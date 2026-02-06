@@ -50,6 +50,8 @@ tmp
 temp
 
 # START Ruler Generated Files
+/.codex/config.toml
+/.codex/config.toml.bak
 /.gemini/settings.json
 /.gemini/settings.json.bak
 /.mcp.json

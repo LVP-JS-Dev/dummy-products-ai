@@ -2,7 +2,7 @@
 # See https://okigu.com/ruler for documentation.
 
 # Default agents to run when --agents is not specified
-default_agents = ["claude", "gemini-cli"]
+default_agents = ["claude", "gemini-cli", "codex"]
 
 # --- Global MCP Server Configuration ---
 [mcp]
@@ -17,12 +17,24 @@ command = "npx"
 args = ["-y", "@upstash/context7-mcp"]
 
 
-[mcp_servers.shadcn]
-command = "npx"
-args = ["shadcn@latest", "mcp"]
-
-
 # --- Global .gitignore Configuration ---
 [gitignore]
 # Enable/disable automatic .gitignore updates (default: true)
+enabled = true
+
+[agents.claude]
+enabled = true
+output_path = "CLAUDE.md"
+
+[agents.codex]
+enabled = true
+output_path = "AGENTS.md"
+output_path_config = ".codex/config.toml"
+
+# Agent-specific MCP configuration for Codex CLI
+[agents.codex.mcp]
+enabled = true
+merge_strategy = "merge"
+
+[agents.gemini-cli]
 enabled = true
