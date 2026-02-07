@@ -1,0 +1,30 @@
+---
+title: Button
+description: Action button with optional icon and badges.
+---
+
+import { Button, states } from "@dummy-products/ui-kit";
+import { story } from "@/stories/button.story";
+
+## Description
+
+Primary action trigger used for creating or confirming actions.
+
+## API
+
+Props are defined in the UI Kit contract. Key props: `text`, `showIcon`, `iconName`, `badgeLabel`, `badgeCount`.
+
+## Examples
+
+<div style={{ display: "grid", gap: 12 }}>
+  {Object.entries(states.button).map(([name, props]) => (
+    <div key={name} style={{ display: "flex", alignItems: "center", gap: 12 }}>
+      <Button {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Interactive
+
+<story.WithControl />

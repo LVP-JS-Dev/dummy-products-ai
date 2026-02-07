@@ -1,0 +1,30 @@
+---
+title: Page Number
+description: Pagination pill for page navigation.
+---
+
+import { PageNumber, states } from "@dummy-products/ui-kit";
+import { story } from "@/stories/page-number.story";
+
+## Description
+
+Compact pagination element used in navigation controls.
+
+## API
+
+Props are defined in the UI Kit contract. Key props: `value`, `selected`, `disabled`.
+
+## Examples
+
+<div style={{ display: "grid", gap: 12 }}>
+  {Object.entries(states.pageNumber).map(([name, props]) => (
+    <div key={name} style={{ display: "flex", alignItems: "center", gap: 12 }}>
+      <PageNumber {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Interactive
+
+<story.WithControl />

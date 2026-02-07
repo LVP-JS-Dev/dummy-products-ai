@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SearchInput",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["placeholder", "state", "showIcon"],
+  "properties": {
+    "placeholder": {
+      "type": "string",
+      "minLength": 1
+    },
+    "value": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string",
+      "enum": ["inactive", "active", "disabled"]
+    },
+    "showIcon": {
+      "type": "boolean"
+    }
+  }
+}
