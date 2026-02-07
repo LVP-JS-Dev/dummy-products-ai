@@ -1,4 +1,4 @@
-default_agents = [ 'claude', 'gemini-cli', 'codex' ]
+default_agents = ['claude', 'gemini-cli', 'codex']
 
 [agents.claude]
 enabled = true
@@ -9,12 +9,13 @@ enabled = true
 output_path = 'AGENTS.md'
 output_path_config = '.codex/config.toml'
 
-    [agents.codex.mcp]
-    enabled = true
-    merge_strategy = 'merge'
+[agents.codex.mcp]
+enabled = true
+merge_strategy = 'merge'
 
 [agents.gemini-cli]
 enabled = true
+output_path = 'GEMINI.md'
 
 [gitignore]
 enabled = true
@@ -24,5 +25,5 @@ enabled = true
 merge_strategy = 'merge'
 
 [mcp_servers.context7]
-args = [ '-y', '@upstash/context7-mcp' ]
+args = ['-y', '@upstash/context7-mcp']
 command = 'npx'
