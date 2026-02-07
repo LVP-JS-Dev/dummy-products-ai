@@ -38,14 +38,14 @@
 `ui-kit` обязан экспортировать через `src/index.ts`:
 
 1. **Компоненты**
-   - React-компоненты (например: `Button`, `Input`).
+   - React-компоненты (например: `Button`, `SearchInput`).
 2. **Типы props**
    - типы, выведенные из контрактов (например: `ButtonProps`).
 3. **States**
    - экспортируемые как единый namespace:
 
 ```ts
-import { states } from "@repo/ui-kit";
+import { states } from "@dummy-products/ui-kit";
 ```
 
 ### 3.2 Запрещённые практики
@@ -53,7 +53,7 @@ import { states } from "@repo/ui-kit";
 - Прямой импорт внутренних файлов:
 
 ```ts
-import Button from "@repo/ui-kit/src/components/Button";
+import Button from "@dummy-products/ui-kit/src/components/Button";
 ```
 
 - Дублирование props или `states` в приложениях или docs.
@@ -76,7 +76,24 @@ import Button from "@repo/ui-kit/src/components/Button";
 
 Контракт не зависит от React.
 
-### 4.2 Типы props
+### 4.2 Serializable Props vs Runtime Props
+
+Для того чтобы UI Kit был одновременно:
+
+- пригоден для реального продукта (React runtime, события, формы),
+- источником истины для агентов (машиночитаемые схемы, валидные `states`),
+
+контракт обязан разделять:
+
+1. **Serializable props** — данные, которые:
+   - сериализуются в JSON Schema;
+   - используются в `states`;
+   - не содержат функций, классов, React-типов.
+2. **Runtime props** — расширение serializable props, которое:
+   - добавляет обработчики событий (`on*`) и React-специфичные вещи (где необходимо);
+   - **не влияет** на shape serializable props.
+
+### 4.3 Типы props
 
 Тип props компонента:
 
@@ -85,7 +102,21 @@ import Button from "@repo/ui-kit/src/components/Button";
 
 Прямое определение интерфейсов props вне контракта запрещено.
 
-### 4.3 Изменения контракта
+### 4.4 Events (agent-first + product-ready)
+
+Каждый интерактивный компонент обязан иметь формальную спецификацию событий (**events spec**), которая:
+
+- является частью публичной спецификации UI Kit;
+- позволяет агентам безопасно “понимать”, какие события компонент может эмитить;
+- (опционально) описывает payload каждого события как serializable-схему.
+
+Events spec:
+
+- не зависит от React;
+- не используется внутри `states` (states остаются data-only);
+- должна быть отражена в generated `manifest.json`.
+
+### 4.5 Изменения контракта
 
 Любое изменение контракта:
 
@@ -108,7 +139,15 @@ import Button from "@repo/ui-kit/src/components/Button";
 - используют props из контракта;
 - не валидируют входные данные самостоятельно (валидация — ответственность контракта и тестов).
 
-### 5.2 Ограничения
+### 5.2 Product-ready требования (семантика и формы)
+
+Компоненты должны быть пригодны для реального продукта, поэтому обязаны:
+
+- использовать корректные семантические HTML-элементы (например, `button`, `input`, `label`, `a`);
+- поддерживать keyboard/focus/a11y на базовом уровне (aria-атрибуты, `aria-current` и т.п.);
+- предоставлять события через runtime props (handlers), описанные events spec.
+
+### 5.3 Ограничения
 
 Компоненты не должны:
 
@@ -198,7 +237,12 @@ export const states = {
 {
   "components": {
     "Button": {
-      "schema": "schemas/button.schema.json"
+      "propsSchema": "schemas/button.schema.json",
+      "events": {
+        "press": {
+          "payloadSchema": "schemas/button.press.schema.json"
+        }
+      }
     }
   }
 }
@@ -215,13 +259,14 @@ Manifest является точкой входа для внешних инст
 Контрактные тесты гарантируют:
 
 - валидность `states`;
-- отсутствие рассинхронизации между контрактами и примерами.
+- отсутствие рассинхронизации между контрактами, generated schemas и примерами.
 
 ### 8.2 Обязательные проверки
 
 `pnpm test` должен:
 
-- проверять каждое state-значение соответствующей схемой;
+- проверять каждое state-значение соответствующей **generated JSON Schema**;
+- падать, если schema-валидация проходит, но контрактная модель/генератор изменились так, что schemas больше не соответствуют контрактам;
 - падать при любом несоответствии.
 
 ---
