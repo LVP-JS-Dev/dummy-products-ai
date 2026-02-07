@@ -55,6 +55,7 @@ temp
 /.claude/skills
 /.codex/config.toml
 /.codex/config.toml.bak
+/.codex/environments
 /.codex/skills
 /.cursor/skills
 /.factory/skills
