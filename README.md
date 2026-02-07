@@ -1,47 +1,142 @@
-# dummy-products
+# Contract-first UI Monorepo
 
-This project was created with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack that combines React, TanStack Router, and more.
+Monorepo с **UI Kit (contract-first)**, **main app (TanStack Router)** и **docs (Next.js + Fumadocs Story)**.
 
-## Features
+Идея проекта: сделать UI не только визуальным набором компонентов, но и **формальной, машиночитаемой системой**:
+- контракты как источник истины
+- `states` как публичный API и валидные примеры
+- генерация спецификации (JSON Schema + manifest)
+- docs и приложение как потребители, а не “вторая правда”
 
-- **TypeScript** - For type safety and improved developer experience
-- **TanStack Router** - File-based routing with full type safety
-- **TailwindCSS** - Utility-first CSS for rapid UI development
-- **shadcn/ui** - Reusable UI components
-- **Husky** - Git hooks for code quality
-- **Turborepo** - Optimized monorepo build system
+---
 
-## Getting Started
+## Состав репозитория
 
-First, install the dependencies:
+```txt
+apps/
+  web/            # Main app (TanStack Router) — “продуктовое” использование UI Kit
+  fumadocs/       # Docs (Next.js + Fumadocs) — документация + интерактивные story
+packages/
+  ui-kit/         # UI Kit — contracts + components + states + generated spec
+```
+
+---
+
+## Быстрый старт
 
 ```bash
-pnpm install
+pnpm i
+pnpm dev
 ```
 
-Then, run the development server:
+Обычно поднимаются:
+- main app: `apps/web`
+- docs: `apps/fumadocs`
+
+---
+
+## Команды
+
+Из корня:
+
+| Команда | Что делает |
+|---|---|
+| `pnpm dev` | Запускает `apps/web` и `apps/fumadocs`. |
+| `pnpm gen` | Генерирует спецификацию UI Kit (schemas + manifest). |
+| `pnpm test` | Контрактные тесты UI Kit (валидация `states` по контрактам). |
+| `pnpm check` | Полный гейт: gen + test + no-drift (generated артефакты должны быть актуальны). |
+
+---
+
+## Как устроена система
+
+### Contract-first
+
+В `packages/ui-kit` каждый компонент имеет контракт (runtime schema).
+От контракта производятся:
+- TS типы props
+- states (fixtures)
+- JSON Schema + `manifest.json`
+
+### `states` — публичный API
+
+states экспортируются из `@repo/ui-kit` и используются:
+- в docs как примеры
+- в тестах как контрактные фикстуры
+- как input для агентной разработки
+
+### Docs не являются source of truth
+
+Docs (Fumadocs) отображают компоненты и states, а интерактивность даёт Story.
+Stories живут в `apps/fumadocs` и импортируют states из `@repo/ui-kit`.
+
+---
+
+## Workflow: добавить новый компонент
+
+Высокоуровнево:
+
+1) **Контракт**  
+   `packages/ui-kit/src/contracts/<name>.contract.ts`
+
+2) **Компонент**  
+   `packages/ui-kit/src/components/<Name>.tsx`
+
+3) **States**  
+   `packages/ui-kit/src/states/<name>.states.ts`  
+   Минимум 3 состояния (default, variant, edge-case)
+
+4) **Экспорт**  
+   `packages/ui-kit/src/index.ts` и `packages/ui-kit/src/states/index.ts`
+
+5) **Генерация и тесты**
 
 ```bash
-pnpm run dev
+pnpm -C packages/ui-kit gen
+pnpm -C packages/ui-kit test
 ```
 
-Open [http://localhost:3001](http://localhost:3001) in your browser to see the web application.
+6) **Docs**
+   - `apps/fumadocs/src/stories/<name>.story.tsx` (client component)
+   - `apps/fumadocs/content/components/<name>.mdx`
 
-## Git Hooks and Formatting
+Полный порядок и правила см. в `AGENT.md`.
 
-- Initialize hooks: `pnpm run prepare`
+---
 
-## Project Structure
+## Требования и управление изменениями
 
-```
-dummy-products/
-├── apps/
-│   ├── web/         # Frontend application (React + TanStack Router)
-```
+Требования разбиты по пакетам:
+- `PRD.md` — системные принципы (root)
+- `packages/ui-kit/PRD.md` — контракты, states, спецификация
+- `apps/fumadocs/PRD.md` — docs + Story правила
+- `apps/web/PRD.md` — требования к main app
 
-## Available Scripts
+Правило:
+- если изменение выходит за рамки требований или меняет инварианты, сначала обновляется соответствующий PRD, потом код.
 
-- `pnpm run dev`: Start all applications in development mode
-- `pnpm run build`: Build all applications
-- `pnpm run dev:web`: Start only the web application
-- `pnpm run check-types`: Check TypeScript types across all apps
+Подробно: `AGENT.md`.
+
+---
+
+## Спецификация для агентов
+
+UI Kit генерирует:
+- `packages/ui-kit/src/generated/schemas/*.schema.json`
+- `packages/ui-kit/src/generated/manifest.json`
+
+`manifest.json` — входная точка для инструментов/агентов: индекс компонентов и путей к схемам.
+
+---
+
+## Non-goals
+
+- Полноценная замена Storybook (аддоны, visual testing и т.п.)
+- Backend, auth, database
+- Большой дизайн-системный объём
+
+---
+
+## License
+
+MIT
