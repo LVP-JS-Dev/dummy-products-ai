@@ -41,12 +41,13 @@
 
 4) **No-drift детектится через тест + root check**
 - Тест:
-  - валидирует states через Ajv по generated JSON Schema;
+  - валидирует states по generated JSON Schema (через JSON Schema validator);
   - сравнивает generated schemas/manifest с “ожидаемыми” (in-memory generation) для текущих контрактов.
 - Root `pnpm check` включает gen/test и проверку чистого `git diff`.
 
 ## Risks / Trade-offs
 
 - [Добавление Ajv] → Mitigation: держать его только как devDependency `ui-kit`, использовать draft-07 compat, не расширять runtime bundle.
+- (опционально) [Валидатор без зависимости] → Mitigation: держать небольшой validator внутри `scripts/Test.ts`, покрывать только используемый сабсет JSON Schema.
 - [Breaking changes в контрактах] → Mitigation: минимальные изменения API, сохранять alias-экспорты, обновлять docs/apps только через публичный API.
 - [Сложность типизации events] → Mitigation: выбрать простой и повторяемый паттерн, не вводить сложную метапрограмминг-магии.
