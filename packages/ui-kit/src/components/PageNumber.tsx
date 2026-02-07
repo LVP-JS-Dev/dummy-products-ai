@@ -1,11 +1,17 @@
-import * as React from "react";
-import type { PageNumberProps } from "../contracts/page-number.contract";
-import { colors, radii, spacing, typography } from "../tokens";
+import type { PageNumberProps } from "../contracts/PageNumberContract";
+import { colors, radii, spacing, typography } from "../Tokens";
 
-export function PageNumber({ value, selected, disabled }: PageNumberProps) {
+export function PageNumber({
+  value,
+  selected,
+  disabled,
+  onPress,
+}: PageNumberProps) {
   return (
-    <span
+    <button
       aria-current={selected ? "page" : undefined}
+      disabled={disabled}
+      onClick={() => onPress?.({ value })}
       style={{
         display: "inline-flex",
         alignItems: "center",
@@ -20,9 +26,11 @@ export function PageNumber({ value, selected, disabled }: PageNumberProps) {
         fontFamily: typography.body,
         fontSize: 14,
         opacity: disabled ? 0.5 : 1,
+        cursor: disabled ? "not-allowed" : "pointer",
       }}
+      type="button"
     >
       {value}
-    </span>
+    </button>
   );
 }

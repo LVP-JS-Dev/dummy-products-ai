@@ -1,6 +1,5 @@
-import * as React from "react";
-import type { SearchInputProps } from "../contracts/search-input.contract";
-import { colors, radii, spacing, typography } from "../tokens";
+import type { SearchInputProps } from "../contracts/SearchInputContract";
+import { colors, radii, spacing, typography } from "../Tokens";
 import { Icon } from "./Icon";
 
 export function SearchInput({
@@ -8,9 +7,12 @@ export function SearchInput({
   value,
   state,
   showIcon,
+  onValueChange,
+  onSubmit,
 }: SearchInputProps) {
   const isDisabled = state === "disabled";
   const isActive = state === "active";
+  const currentValue = value ?? "";
 
   return (
     <label
@@ -26,12 +28,20 @@ export function SearchInput({
         opacity: isDisabled ? 0.6 : 1,
       }}
     >
-      {showIcon ? <Icon name="search" size={20} color={colors.text.placeholder} /> : null}
+      {showIcon ? (
+        <Icon color={colors.text.placeholder} name="search" size={20} />
+      ) : null}
       <input
-        type="search"
-        value={value}
-        placeholder={placeholder}
         disabled={isDisabled}
+        onChange={(event) =>
+          onValueChange?.({ value: event.currentTarget.value })
+        }
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            onSubmit?.({ value: event.currentTarget.value });
+          }
+        }}
+        placeholder={placeholder}
         style={{
           border: "none",
           outline: "none",
@@ -41,6 +51,8 @@ export function SearchInput({
           fontSize: 14,
           minWidth: 160,
         }}
+        type="search"
+        value={currentValue}
       />
     </label>
   );

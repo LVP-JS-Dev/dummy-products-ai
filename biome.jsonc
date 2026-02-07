@@ -1,4 +1,150 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-  "extends": ["ultracite/biome/core", "ultracite/biome/react"]
+  "extends": ["ultracite/biome/core", "ultracite/biome/react"],
+  "overrides": [
+    {
+      "includes": [
+        "**/*.{ts,tsx}",
+        "!**/*.d.ts",
+        "!**/index.{ts,tsx}",
+        "!**/*.config.{ts,tsx}",
+        "!apps/fumadocs/.source/**/*.ts",
+        "!apps/fumadocs/src/app/**/*.{ts,tsx}",
+        "!apps/web/src/routes/**/*.{ts,tsx}"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "useFilenamingConvention": {
+              "level": "error",
+              "options": {
+                "filenameCases": ["PascalCase"]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "packages/ui-kit/src/Icons.ts",
+        "packages/ui-kit/src/Tokens.ts",
+        "packages/ui-kit/src/components/**/*.tsx",
+        "apps/web/src/components/**/*.tsx",
+        "apps/web/src/lib/**/*.ts",
+        "apps/fumadocs/src/MdxComponents.tsx",
+        "apps/fumadocs/src/lib/**/*.{ts,tsx}",
+        "apps/fumadocs/src/components/**/*.tsx"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "useFilenamingConvention": {
+              "level": "error",
+              "options": {
+                "filenameCases": ["PascalCase"]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "packages/ui-kit/src/contracts/*.ts",
+        "!packages/ui-kit/src/contracts/index.ts"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "useFilenamingConvention": {
+              "level": "error",
+              "options": {
+                "filenameCases": ["PascalCase"]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "packages/ui-kit/src/states/*.ts",
+        "!packages/ui-kit/src/states/index.ts"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "useFilenamingConvention": {
+              "level": "error",
+              "options": {
+                "filenameCases": ["PascalCase"]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": ["apps/fumadocs/src/stories/*.tsx"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useFilenamingConvention": {
+              "level": "error",
+              "options": {
+                "filenameCases": ["PascalCase"]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": ["packages/env/src/*.ts"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useFilenamingConvention": {
+              "level": "error",
+              "options": {
+                "filenameCases": ["PascalCase"]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "packages/ui-kit/src/generated/**/*.json",
+        "**/*.{json,jsonc,css,scss}"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "useFilenamingConvention": {
+              "level": "error",
+              "options": {
+                "match": "[a-z0-9]+(?:-[a-z0-9]+)*(?:[.][a-z0-9]+(?:-[a-z0-9]+)*)*"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "packages/ui-kit/src/index.ts",
+        "packages/ui-kit/src/contracts/index.ts"
+      ],
+      "linter": {
+        "rules": {
+          "performance": {
+            "noBarrelFile": "off"
+          }
+        }
+      }
+    }
+  ]
 }

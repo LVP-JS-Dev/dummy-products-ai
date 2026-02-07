@@ -67,13 +67,13 @@
 
 Шаги (строго в этом порядке)
 
-1. **Контракт**: `packages/ui-kit/src/contracts/<name>.contract.ts`
+1. **Контракт**: `packages/ui-kit/src/contracts/<Name>Contract.ts`
    - описать props
    - не использовать React
 2. **Компонент**: `packages/ui-kit/src/components/<Name>.tsx`
    - props только из контракта
    - без бизнес-логики
-3. **States**: `packages/ui-kit/src/states/<name>.states.ts`
+3. **States**: `packages/ui-kit/src/states/<Name>States.ts`
    - минимум 3 состояния
    - data-only
    - без функций
@@ -83,7 +83,7 @@
 5. **Генерация**: `pnpm -C packages/ui-kit gen`
 6. **Тесты**: `pnpm -C packages/ui-kit test`
 7. **Docs**
-   - Story: `apps/fumadocs/src/stories/<name>.story.tsx`
+   - Story: `apps/fumadocs/src/stories/<Name>Story.tsx`
      - `'use client'`
      - экспорт story
    - MDX: `apps/fumadocs/content/components/<name>.mdx`

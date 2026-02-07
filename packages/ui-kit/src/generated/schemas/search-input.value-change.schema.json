@@ -1,0 +1,7 @@
+{
+  "$ref": "#/definitions/SearchInput.valueChange",
+  "definitions": {
+    "SearchInput.valueChange": {}
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

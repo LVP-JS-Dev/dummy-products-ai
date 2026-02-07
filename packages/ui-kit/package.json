@@ -7,8 +7,8 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "gen": "tsx scripts/gen.ts",
-    "test": "tsx scripts/test.ts"
+    "gen": "tsx scripts/Gen.ts",
+    "test": "tsx scripts/Test.ts"
   },
   "dependencies": {
     "zod": "catalog:"

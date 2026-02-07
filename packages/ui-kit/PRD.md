@@ -67,7 +67,7 @@ import Button from "@dummy-products/ui-kit/src/components/Button";
 
 Каждый компонент обязан иметь формальный контракт:
 
-- файл: `src/contracts/<name>.contract.ts`;
+- файл: `src/contracts/<Name>Contract.ts`;
 - контракт описывает:
   - shape props;
   - допустимые варианты (union / enum);
@@ -176,7 +176,7 @@ Events spec:
 
 Для каждого компонента:
 
-- файл: `src/states/<name>.states.ts`;
+- файл: `src/states/<Name>States.ts`;
 - формат:
 
 ```ts

@@ -1,8 +1,8 @@
-import { source } from "@/lib/source";
+import { source } from "@/lib/Source";
 
 export const revalidate = false;
 
-export async function GET() {
+export function GET() {
   const lines: string[] = [];
   lines.push("# Documentation");
   lines.push("");
