@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import type { SearchInputProps } from "../contracts/SearchInputContract";
 import { colors, radii, spacing, typography } from "../Tokens";
 import { Icon } from "./Icon";
@@ -12,7 +13,16 @@ export function SearchInput({
 }: SearchInputProps) {
   const isDisabled = state === "disabled";
   const isActive = state === "active";
-  const currentValue = value ?? "";
+  const isControlled = value !== undefined;
+  const [uncontrolledValue, setUncontrolledValue] = useState(value ?? "");
+
+  useEffect(() => {
+    if (isControlled) {
+      setUncontrolledValue(value ?? "");
+    }
+  }, [isControlled, value]);
+
+  const currentValue = isControlled ? (value ?? "") : uncontrolledValue;
 
   return (
     <label
@@ -33,9 +43,15 @@ export function SearchInput({
       ) : null}
       <input
         disabled={isDisabled}
-        onChange={(event) =>
-          onValueChange?.({ value: event.currentTarget.value })
-        }
+        onChange={(event) => {
+          const nextValue = event.currentTarget.value;
+
+          if (!isControlled) {
+            setUncontrolledValue(nextValue);
+          }
+
+          onValueChange?.({ value: nextValue });
+        }}
         onKeyDown={(event) => {
           if (event.key === "Enter") {
             onSubmit?.({ value: event.currentTarget.value });

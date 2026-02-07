@@ -67,6 +67,60 @@ function isRecord(value: unknown): value is JsonRecord {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
+const fileNameMap: Record<keyof typeof components, string> = {
+  Button: "button",
+  SearchInput: "search-input",
+  Checkbox: "checkbox",
+  PageNumber: "page-number",
+  Icon: "icon",
+};
+
+function toKebabCase(value: string) {
+  return value
+    .replaceAll("_", "-")
+    .replaceAll(/([a-z0-9])([A-Z])/g, "$1-$2")
+    .toLowerCase();
+}
+
+function buildExpectedManifest(): Manifest {
+  const manifest: Manifest = { components: {} };
+
+  for (const [componentName, component] of Object.entries(components)) {
+    const fileBase = fileNameMap[componentName as keyof typeof components];
+    const propsFileName = `${fileBase}.schema.json`;
+    const schemaPath = `schemas/${propsFileName}`;
+
+    const declaredEvents = "events" in component ? component.events : undefined;
+    const eventsManifest: Record<string, { payloadSchema: string }> = {};
+
+    if (declaredEvents) {
+      for (const eventName of Object.keys(declaredEvents)) {
+        const payloadFileName = `${fileBase}.${toKebabCase(eventName)}.schema.json`;
+        eventsManifest[eventName] = {
+          payloadSchema: `schemas/${payloadFileName}`,
+        };
+      }
+    }
+
+    const hasEventSchemas = Object.keys(eventsManifest).length > 0;
+
+    if (hasEventSchemas) {
+      manifest.components[componentName] = {
+        schema: schemaPath,
+        propsSchema: schemaPath,
+        events: eventsManifest,
+      };
+    } else {
+      manifest.components[componentName] = {
+        schema: schemaPath,
+        propsSchema: schemaPath,
+      };
+    }
+  }
+
+  return manifest;
+}
+
 function asSchema(value: unknown): JsonSchema | undefined {
   if (!isRecord(value)) {
     return undefined;
@@ -405,10 +459,23 @@ async function validateComponent(
 async function validateAll() {
   const reporter = new Reporter();
   const manifestPath = resolve("src/generated/manifest.json");
-  const manifest = (await readJson(manifestPath)) as Manifest;
+  const manifestFromDisk = (await readJson(manifestPath)) as Manifest;
+
+  const expectedManifest = buildExpectedManifest();
+  validateSchemasEqual(
+    reporter,
+    "Manifest",
+    manifestFromDisk,
+    expectedManifest
+  );
 
   for (const [componentName, component] of Object.entries(components)) {
-    await validateComponent(reporter, manifest, componentName, component);
+    await validateComponent(
+      reporter,
+      manifestFromDisk,
+      componentName,
+      component
+    );
   }
 
   if (reporter.hasError) {
