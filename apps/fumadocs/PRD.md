@@ -92,7 +92,7 @@ MDX **не используется** для:
    - краткое описание props (без дублирования контрактов);
    - ссылки на спецификацию (schema / manifest).
 3. **Examples**
-   - визуальный список `states` из `@repo/ui-kit`.
+   - визуальный список `states` из `@dummy-products/ui-kit`.
 4. **Interactive**
    - один интерактивный блок `<story.WithControl />`.
 
@@ -134,7 +134,7 @@ Story-файлы располагаются только в `apps/fumadocs`.
 - Базовые args для Story берутся из `states` UI Kit:
 
 ```ts
-import { states } from "@repo/ui-kit";
+import { states } from "@dummy-products/ui-kit";
 ```
 
 - Docs не создают собственные args и не дублируют `states`.
@@ -192,7 +192,7 @@ import { states } from "@repo/ui-kit";
 `apps/fumadocs` считается корректным, если:
 
 1. Каждому публичному компоненту UI Kit соответствует MDX-страница.
-2. Каждая страница использует `states` из `@repo/ui-kit`.
+2. Каждая страница использует `states` из `@dummy-products/ui-kit`.
 3. На каждой странице есть `<story.WithControl />`.
 4. Story-файлы являются client components.
 5. Docs не содержат собственных контрактов или `states`.

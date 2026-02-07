@@ -22,7 +22,7 @@
 
 Он:
 
-- использует компоненты и types из `@repo/ui-kit`;
+- использует компоненты и types из `@dummy-products/ui-kit`;
 - не определяет props, `states` или контракты;
 - не хранит копии спецификаций.
 
@@ -80,7 +80,7 @@ TanStack Router должен использоваться с:
 Разрешено только:
 
 ```ts
-import { Button, Input, states } from "@repo/ui-kit";
+import { Button, SearchInput, states } from "@dummy-products/ui-kit";
 ```
 
 Запрещено:
@@ -104,7 +104,7 @@ import { Button, Input, states } from "@repo/ui-kit";
 
 Форма должна:
 
-- использовать минимум 2 компонента UI Kit (например: `Input` + `Button`);
+- использовать минимум 2 компонента UI Kit (например: `SearchInput` + `Button`);
 - иметь controlled state;
 - демонстрировать disabled / loading / error состояние кнопки.
 

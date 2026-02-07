@@ -1,0 +1,30 @@
+---
+title: Icon
+description: Vector glyphs sourced from the Figma file.
+---
+
+import { Icon, states } from "@dummy-products/ui-kit";
+import { story } from "@/stories/icon.story";
+
+## Description
+
+Icon component that renders the SVG glyphs from the Aiti Guru design set.
+
+## API
+
+Props are defined in the UI Kit contract. Key props: `name`, `size`, `color`, `title`.
+
+## Examples
+
+<div style={{ display: "grid", gap: 12 }}>
+  {Object.entries(states.icon).map(([name, props]) => (
+    <div key={name} style={{ display: "flex", alignItems: "center", gap: 12 }}>
+      <Icon {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Interactive
+
+<story.WithControl />

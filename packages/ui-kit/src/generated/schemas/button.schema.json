@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Button",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["text", "variant"],
+  "properties": {
+    "text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "variant": {
+      "type": "string",
+      "enum": ["blue"]
+    },
+    "showIcon": {
+      "type": "boolean"
+    },
+    "iconName": {
+      "type": "string",
+      "enum": [
+        "caret_left",
+        "caret_right",
+        "eye_off",
+        "lock_03",
+        "plus_circle",
+        "refresh",
+        "search",
+        "square",
+        "user"
+      ]
+    },
+    "showDropdown": {
+      "type": "boolean"
+    },
+    "badgeLabel": {
+      "type": "string"
+    },
+    "badgeCount": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "showBadgeLabel": {
+      "type": "boolean"
+    },
+    "showBadgeCount": {
+      "type": "boolean"
+    },
+    "disabled": {
+      "type": "boolean"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+---
+title: Checkbox
+description: Binary selection control with optional label.
+---
+
+import { Checkbox, states } from "@dummy-products/ui-kit";
+import { story } from "@/stories/checkbox.story";
+
+## Description
+
+Binary control for item selection within lists or tables.
+
+## API
+
+Props are defined in the UI Kit contract. Key props: `checked`, `label`, `disabled`.
+
+## Examples
+
+<div style={{ display: "grid", gap: 12 }}>
+  {Object.entries(states.checkbox).map(([name, props]) => (
+    <div key={name} style={{ display: "flex", alignItems: "center", gap: 12 }}>
+      <Checkbox {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Interactive
+
+<story.WithControl />

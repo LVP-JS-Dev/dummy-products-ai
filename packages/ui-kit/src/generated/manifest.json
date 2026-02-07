@@ -1,0 +1,19 @@
+{
+  "components": {
+    "Button": {
+      "schema": "schemas/button.schema.json"
+    },
+    "SearchInput": {
+      "schema": "schemas/search-input.schema.json"
+    },
+    "Checkbox": {
+      "schema": "schemas/checkbox.schema.json"
+    },
+    "PageNumber": {
+      "schema": "schemas/page-number.schema.json"
+    },
+    "Icon": {
+      "schema": "schemas/icon.schema.json"
+    }
+  }
+}

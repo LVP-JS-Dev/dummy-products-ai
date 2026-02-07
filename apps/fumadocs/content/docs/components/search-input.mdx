@@ -1,0 +1,30 @@
+---
+title: Search Input
+description: Search field with optional icon and state styles.
+---
+
+import { SearchInput, states } from "@dummy-products/ui-kit";
+import { story } from "@/stories/search-input.story";
+
+## Description
+
+Text field optimized for search queries with distinct inactive, active, and disabled states.
+
+## API
+
+Props are defined in the UI Kit contract. Key props: `placeholder`, `state`, `showIcon`, `value`.
+
+## Examples
+
+<div style={{ display: "grid", gap: 12 }}>
+  {Object.entries(states.searchInput).map(([name, props]) => (
+    <div key={name} style={{ display: "flex", alignItems: "center", gap: 12 }}>
+      <SearchInput {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Interactive
+
+<story.WithControl />
