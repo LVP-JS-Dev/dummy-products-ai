@@ -2,7 +2,7 @@
 set -e
 
 # Keep pre-commit fast and offline: use locally installed tools (no `pnpm dlx`).
-# Preserve unstaged changes with `--keep-index`.
+# Run formatting/linting only on the staged file set.
 
 STAGED_FILE_LIST="$(mktemp -t precommit-staged.XXXXXX)"
 git -c core.quotePath=false diff --cached --name-only --diff-filter=ACMR -z > "$STAGED_FILE_LIST"
@@ -12,17 +12,8 @@ if [ ! -s "$STAGED_FILE_LIST" ]; then
   exit 0
 fi
 
-STASHED=1
-if git stash push --quiet --keep-index --message "pre-commit-stash"; then
-  STASHED=0
-fi
-
 cat "$STAGED_FILE_LIST" | xargs -0 pnpm exec biome check --write --
 
 cat "$STAGED_FILE_LIST" | xargs -0 git add --
-
-if [ $STASHED -eq 0 ]; then
-  git stash pop --quiet || true
-fi
 
 rm -f "$STAGED_FILE_LIST"

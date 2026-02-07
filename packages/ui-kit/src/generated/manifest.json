@@ -1,19 +1,47 @@
 {
   "components": {
     "Button": {
-      "schema": "schemas/button.schema.json"
+      "schema": "schemas/button.schema.json",
+      "propsSchema": "schemas/button.schema.json",
+      "events": {
+        "press": {
+          "payloadSchema": "schemas/button.press.schema.json"
+        }
+      }
     },
     "SearchInput": {
-      "schema": "schemas/search-input.schema.json"
+      "schema": "schemas/search-input.schema.json",
+      "propsSchema": "schemas/search-input.schema.json",
+      "events": {
+        "valueChange": {
+          "payloadSchema": "schemas/search-input.value-change.schema.json"
+        },
+        "submit": {
+          "payloadSchema": "schemas/search-input.submit.schema.json"
+        }
+      }
     },
     "Checkbox": {
-      "schema": "schemas/checkbox.schema.json"
+      "schema": "schemas/checkbox.schema.json",
+      "propsSchema": "schemas/checkbox.schema.json",
+      "events": {
+        "checkedChange": {
+          "payloadSchema": "schemas/checkbox.checked-change.schema.json"
+        }
+      }
     },
     "PageNumber": {
-      "schema": "schemas/page-number.schema.json"
+      "schema": "schemas/page-number.schema.json",
+      "propsSchema": "schemas/page-number.schema.json",
+      "events": {
+        "press": {
+          "payloadSchema": "schemas/page-number.press.schema.json"
+        }
+      }
     },
     "Icon": {
-      "schema": "schemas/icon.schema.json"
+      "schema": "schemas/icon.schema.json",
+      "propsSchema": "schemas/icon.schema.json"
     }
   }
 }

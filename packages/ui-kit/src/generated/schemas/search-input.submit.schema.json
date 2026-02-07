@@ -1,0 +1,7 @@
+{
+  "$ref": "#/definitions/SearchInput.submit",
+  "definitions": {
+    "SearchInput.submit": {}
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

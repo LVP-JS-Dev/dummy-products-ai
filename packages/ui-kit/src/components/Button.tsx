@@ -1,6 +1,6 @@
-import * as React from "react";
-import type { ButtonProps } from "../contracts/button.contract";
-import { colors, radii, spacing, typography } from "../tokens";
+import type * as React from "react";
+import type { ButtonProps } from "../contracts/ButtonContract";
+import { colors, radii, spacing, typography } from "../Tokens";
 import { Icon } from "./Icon";
 
 const baseStyle: React.CSSProperties = {
@@ -39,21 +39,28 @@ export function Button({
   showBadgeLabel,
   showBadgeCount,
   disabled,
+  loading,
+  onPress,
 }: ButtonProps) {
-  const isDisabled = Boolean(disabled);
+  const isDisabled = Boolean(disabled) || Boolean(loading);
   const showLabel = showBadgeLabel ?? Boolean(badgeLabel);
   const showCount = showBadgeCount ?? typeof badgeCount === "number";
+  const { background, color } = {
+    blue: { background: colors.blue.primary, color: colors.green.soft },
+  }[variant];
 
   return (
     <button
-      type="button"
+      aria-busy={loading || undefined}
       disabled={isDisabled}
+      onClick={() => onPress?.({})}
       style={{
         ...baseStyle,
-        background: colors.blue.primary,
-        color: colors.green.soft,
+        background,
+        color,
         opacity: isDisabled ? 0.6 : 1,
       }}
+      type="button"
     >
       {showIcon && iconName ? <Icon name={iconName} size={18} /> : null}
       <span>{text}</span>

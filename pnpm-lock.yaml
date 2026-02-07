@@ -54,6 +54,9 @@ importers:
 
   apps/fumadocs:
     dependencies:
+      '@dummy-products/ui-kit':
+        specifier: workspace:*
+        version: link:../../packages/ui-kit
       fumadocs-core:
         specifier: 16.5.1
         version: 16.5.1(@tanstack/react-router@1.158.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(@types/react@19.2.13)(lucide-react@0.563.0(react@19.2.4))(next@16.1.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(zod@4.3.6)
@@ -215,6 +218,28 @@ importers:
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
+
+  packages/ui-kit:
+    dependencies:
+      react:
+        specifier: ^19.0.0
+        version: 19.2.4
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.2.4(react@19.2.4)
+      zod:
+        specifier: 'catalog:'
+        version: 4.3.6
+    devDependencies:
+      '@dummy-products/config':
+        specifier: workspace:*
+        version: link:../config
+      tsx:
+        specifier: ^4.20.5
+        version: 4.21.0
+      zod-to-json-schema:
+        specifier: ^3.24.6
+        version: 3.25.1(zod@4.3.6)
 
 packages:
 
@@ -8344,6 +8369,10 @@ snapshots:
   zod-to-json-schema@3.25.1(zod@3.25.76):
     dependencies:
       zod: 3.25.76
+
+  zod-to-json-schema@3.25.1(zod@4.3.6):
+    dependencies:
+      zod: 4.3.6
 
   zod@3.25.76: {}
 

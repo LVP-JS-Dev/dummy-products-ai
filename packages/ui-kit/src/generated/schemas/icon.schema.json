@@ -1,33 +1,7 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Icon",
-  "type": "object",
-  "additionalProperties": false,
-  "required": ["name"],
-  "properties": {
-    "name": {
-      "type": "string",
-      "enum": [
-        "caret_left",
-        "caret_right",
-        "eye_off",
-        "lock_03",
-        "plus_circle",
-        "refresh",
-        "search",
-        "square",
-        "user"
-      ]
-    },
-    "size": {
-      "type": "integer",
-      "minimum": 1
-    },
-    "color": {
-      "type": "string"
-    },
-    "title": {
-      "type": "string"
-    }
-  }
+  "$ref": "#/definitions/Icon",
+  "definitions": {
+    "Icon": {}
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
 }

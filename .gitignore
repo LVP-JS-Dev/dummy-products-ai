@@ -32,6 +32,8 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
+.pnpm-store
+.pnpm-store/
 
 # Turbo
 .turbo
@@ -48,6 +50,8 @@ coverage
 .cache
 tmp
 temp
+
+.codex
 
 # START Ruler Generated Files
 /.agent/skills
