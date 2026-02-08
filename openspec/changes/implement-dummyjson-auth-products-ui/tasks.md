@@ -8,8 +8,10 @@
 
 - [ ] 2.1 Implement `/login` route UI with required-field validation and submit/loading states
 - [ ] 2.2 Integrate login submission with auth API and render API error feedback in the login screen
-- [ ] 2.3 Persist auth token via remember-me policy and wire post-login navigation to products route
-- [ ] 2.4 Add route guard/redirect logic so products routes require an active session
+- [ ] 2.3 Persist auth token and last-used username via remember-me policy and wire post-login navigation to products route
+- [ ] 2.4 Prefill login username from stored last-used username (no password persistence)
+- [ ] 2.5 Add route guard/redirect logic so products routes require an active session
+- [ ] 2.6 Add logout button/action to clear session data from both storages and navigate to `/login`
 
 ## 3. Products List and Sorting
 

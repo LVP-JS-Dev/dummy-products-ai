@@ -16,17 +16,36 @@ The web app SHALL require both username and password before submitting auth requ
 
 ### Requirement: Session persistence SHALL follow remember-me policy
 
-The web app SHALL persist the auth token in `localStorage` when remember-me is enabled, and SHALL persist in `sessionStorage` when remember-me is disabled.
+The web app SHALL persist the auth token and the last-used username in `localStorage` when remember-me is enabled, and SHALL persist them in `sessionStorage` when remember-me is disabled.
 
 #### Scenario: Remember-me enabled
 
 - **WHEN** a user logs in with remember-me checked
-- **THEN** the session token is restored after closing and reopening the browser
+- **THEN** the session token and username are restored after closing and reopening the browser
 
 #### Scenario: Remember-me disabled
 
 - **WHEN** a user logs in with remember-me unchecked
 - **THEN** the session ends after browser session termination and is not restored in a new browser session
+
+### Requirement: Session storage precedence SHALL be deterministic
+
+If both `sessionStorage` and `localStorage` contain session data, the app SHALL prefer the `sessionStorage` session.
+
+#### Scenario: Both storages contain session data
+
+- **WHEN** the app initializes and finds session data in both `sessionStorage` and `localStorage`
+- **THEN** it uses the session from `sessionStorage` as the active session
+
+### Requirement: Logout SHALL clear session data in both storages
+
+The app SHALL provide a logout action that clears auth session data in both `sessionStorage` and `localStorage` and navigates the user to the login screen.
+
+#### Scenario: User clicks logout
+
+- **WHEN** an authenticated user triggers logout
+- **THEN** the session data is removed from `sessionStorage` and `localStorage`
+- **AND** the user is redirected to the login screen
 
 ### Requirement: Products access SHALL require an active session
 

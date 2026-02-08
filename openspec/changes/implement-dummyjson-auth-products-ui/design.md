@@ -31,7 +31,7 @@ Alternatives considered:
 ### 2. Storage abstraction for remember-me semantics
 
 Decision:
-- Implement a small session storage adapter that reads/writes token payload to `localStorage` when remember-me is checked and `sessionStorage` otherwise, with a unified API.
+- Implement a small session storage adapter that reads/writes auth session data (token) and last-used username to `localStorage` when remember-me is checked and `sessionStorage` otherwise, with a unified API. On logout, clear both storages. If both storages contain data, prefer `sessionStorage`.
 
 Why:
 - Centralizes storage policy and avoids scattering persistence logic across components/forms.
