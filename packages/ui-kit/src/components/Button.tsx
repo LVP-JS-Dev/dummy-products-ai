@@ -1,17 +1,16 @@
 import type * as React from "react";
 import type { ButtonProps } from "../contracts/ButtonContract";
-import { colors, radii, spacing, typography } from "../Tokens";
 import { Icon } from "./Icon";
 
 const baseStyle: React.CSSProperties = {
   display: "inline-flex",
   alignItems: "center",
-  gap: spacing.lg,
-  padding: `${spacing.md}px ${spacing.xxl}px`,
-  borderRadius: radii.md,
+  gap: "var(--ui-space-lg)",
+  padding: "var(--ui-space-md) var(--ui-space-xxl)",
+  borderRadius: "var(--ui-radius-md)",
   border: "none",
   cursor: "pointer",
-  fontFamily: typography.heading,
+  fontFamily: "var(--ui-font-heading)",
   fontWeight: 600,
   fontSize: 14,
   lineHeight: 1.4,
@@ -46,7 +45,10 @@ export function Button({
   const showLabel = showBadgeLabel ?? Boolean(badgeLabel);
   const showCount = showBadgeCount ?? typeof badgeCount === "number";
   const { background, color } = {
-    blue: { background: colors.blue.primary, color: colors.green.soft },
+    blue: {
+      background: "var(--ui-color-blue-primary)",
+      color: "var(--ui-color-green-soft)",
+    },
   }[variant];
 
   return (
@@ -68,8 +70,8 @@ export function Button({
         <span
           style={{
             ...badgeBase,
-            background: colors.white,
-            color: colors.blue.primary,
+            background: "var(--ui-color-white)",
+            color: "var(--ui-color-blue-primary)",
           }}
         >
           {badgeLabel}
@@ -79,8 +81,8 @@ export function Button({
         <span
           style={{
             ...badgeBase,
-            background: colors.white,
-            color: colors.blue.primary,
+            background: "var(--ui-color-white)",
+            color: "var(--ui-color-blue-primary)",
             minWidth: 20,
           }}
         >

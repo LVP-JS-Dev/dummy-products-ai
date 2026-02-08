@@ -1,0 +1,30 @@
+/* UI Kit token CSS surface
+   Naming scheme:
+   --ui-color-<group>-<name>
+   --ui-space-<size>
+   --ui-radius-<size>
+   --ui-font-<role>
+*/
+:root {
+  --ui-color-white: #ffffff;
+  --ui-color-blue-primary: #242edb;
+  --ui-color-blue-accent: #5c6cff;
+  --ui-color-green-soft: #d9f4e5;
+  --ui-color-gray-200: #e5e7eb;
+  --ui-color-gray-400: #9ca3af;
+  --ui-color-text-primary: #111827;
+  --ui-color-text-placeholder: #9ca3af;
+
+  --ui-space-sm: 8px;
+  --ui-space-md: 12px;
+  --ui-space-lg: 16px;
+  --ui-space-xxl: 24px;
+
+  --ui-radius-sm: 6px;
+  --ui-radius-md: 10px;
+  --ui-radius-lg: 14px;
+
+  --ui-font-heading: "Inter Variable", "Inter", system-ui, sans-serif;
+  --ui-font-ui: "Inter Variable", "Inter", system-ui, sans-serif;
+  --ui-font-body: "Inter Variable", "Inter", system-ui, sans-serif;
+}
