@@ -4,10 +4,13 @@
 
 **Public tokens**: Tokens exported in the UI kit public API, documented for external consumption, not marked as internal or experimental, and covered by semantic stability guarantees.
 
-**Approved token definition or generation files**: Files allowed to define or generate token values for consumption in UI kit component code.
+**Approved token definition or generation files**: JS/TS files allowed to define or generate token values for consumption in UI kit component code.
+
+- `packages/ui-kit/src/Tokens.ts`
+
+**CSS token entrypoint**: CSS file that exposes public tokens as variables for consumption by UI kit components and external consumers.
 
 - `packages/ui-kit/src/tokens.css`
-- `packages/ui-kit/src/Tokens.ts`
 
 ## ADDED Requirements
 
