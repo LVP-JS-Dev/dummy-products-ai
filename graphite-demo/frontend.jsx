@@ -1,28 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 const TaskSearch = () => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
+    const abortController = new AbortController();
+
     setLoading(true);
-    fetch(`/search?query=${encodeURIComponent(searchQuery)}`)
-      .then(response => {
+    setError(null);
+    fetch(`/search?query=${encodeURIComponent(searchQuery)}`, {
+      signal: abortController.signal,
+    })
+      .then((response) => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         setTasks(data);
         setLoading(false);
       })
-      .catch(error => {
+      .catch((error) => {
+        if (error.name === "AbortError") {
+          return;
+        }
         setError(error.message);
         setLoading(false);
       });
+
+    return () => abortController.abort();
   }, [searchQuery]); // Depend on searchQuery
 
   if (loading) {
@@ -37,13 +47,13 @@ const TaskSearch = () => {
     <div>
       <h2>Task Search</h2>
       <input
-        type="text"
-        placeholder="Search tasks..."
-        value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
+        placeholder="Search tasks..."
+        type="text"
+        value={searchQuery}
       />
       <ul>
-        {tasks.map(task => (
+        {tasks.map((task) => (
           <li key={task.id}>
             <p>{task.description}</p>
           </li>
