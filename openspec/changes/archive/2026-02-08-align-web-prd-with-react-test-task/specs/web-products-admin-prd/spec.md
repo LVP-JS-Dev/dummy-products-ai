@@ -1,8 +1,10 @@
+# Delta Spec: Web Products Admin PRD
+
 ## ADDED Requirements
 
 ### Requirement: `apps/web` PRD SHALL define products-admin assignment scope
 
-`apps/web` PRD SHALL define the application as a products-admin test task and SHALL include login and products workflows aligned with the assignment document (`/Users/leonidpetrov/Downloads/фронт React.pdf`).
+`apps/web` PRD SHALL define the application as a products-admin test task and SHALL include login and products workflows aligned with the assignment document (`requirements/requirement.md`).
 
 #### Scenario: Scope reflects assignment intent
 

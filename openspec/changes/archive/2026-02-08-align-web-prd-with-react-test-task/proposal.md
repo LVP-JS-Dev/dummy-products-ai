@@ -1,6 +1,8 @@
+# Proposal: Align Web PRD With React Test Task
+
 ## Why
 
-Current `/apps/web/PRD.md` is oriented to a UI Kit demo and directly conflicts with the attached React test assignment (`/Users/leonidpetrov/Downloads/фронт React.pdf`) that requires auth and product-data workflows. This mismatch creates planning drift and inconsistent scope across monorepo PRDs.
+Current `/apps/web/PRD.md` is oriented to a UI Kit demo and directly conflicts with the React test assignment captured in `requirements/requirement.md` that requires auth and product-data workflows. This mismatch creates planning drift and inconsistent scope across monorepo PRDs.
 
 ## What Changes
 
