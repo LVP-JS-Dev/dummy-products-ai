@@ -72,16 +72,16 @@ Why:
 Alternatives considered:
 - Rely exclusively on API-side sorting/query params: not guaranteed for all required combinations and can complicate client UX consistency.
 
-### 6. Local add-product flow merged into displayed dataset
+### 6. Add-product flow is UI-only (no list mutation)
 
 Decision:
-- Treat added products as local client records appended/merged into currently displayed dataset (without API write), then show success toast.
+- Treat add-product as a UI demonstration only: validate fields, show success toast, and close/reset the form WITHOUT writing to API and WITHOUT mutating the products list/search results.
 
 Why:
-- Directly satisfies requirement while making the action visible immediately.
+- Matches the assignment intent for v1 (form + feedback), keeps scope small, and avoids ambiguous behavior around search/sort integration.
 
 Alternatives considered:
-- Toast-only success without adding to list: simpler but lower user feedback value.
+- Append locally to list: useful feedback, but creates extra questions (persistence, search inclusion, id conflicts) not required for v1.
 
 ## Risks / Trade-offs
 
@@ -89,7 +89,7 @@ Alternatives considered:
 - [Search requests on every keystroke create noisy network traffic] -> Debounce search input before firing API calls.
 - [Session source ambiguity when both storages contain stale data] -> Define strict precedence and cleanup on login/logout.
 - [Figma visual mismatch due to missing exact design tokens] -> Prioritize structural parity (layout/columns/hierarchy) and document minor token-level deviations.
-- [Local added items can conflict with API ids] -> Generate deterministic temporary client ids prefixed with `local-`.
+- [Users expect added item to appear in the table] -> Make this explicit in UI copy (e.g., helper text) and keep success feedback via toast.
 
 ## Migration Plan
 

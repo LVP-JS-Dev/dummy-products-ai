@@ -23,7 +23,7 @@
 - [ ] 4.1 Implement product search input and API search request flow with retryable error handling
 - [ ] 4.2 Merge/render search results in the products table while preserving active sort behavior
 - [ ] 4.3 Implement add-product modal/form with required fields (name, price, vendor, article/SKU)
-- [ ] 4.4 On successful add, append a local product record and show success toast without API write
+- [ ] 4.4 On successful add, show success toast and close/reset the form without API write and without mutating the products list/search results
 
 ## 5. UX Fidelity and Verification
 
