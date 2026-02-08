@@ -39,13 +39,24 @@ If both `sessionStorage` and `localStorage` contain session data, the app SHALL 
 
 ### Requirement: Logout SHALL clear session data in both storages
 
-The app SHALL provide a logout action that clears auth session data in both `sessionStorage` and `localStorage` and navigates the user to the login screen.
+The app SHALL provide a logout action that clears all stored auth-related data (token and stored username) in both `sessionStorage` and `localStorage` and navigates the user to the login screen.
 
 #### Scenario: User clicks logout
 
 - **WHEN** an authenticated user triggers logout
 - **THEN** the session data is removed from `sessionStorage` and `localStorage`
 - **AND** the user is redirected to the login screen
+
+### Requirement: Unauthorized API responses SHALL trigger forced logout
+
+If a protected API call returns `401 Unauthorized`, the app SHALL force-logout the user by clearing all auth-related data and redirecting to login, while displaying a user-visible message.
+
+#### Scenario: Products API returns 401
+
+- **WHEN** an authenticated user requests products data and the API returns `401 Unauthorized`
+- **THEN** the app clears auth-related data from both storages
+- **AND** the app redirects to the login screen
+- **AND** the app shows a message indicating the session expired and the user must log in again
 
 ### Requirement: Products access SHALL require an active session
 

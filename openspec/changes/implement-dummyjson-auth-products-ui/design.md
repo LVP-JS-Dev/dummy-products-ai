@@ -9,6 +9,7 @@
 - Keep auth/session behavior deterministic with explicit storage policy (`localStorage` vs `sessionStorage`).
 - Keep the implementation modular enough to test and evolve (API clients, auth/session helpers, table state, form state).
 - Preserve architectural boundaries: `apps/web` consumes shared UI components and does not redefine UI kit contracts.
+- Achieve pixel-close visual parity with the provided Figma for the login and products screens (layout, spacing, typography, colors) within reasonable limits of the existing stack.
 
 **Non-Goals:**
 - Backend ownership, token refresh orchestration, or production security hardening beyond assignment scope.
@@ -65,12 +66,24 @@ Alternatives considered:
 
 Decision:
 - Persist current sort descriptor (`field`, `direction`) in component/route state and apply deterministic sorting for displayed items; apply sort to both list and search results.
+- Persist the sort descriptor to `localStorage` when remember-me is enabled and to `sessionStorage` otherwise (same policy as auth session), so sort behavior is consistent with session lifetime.
 
 Why:
 - Meets the requirement to retain sorting state and avoids inconsistent ordering when result source changes.
 
 Alternatives considered:
 - Rely exclusively on API-side sorting/query params: not guaranteed for all required combinations and can complicate client UX consistency.
+
+### 5.1 Pagination uses API `limit/skip`
+
+Decision:
+- Use server-backed pagination for both list and search results via API pagination parameters (e.g., `limit` and `skip`), with client-side sorting applied to the currently loaded page.
+
+Why:
+- Keeps network payloads bounded and makes UI responsive while still meeting the “pagination required” requirement.
+
+Alternatives considered:
+- Fetch all products then paginate client-side: simple, but wastes bandwidth and slows first render.
 
 ### 6. Add-product flow is UI-only (no list mutation)
 
@@ -87,8 +100,11 @@ Alternatives considered:
 
 - [DummyJSON auth/token contract differs from assumptions] -> Validate response shape with runtime guards and provide fallback user-readable error text.
 - [Search requests on every keystroke create noisy network traffic] -> Debounce search input before firing API calls.
+- [URL-synced search can cause excessive history updates] -> Use replace-style URL updates and keep debounce in place.
 - [Session source ambiguity when both storages contain stale data] -> Define strict precedence and cleanup on login/logout.
+- [401 handling can create redirect loops] -> On forced logout, clear auth data first, then navigate to login; avoid immediately re-triggering protected calls.
 - [Figma visual mismatch due to missing exact design tokens] -> Prioritize structural parity (layout/columns/hierarchy) and document minor token-level deviations.
+- [Extra elements not in Figma can skew parity review] -> Treat parity checks as excluding non-mock elements (e.g., logout) and avoid adding any other non-required UI chrome.
 - [Users expect added item to appear in the table] -> Make this explicit in UI copy (e.g., helper text) and keep success feedback via toast.
 
 ## Migration Plan

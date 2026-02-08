@@ -9,7 +9,7 @@
 - Implement server-backed product search and render search results in the products table.
 - Implement local "Add product" UI flow (no API write) with required fields and success toast feedback.
 - Apply rating-based visual rule: ratings below `3` are rendered in red.
-- Build login and products screens to match the provided Figma structure and key visual hierarchy.
+- Build login and products screens to match the provided Figma as close as possible (pixel-close), excluding elements not present in the mock (e.g., logout).
 
 ## Capabilities
 

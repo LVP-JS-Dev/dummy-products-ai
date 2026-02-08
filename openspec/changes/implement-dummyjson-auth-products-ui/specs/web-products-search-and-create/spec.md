@@ -9,10 +9,42 @@ The products screen SHALL execute product search against DummyJSON API and SHALL
 - **WHEN** a user submits or applies a non-empty search query
 - **THEN** the app requests filtered products from the search API and renders the resulting items
 
+#### Scenario: Search input is debounced
+
+- **WHEN** a user types into the search input
+- **THEN** the app waits a short debounce interval before issuing a search request
+
 #### Scenario: Search request fails
 
 - **WHEN** the search API returns an error
 - **THEN** the UI shows an error state/message while preserving the ability to retry
+
+### Requirement: Empty search query SHALL show the default products list
+
+When the search query is empty, the products screen SHALL show the default (non-search) paginated products list.
+
+#### Scenario: User clears the search input
+
+- **WHEN** a user clears the search query to an empty value
+- **THEN** the app renders the default products list instead of the search results
+
+### Requirement: Search results SHALL support pagination
+
+The products screen SHALL support paginated search results using API pagination parameters (e.g., `limit` and `skip`) and SHALL provide UI controls to navigate pages of search results.
+
+#### Scenario: User paginates search results
+
+- **WHEN** a user navigates to the next page while a search query is active
+- **THEN** the app requests the next page for the active query and renders the new page results
+
+### Requirement: Search query SHALL be stored in the URL
+
+The products screen SHALL store the active search query in the URL (e.g., as a `q` query parameter) so the state is restorable on reload and shareable.
+
+#### Scenario: Reload restores active query
+
+- **WHEN** a user reloads the page with a non-empty search query in the URL
+- **THEN** the products screen restores the query from the URL and shows search results
 
 ### Requirement: Add-product UI SHALL validate required fields
 
