@@ -93,7 +93,7 @@
             "useFilenamingConvention": {
               "level": "error",
               "options": {
-                "filenameCases": ["PascalCase"]
+                "match": "[a-z0-9]+(?:-[a-z0-9]+)*(?:[.][a-z0-9]+(?:-[a-z0-9]+)*)*"
               }
             }
           }
