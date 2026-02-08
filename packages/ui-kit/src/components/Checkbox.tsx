@@ -1,5 +1,4 @@
 import type { CheckboxProps } from "../contracts/CheckboxContract";
-import { colors, radii, spacing, typography } from "../Tokens";
 
 export function Checkbox({
   checked,
@@ -14,11 +13,11 @@ export function Checkbox({
         position: "relative",
         display: "inline-flex",
         alignItems: "center",
-        gap: spacing.sm,
+        gap: "var(--ui-space-sm)",
         opacity: disabled ? 0.6 : 1,
-        fontFamily: typography.body,
+        fontFamily: "var(--ui-font-body)",
         fontSize: 14,
-        color: colors.text.primary,
+        color: "var(--ui-color-text-primary)",
         cursor: disabled ? "not-allowed" : "pointer",
       }}
     >
@@ -47,13 +46,15 @@ export function Checkbox({
         style={{
           width: 22,
           height: 22,
-          borderRadius: radii.sm,
-          border: `1px solid ${colors.gray[400]}`,
-          background: checked ? colors.blue.primary : colors.white,
+          borderRadius: "var(--ui-radius-sm)",
+          border: "1px solid var(--ui-color-gray-400)",
+          background: checked
+            ? "var(--ui-color-blue-primary)"
+            : "var(--ui-color-white)",
           display: "inline-flex",
           alignItems: "center",
           justifyContent: "center",
-          color: colors.white,
+          color: "var(--ui-color-white)",
           fontSize: 12,
           lineHeight: 1,
         }}
