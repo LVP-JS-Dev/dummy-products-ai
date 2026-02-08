@@ -1,4 +1,4 @@
-## 1. Story Filename Alignment
+# 1. Story Filename Alignment
 
 - [x] 1.1 Rename Story files to kebab-case `<component>.story.tsx` under `apps/fumadocs/src/stories`
 - [x] 1.2 Confirm MDX story imports resolve without case-sensitive mismatches

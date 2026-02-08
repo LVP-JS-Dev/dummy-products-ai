@@ -1,3 +1,5 @@
+# PRD Alignment: Fumadocs Story & Spec Conventions
+
 ## Context
 
 PRD for `apps/fumadocs` defines how component docs should reference Story files and specs. Current docs had case-sensitive import mismatches and lacked spec links in API sections. We already intend to align Story file naming to `src/stories/<component>.story.tsx` and add spec references in MDX. This is a localized change within `apps/fumadocs` plus an OpenSpec change record.
