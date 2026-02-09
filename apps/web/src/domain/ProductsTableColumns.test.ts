@@ -6,13 +6,12 @@ import {
   getSortedRowModel,
   type SortingState,
 } from "@tanstack/react-table";
-
-import { productsTableColumns } from "@/domain/ProductsTableColumns";
 import {
   mapProductToRow,
   type Product,
   type ProductRow,
-} from "@/domain/products";
+} from "@/domain/Products";
+import { productsTableColumns } from "@/domain/ProductsTableColumns";
 
 function createProductsTable(data: ProductRow[], sorting: SortingState) {
   return createTable<ProductRow>({

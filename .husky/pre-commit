@@ -12,7 +12,28 @@ if [ ! -s "$STAGED_FILE_LIST" ]; then
   exit 0
 fi
 
+set +e
 cat "$STAGED_FILE_LIST" | xargs -0 pnpm exec biome check --write --
+BIOME_EXIT_CODE=$?
+set -e
+
+if [ "$BIOME_EXIT_CODE" -ne 0 ]; then
+  # Biome can exit non-zero when *all* explicitly provided files are ignored by
+  # configuration ("No files were processed"). This should not block commits
+  # that only touch ignored paths (e.g. OpenSpec artifacts).
+  #
+  # Re-run once to capture the message and decide if it's the ignorable case.
+  BIOME_OUTPUT="$(cat "$STAGED_FILE_LIST" | xargs -0 pnpm exec biome check --write -- 2>&1)" || true
+  echo "$BIOME_OUTPUT" | grep -q "No files were processed"
+  if [ $? -eq 0 ]; then
+    rm -f "$STAGED_FILE_LIST"
+    exit 0
+  fi
+
+  echo "$BIOME_OUTPUT" >&2
+  rm -f "$STAGED_FILE_LIST"
+  exit "$BIOME_EXIT_CODE"
+fi
 
 cat "$STAGED_FILE_LIST" | xargs -0 git add --
 

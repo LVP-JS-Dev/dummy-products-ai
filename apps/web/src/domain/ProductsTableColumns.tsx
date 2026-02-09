@@ -1,6 +1,6 @@
 import type { ColumnDef } from "@tanstack/react-table";
 
-import type { ProductRow } from "@/domain/products";
+import type { ProductRow } from "@/domain/Products";
 
 export interface ProductsColumnMeta {
   label: string;

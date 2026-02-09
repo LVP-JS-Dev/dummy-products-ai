@@ -1,26 +1,32 @@
-import type { AuthSession, StorageScope } from "@/domain/auth";
+import type { AuthSession, StorageScope } from "@/domain/Auth";
 import {
   readStorage,
   removeStorage,
   safeParseJson,
   writeStorage,
-} from "@/lib/storage";
+} from "@/lib/Storage";
 
 const AUTH_KEY = "dummy-products.auth";
 
-type StoredAuth = {
+interface StoredAuth {
   token: string;
   username: string;
-};
+}
 
 function parseStoredAuth(raw: string): StoredAuth | null {
   const data = safeParseJson<unknown>(raw);
-  if (!data || typeof data !== "object") return null;
+  if (!data || typeof data !== "object") {
+    return null;
+  }
   const token = (data as { token?: unknown }).token;
   const username = (data as { username?: unknown }).username;
 
-  if (typeof token !== "string" || token.length === 0) return null;
-  if (typeof username !== "string" || username.length === 0) return null;
+  if (typeof token !== "string" || token.length === 0) {
+    return null;
+  }
+  if (typeof username !== "string" || username.length === 0) {
+    return null;
+  }
 
   return { token, username };
 }
@@ -29,13 +35,17 @@ export function loadAuthSession(): AuthSession | null {
   const sessionRaw = readStorage(sessionStorage, AUTH_KEY);
   if (sessionRaw) {
     const parsed = parseStoredAuth(sessionRaw);
-    if (parsed) return { ...parsed, scope: "session" };
+    if (parsed) {
+      return { ...parsed, scope: "session" };
+    }
   }
 
   const localRaw = readStorage(localStorage, AUTH_KEY);
   if (localRaw) {
     const parsed = parseStoredAuth(localRaw);
-    if (parsed) return { ...parsed, scope: "local" };
+    if (parsed) {
+      return { ...parsed, scope: "local" };
+    }
   }
 
   return null;

@@ -4,10 +4,10 @@ export const ALLOWED_SORT_DIRECTIONS = ["asc", "desc"] as const;
 export type SortField = (typeof ALLOWED_SORT_FIELDS)[number];
 export type SortDirection = (typeof ALLOWED_SORT_DIRECTIONS)[number];
 
-export type SortDescriptor = {
+export interface SortDescriptor {
   field: SortField;
   direction: SortDirection;
-};
+}
 
 export function sortRows<
   T extends { name: string; price: number; rating: number },

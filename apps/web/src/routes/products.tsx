@@ -20,22 +20,22 @@ import {
 } from "react";
 import { toast } from "sonner";
 
-import { fetchProductsPage, searchProductsPage } from "@/api/dummyjson";
-import { ApiError } from "@/api/http";
-import { clearAuthSession, loadAuthSession } from "@/auth/session";
-import { clearSort, loadSort, saveSort } from "@/auth/sortStorage";
+import { fetchProductsPage, searchProductsPage } from "@/api/DummyJson";
+import { ApiError } from "@/api/Http";
+import { clearAuthSession, loadAuthSession } from "@/auth/Session";
+import { clearSort, loadSort, saveSort } from "@/auth/SortStorage";
+import type { ProductPage, ProductRow } from "@/domain/Products";
+import { mapProductToRow } from "@/domain/Products";
 import {
   type ProductsColumnMeta,
   productsTableColumns,
 } from "@/domain/ProductsTableColumns";
-import type { ProductPage, ProductRow } from "@/domain/products";
-import { mapProductToRow } from "@/domain/products";
+import type { SortDescriptor } from "@/domain/Sort";
 import {
   applySortingUpdate,
   sortDescriptorToSortingState,
 } from "@/domain/SortTanstack";
-import type { SortDescriptor } from "@/domain/sort";
-import { useDebouncedValue } from "@/hooks/useDebouncedValue";
+import { useDebouncedValue } from "@/hooks/UseDebouncedValue";
 
 interface ProductsSearch {
   q?: string;

@@ -11,9 +11,9 @@ import {
   useState,
 } from "react";
 
-import { login } from "@/api/dummyjson";
-import { ApiError } from "@/api/http";
-import { loadLastUsedUsername, saveAuthSession } from "@/auth/session";
+import { login } from "@/api/DummyJson";
+import { ApiError } from "@/api/Http";
+import { loadLastUsedUsername, saveAuthSession } from "@/auth/Session";
 
 export const Route = createFileRoute("/login")({
   component: LoginPage,
@@ -260,8 +260,8 @@ export function LoginPage() {
               </p>
             ) : null}
             <button
-              aria-describedby={errors.form ? formErrorId : undefined}
               aria-busy={submitting || undefined}
+              aria-describedby={errors.form ? formErrorId : undefined}
               disabled={submitting}
               style={{
                 height: 52,
