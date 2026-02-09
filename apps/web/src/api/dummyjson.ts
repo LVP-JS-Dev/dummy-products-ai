@@ -28,8 +28,8 @@ export async function login(input: {
     typeof data.token === "string" && data.token.length > 0
       ? data.token
       : typeof data.accessToken === "string" && data.accessToken.length > 0
-      ? data.accessToken
-      : null;
+        ? data.accessToken
+        : null;
 
   if (!token) {
     throw new ApiError("Invalid auth response", 500);

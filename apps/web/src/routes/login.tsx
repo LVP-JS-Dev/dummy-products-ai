@@ -1,6 +1,6 @@
+import { Button, Checkbox } from "@dummy-products/ui-kit";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { type FormEvent, useMemo, useState } from "react";
-import { Button, Checkbox } from "@dummy-products/ui-kit";
 
 import { login } from "@/api/dummyjson";
 import { ApiError } from "@/api/http";

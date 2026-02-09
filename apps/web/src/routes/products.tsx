@@ -184,7 +184,9 @@ function ProductsPage() {
           onValueChange={({ value }) => setInputQuery(value)}
           placeholder="Введите запрос"
           showIcon
-          state={loading ? "disabled" : inputQuery.trim() ? "active" : "inactive"}
+          state={
+            loading ? "disabled" : inputQuery.trim() ? "active" : "inactive"
+          }
           value={inputQuery}
         />
       </div>
@@ -199,7 +201,10 @@ function ProductsPage() {
             style={{ background: "var(--ui-color-blue-primary)" }}
           />
         ) : (
-          <div className="h-full w-0" style={{ background: "var(--ui-color-blue-primary)" }} />
+          <div
+            className="h-full w-0"
+            style={{ background: "var(--ui-color-blue-primary)" }}
+          />
         )}
       </div>
 
@@ -377,7 +382,9 @@ function SortableTh(props: {
         type="button"
       >
         <span>{props.label}</span>
-        <span style={{ color: "var(--ui-color-text-placeholder)" }}>{arrow}</span>
+        <span style={{ color: "var(--ui-color-text-placeholder)" }}>
+          {arrow}
+        </span>
       </button>
     </th>
   );
