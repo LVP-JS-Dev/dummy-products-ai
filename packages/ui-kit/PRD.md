@@ -157,6 +157,31 @@ Events spec:
 
 ---
 
+## 5.4 Typography tokens
+
+UI Kit задаёт единый типографический слой через CSS-токены:
+
+- `--ui-font-heading`: `"Cairo", "Inter", system-ui, sans-serif`
+  Назначение: заголовки и визуально приоритетные подписи.
+- `--ui-font-body`: `"Open Sans", "Inter", system-ui, sans-serif`
+  Назначение: основная текстовая масса и длинные описания.
+- `--ui-font-ui`: `"Inter", "Inter Variable", system-ui, sans-serif`
+  Назначение: интерактивные контролы, короткие UI-лейблы, компактные данные.
+
+Требования:
+
+- потребители используют `var(--ui-font-*)` вместо прямого `font-family`;
+- fallback определяется стеком токена и должен оставаться предсказуемым;
+- новые текстовые паттерны должны маппиться на один из трёх токенов, а не создавать ad-hoc шрифты.
+
+Примеры:
+
+- `font-family: var(--ui-font-heading);` для title в карточках/модалках;
+- `font-family: var(--ui-font-body);` для описательного текста;
+- `font-family: var(--ui-font-ui);` для `input`, `button`, пагинации.
+
+---
+
 ## 6. States (fixtures) как часть системы
 
 ### 6.1 Назначение states

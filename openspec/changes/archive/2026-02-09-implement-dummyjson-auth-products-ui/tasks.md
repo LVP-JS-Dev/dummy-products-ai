@@ -30,8 +30,8 @@
 - [x] 4.3 Render search results in the products table while preserving active sort behavior
 - [x] 4.4 When query is empty, show default (non-search) paginated product list
 - [x] 4.5 Implement paginated search results via API `limit/skip` while query is active
-- [x] 4.3 Implement add-product modal/form with required fields (name, price, vendor, article/SKU)
-- [x] 4.4 On successful add, show success toast and close/reset the form without API write and without mutating the products list/search results
+- [x] 4.6 Implement add-product modal/form with required fields (name, price, vendor, article/SKU)
+- [x] 4.7 On successful add, show success toast and close/reset the form without API write and without mutating the products list/search results
 
 ## 5. UX Fidelity and Verification
 

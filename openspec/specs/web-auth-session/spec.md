@@ -1,8 +1,11 @@
 # web-auth-session Specification
 
 ## Purpose
+
 TBD - created by archiving change implement-dummyjson-auth-products-ui. Update Purpose after archive.
+
 ## Requirements
+
 ### Requirement: Login form SHALL enforce required credentials and show API failures
 
 The web app SHALL require both username and password before submitting auth requests, and SHALL surface authentication API errors in the login UI.
@@ -74,4 +77,3 @@ The web app SHALL protect products functionality behind an active auth session a
 
 - **WHEN** a user with a valid stored session opens the app
 - **THEN** the user is allowed to access products functionality without re-authenticating
-

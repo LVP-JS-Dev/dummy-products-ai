@@ -1,8 +1,11 @@
 # web-products-search-and-create Specification
 
 ## Purpose
-TBD - created by archiving change implement-dummyjson-auth-products-ui. Update Purpose after archive.
+
+Define how the products screen performs API-backed search and local-only add-product interactions, including URL-restorable search state, debounced queries, paginated results, and validated form submission without creating/updating external products.
+
 ## Requirements
+
 ### Requirement: Product search SHALL use DummyJSON API
 
 The products screen SHALL execute product search against DummyJSON API and SHALL render the returned results in the same products table view.
@@ -81,4 +84,3 @@ The add-product action SHALL NOT send create/update requests to external product
 
 - **WHEN** a product is added through the add-product form
 - **THEN** the app does not issue a create/update request to external products APIs
-

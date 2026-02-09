@@ -50,6 +50,21 @@
 
 Выбор state-management и UI-библиотек допускается, но должен быть обоснован.
 
+### 4.1 Typography and token usage
+
+`apps/web` должен использовать шрифты только через токены UI Kit:
+
+- `--ui-font-heading` (`Cairo`) для заголовков экранов, блоков и акцентных label;
+- `--ui-font-body` (`Open Sans`) для основного и вспомогательного текста;
+- `--ui-font-ui` (`Inter`) для элементов управления (input/button/search/table controls).
+
+Fallback stack задаётся токенами (`Inter`/`system-ui`/`sans-serif`) и не переопределяется локально без отдельного решения.
+
+Пример применения:
+- заголовок страницы товаров: `font-family: var(--ui-font-heading);`
+- подсказка под заголовком: `font-family: var(--ui-font-body);`
+- поля формы: `font-family: var(--ui-font-ui);`
+
 ## 5. Внешние интеграции
 
 - Auth API: DummyJSON Auth;

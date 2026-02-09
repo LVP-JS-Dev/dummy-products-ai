@@ -73,6 +73,26 @@
 
 ---
 
+## 4.1 Typography tokens (design system baseline)
+
+Во всех пакетах, где используется UI Kit, типографика должна идти через токены:
+
+- `--ui-font-heading`: `"Cairo", "Inter", system-ui, sans-serif`
+  Использование: заголовки экранов, секций, важные label в UI.
+- `--ui-font-body`: `"Open Sans", "Inter", system-ui, sans-serif`
+  Использование: основной текст, описания, вспомогательные подписи.
+- `--ui-font-ui`: `"Inter", "Inter Variable", system-ui, sans-serif`
+  Использование: инпуты, контролы, компактные UI-элементы и табличные ячейки.
+
+Правило fallback: если кастомный шрифт недоступен, применяется следующий в стеке до `system-ui`.
+
+Пример:
+- `font-family: var(--ui-font-heading);` для `h1/h2`
+- `font-family: var(--ui-font-body);` для paragraph/helper text
+- `font-family: var(--ui-font-ui);` для form controls
+
+---
+
 ## 5. Out of scope
 
 - Полноценная замена Storybook.
