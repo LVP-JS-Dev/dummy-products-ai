@@ -2,7 +2,7 @@ import type { IconProps } from "../contracts/IconContract";
 import { icons } from "../Icons";
 
 export function Icon({ name, size = 24, color, title }: IconProps) {
-  const svg = icons[name];
+  const svg = icons[name as keyof typeof icons];
 
   if (title) {
     return (
