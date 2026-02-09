@@ -5,7 +5,7 @@ import {
   type SortDescriptor,
   type SortDirection,
   type SortField,
-} from "@/domain/sort";
+} from "@/domain/Sort";
 
 function isSortField(value: string): value is SortField {
   return (ALLOWED_SORT_FIELDS as readonly string[]).includes(value);

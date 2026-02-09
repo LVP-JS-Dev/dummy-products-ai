@@ -1,20 +1,23 @@
-import { ApiError, readJsonOrThrow } from "@/api/http";
-import type { ProductPage } from "@/domain/products";
+import { ApiError, readJsonOrThrow } from "@/api/Http";
+import type { ProductPage } from "@/domain/Products";
 
 const BASE_URL = "https://dummyjson.com";
 const REQUEST_TIMEOUT_MS = 10_000;
 
-export type LoginResponse = {
+export interface LoginResponse {
   token: string;
   username: string;
-};
+}
 
 async function fetchWithTimeout(
   input: URL | string,
   init?: RequestInit
 ): Promise<Response> {
   const controller = new AbortController();
-  const timeoutId = window.setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+  const timeoutId = window.setTimeout(
+    () => controller.abort(),
+    REQUEST_TIMEOUT_MS
+  );
   try {
     return await fetch(input, { ...init, signal: controller.signal });
   } catch (err) {
@@ -43,12 +46,16 @@ export async function login(input: {
   const data = await readJsonOrThrow<
     Partial<LoginResponse> & { accessToken?: unknown; username?: unknown }
   >(res);
-  const token =
-    typeof data.token === "string" && data.token.length > 0
-      ? data.token
-      : typeof data.accessToken === "string" && data.accessToken.length > 0
-        ? data.accessToken
-        : null;
+
+  let token: string | null = null;
+  if (typeof data.token === "string" && data.token.length > 0) {
+    token = data.token;
+  } else if (
+    typeof data.accessToken === "string" &&
+    data.accessToken.length > 0
+  ) {
+    token = data.accessToken;
+  }
 
   if (!token) {
     throw new ApiError("Invalid auth response", 500);

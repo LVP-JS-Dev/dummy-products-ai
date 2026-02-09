@@ -1,17 +1,17 @@
-import { loadAuthSession } from "@/auth/session";
+import { loadAuthSession } from "@/auth/Session";
 import {
   ALLOWED_SORT_DIRECTIONS,
   ALLOWED_SORT_FIELDS,
-  type SortDirection,
   type SortDescriptor,
+  type SortDirection,
   type SortField,
-} from "@/domain/sort";
+} from "@/domain/Sort";
 import {
   readStorage,
   removeStorage,
   safeParseJson,
   writeStorage,
-} from "@/lib/storage";
+} from "@/lib/Storage";
 
 const SORT_KEY = "dummy-products.sort";
 
@@ -33,20 +33,30 @@ function isSortDirection(value: unknown): value is SortDirection {
 
 function parseSort(raw: string): SortDescriptor | null {
   const data = safeParseJson<unknown>(raw);
-  if (!data || typeof data !== "object") return null;
+  if (!data || typeof data !== "object") {
+    return null;
+  }
   const field = (data as { field?: unknown }).field;
   const direction = (data as { direction?: unknown }).direction;
-  if (!isSortField(field)) return null;
-  if (!isSortDirection(direction)) return null;
+  if (!isSortField(field)) {
+    return null;
+  }
+  if (!isSortDirection(direction)) {
+    return null;
+  }
   return { field, direction };
 }
 
 export function loadSort(): SortDescriptor | null {
   const session = loadAuthSession();
-  if (!session) return null;
+  if (!session) {
+    return null;
+  }
   const storage = session.scope === "local" ? localStorage : sessionStorage;
   const raw = readStorage(storage, SORT_KEY);
-  if (!raw) return null;
+  if (!raw) {
+    return null;
+  }
   return parseSort(raw);
 }
 

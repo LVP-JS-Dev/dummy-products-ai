@@ -12,11 +12,11 @@ vi.mock("@tanstack/react-router", () => ({
   useNavigate: () => navigateMock,
 }));
 
-vi.mock("@/api/dummyjson", () => ({
+vi.mock("@/api/DummyJson", () => ({
   login: (input: unknown) => loginMock(input),
 }));
 
-vi.mock("@/auth/session", () => ({
+vi.mock("@/auth/Session", () => ({
   saveAuthSession: (input: unknown) => saveAuthSessionMock(input),
   loadLastUsedUsername: () => loadLastUsedUsernameMock(),
 }));

@@ -1,7 +1,7 @@
 export type StorageScope = "local" | "session";
 
-export type AuthSession = {
+export interface AuthSession {
   token: string;
   username: string;
   scope: StorageScope;
-};
+}

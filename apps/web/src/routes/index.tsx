@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
-import { loadAuthSession } from "@/auth/session";
+import { loadAuthSession } from "@/auth/Session";
 
 export const Route = createFileRoute("/")({
   beforeLoad: () => {

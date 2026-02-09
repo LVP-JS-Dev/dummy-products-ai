@@ -33,6 +33,11 @@ pnpm dev
 - main app: `apps/web`
 - docs: `apps/fumadocs`
 
+## Submission (reviewer entrypoint)
+
+- Run + verification checklist: `SUBMISSION.md`
+- AI usage disclosure: `AI_USAGE.md`
+
 ---
 
 ## Команды
@@ -60,7 +65,7 @@ pnpm dev
 
 ### `states` — публичный API
 
-states экспортируются из `@repo/ui-kit` и используются:
+states экспортируются из `@dummy-products/ui-kit` и используются:
 - в docs как примеры
 - в тестах как контрактные фикстуры
 - как input для агентной разработки
@@ -68,7 +73,7 @@ states экспортируются из `@repo/ui-kit` и используют�
 ### Docs не являются source of truth
 
 Docs (Fumadocs) отображают компоненты и states, а интерактивность даёт Story.
-Stories живут в `apps/fumadocs` и импортируют states из `@repo/ui-kit`.
+Stories живут в `apps/fumadocs` и импортируют states из `@dummy-products/ui-kit`.
 
 ---
 
@@ -77,13 +82,13 @@ Stories живут в `apps/fumadocs` и импортируют states из `@re
 Высокоуровнево:
 
 1) **Контракт**  
-   `packages/ui-kit/src/contracts/<name>.contract.ts`
+   `packages/ui-kit/src/contracts/<Name>Contract.ts`
 
 2) **Компонент**  
    `packages/ui-kit/src/components/<Name>.tsx`
 
 3) **States**  
-   `packages/ui-kit/src/states/<name>.states.ts`  
+   `packages/ui-kit/src/states/<Name>States.ts`  
    Минимум 3 состояния (default, variant, edge-case)
 
 4) **Экспорт**  
@@ -98,9 +103,9 @@ pnpm -C packages/ui-kit test
 
 6) **Docs**
    - `apps/fumadocs/src/stories/<name>.story.tsx` (client component)
-   - `apps/fumadocs/content/components/<name>.mdx`
+   - `apps/fumadocs/content/docs/components/<name>.mdx`
 
-Полный порядок и правила см. в `AGENT.md`.
+Полный порядок и правила см. в `.ruler/agent.md`.
 
 ---
 
@@ -115,7 +120,7 @@ pnpm -C packages/ui-kit test
 Правило:
 - если изменение выходит за рамки требований или меняет инварианты, сначала обновляется соответствующий PRD, потом код.
 
-Подробно: `AGENT.md`.
+Подробно: `.ruler/agent.md`.
 
 ---
 

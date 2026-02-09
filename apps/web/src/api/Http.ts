@@ -14,7 +14,9 @@ export async function readJsonOrThrow<T>(res: Response): Promise<T> {
     try {
       const data = (await res.json()) as unknown;
       const msg = (data as { message?: unknown }).message;
-      if (typeof msg === "string" && msg.trim()) message = msg;
+      if (typeof msg === "string" && msg.trim()) {
+        message = msg;
+      }
     } catch {
       // ignore
     }

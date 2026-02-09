@@ -1,27 +1,27 @@
-export type Product = {
+export interface Product {
   id: number;
   title: string;
   price: number;
   rating: number;
   brand?: string | null;
   sku?: string | null;
-};
+}
 
-export type ProductPage = {
+export interface ProductPage {
   products: Product[];
   total: number;
   skip: number;
   limit: number;
-};
+}
 
-export type ProductRow = {
+export interface ProductRow {
   id: number;
   name: string;
   price: number;
   vendor: string;
   article: string;
   rating: number;
-};
+}
 
 export function mapProductToRow(product: Product): ProductRow {
   return {
