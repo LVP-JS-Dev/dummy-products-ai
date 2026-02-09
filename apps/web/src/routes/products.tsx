@@ -1,9 +1,19 @@
 import { Button, PageNumber, SearchInput } from "@dummy-products/ui-kit";
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import {
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+  type Header,
+  useReactTable,
+} from "@tanstack/react-table";
+import {
   type FormEvent,
   type HTMLAttributes,
+  type ReactNode,
+  useCallback,
   useEffect,
+  useId,
   useMemo,
   useRef,
   useState,
@@ -14,15 +24,96 @@ import { fetchProductsPage, searchProductsPage } from "@/api/dummyjson";
 import { ApiError } from "@/api/http";
 import { clearAuthSession, loadAuthSession } from "@/auth/session";
 import { clearSort, loadSort, saveSort } from "@/auth/sortStorage";
+import {
+  type ProductsColumnMeta,
+  productsTableColumns,
+} from "@/domain/ProductsTableColumns";
 import type { ProductPage, ProductRow } from "@/domain/products";
 import { mapProductToRow } from "@/domain/products";
-import type { SortDescriptor, SortField } from "@/domain/sort";
-import { sortRows } from "@/domain/sort";
+import {
+  applySortingUpdate,
+  sortDescriptorToSortingState,
+} from "@/domain/SortTanstack";
+import type { SortDescriptor } from "@/domain/sort";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 
-type ProductsSearch = {
+interface ProductsSearch {
   q?: string;
-};
+}
+
+function runAsync(promise: Promise<unknown>, context: string): void {
+  promise.catch((error: unknown) => {
+    console.error(`[runAsync] ${context}`, error);
+  });
+}
+
+function getSearchInputState(loading: boolean, query: string) {
+  if (loading) {
+    return "disabled" as const;
+  }
+  return query.trim() ? ("active" as const) : ("inactive" as const);
+}
+
+function getSortDirection(
+  sorted: false | "asc" | "desc"
+): "asc" | "desc" | undefined {
+  if (sorted === false) {
+    return undefined;
+  }
+  if (sorted === "desc") {
+    return "desc";
+  }
+  return "asc";
+}
+
+function getHeaderLabel(
+  header: Header<ProductRow, unknown>,
+  meta?: ProductsColumnMeta
+): string {
+  if (meta?.label) {
+    return meta.label;
+  }
+  if (typeof header.column.columnDef.header === "string") {
+    return header.column.columnDef.header;
+  }
+  return header.column.id;
+}
+
+function renderProductsHeaderCell(
+  header: Header<ProductRow, unknown>
+): ReactNode {
+  const meta = header.column.columnDef.meta as ProductsColumnMeta | undefined;
+  if (header.isPlaceholder) {
+    return <th key={header.id} />;
+  }
+
+  const direction = getSortDirection(header.column.getIsSorted());
+  return (
+    <SortableTh
+      align={meta?.align}
+      direction={direction}
+      key={header.id}
+      label={getHeaderLabel(header, meta)}
+      onClick={
+        header.column.getCanSort()
+          ? () => header.column.toggleSorting(direction === "asc")
+          : undefined
+      }
+      renderHeader={() =>
+        flexRender(header.column.columnDef.header, header.getContext())
+      }
+    />
+  );
+}
+
+function fetchPageData(query: string, page: number): Promise<ProductPage> {
+  const skip = (page - 1) * PAGE_LIMIT;
+  const normalizedQuery = query.trim();
+  if (normalizedQuery) {
+    return searchProductsPage({ q: normalizedQuery, limit: PAGE_LIMIT, skip });
+  }
+  return fetchProductsPage({ limit: PAGE_LIMIT, skip });
+}
 
 export const Route = createFileRoute("/products")({
   validateSearch: (search: Record<string, unknown>): ProductsSearch => {
@@ -31,7 +122,9 @@ export const Route = createFileRoute("/products")({
   },
   beforeLoad: () => {
     const session = loadAuthSession();
-    if (!session) throw redirect({ to: "/login" });
+    if (!session) {
+      throw redirect({ to: "/login" });
+    }
   },
   component: ProductsPage,
 });
@@ -55,16 +148,31 @@ function ProductsPage() {
     () => loadSort() ?? { field: "name", direction: "asc" }
   );
 
+  const forceLogout = useCallback(() => {
+    clearAuthSession();
+    clearSort();
+    toast.error("Сессия истекла, войдите снова");
+    runAsync(navigate({ to: "/login", replace: true }), "forceLogout");
+  }, [navigate]);
+
+  const onLogout = useCallback(() => {
+    clearAuthSession();
+    clearSort();
+    runAsync(navigate({ to: "/login" }), "onLogout");
+  }, [navigate]);
+
   useEffect(() => {
     const q = debouncedQuery.trim();
-    void navigate({
-      to: "/products",
-      search: q ? { q } : {},
-      replace: true,
-    });
+    runAsync(
+      navigate({
+        to: "/products",
+        search: q ? { q } : {},
+        replace: true,
+      }),
+      "syncSearchQuery"
+    );
     setPage(1);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedQuery]);
+  }, [debouncedQuery, navigate]);
 
   useEffect(() => {
     setInputQuery(search.q ?? "");
@@ -72,71 +180,77 @@ function ProductsPage() {
 
   useEffect(() => {
     let cancelled = false;
-    async function run() {
-      setLoading(true);
-      setError(null);
-      try {
-        const skip = (page - 1) * PAGE_LIMIT;
-        const q = (search.q ?? "").trim();
 
-        const pageData = q
-          ? await searchProductsPage({ q, limit: PAGE_LIMIT, skip })
-          : await fetchProductsPage({ limit: PAGE_LIMIT, skip });
+    setLoading(true);
+    setError(null);
 
-        if (cancelled) return;
-        setData(pageData);
-      } catch (err) {
-        if (cancelled) return;
-        if (err instanceof ApiError && err.status === 401) {
-          forceLogout();
-          return;
-        }
-        const message =
-          err instanceof Error ? err.message : "Failed to load products";
-        setError(message);
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    }
-    void run();
+    const requestContext = `fetchProductsPage:retry-${retryToken}`;
+
+    runAsync(
+      fetchPageData(search.q ?? "", page)
+        .then((pageData) => {
+          if (cancelled) {
+            return;
+          }
+          setData(pageData);
+        })
+        .catch((err: unknown) => {
+          if (cancelled) {
+            return;
+          }
+          if (err instanceof ApiError && err.status === 401) {
+            forceLogout();
+            return;
+          }
+          const message =
+            err instanceof Error ? err.message : "Failed to load products";
+          setError(message);
+        })
+        .finally(() => {
+          if (!cancelled) {
+            setLoading(false);
+          }
+        }),
+      requestContext
+    );
+
     return () => {
       cancelled = true;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, search.q, retryToken]);
+  }, [forceLogout, page, retryToken, search.q]);
 
-  const rows: ProductRow[] = useMemo(() => {
-    const base = (data?.products ?? []).map(mapProductToRow);
-    return sortRows(base, sort);
-  }, [data, sort]);
+  const baseRows = useMemo(
+    () => (data?.products ?? []).map(mapProductToRow),
+    [data]
+  );
+
+  const table = useReactTable({
+    data: baseRows,
+    columns: productsTableColumns,
+    state: { sorting: sortDescriptorToSortingState(sort) },
+    onSortingChange: (updater) => {
+      setSort((prev) => {
+        const next = applySortingUpdate(
+          updater,
+          sortDescriptorToSortingState(prev),
+          prev
+        );
+        saveSort(next);
+        return next;
+      });
+    },
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    enableMultiSort: false,
+    enableSortingRemoval: false,
+  });
+
+  const rows = table.getRowModel().rows;
 
   const totalPages = data ? Math.max(1, Math.ceil(data.total / data.limit)) : 1;
   const canPrev = page > 1;
   const canNext = page < totalPages;
-
-  function toggleSort(field: SortField) {
-    setSort((prev) => {
-      const next: SortDescriptor =
-        prev.field === field
-          ? { field, direction: prev.direction === "asc" ? "desc" : "asc" }
-          : { field, direction: "asc" };
-      saveSort(next);
-      return next;
-    });
-  }
-
-  function forceLogout() {
-    clearAuthSession();
-    clearSort();
-    toast.error("Сессия истекла, войдите снова");
-    void navigate({ to: "/login", replace: true });
-  }
-
-  function onLogout() {
-    clearAuthSession();
-    clearSort();
-    void navigate({ to: "/login" });
-  }
+  const searchState = getSearchInputState(loading, inputQuery);
 
   return (
     <div className="mx-auto w-full max-w-[1200px] px-6 py-8">
@@ -185,9 +299,7 @@ function ProductsPage() {
           onValueChange={({ value }) => setInputQuery(value)}
           placeholder="Введите запрос"
           showIcon
-          state={
-            loading ? "disabled" : inputQuery.trim() ? "active" : "inactive"
-          }
+          state={searchState}
           value={inputQuery}
         />
       </div>
@@ -258,36 +370,19 @@ function ProductsPage() {
         >
           <table className="w-full border-collapse text-left text-xs">
             <thead style={{ background: "#f9fafb" }}>
-              <tr className="[&>th]:px-3 [&>th]:py-2">
-                <SortableTh
-                  active={sort.field === "name"}
-                  direction={sort.direction}
-                  label="Название"
-                  onClick={() => toggleSort("name")}
-                />
-                <th>Вендор</th>
-                <th>Артикул</th>
-                <SortableTh
-                  active={sort.field === "price"}
-                  align="right"
-                  direction={sort.direction}
-                  label="Цена"
-                  onClick={() => toggleSort("price")}
-                />
-                <SortableTh
-                  active={sort.field === "rating"}
-                  align="right"
-                  direction={sort.direction}
-                  label="Рейтинг"
-                  onClick={() => toggleSort("rating")}
-                />
-              </tr>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <tr className="[&>th]:px-3 [&>th]:py-2" key={headerGroup.id}>
+                  {headerGroup.headers.map((header) =>
+                    renderProductsHeaderCell(header)
+                  )}
+                </tr>
+              ))}
             </thead>
             <tbody className="[&>tr>td]:px-3 [&>tr>td]:py-2">
               {rows.length === 0 && !loading ? (
                 <tr>
                   <td
-                    colSpan={5}
+                    colSpan={productsTableColumns.length}
                     style={{
                       textAlign: "center",
                       padding: "32px 0",
@@ -306,16 +401,33 @@ function ProductsPage() {
                     key={r.id}
                     style={{ borderColor: "var(--ui-color-gray-200)" }}
                   >
-                    <td className="font-medium">{r.name}</td>
-                    <td>{r.vendor}</td>
-                    <td>{r.article}</td>
-                    <td className="text-right tabular-nums">{r.price}</td>
-                    <td
-                      className="text-right tabular-nums"
-                      style={{ color: r.rating < 3 ? "#dc2626" : "inherit" }}
-                    >
-                      {r.rating}
-                    </td>
+                    {r.getVisibleCells().map((cell) => {
+                      const meta = cell.column.columnDef.meta as
+                        | ProductsColumnMeta
+                        | undefined;
+                      const alignClass =
+                        meta?.align === "right"
+                          ? "tabular-nums text-right"
+                          : "";
+                      const isName = cell.column.id === "name";
+                      const cellClassName = isName
+                        ? `font-medium ${alignClass}`.trim()
+                        : alignClass;
+                      const isLowRating =
+                        cell.column.id === "rating" && r.original.rating < 3;
+                      return (
+                        <td
+                          className={cellClassName}
+                          key={cell.id}
+                          style={{ color: isLowRating ? "#dc2626" : "inherit" }}
+                        >
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </td>
+                      );
+                    })}
                   </tr>
                 ))
               )}
@@ -343,7 +455,9 @@ function ProductsPage() {
           />
           <PageNumber
             onPress={({ value }) => {
-              if (typeof value === "number") setPage(value);
+              if (typeof value === "number") {
+                setPage(value);
+              }
             }}
             selected
             value={page}
@@ -362,12 +476,26 @@ function ProductsPage() {
 
 function SortableTh(props: {
   label: string;
-  active: boolean;
-  direction: SortDescriptor["direction"];
-  onClick: () => void;
+  direction?: "asc" | "desc";
+  onClick?: () => void;
   align?: "left" | "right";
+  renderHeader: () => ReactNode;
 }) {
-  const arrow = props.active ? (props.direction === "asc" ? "↑" : "↓") : "";
+  let arrow = "";
+  if (props.direction === "asc") {
+    arrow = "↑";
+  } else if (props.direction === "desc") {
+    arrow = "↓";
+  }
+  const content = props.renderHeader();
+  if (!props.onClick) {
+    return (
+      <th className={props.align === "right" ? "text-right" : ""}>
+        {typeof content === "string" ? content : <span>{props.label}</span>}
+      </th>
+    );
+  }
+
   return (
     <th className={props.align === "right" ? "text-right" : ""}>
       <button
@@ -382,7 +510,11 @@ function SortableTh(props: {
         }}
         type="button"
       >
-        <span>{props.label}</span>
+        {typeof content === "string" ? (
+          <span>{content}</span>
+        ) : (
+          <span>{props.label}</span>
+        )}
         <span style={{ color: "var(--ui-color-text-placeholder)" }}>
           {arrow}
         </span>
@@ -407,8 +539,12 @@ function AddProductButton() {
   );
 }
 
-function AddProductModal(props: { onClose: () => void }) {
+function AddProductModal({ onClose }: { onClose: () => void }) {
   const modalRef = useRef<HTMLDivElement | null>(null);
+  const nameId = useId();
+  const priceId = useId();
+  const vendorId = useId();
+  const articleId = useId();
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [vendor, setVendor] = useState("");
@@ -417,7 +553,9 @@ function AddProductModal(props: { onClose: () => void }) {
 
   useEffect(() => {
     const previousActive =
-      document.activeElement instanceof HTMLElement ? document.activeElement : null;
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
 
     const focusableSelector = [
       "a[href]",
@@ -430,10 +568,15 @@ function AddProductModal(props: { onClose: () => void }) {
 
     function getFocusableElements(): HTMLElement[] {
       const modal = modalRef.current;
-      if (!modal) return [];
-      return Array.from(modal.querySelectorAll<HTMLElement>(focusableSelector)).filter(
+      if (!modal) {
+        return [];
+      }
+      return Array.from(
+        modal.querySelectorAll<HTMLElement>(focusableSelector)
+      ).filter(
         (el) =>
-          !el.hasAttribute("disabled") && el.getAttribute("aria-hidden") !== "true"
+          !el.hasAttribute("disabled") &&
+          el.getAttribute("aria-hidden") !== "true"
       );
     }
 
@@ -447,10 +590,12 @@ function AddProductModal(props: { onClose: () => void }) {
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
         event.preventDefault();
-        props.onClose();
+        onClose();
         return;
       }
-      if (event.key !== "Tab") return;
+      if (event.key !== "Tab") {
+        return;
+      }
 
       const currentFocusable = getFocusableElements();
       if (currentFocusable.length === 0) {
@@ -459,8 +604,10 @@ function AddProductModal(props: { onClose: () => void }) {
       }
 
       const first = currentFocusable[0];
-      const last = currentFocusable[currentFocusable.length - 1];
-      if (!first || !last) return;
+      const last = currentFocusable.at(-1);
+      if (!(first && last)) {
+        return;
+      }
 
       const active = document.activeElement;
       if (event.shiftKey) {
@@ -482,26 +629,34 @@ function AddProductModal(props: { onClose: () => void }) {
       document.removeEventListener("keydown", onKeyDown);
       previousActive?.focus();
     };
-  }, [props.onClose]);
+  }, [onClose]);
 
   function saveProduct() {
     const next: Record<string, string> = {};
-    if (!name.trim()) next.name = "Обязательное поле";
-    if (!price.trim()) {
-      next.price = "Обязательное поле";
-    } else {
+    if (!name.trim()) {
+      next.name = "Обязательное поле";
+    }
+    if (price.trim()) {
       const parsedPrice = Number.parseFloat(price.replace(",", "."));
       if (!Number.isFinite(parsedPrice) || parsedPrice <= 0) {
         next.price = "Должно быть положительным числом";
       }
+    } else {
+      next.price = "Обязательное поле";
     }
-    if (!vendor.trim()) next.vendor = "Обязательное поле";
-    if (!article.trim()) next.article = "Обязательное поле";
+    if (!vendor.trim()) {
+      next.vendor = "Обязательное поле";
+    }
+    if (!article.trim()) {
+      next.article = "Обязательное поле";
+    }
     setErrors(next);
-    if (Object.keys(next).length > 0) return;
+    if (Object.keys(next).length > 0) {
+      return;
+    }
 
     toast.success("Товар добавлен");
-    props.onClose();
+    onClose();
   }
 
   function onSubmit(e: FormEvent) {
@@ -516,7 +671,6 @@ function AddProductModal(props: { onClose: () => void }) {
         aria-modal="true"
         ref={modalRef}
         role="dialog"
-        tabIndex={-1}
         style={{
           width: "100%",
           maxWidth: 680,
@@ -525,6 +679,7 @@ function AddProductModal(props: { onClose: () => void }) {
           border: "1px solid var(--ui-color-gray-200)",
           padding: "var(--ui-space-xxl)",
         }}
+        tabIndex={-1}
       >
         <div
           style={{
@@ -541,12 +696,14 @@ function AddProductModal(props: { onClose: () => void }) {
           <div style={{ display: "grid", gap: "var(--ui-space-md)" }}>
             <Field
               error={errors.name}
+              id={nameId}
               label="Наименование"
               onChange={setName}
               value={name}
             />
             <Field
               error={errors.price}
+              id={priceId}
               inputMode="decimal"
               label="Цена"
               onChange={setPrice}
@@ -554,12 +711,14 @@ function AddProductModal(props: { onClose: () => void }) {
             />
             <Field
               error={errors.vendor}
+              id={vendorId}
               label="Вендор"
               onChange={setVendor}
               value={vendor}
             />
             <Field
               error={errors.article}
+              id={articleId}
               label="Артикул"
               onChange={setArticle}
               value={article}
@@ -573,7 +732,7 @@ function AddProductModal(props: { onClose: () => void }) {
               gap: "var(--ui-space-sm)",
             }}
           >
-            <Button onPress={props.onClose} text="Отмена" variant="blue" />
+            <Button onPress={onClose} text="Отмена" variant="blue" />
             <Button onPress={saveProduct} text="Сохранить" variant="blue" />
           </div>
         </form>
@@ -583,6 +742,7 @@ function AddProductModal(props: { onClose: () => void }) {
 }
 
 function Field(props: {
+  id: string;
   label: string;
   value: string;
   onChange: (v: string) => void;
@@ -592,6 +752,7 @@ function Field(props: {
   return (
     <div style={{ display: "grid", gap: 6 }}>
       <label
+        htmlFor={props.id}
         style={{
           color: "var(--ui-color-text-primary)",
           fontFamily: "var(--ui-font-heading)",
@@ -603,7 +764,8 @@ function Field(props: {
       </label>
       <input
         aria-invalid={Boolean(props.error)}
-        className="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ui-color-blue-accent)]"
+        className="focus-visible:outline-2 focus-visible:outline-[var(--ui-color-blue-accent)] focus-visible:outline-offset-2"
+        id={props.id}
         inputMode={props.inputMode}
         onChange={(e) => props.onChange(e.target.value)}
         style={{
