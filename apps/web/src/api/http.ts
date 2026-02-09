@@ -21,5 +21,14 @@ export async function readJsonOrThrow<T>(res: Response): Promise<T> {
     throw new ApiError(message, res.status);
   }
 
+  if (res.status === 204 || res.headers.get("content-length") === "0") {
+    return undefined as T;
+  }
+
+  const contentType = res.headers.get("content-type") ?? "";
+  if (!contentType.includes("application/json")) {
+    return undefined as T;
+  }
+
   return (await res.json()) as T;
 }

@@ -1,5 +1,8 @@
-export type SortField = "name" | "price" | "rating";
-export type SortDirection = "asc" | "desc";
+export const ALLOWED_SORT_FIELDS = ["name", "price", "rating"] as const;
+export const ALLOWED_SORT_DIRECTIONS = ["asc", "desc"] as const;
+
+export type SortField = (typeof ALLOWED_SORT_FIELDS)[number];
+export type SortDirection = (typeof ALLOWED_SORT_DIRECTIONS)[number];
 
 export type SortDescriptor = {
   field: SortField;

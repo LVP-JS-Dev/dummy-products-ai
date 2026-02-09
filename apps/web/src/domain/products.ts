@@ -28,8 +28,8 @@ export function mapProductToRow(product: Product): ProductRow {
     id: product.id,
     name: product.title,
     price: product.price,
-    vendor: product.brand?.trim() ? product.brand : "-",
-    article: product.sku?.trim() ? product.sku : String(product.id),
+    vendor: product.brand?.trim() || "-",
+    article: product.sku?.trim() || String(product.id),
     rating: product.rating,
   };
 }

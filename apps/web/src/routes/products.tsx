@@ -5,6 +5,7 @@ import {
   type HTMLAttributes,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import { toast } from "sonner";
@@ -407,16 +408,93 @@ function AddProductButton() {
 }
 
 function AddProductModal(props: { onClose: () => void }) {
+  const modalRef = useRef<HTMLDivElement | null>(null);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [vendor, setVendor] = useState("");
   const [article, setArticle] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  useEffect(() => {
+    const previousActive =
+      document.activeElement instanceof HTMLElement ? document.activeElement : null;
+
+    const focusableSelector = [
+      "a[href]",
+      "button:not([disabled])",
+      "input:not([disabled])",
+      "select:not([disabled])",
+      "textarea:not([disabled])",
+      "[tabindex]:not([tabindex='-1'])",
+    ].join(",");
+
+    function getFocusableElements(): HTMLElement[] {
+      const modal = modalRef.current;
+      if (!modal) return [];
+      return Array.from(modal.querySelectorAll<HTMLElement>(focusableSelector)).filter(
+        (el) =>
+          !el.hasAttribute("disabled") && el.getAttribute("aria-hidden") !== "true"
+      );
+    }
+
+    const focusable = getFocusableElements();
+    if (focusable.length > 0) {
+      focusable[0]?.focus();
+    } else {
+      modalRef.current?.focus();
+    }
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        props.onClose();
+        return;
+      }
+      if (event.key !== "Tab") return;
+
+      const currentFocusable = getFocusableElements();
+      if (currentFocusable.length === 0) {
+        event.preventDefault();
+        return;
+      }
+
+      const first = currentFocusable[0];
+      const last = currentFocusable[currentFocusable.length - 1];
+      if (!first || !last) return;
+
+      const active = document.activeElement;
+      if (event.shiftKey) {
+        if (active === first || !modalRef.current?.contains(active)) {
+          event.preventDefault();
+          last.focus();
+        }
+        return;
+      }
+
+      if (active === last || !modalRef.current?.contains(active)) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      previousActive?.focus();
+    };
+  }, [props.onClose]);
+
   function saveProduct() {
     const next: Record<string, string> = {};
     if (!name.trim()) next.name = "Обязательное поле";
-    if (!price.trim()) next.price = "Обязательное поле";
+    if (!price.trim()) {
+      next.price = "Обязательное поле";
+    } else {
+      const parsedPrice = Number.parseFloat(price.replace(",", "."));
+      if (!Number.isFinite(parsedPrice) || parsedPrice <= 0) {
+        next.price = "Должно быть положительным числом";
+      }
+    }
     if (!vendor.trim()) next.vendor = "Обязательное поле";
     if (!article.trim()) next.article = "Обязательное поле";
     setErrors(next);
@@ -434,6 +512,11 @@ function AddProductModal(props: { onClose: () => void }) {
   return (
     <div className="fixed inset-0 z-50 grid place-items-center bg-black/40 px-4">
       <div
+        aria-labelledby="add-product-title"
+        aria-modal="true"
+        ref={modalRef}
+        role="dialog"
+        tabIndex={-1}
         style={{
           width: "100%",
           maxWidth: 680,
@@ -452,7 +535,7 @@ function AddProductModal(props: { onClose: () => void }) {
             marginBottom: "var(--ui-space-lg)",
           }}
         >
-          Добавить товар
+          <span id="add-product-title">Добавить товар</span>
         </div>
         <form onSubmit={onSubmit}>
           <div style={{ display: "grid", gap: "var(--ui-space-md)" }}>
@@ -520,6 +603,7 @@ function Field(props: {
       </label>
       <input
         aria-invalid={Boolean(props.error)}
+        className="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ui-color-blue-accent)]"
         inputMode={props.inputMode}
         onChange={(e) => props.onChange(e.target.value)}
         style={{
@@ -530,7 +614,6 @@ function Field(props: {
           fontFamily: "var(--ui-font-ui)",
           fontSize: 14,
           color: "var(--ui-color-text-primary)",
-          outline: "none",
         }}
         value={props.value}
       />
