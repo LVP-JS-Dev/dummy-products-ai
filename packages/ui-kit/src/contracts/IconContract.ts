@@ -1,10 +1,8 @@
 import { z } from "zod";
+import type { IconName } from "../Icons";
 import { iconNames } from "../Icons";
 
-const iconNameSchema = z.enum([...(iconNames as string[])] as [
-  string,
-  ...string[],
-]);
+const iconNameSchema = z.enum(iconNames as [IconName, ...IconName[]]);
 
 export const iconContract = z.object({
   name: iconNameSchema,

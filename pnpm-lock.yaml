@@ -115,6 +115,9 @@ importers:
       '@dummy-products/env':
         specifier: workspace:*
         version: link:../../packages/env
+      '@dummy-products/ui-kit':
+        specifier: workspace:*
+        version: link:../../packages/ui-kit
       '@hookform/resolvers':
         specifier: ^5.1.1
         version: 5.2.2(react-hook-form@7.71.1(react@19.2.3))
@@ -234,6 +237,12 @@ importers:
       '@dummy-products/config':
         specifier: workspace:*
         version: link:../config
+      '@types/react':
+        specifier: 19.2.7
+        version: 19.2.7
+      '@types/react-dom':
+        specifier: 19.2.3
+        version: 19.2.3(@types/react@19.2.7)
       tsx:
         specifier: ^4.20.5
         version: 4.21.0

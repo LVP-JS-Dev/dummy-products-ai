@@ -24,7 +24,7 @@
   --ui-radius-md: 10px;
   --ui-radius-lg: 14px;
 
-  --ui-font-heading: "Inter Variable", "Inter", system-ui, sans-serif;
-  --ui-font-ui: "Inter Variable", "Inter", system-ui, sans-serif;
-  --ui-font-body: "Inter Variable", "Inter", system-ui, sans-serif;
+  --ui-font-heading: "Cairo", "Inter", system-ui, sans-serif;
+  --ui-font-ui: "Inter", "Inter Variable", system-ui, sans-serif;
+  --ui-font-body: "Open Sans", "Inter", system-ui, sans-serif;
 }
