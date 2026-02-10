@@ -54,6 +54,8 @@ The products screen SHALL allow sorting by supported columns (including name, pr
 
 Sorting in v1 SHALL apply only to the currently loaded page of results (because results are paginated via API). This limitation SHALL be documented in the product UI/help text to avoid confusion.
 
+The sortable table state SHALL be implemented via TanStack Table sorting state and row model while preserving the existing user-facing sorting behavior.
+
 #### Scenario: User sorts by price
 
 - **WHEN** a user selects sorting by price
