@@ -1,21 +1,14 @@
 export const tokenCssVars = {
   color: {
-    white: "var(--ui-color-white)",
-    blue: {
-      primary: "var(--ui-color-blue-primary)",
-      accent: "var(--ui-color-blue-accent)",
-    },
-    green: {
-      soft: "var(--ui-color-green-soft)",
-    },
-    gray: {
-      200: "var(--ui-color-gray-200)",
-      400: "var(--ui-color-gray-400)",
-    },
-    text: {
-      primary: "var(--ui-color-text-primary)",
-      placeholder: "var(--ui-color-text-placeholder)",
-    },
+    surface: "var(--ui-color-surface)",
+    surfaceMuted: "var(--ui-color-surface-muted)",
+    border: "var(--ui-color-border)",
+    primary: "var(--ui-color-primary)",
+    onPrimary: "var(--ui-color-on-primary)",
+    focusRing: "var(--ui-color-focus-ring)",
+    text: "var(--ui-color-text)",
+    textMuted: "var(--ui-color-text-muted)",
+    successSurface: "var(--ui-color-success-surface)",
   },
   space: {
     sm: "var(--ui-space-sm)",

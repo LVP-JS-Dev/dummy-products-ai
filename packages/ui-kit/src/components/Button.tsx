@@ -48,8 +48,8 @@ export function Button({
   const showCount = showBadgeCount ?? typeof badgeCount === "number";
   const { background, color } = {
     blue: {
-      background: "var(--ui-color-blue-primary)",
-      color: "var(--ui-color-green-soft)",
+      background: "var(--ui-color-primary)",
+      color: "var(--ui-color-on-primary)",
     },
   }[variant];
 
@@ -72,8 +72,8 @@ export function Button({
         <span
           style={{
             ...badgeBase,
-            background: "var(--ui-color-white)",
-            color: "var(--ui-color-blue-primary)",
+            background: "var(--ui-color-surface)",
+            color: "var(--ui-color-primary)",
           }}
         >
           {badgeLabel}
@@ -83,8 +83,8 @@ export function Button({
         <span
           style={{
             ...badgeBase,
-            background: "var(--ui-color-white)",
-            color: "var(--ui-color-blue-primary)",
+            background: "var(--ui-color-surface)",
+            color: "var(--ui-color-primary)",
             minWidth: 20,
           }}
         >

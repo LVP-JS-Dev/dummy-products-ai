@@ -120,7 +120,7 @@ export function LoginPage() {
           borderRadius: 28,
           border: "1px solid #e8e9ef",
           boxShadow: "0 18px 50px rgba(17, 24, 39, 0.09)",
-          background: "var(--ui-color-white)",
+          background: "var(--ui-color-surface)",
           padding: "28px 22px 26px",
         }}
       >

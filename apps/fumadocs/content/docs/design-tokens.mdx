@@ -15,47 +15,56 @@ Import the token stylesheet once in your app’s global CSS:
 
 ## Colors
 
-### Base
+### Core
 
 | Token | Value | Description |
 | --- | --- | --- |
-| `--ui-color-white` | `#ffffff` | Base white surface/background color. |
+| `--ui-color-focus-ring` | `#5c6cff` | Focus ring/outline color for interactive elements. |
+| `--ui-color-on-primary` | `#ffffff` | Text/icon color on top of primary backgrounds. |
+| `--ui-color-primary` | `#242edb` | Primary action/brand color. |
 
-### Blue
-
-| Token | Value | Description |
-| --- | --- | --- |
-| `--ui-color-blue-accent` | `#5c6cff` | Accent color for focus rings and secondary emphasis. |
-| `--ui-color-blue-primary` | `#242edb` | Primary brand/action color (buttons, key highlights). |
-
-### Gray
+### Deprecated
 
 | Token | Value | Description |
 | --- | --- | --- |
-| `--ui-color-gray-200` | `#e5e7eb` | Light neutral border/divider/background. |
-| `--ui-color-gray-400` | `#9ca3af` | Neutral muted text/icon color. |
+| `--ui-color-blue-accent` | `var(--ui-color-focus-ring)` | Deprecated. Use `--ui-color-focus-ring`. |
+| `--ui-color-blue-primary` | `var(--ui-color-primary)` | Deprecated. Use `--ui-color-primary`. |
+| `--ui-color-gray-200` | `var(--ui-color-border)` | Deprecated. Use `--ui-color-border` (or `--ui-color-surface-muted` for fills). |
+| `--ui-color-gray-400` | `var(--ui-color-text-muted)` | Deprecated. Use `--ui-color-text-muted`. |
+| `--ui-color-green-soft` | `var(--ui-color-success-surface)` | Deprecated. Use `--ui-color-success-surface`. |
+| `--ui-color-text-placeholder` | `var(--ui-color-text-muted)` | Deprecated. Use `--ui-color-text-muted`. |
+| `--ui-color-text-primary` | `var(--ui-color-text)` | Deprecated. Use `--ui-color-text`. |
+| `--ui-color-white` | `var(--ui-color-surface)` | Deprecated. Use `--ui-color-surface`. |
 
-### Green
+### State
 
 | Token | Value | Description |
 | --- | --- | --- |
-| `--ui-color-green-soft` | `#d9f4e5` | Soft positive/confirmation background. |
+| `--ui-color-success-surface` | `#d9f4e5` | Soft positive/confirmation background. |
+
+### Surface
+
+| Token | Value | Description |
+| --- | --- | --- |
+| `--ui-color-border` | `#e5e7eb` | Default border/divider color. |
+| `--ui-color-surface` | `#ffffff` | Default app surface/background color. |
+| `--ui-color-surface-muted` | `#e5e7eb` | Muted surface/background for subtle fills (e.g., progress tracks). |
 
 ### Text
 
 | Token | Value | Description |
 | --- | --- | --- |
-| `--ui-color-text-placeholder` | `#9ca3af` | Placeholder/help text color (low emphasis). |
-| `--ui-color-text-primary` | `#111827` | Primary text color for most UI text. |
+| `--ui-color-text` | `#111827` | Primary text color for most UI text. |
+| `--ui-color-text-muted` | `#9ca3af` | Muted/secondary text color (e.g., placeholders, helper text). |
 
 ### Example
 
 ```css
 /* Example usage */
 .card {
-  background: var(--ui-color-white);
-  border: 1px solid var(--ui-color-gray-200);
-  color: var(--ui-color-text-primary);
+  background: var(--ui-color-surface);
+  border: 1px solid var(--ui-color-border);
+  color: var(--ui-color-text);
 }
 ```
 

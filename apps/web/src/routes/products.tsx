@@ -259,7 +259,7 @@ function ProductsPage() {
           <div
             style={{
               fontFamily: "var(--ui-font-heading)",
-              color: "var(--ui-color-text-primary)",
+              color: "var(--ui-color-text)",
               fontWeight: 700,
               fontSize: 32,
               lineHeight: 1.2,
@@ -269,7 +269,7 @@ function ProductsPage() {
           </div>
           <div
             style={{
-              color: "var(--ui-color-text-placeholder)",
+              color: "var(--ui-color-text-muted)",
               fontFamily: "var(--ui-font-body)",
               fontSize: 14,
             }}
@@ -286,7 +286,7 @@ function ProductsPage() {
       <div className="mb-4 grid gap-2">
         <div
           style={{
-            color: "var(--ui-color-text-primary)",
+            color: "var(--ui-color-text)",
             fontFamily: "var(--ui-font-heading)",
             fontWeight: 600,
             fontSize: 16,
@@ -306,17 +306,17 @@ function ProductsPage() {
 
       <div
         className="mb-2 h-1 overflow-hidden"
-        style={{ background: "var(--ui-color-gray-200)" }}
+        style={{ background: "var(--ui-color-surface-muted)" }}
       >
         {loading ? (
           <div
             className="h-full w-2/5 animate-[indeterminate_1.2s_ease-in-out_infinite]"
-            style={{ background: "var(--ui-color-blue-primary)" }}
+            style={{ background: "var(--ui-color-primary)" }}
           />
         ) : (
           <div
             className="h-full w-0"
-            style={{ background: "var(--ui-color-blue-primary)" }}
+            style={{ background: "var(--ui-color-primary)" }}
           />
         )}
       </div>
@@ -324,15 +324,15 @@ function ProductsPage() {
       {error ? (
         <div
           style={{
-            border: "1px solid var(--ui-color-gray-200)",
+            border: "1px solid var(--ui-color-border)",
             borderRadius: "var(--ui-radius-md)",
             padding: "var(--ui-space-lg)",
-            background: "var(--ui-color-white)",
+            background: "var(--ui-color-surface)",
           }}
         >
           <div
             style={{
-              color: "var(--ui-color-text-primary)",
+              color: "var(--ui-color-text)",
               fontFamily: "var(--ui-font-heading)",
               fontWeight: 700,
               fontSize: 16,
@@ -343,7 +343,7 @@ function ProductsPage() {
           <div
             style={{
               marginTop: 6,
-              color: "var(--ui-color-text-placeholder)",
+              color: "var(--ui-color-text-muted)",
               fontFamily: "var(--ui-font-body)",
               fontSize: 14,
             }}
@@ -363,9 +363,9 @@ function ProductsPage() {
         <div
           className="overflow-hidden"
           style={{
-            border: "1px solid var(--ui-color-gray-200)",
+            border: "1px solid var(--ui-color-border)",
             borderRadius: "var(--ui-radius-md)",
-            background: "var(--ui-color-white)",
+            background: "var(--ui-color-surface)",
           }}
         >
           <table className="w-full border-collapse text-left text-xs">
@@ -387,7 +387,7 @@ function ProductsPage() {
                       textAlign: "center",
                       padding: "32px 0",
                       fontFamily: "var(--ui-font-body)",
-                      color: "var(--ui-color-text-placeholder)",
+                      color: "var(--ui-color-text-muted)",
                       fontSize: 14,
                     }}
                   >
@@ -399,7 +399,7 @@ function ProductsPage() {
                   <tr
                     className="border-t"
                     key={r.id}
-                    style={{ borderColor: "var(--ui-color-gray-200)" }}
+                    style={{ borderColor: "var(--ui-color-border)" }}
                   >
                     {r.getVisibleCells().map((cell) => {
                       const meta = cell.column.columnDef.meta as
@@ -440,7 +440,7 @@ function ProductsPage() {
         <div
           style={{
             fontFamily: "var(--ui-font-body)",
-            color: "var(--ui-color-text-placeholder)",
+            color: "var(--ui-color-text-muted)",
             fontSize: 14,
           }}
         >
@@ -505,7 +505,7 @@ function SortableTh(props: {
           alignItems: "center",
           gap: 4,
           fontFamily: "var(--ui-font-heading)",
-          color: "var(--ui-color-text-primary)",
+          color: "var(--ui-color-text)",
           fontWeight: 600,
         }}
         type="button"
@@ -515,9 +515,7 @@ function SortableTh(props: {
         ) : (
           <span>{props.label}</span>
         )}
-        <span style={{ color: "var(--ui-color-text-placeholder)" }}>
-          {arrow}
-        </span>
+        <span style={{ color: "var(--ui-color-text-muted)" }}>{arrow}</span>
       </button>
     </th>
   );
@@ -674,9 +672,9 @@ function AddProductModal({ onClose }: { onClose: () => void }) {
         style={{
           width: "100%",
           maxWidth: 680,
-          background: "var(--ui-color-white)",
+          background: "var(--ui-color-surface)",
           borderRadius: "var(--ui-radius-lg)",
-          border: "1px solid var(--ui-color-gray-200)",
+          border: "1px solid var(--ui-color-border)",
           padding: "var(--ui-space-xxl)",
         }}
         tabIndex={-1}
@@ -684,7 +682,7 @@ function AddProductModal({ onClose }: { onClose: () => void }) {
         <div
           style={{
             fontFamily: "var(--ui-font-heading)",
-            color: "var(--ui-color-text-primary)",
+            color: "var(--ui-color-text)",
             fontWeight: 700,
             fontSize: 24,
             marginBottom: "var(--ui-space-lg)",
@@ -754,7 +752,7 @@ function Field(props: {
       <label
         htmlFor={props.id}
         style={{
-          color: "var(--ui-color-text-primary)",
+          color: "var(--ui-color-text)",
           fontFamily: "var(--ui-font-heading)",
           fontWeight: 600,
           fontSize: 14,
@@ -764,18 +762,18 @@ function Field(props: {
       </label>
       <input
         aria-invalid={Boolean(props.error)}
-        className="focus-visible:outline-2 focus-visible:outline-[var(--ui-color-blue-accent)] focus-visible:outline-offset-2"
+        className="focus-visible:outline-2 focus-visible:outline-[var(--ui-color-focus-ring)] focus-visible:outline-offset-2"
         id={props.id}
         inputMode={props.inputMode}
         onChange={(e) => props.onChange(e.target.value)}
         style={{
-          border: "1px solid var(--ui-color-gray-200)",
+          border: "1px solid var(--ui-color-border)",
           borderRadius: "var(--ui-radius-sm)",
           height: 44,
           padding: "0 var(--ui-space-md)",
           fontFamily: "var(--ui-font-ui)",
           fontSize: 14,
-          color: "var(--ui-color-text-primary)",
+          color: "var(--ui-color-text)",
         }}
         value={props.value}
       />

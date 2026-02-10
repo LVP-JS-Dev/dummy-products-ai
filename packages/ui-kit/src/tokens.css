@@ -6,14 +6,29 @@
    --ui-font-<role>
 */
 :root {
-  --ui-color-white: #ffffff;
-  --ui-color-blue-primary: #242edb;
-  --ui-color-blue-accent: #5c6cff;
-  --ui-color-green-soft: #d9f4e5;
-  --ui-color-gray-200: #e5e7eb;
-  --ui-color-gray-400: #9ca3af;
-  --ui-color-text-primary: #111827;
-  --ui-color-text-placeholder: #9ca3af;
+  /* Semantic colors (preferred) */
+  --ui-color-surface: #ffffff;
+  --ui-color-surface-muted: #e5e7eb;
+  --ui-color-border: #e5e7eb;
+
+  --ui-color-primary: #242edb;
+  --ui-color-on-primary: #ffffff;
+  --ui-color-focus-ring: #5c6cff;
+
+  --ui-color-text: #111827;
+  --ui-color-text-muted: #9ca3af;
+
+  --ui-color-success-surface: #d9f4e5;
+
+  /* Deprecated palette-based aliases (kept for backward compatibility) */
+  --ui-color-white: var(--ui-color-surface);
+  --ui-color-blue-primary: var(--ui-color-primary);
+  --ui-color-blue-accent: var(--ui-color-focus-ring);
+  --ui-color-green-soft: var(--ui-color-success-surface);
+  --ui-color-gray-200: var(--ui-color-border);
+  --ui-color-gray-400: var(--ui-color-text-muted);
+  --ui-color-text-primary: var(--ui-color-text);
+  --ui-color-text-placeholder: var(--ui-color-text-muted);
 
   --ui-space-sm: 8px;
   --ui-space-md: 12px;

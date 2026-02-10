@@ -7,24 +7,24 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: var(--ui-color-white);
-  --foreground: var(--ui-color-text-primary);
+  --background: var(--ui-color-surface);
+  --foreground: var(--ui-color-text);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: var(--ui-color-blue-primary);
-  --primary-foreground: var(--ui-color-white);
+  --primary: var(--ui-color-primary);
+  --primary-foreground: var(--ui-color-on-primary);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
-  --muted-foreground: var(--ui-color-text-placeholder);
+  --muted-foreground: var(--ui-color-text-muted);
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.58 0.22 27);
-  --border: var(--ui-color-gray-200);
-  --input: var(--ui-color-gray-200);
-  --ring: var(--ui-color-blue-accent);
+  --border: var(--ui-color-border);
+  --input: var(--ui-color-border);
+  --ring: var(--ui-color-focus-ring);
   --chart-1: oklch(0.809 0.105 251.813);
   --chart-2: oklch(0.623 0.214 259.815);
   --chart-3: oklch(0.546 0.245 262.881);

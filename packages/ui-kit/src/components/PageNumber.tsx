@@ -21,13 +21,11 @@ export function PageNumber({
         height: 30,
         padding: "0 var(--ui-space-sm)",
         borderRadius: "var(--ui-radius-md)",
-        border: `1px solid ${selected ? "var(--ui-color-blue-primary)" : "var(--ui-color-gray-200)"}`,
+        border: `1px solid ${selected ? "var(--ui-color-primary)" : "var(--ui-color-border)"}`,
         background: selected
-          ? "var(--ui-color-blue-primary)"
-          : "var(--ui-color-white)",
-        color: selected
-          ? "var(--ui-color-white)"
-          : "var(--ui-color-text-primary)",
+          ? "var(--ui-color-primary)"
+          : "var(--ui-color-surface)",
+        color: selected ? "var(--ui-color-on-primary)" : "var(--ui-color-text)",
         fontFamily: "var(--ui-font-body)",
         fontSize: 14,
         opacity: disabled ? 0.5 : 1,

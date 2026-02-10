@@ -103,9 +103,9 @@ const GROUPS = [
     title: "Colors",
     usageExample: `/* Example usage */
 .card {
-  background: var(--ui-color-white);
-  border: 1px solid var(--ui-color-gray-200);
-  color: var(--ui-color-text-primary);
+  background: var(--ui-color-surface);
+  border: 1px solid var(--ui-color-border);
+  color: var(--ui-color-text);
 }
 `,
   },
@@ -201,11 +201,16 @@ function buildRows({ tokens, metadata }) {
   return tokens
     .map((t) => {
       const groupKey = groupKeyFromTokenName(t.name);
+      const meta = metadata[t.name] ?? {};
       return {
         ...t,
-        description: metadata[t.name]?.description ?? "",
+        description: meta.description ?? "",
+        deprecated: meta.deprecated === true,
+        subgroupKey:
+          typeof meta.subgroup === "string" && meta.subgroup.length > 0
+            ? meta.subgroup
+            : subgroupKeyFromTokenName(t.name, groupKey),
         groupKey,
-        subgroupKey: subgroupKeyFromTokenName(t.name, groupKey),
       };
     })
     .sort((a, b) => {
@@ -268,7 +273,7 @@ function buildMdx({ tokens, metadata }) {
     if (groupKey === "color") {
       const byPalette = new Map();
       for (const r of groupRows) {
-        const palette = r.subgroupKey ?? "base";
+        const palette = r.subgroupKey ?? (r.deprecated ? "Deprecated" : "Base");
         if (!byPalette.has(palette)) {
           byPalette.set(palette, []);
         }

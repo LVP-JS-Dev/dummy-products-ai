@@ -23,18 +23,14 @@ export function SearchInput({
         gap: "var(--ui-space-sm)",
         padding: "var(--ui-space-sm) var(--ui-space-md)",
         borderRadius: "var(--ui-radius-lg)",
-        background: "var(--ui-color-white)",
-        border: `1px solid ${isActive ? "var(--ui-color-blue-accent)" : "var(--ui-color-gray-200)"}`,
+        background: "var(--ui-color-surface)",
+        border: `1px solid ${isActive ? "var(--ui-color-focus-ring)" : "var(--ui-color-border)"}`,
         minWidth: 220,
         opacity: isDisabled ? 0.6 : 1,
       }}
     >
       {showIcon ? (
-        <Icon
-          color={"var(--ui-color-text-placeholder)"}
-          name="search"
-          size={20}
-        />
+        <Icon color={"var(--ui-color-text-muted)"} name="search" size={20} />
       ) : null}
       <input
         disabled={isDisabled}
@@ -51,7 +47,7 @@ export function SearchInput({
           border: "none",
           outline: "none",
           background: "transparent",
-          color: "var(--ui-color-text-primary)",
+          color: "var(--ui-color-text)",
           fontFamily: "var(--ui-font-ui)",
           fontSize: 14,
           minWidth: 160,
