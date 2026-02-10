@@ -87,7 +87,7 @@
     "description": "Large spacing unit."
   },
   "--ui-space-xxl": {
-    "description": "Extra-large spacing unit."
+    "description": "Double extra-large spacing unit."
   },
   "--ui-radius-sm": {
     "description": "Small corner radius."

@@ -1,3 +1,5 @@
+# Document all tokens
+
 ## 1. Token documentation metadata
 
 - [x] 1.1 Decide the metadata format/location for token descriptions (e.g. `packages/ui-kit/src/tokens.docs.ts` or `.json`)

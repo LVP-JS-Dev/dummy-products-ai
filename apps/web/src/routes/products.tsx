@@ -369,7 +369,7 @@ function ProductsPage() {
           }}
         >
           <table className="w-full border-collapse text-left text-xs">
-            <thead style={{ background: "#f9fafb" }}>
+            <thead style={{ background: "var(--ui-color-surface-muted)" }}>
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr className="[&>th]:px-3 [&>th]:py-2" key={headerGroup.id}>
                   {headerGroup.headers.map((header) =>
