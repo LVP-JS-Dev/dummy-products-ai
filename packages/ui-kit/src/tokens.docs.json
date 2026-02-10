@@ -1,0 +1,56 @@
+{
+  "--ui-color-white": {
+    "description": "Base white surface/background color."
+  },
+  "--ui-color-blue-primary": {
+    "description": "Primary brand/action color (buttons, key highlights)."
+  },
+  "--ui-color-blue-accent": {
+    "description": "Accent color for focus rings and secondary emphasis."
+  },
+  "--ui-color-green-soft": {
+    "description": "Soft positive/confirmation background."
+  },
+  "--ui-color-gray-200": {
+    "description": "Light neutral border/divider/background."
+  },
+  "--ui-color-gray-400": {
+    "description": "Neutral muted text/icon color."
+  },
+  "--ui-color-text-primary": {
+    "description": "Primary text color for most UI text."
+  },
+  "--ui-color-text-placeholder": {
+    "description": "Placeholder/help text color (low emphasis)."
+  },
+  "--ui-space-sm": {
+    "description": "Small spacing unit."
+  },
+  "--ui-space-md": {
+    "description": "Medium spacing unit."
+  },
+  "--ui-space-lg": {
+    "description": "Large spacing unit."
+  },
+  "--ui-space-xxl": {
+    "description": "Extra-large spacing unit."
+  },
+  "--ui-radius-sm": {
+    "description": "Small corner radius."
+  },
+  "--ui-radius-md": {
+    "description": "Medium corner radius."
+  },
+  "--ui-radius-lg": {
+    "description": "Large corner radius."
+  },
+  "--ui-font-heading": {
+    "description": "Font family for headings and prominent labels."
+  },
+  "--ui-font-ui": {
+    "description": "Font family for controls and compact UI text."
+  },
+  "--ui-font-body": {
+    "description": "Font family for body text and long-form content."
+  }
+}
