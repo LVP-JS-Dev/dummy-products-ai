@@ -1,3 +1,5 @@
+"use client";
+
 import type { PageNumberProps } from "../contracts/PageNumberContract";
 
 export function PageNumber({

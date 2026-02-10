@@ -1,3 +1,5 @@
+"use client";
+
 import type { CheckboxProps } from "../contracts/CheckboxContract";
 
 export function Checkbox({

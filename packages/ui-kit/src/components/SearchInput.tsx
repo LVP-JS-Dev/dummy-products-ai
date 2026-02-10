@@ -1,3 +1,5 @@
+"use client";
+
 import type { SearchInputProps } from "../contracts/SearchInputContract";
 import { Icon } from "./Icon";
 
