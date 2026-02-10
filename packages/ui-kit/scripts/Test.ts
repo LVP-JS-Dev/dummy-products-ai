@@ -10,6 +10,8 @@ import {
   iconContract,
   pageNumberContract,
   pageNumberEvents,
+  paginationContract,
+  paginationEvents,
   searchInputContract,
   searchInputEvents,
 } from "../src/contracts";
@@ -30,6 +32,11 @@ const components = {
     props: checkboxContract,
     events: checkboxEvents,
     states: states.checkbox,
+  },
+  Pagination: {
+    props: paginationContract,
+    events: paginationEvents,
+    states: states.pagination,
   },
   PageNumber: {
     props: pageNumberContract,
@@ -71,6 +78,7 @@ const fileNameMap: Record<keyof typeof components, string> = {
   Button: "button",
   SearchInput: "search-input",
   Checkbox: "checkbox",
+  Pagination: "pagination",
   PageNumber: "page-number",
   Icon: "icon",
 };

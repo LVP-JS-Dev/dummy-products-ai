@@ -9,6 +9,8 @@ import {
   iconContract,
   pageNumberContract,
   pageNumberEvents,
+  paginationContract,
+  paginationEvents,
   searchInputContract,
   searchInputEvents,
 } from "../src/contracts";
@@ -17,6 +19,7 @@ const components = {
   Button: { props: buttonContract, events: buttonEvents },
   SearchInput: { props: searchInputContract, events: searchInputEvents },
   Checkbox: { props: checkboxContract, events: checkboxEvents },
+  Pagination: { props: paginationContract, events: paginationEvents },
   PageNumber: { props: pageNumberContract, events: pageNumberEvents },
   Icon: { props: iconContract },
 } as const;
@@ -27,6 +30,7 @@ const fileNameMap: Record<keyof typeof components, string> = {
   Button: "button",
   SearchInput: "search-input",
   Checkbox: "checkbox",
+  Pagination: "pagination",
   PageNumber: "page-number",
   Icon: "icon",
 };

@@ -30,6 +30,15 @@
         }
       }
     },
+    "Pagination": {
+      "schema": "schemas/pagination.schema.json",
+      "propsSchema": "schemas/pagination.schema.json",
+      "events": {
+        "pageChange": {
+          "payloadSchema": "schemas/pagination.page-change.schema.json"
+        }
+      }
+    },
     "PageNumber": {
       "schema": "schemas/page-number.schema.json",
       "propsSchema": "schemas/page-number.schema.json",

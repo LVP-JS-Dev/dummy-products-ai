@@ -1,0 +1,34 @@
+---
+title: Pagination
+description: Pagination control with previous, next and page buttons.
+---
+
+import { Pagination, states } from "@dummy-products/ui-kit";
+import { WithControl } from "@/stories/pagination.story";
+
+## Description
+
+Navigation component for paged content, including previous/next actions and numbered pages.
+
+## API
+
+Props are defined in the UI Kit contract. Key props: `currentPage`, `totalPages`, `maxVisiblePages`, `disabled`.
+
+**Specification**
+- [`manifest.json`](../../../../../packages/ui-kit/src/generated/manifest.json)
+- [`pagination.schema.json`](../../../../../packages/ui-kit/src/generated/schemas/pagination.schema.json)
+
+## Examples
+
+<div style={{ display: "grid", gap: 12 }}>
+  {Object.entries(states.pagination).map(([name, props]) => (
+    <div key={name} style={{ display: "flex", alignItems: "center", gap: 12 }}>
+      <Pagination {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Interactive
+
+<WithControl />

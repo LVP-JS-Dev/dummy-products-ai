@@ -1,4 +1,4 @@
-import { Button, PageNumber, SearchInput } from "@dummy-products/ui-kit";
+import { Button, Pagination, SearchInput } from "@dummy-products/ui-kit";
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import {
   flexRender,
@@ -248,8 +248,6 @@ function ProductsPage() {
   const rows = table.getRowModel().rows;
 
   const totalPages = data ? Math.max(1, Math.ceil(data.total / data.limit)) : 1;
-  const canPrev = page > 1;
-  const canNext = page < totalPages;
   const searchState = getSearchInputState(loading, inputQuery);
 
   return (
@@ -446,29 +444,16 @@ function ProductsPage() {
         >
           {data ? `Страница ${page} из ${totalPages}` : "Загрузка..."}
         </div>
-        <div className="flex items-center gap-2">
-          <PageNumber
-            disabled={!canPrev || loading}
-            onPress={() => setPage((p) => Math.max(1, p - 1))}
-            selected={false}
-            value="‹"
-          />
-          <PageNumber
-            onPress={({ value }) => {
-              if (typeof value === "number") {
-                setPage(value);
-              }
-            }}
-            selected
-            value={page}
-          />
-          <PageNumber
-            disabled={!canNext || loading}
-            onPress={() => setPage((p) => p + 1)}
-            selected={false}
-            value="›"
-          />
-        </div>
+        <Pagination
+          currentPage={page}
+          disabled={loading}
+          maxVisiblePages={5}
+          nextAriaLabel="Следующая страница"
+          onPageChange={({ page: nextPage }) => setPage(nextPage)}
+          pageAriaLabelPrefix="Страница"
+          prevAriaLabel="Предыдущая страница"
+          totalPages={totalPages}
+        />
       </div>
     </div>
   );
