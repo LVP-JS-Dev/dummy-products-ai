@@ -19,7 +19,7 @@ export function Checkbox({
         opacity: disabled ? 0.6 : 1,
         fontFamily: "var(--ui-font-body)",
         fontSize: 14,
-        color: "var(--ui-color-text-primary)",
+        color: "var(--ui-color-text)",
         cursor: disabled ? "not-allowed" : "pointer",
       }}
     >
@@ -49,14 +49,14 @@ export function Checkbox({
           width: 22,
           height: 22,
           borderRadius: "var(--ui-radius-sm)",
-          border: "1px solid var(--ui-color-gray-400)",
+          border: "1px solid var(--ui-color-text-muted)",
           background: checked
-            ? "var(--ui-color-blue-primary)"
-            : "var(--ui-color-white)",
+            ? "var(--ui-color-primary)"
+            : "var(--ui-color-surface)",
           display: "inline-flex",
           alignItems: "center",
           justifyContent: "center",
-          color: "var(--ui-color-white)",
+          color: "var(--ui-color-on-primary)",
           fontSize: 12,
           lineHeight: 1,
         }}

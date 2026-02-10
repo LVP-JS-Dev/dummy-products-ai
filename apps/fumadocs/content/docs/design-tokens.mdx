@@ -1,0 +1,126 @@
+---
+title: "Design Tokens"
+description: "Reference for UI Kit public CSS variables"
+---
+
+> This page is generated. Do not edit it by hand.
+
+## Import
+
+Import the token stylesheet once in your app’s global CSS:
+
+```css
+@import "@dummy-products/ui-kit/tokens.css";
+```
+
+## Colors
+
+### Core
+
+| Token | Value | Description |
+| --- | --- | --- |
+| `--ui-color-focus-ring` | `#5c6cff` | Focus ring/outline color for interactive elements. |
+| `--ui-color-on-primary` | `#ffffff` | Text/icon color on top of primary backgrounds. |
+| `--ui-color-primary` | `#242edb` | Primary action/brand color. |
+
+### Deprecated
+
+| Token | Value | Description |
+| --- | --- | --- |
+| `--ui-color-blue-accent` | `var(--ui-color-focus-ring)` | Deprecated. Use `--ui-color-focus-ring`. |
+| `--ui-color-blue-primary` | `var(--ui-color-primary)` | Deprecated. Use `--ui-color-primary`. |
+| `--ui-color-gray-200` | `var(--ui-color-border)` | Deprecated. Use `--ui-color-border` (or `--ui-color-surface-muted` for fills). |
+| `--ui-color-gray-400` | `var(--ui-color-text-muted)` | Deprecated. Use `--ui-color-text-muted`. |
+| `--ui-color-green-soft` | `var(--ui-color-success-surface)` | Deprecated. Use `--ui-color-success-surface`. |
+| `--ui-color-text-placeholder` | `var(--ui-color-text-muted)` | Deprecated. Use `--ui-color-text-muted`. |
+| `--ui-color-text-primary` | `var(--ui-color-text)` | Deprecated. Use `--ui-color-text`. |
+| `--ui-color-white` | `var(--ui-color-surface)` | Deprecated. Use `--ui-color-surface`. |
+
+### State
+
+| Token | Value | Description |
+| --- | --- | --- |
+| `--ui-color-success-surface` | `#d9f4e5` | Soft positive/confirmation background. |
+
+### Surface
+
+| Token | Value | Description |
+| --- | --- | --- |
+| `--ui-color-border` | `#e5e7eb` | Default border/divider color. |
+| `--ui-color-surface` | `#ffffff` | Default app surface/background color. |
+| `--ui-color-surface-muted` | `#e5e7eb` | Muted surface/background for subtle fills (e.g., progress tracks). |
+
+### Text
+
+| Token | Value | Description |
+| --- | --- | --- |
+| `--ui-color-text` | `#111827` | Primary text color for most UI text. |
+| `--ui-color-text-muted` | `#9ca3af` | Muted/secondary text color (e.g., placeholders, helper text). |
+
+### Example
+
+```css
+/* Example usage */
+.card {
+  background: var(--ui-color-surface);
+  border: 1px solid var(--ui-color-border);
+  color: var(--ui-color-text);
+}
+```
+
+## Typography
+
+| Token | Value | Description |
+| --- | --- | --- |
+| `--ui-font-body` | `"Open Sans", "Inter", system-ui, sans-serif` | Font family for body text and long-form content. |
+| `--ui-font-heading` | `"Cairo", "Inter", system-ui, sans-serif` | Font family for headings and prominent labels. |
+| `--ui-font-ui` | `"Inter", "Inter Variable", system-ui, sans-serif` | Font family for controls and compact UI text. |
+
+### Example
+
+```css
+/* Example usage */
+h1, h2 {
+  font-family: var(--ui-font-heading);
+}
+p {
+  font-family: var(--ui-font-body);
+}
+```
+
+## Spacing
+
+| Token | Value | Description |
+| --- | --- | --- |
+| `--ui-space-lg` | `16px` | Large spacing unit. |
+| `--ui-space-md` | `12px` | Medium spacing unit. |
+| `--ui-space-sm` | `8px` | Small spacing unit. |
+| `--ui-space-xxl` | `24px` | Double extra-large spacing unit. |
+
+### Example
+
+```css
+/* Example usage */
+.stack {
+  display: grid;
+  gap: var(--ui-space-md);
+}
+```
+
+## Radius
+
+| Token | Value | Description |
+| --- | --- | --- |
+| `--ui-radius-lg` | `14px` | Large corner radius. |
+| `--ui-radius-md` | `10px` | Medium corner radius. |
+| `--ui-radius-sm` | `6px` | Small corner radius. |
+
+### Example
+
+```css
+/* Example usage */
+.button {
+  border-radius: var(--ui-radius-md);
+}
+```
+

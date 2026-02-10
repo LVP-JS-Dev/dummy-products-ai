@@ -1,0 +1,110 @@
+{
+  "--ui-color-surface": {
+    "description": "Default app surface/background color.",
+    "subgroup": "Surface"
+  },
+  "--ui-color-surface-muted": {
+    "description": "Muted surface/background for subtle fills (e.g., progress tracks).",
+    "subgroup": "Surface"
+  },
+  "--ui-color-border": {
+    "description": "Default border/divider color.",
+    "subgroup": "Surface"
+  },
+  "--ui-color-primary": {
+    "description": "Primary action/brand color.",
+    "subgroup": "Core"
+  },
+  "--ui-color-on-primary": {
+    "description": "Text/icon color on top of primary backgrounds.",
+    "subgroup": "Core"
+  },
+  "--ui-color-focus-ring": {
+    "description": "Focus ring/outline color for interactive elements.",
+    "subgroup": "Core"
+  },
+  "--ui-color-text": {
+    "description": "Primary text color for most UI text.",
+    "subgroup": "Text"
+  },
+  "--ui-color-text-muted": {
+    "description": "Muted/secondary text color (e.g., placeholders, helper text).",
+    "subgroup": "Text"
+  },
+  "--ui-color-success-surface": {
+    "description": "Soft positive/confirmation background.",
+    "subgroup": "State"
+  },
+
+  "--ui-color-white": {
+    "description": "Deprecated. Use `--ui-color-surface`.",
+    "subgroup": "Deprecated",
+    "deprecated": true
+  },
+  "--ui-color-blue-primary": {
+    "description": "Deprecated. Use `--ui-color-primary`.",
+    "subgroup": "Deprecated",
+    "deprecated": true
+  },
+  "--ui-color-blue-accent": {
+    "description": "Deprecated. Use `--ui-color-focus-ring`.",
+    "subgroup": "Deprecated",
+    "deprecated": true
+  },
+  "--ui-color-green-soft": {
+    "description": "Deprecated. Use `--ui-color-success-surface`.",
+    "subgroup": "Deprecated",
+    "deprecated": true
+  },
+  "--ui-color-gray-200": {
+    "description": "Deprecated. Use `--ui-color-border` (or `--ui-color-surface-muted` for fills).",
+    "subgroup": "Deprecated",
+    "deprecated": true
+  },
+  "--ui-color-gray-400": {
+    "description": "Deprecated. Use `--ui-color-text-muted`.",
+    "subgroup": "Deprecated",
+    "deprecated": true
+  },
+  "--ui-color-text-primary": {
+    "description": "Deprecated. Use `--ui-color-text`.",
+    "subgroup": "Deprecated",
+    "deprecated": true
+  },
+  "--ui-color-text-placeholder": {
+    "description": "Deprecated. Use `--ui-color-text-muted`.",
+    "subgroup": "Deprecated",
+    "deprecated": true
+  },
+
+  "--ui-space-sm": {
+    "description": "Small spacing unit."
+  },
+  "--ui-space-md": {
+    "description": "Medium spacing unit."
+  },
+  "--ui-space-lg": {
+    "description": "Large spacing unit."
+  },
+  "--ui-space-xxl": {
+    "description": "Double extra-large spacing unit."
+  },
+  "--ui-radius-sm": {
+    "description": "Small corner radius."
+  },
+  "--ui-radius-md": {
+    "description": "Medium corner radius."
+  },
+  "--ui-radius-lg": {
+    "description": "Large corner radius."
+  },
+  "--ui-font-heading": {
+    "description": "Font family for headings and prominent labels."
+  },
+  "--ui-font-ui": {
+    "description": "Font family for controls and compact UI text."
+  },
+  "--ui-font-body": {
+    "description": "Font family for body text and long-form content."
+  }
+}

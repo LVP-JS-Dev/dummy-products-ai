@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "predev": "pnpm -w docs:generate-tokens",
+    "prebuild": "pnpm -w docs:generate-tokens",
     "build": "next build",
     "dev": "next dev --port=4000",
     "start": "next start",
