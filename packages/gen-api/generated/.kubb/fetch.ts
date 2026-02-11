@@ -60,21 +60,50 @@ export const fetch = async <TData, _TError = unknown, TVariables = unknown>(para
     }
   })
 
-  let targetUrl = [config.baseURL, config.url].filter(Boolean).join('')
+  const targetPath = config.url || ''
+  const isAbsoluteUrl = /^https?:\/\//i.test(targetPath)
+  let targetUrl = isAbsoluteUrl ? targetPath : [config.baseURL, targetPath].filter(Boolean).join('')
 
-  if (config.params) {
+  if (normalizedParams.size > 0) {
     targetUrl += `?${normalizedParams}`
+  }
+
+  const hasBody = config.data !== undefined && config.data !== null
+  const isFormDataBody = config.data instanceof FormData
+  const body = !hasBody ? undefined : isFormDataBody ? config.data : JSON.stringify(config.data)
+  const headers = new Headers(config.headers)
+
+  if (hasBody && !isFormDataBody && !headers.has('content-type')) {
+    headers.set('content-type', 'application/json')
   }
 
   const response = await globalThis.fetch(targetUrl, {
     credentials: config.credentials || 'same-origin',
     method: config.method?.toUpperCase(),
-    body: config.data instanceof FormData ? config.data : JSON.stringify(config.data),
+    body,
     signal: config.signal,
-    headers: config.headers,
+    headers,
   })
 
-  const data = [204, 205, 304].includes(response.status) || !response.body ? {} : await response.json()
+  const hasNoPayload = [204, 205, 304].includes(response.status) || !response.body
+  const responseContentType = response.headers.get('content-type') || ''
+  const data = hasNoPayload
+    ? {}
+    : responseContentType.includes('application/json')
+      ? await response.json()
+      : await response.text()
+
+  if (!response.ok) {
+    const error = new Error(response.statusText || `Request failed with status ${response.status}`) as Error & {
+      data: unknown
+      status: number
+      headers: Headers
+    }
+    error.data = data
+    error.status = response.status
+    error.headers = response.headers as Headers
+    throw error
+  }
 
   return {
     data: data as TData,

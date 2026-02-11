@@ -8,12 +8,14 @@ import * as z from "zod";
 /**
  * @description DummyJSON response is not fully stable across versions; this repo only requires a non-empty token.\n
  */
-export const loginResponseSchema = z.union([z.any().and(z.object({
+export const loginResponseSchema = z.object({
     "username": z.optional(z.string()),
 "token": z.optional(z.string().describe("Some responses may include `token` instead of `accessToken`.")),
 "accessToken": z.optional(z.string().describe("Preferred token field in newer DummyJSON responses."))
-    }).catchall(z.any())), z.any().and(z.object({
-    "username": z.optional(z.string()),
-"token": z.optional(z.string().describe("Some responses may include `token` instead of `accessToken`.")),
-"accessToken": z.optional(z.string().describe("Preferred token field in newer DummyJSON responses."))
-    }).catchall(z.any()))]).describe("DummyJSON response is not fully stable across versions; this repo only requires a non-empty token.\n")
+    }).catchall(z.any()).refine((data) => {
+    const hasToken = typeof data.token === "string" && data.token.length > 0;
+    const hasAccessToken = typeof data.accessToken === "string" && data.accessToken.length > 0;
+    return hasToken || hasAccessToken;
+}, {
+    message: "Either token or accessToken is required."
+}).describe("DummyJSON response is not fully stable across versions; this repo only requires a non-empty token.\n")
