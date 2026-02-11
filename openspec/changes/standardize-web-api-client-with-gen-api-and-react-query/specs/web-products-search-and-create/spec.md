@@ -4,7 +4,7 @@
 
 ### Requirement: Search server state SHALL be managed by React Query
 
-The products search flow SHOULD use `@tanstack/react-query` as the canonical server-state layer for search requests, preserving debounced input behavior and URL-restorable query state.
+The products search flow SHALL use `@tanstack/react-query` as the canonical server-state layer for search requests, preserving debounced input behavior and URL-restorable query state.
 
 #### Scenario: URL query changes after debounce
 

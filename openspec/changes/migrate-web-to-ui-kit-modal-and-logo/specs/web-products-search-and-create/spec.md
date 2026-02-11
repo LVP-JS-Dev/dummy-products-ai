@@ -1,17 +1,17 @@
-# Web Products Search And Create
+# web-products-search-and-create Specification
 
-## ADDED Requirements
+## MODIFIED Requirements
 
-### Requirement: Add-product dialog SHALL use UI-kit Modal
+### Requirement: Add-product dialog SHALL use ui-kit Modal
 
-The add-product dialog on the products screen SHALL be implemented using the `@dummy-products/ui-kit/Modal` primitive to provide consistent accessibility, focus handling, and close semantics.
+The add-product flow SHALL render its dialog surface via the UI Kit `Modal` primitive rather than an app-local overlay implementation, while preserving close semantics and focus management behavior (focus trap while open, deterministic focus restore on close).
 
-#### Scenario: User opens the add-product dialog
+#### Scenario: User opens add-product dialog
 
-- **WHEN** the user triggers the add-product action
-- **THEN** the UI-kit `Modal` opens and contains the add-product form content
+- **WHEN** a user triggers the add-product action
+- **THEN** the UI Kit `Modal` opens and focus is moved inside the dialog
 
-#### Scenario: User closes the add-product dialog
+#### Scenario: User dismisses add-product dialog
 
-- **WHEN** the user activates the modal close control or dismiss action
-- **THEN** the dialog closes using the UI-kit Modal close behavior
+- **WHEN** the dialog is dismissible and the user presses Escape or clicks the backdrop
+- **THEN** the dialog closes and focus is restored deterministically to the triggering control (e.g., the “Add product” button)
