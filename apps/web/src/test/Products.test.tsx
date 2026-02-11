@@ -171,7 +171,7 @@ describe("ProductsPage", () => {
     });
 
     expect(fetchProductsPageMock).not.toHaveBeenCalled();
-    expect(screen.getByText("Страница 2 из 3")).toBeInTheDocument();
+    expect(await screen.findByText("Страница 2 из 3")).toBeInTheDocument();
   });
 
   it("disables boundary controls and keeps controls disabled while page is loading", async () => {

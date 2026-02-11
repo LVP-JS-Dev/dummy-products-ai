@@ -38,7 +38,7 @@ On the products page, controls should be composed from the available `@dummy-pro
 
 ## PRD impact
 
-- [ ] Root `PRD.md`
-- [ ] `packages/ui-kit/PRD.md`
+- [x] Root `PRD.md`
+- [x] `packages/ui-kit/PRD.md`
 - [x] `apps/web/PRD.md`
-- [ ] `apps/fumadocs/PRD.md`
+- [x] `apps/fumadocs/PRD.md`

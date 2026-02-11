@@ -14,7 +14,7 @@ The products screen SHALL support paginated search results using API pagination 
 #### Scenario: Search mode uses shared footer pagination using UI-kit
 
 - **WHEN** a non-empty search query is active and results are displayed
-- **THEN** pagination controls are rendered in the footer area below the table content using `@dummy-products/ui-kit` `Pagination`
+- **THEN** pagination controls are rendered in a footer row under the table content using `@dummy-products/ui-kit` `Pagination`
 
 #### Scenario: Boundary page controls are disabled in search mode
 

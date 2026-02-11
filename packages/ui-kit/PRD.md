@@ -157,7 +157,24 @@ Events spec:
 
 ---
 
-## 5.4 Typography tokens
+### 5.4 Pagination component contract and states
+
+Компонент `Pagination` является обязательным примитивом для продуктовых сценариев постраничной навигации и должен быть описан в контракте как часть публичного API.
+
+Минимальный контракт `Pagination` обязан покрывать:
+
+- текущее состояние страницы (`currentPage`) и общее число страниц (`totalPages`);
+- состояние блокировки навигации (`disabled`) и граничные состояния (first/last page);
+- обработчики смены страницы и действия prev/next как runtime events, совместимые с events spec;
+- a11y-атрибуты для активной страницы и кнопок навигации (`aria-current`, доступные имена для prev/next).
+
+Требования к `Pagination` states:
+
+- обязательно наличие состояний для `default`, `loading/disabled` и boundary edge-cases;
+- states должны быть serializable и валидироваться контрактом;
+- states используются в docs (`apps/fumadocs`) и в продуктах (`apps/web`) без ad hoc альтернатив.
+
+## 5.5 Typography tokens
 
 UI Kit задаёт единый типографический слой через CSS-токены:
 

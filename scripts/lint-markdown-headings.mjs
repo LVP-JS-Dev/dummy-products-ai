@@ -52,6 +52,10 @@ function stripUtf8Bom(line) {
   return line.replace(UTF8_BOM_RE, "");
 }
 
+function isFenceDelimiter(trimmedLine) {
+  return trimmedLine.startsWith("```") || trimmedLine.startsWith("~~~");
+}
+
 function indexAfterFrontmatter(lines) {
   if (lines.length === 0) {
     return 0;
@@ -126,9 +130,21 @@ function lintMd041TopLevelHeading(filePath, lines) {
 
 function lintMd022HeadingsSurroundedByBlankLines(filePath, lines) {
   const issues = [];
+  let inFence = false;
 
   for (let i = 0; i < lines.length; i += 1) {
     const line = stripUtf8Bom(lines[i]);
+    const trimmed = line.trim();
+
+    if (isFenceDelimiter(trimmed)) {
+      inFence = !inFence;
+      continue;
+    }
+
+    if (inFence) {
+      continue;
+    }
+
     if (!HEADING_RE.test(line)) {
       continue;
     }

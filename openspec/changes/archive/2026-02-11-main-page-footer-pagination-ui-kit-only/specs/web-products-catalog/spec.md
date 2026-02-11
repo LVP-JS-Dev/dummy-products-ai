@@ -4,7 +4,7 @@
 
 ### Requirement: Products list SHALL support pagination via API parameters
 
-The products screen SHALL support paginated loading from the products API using `limit` and `skip` (or equivalent) parameters. The products screen SHALL render pagination controls in the page footer area below the products table and MUST implement those controls using the available `@dummy-products/ui-kit` pagination primitives (specifically `Pagination`, without custom next/prev/page button implementations).
+The products screen SHALL support paginated loading from the products API using `limit` and `skip` (or equivalent) parameters. The products screen SHALL render pagination controls in a footer row under the table content and MUST implement those controls using the available `@dummy-products/ui-kit` pagination primitives (specifically `Pagination`, without custom next/prev/page button implementations).
 
 #### Scenario: User navigates to next page
 

@@ -46,3 +46,16 @@ Available UI-kit components in this repo are limited to: `Button`, `Checkbox`, `
 ## Open Questions
 
 - None.
+
+## How to verify
+
+- Run `pnpm -C apps/web exec vitest run src/test/Products.test.tsx`.
+- Run `pnpm check` from repo root.
+- Manually verify on `/products` that footer pagination uses only UI-kit primitives for controls (`Pagination`, plus `SearchInput`/`Button` where applicable), with no ad hoc page/prev/next control implementation.
+
+## PRD impact
+
+- [x] Root `PRD.md`
+- [x] `packages/ui-kit/PRD.md`
+- [x] `apps/web/PRD.md`
+- [x] `apps/fumadocs/PRD.md`
