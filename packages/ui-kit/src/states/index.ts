@@ -6,6 +6,8 @@ import { iconStates } from "./IconStates";
 import { imageStates } from "./ImageStates";
 import { inputStates } from "./InputStates";
 import { linkStates } from "./LinkStates";
+import { logoStates } from "./LogoStates";
+import { modalStates } from "./ModalStates";
 import { pageNumberStates } from "./PageNumberStates";
 import { paginationStates } from "./PaginationStates";
 import { searchInputStates } from "./SearchInputStates";
@@ -22,6 +24,8 @@ export const states = {
   divider: dividerStates,
   input: inputStates,
   link: linkStates,
+  logo: logoStates,
+  modal: modalStates,
   spinner: spinnerStates,
   text: textStates,
   toast: toastStates,

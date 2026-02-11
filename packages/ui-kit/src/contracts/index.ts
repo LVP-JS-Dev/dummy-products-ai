@@ -6,6 +6,8 @@ export { iconContract } from "./IconContract";
 export { imageContract, imageEvents } from "./ImageContract";
 export { inputContract, inputEvents } from "./InputContract";
 export { linkContract, linkEvents } from "./LinkContract";
+export { logoContract } from "./LogoContract";
+export { modalContract, modalEvents } from "./ModalContract";
 export { pageNumberContract, pageNumberEvents } from "./PageNumberContract";
 export { paginationContract, paginationEvents } from "./PaginationContract";
 export {
