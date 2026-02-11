@@ -8,10 +8,10 @@
 
 ## 2. Implementation (only if adopted)
 
-- [x] Add `@tanstack/react-virtual` dependency to `apps/web` (deferred; adoption not approved)
-- [x] Virtualize products table body rows while preserving header/footer layout (deferred; adoption not approved)
-- [x] Preserve keyboard navigation and accessible reading order (deferred; adoption not approved)
-- [x] Add regression tests for basic rendering and interactions (deferred; adoption not approved)
+- [ ] Add `@tanstack/react-virtual` dependency to `apps/web` *(deferred; adoption not approved)*
+- [ ] Virtualize products table body rows while preserving header/footer layout *(deferred; adoption not approved)*
+- [ ] Preserve keyboard navigation and accessible reading order *(deferred; adoption not approved)*
+- [ ] Add regression tests for basic rendering and interactions *(deferred; adoption not approved)*
 
 ## 3. Verification
 

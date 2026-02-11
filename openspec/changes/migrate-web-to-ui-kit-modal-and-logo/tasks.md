@@ -15,4 +15,4 @@
 
 ## 3. Verification
 
-- [x] Run `pnpm check` (not run)
+- [x] Run `pnpm check`

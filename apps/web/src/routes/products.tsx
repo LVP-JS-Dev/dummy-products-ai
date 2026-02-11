@@ -461,13 +461,7 @@ function AddProductModal({ onClose }: { onClose: () => void }) {
   }
 
   return (
-    <Modal
-      dismissible
-      onClose={() => onClose()}
-      open
-      size="lg"
-      title="Добавить товар"
-    >
+    <Modal dismissible onClose={onClose} open size="lg" title="Добавить товар">
       <form onSubmit={onSubmit}>
         <div style={{ display: "grid", gap: "var(--ui-space-md)" }}>
           <Field
@@ -508,7 +502,7 @@ function AddProductModal({ onClose }: { onClose: () => void }) {
             gap: "var(--ui-space-sm)",
           }}
         >
-          <Button onPress={onClose} text="Отмена" variant="blue" />
+          <Button onPress={onClose} text="Отмена" variant="secondary" />
           <Button onPress={saveProduct} text="Сохранить" variant="blue" />
         </div>
       </form>
@@ -524,6 +518,7 @@ function Field(props: {
   error?: string;
   inputMode?: HTMLAttributes<HTMLInputElement>["inputMode"];
 }) {
+  const errorId = `${props.id}-error`;
   return (
     <div style={{ display: "grid", gap: 6 }}>
       <label
@@ -538,6 +533,7 @@ function Field(props: {
         {props.label}
       </label>
       <input
+        aria-describedby={props.error ? errorId : undefined}
         aria-invalid={Boolean(props.error)}
         className="focus-visible:outline-2 focus-visible:outline-[var(--ui-color-focus-ring)] focus-visible:outline-offset-2"
         id={props.id}
@@ -556,6 +552,7 @@ function Field(props: {
       />
       {props.error ? (
         <div
+          id={errorId}
           style={{
             color: "#dc2626",
             fontFamily: "var(--ui-font-body)",
