@@ -1,0 +1,14 @@
+{
+  "source": "talktofigma-mcp",
+  "channel": "wd3ly4mp",
+  "fileKey": "u4GSbcr9JRSsLjik5IAjRg",
+  "nodeIds": ["1046:50", "1046:71", "1:417", "1:451"],
+  "extraNodeIds": ["1046:81", "1002:2846"],
+  "fallbackRefs": [
+    "requirements/auth-form.png",
+    "requirements/goods-list.png",
+    "apps/web/src/routes/login.figma-map.md",
+    "apps/web/src/routes/products.figma-map.md"
+  ],
+  "timestamp": "2026-02-11T08:17:00.000Z"
+}

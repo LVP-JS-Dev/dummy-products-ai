@@ -19,9 +19,13 @@ Import the token stylesheet once in your app’s global CSS:
 
 | Token | Value | Description |
 | --- | --- | --- |
-| `--ui-color-focus-ring` | `#5c6cff` | Focus ring/outline color for interactive elements. |
+| `--ui-color-accent` | `#797fea` | Accent color for selection highlights (e.g., active pagination). |
+| `--ui-color-focus-ring` | `var(--ui-color-accent)` | Focus ring/outline color for interactive elements. |
+| `--ui-color-link` | `var(--ui-color-primary)` | Semantic link text color. |
 | `--ui-color-on-primary` | `#ffffff` | Text/icon color on top of primary backgrounds. |
+| `--ui-color-overlay` | `rgb(17 24 39 / 45%)` | Overlay color for dimmed backdrops. |
 | `--ui-color-primary` | `#242edb` | Primary action/brand color. |
+| `--ui-color-primary-border` | `#367aff` | Border/stroke color paired with the primary brand fill. |
 
 ### Deprecated
 
@@ -32,7 +36,6 @@ Import the token stylesheet once in your app’s global CSS:
 | `--ui-color-gray-200` | `var(--ui-color-border)` | Deprecated. Use `--ui-color-border` (or `--ui-color-surface-muted` for fills). |
 | `--ui-color-gray-400` | `var(--ui-color-text-muted)` | Deprecated. Use `--ui-color-text-muted`. |
 | `--ui-color-green-soft` | `var(--ui-color-success-surface)` | Deprecated. Use `--ui-color-success-surface`. |
-| `--ui-color-text-placeholder` | `var(--ui-color-text-muted)` | Deprecated. Use `--ui-color-text-muted`. |
 | `--ui-color-text-primary` | `var(--ui-color-text)` | Deprecated. Use `--ui-color-text`. |
 | `--ui-color-white` | `var(--ui-color-surface)` | Deprecated. Use `--ui-color-surface`. |
 
@@ -40,22 +43,30 @@ Import the token stylesheet once in your app’s global CSS:
 
 | Token | Value | Description |
 | --- | --- | --- |
-| `--ui-color-success-surface` | `#d9f4e5` | Soft positive/confirmation background. |
+| `--ui-color-danger` | `#dc2626` | Semantic error/danger foreground color. |
+| `--ui-color-danger-surface` | `#fee2e2` | Soft background for destructive or error emphasis. |
+| `--ui-color-info` | `#2563eb` | Semantic informational color. |
+| `--ui-color-success` | `#15803d` | Semantic success foreground color. |
+| `--ui-color-success-surface` | `#dcfce7` | Soft positive/confirmation background. |
+| `--ui-color-warning` | `#d97706` | Semantic warning color. |
 
 ### Surface
 
 | Token | Value | Description |
 | --- | --- | --- |
-| `--ui-color-border` | `#e5e7eb` | Default border/divider color. |
+| `--ui-color-border` | `#ededed` | Default border/divider color. |
+| `--ui-color-border-subtle` | `#ececeb` | Subtle border color for compact controls (e.g., pagination). |
 | `--ui-color-surface` | `#ffffff` | Default app surface/background color. |
-| `--ui-color-surface-muted` | `#e5e7eb` | Muted surface/background for subtle fills (e.g., progress tracks). |
+| `--ui-color-surface-muted` | `#f3f3f3` | Muted surface/background for subtle fills (e.g., progress tracks). |
 
 ### Text
 
 | Token | Value | Description |
 | --- | --- | --- |
-| `--ui-color-text` | `#111827` | Primary text color for most UI text. |
-| `--ui-color-text-muted` | `#9ca3af` | Muted/secondary text color (e.g., placeholders, helper text). |
+| `--ui-color-text` | `#232323` | Primary text color for most UI text. |
+| `--ui-color-text-muted` | `#9c9c9c` | Muted/secondary text color (e.g., placeholders, helper text). |
+| `--ui-color-text-placeholder` | `#999999` | Placeholder text color for inputs. |
+| `--ui-color-text-tertiary` | `#b2b3b9` | Tertiary text color used for low-emphasis UI labels. |
 
 ### Example
 
@@ -95,6 +106,8 @@ p {
 | `--ui-space-lg` | `16px` | Large spacing unit. |
 | `--ui-space-md` | `12px` | Medium spacing unit. |
 | `--ui-space-sm` | `8px` | Small spacing unit. |
+| `--ui-space-xl` | `20px` | Extra-large spacing unit. |
+| `--ui-space-xs` | `4px` | Extra-small spacing unit. |
 | `--ui-space-xxl` | `24px` | Double extra-large spacing unit. |
 
 ### Example
@@ -111,9 +124,12 @@ p {
 
 | Token | Value | Description |
 | --- | --- | --- |
-| `--ui-radius-lg` | `14px` | Large corner radius. |
-| `--ui-radius-md` | `10px` | Medium corner radius. |
+| `--ui-radius-lg` | `12px` | Large corner radius. |
+| `--ui-radius-md` | `8px` | Medium corner radius. |
+| `--ui-radius-pill` | `9999px` | Pill radius for rounded badges and chips. |
 | `--ui-radius-sm` | `6px` | Small corner radius. |
+| `--ui-radius-xl` | `16px` | Extra-large corner radius. |
+| `--ui-radius-xs` | `4px` | Extra-small corner radius. |
 
 ### Example
 

@@ -1,0 +1,34 @@
+---
+title: Input
+description: Text field with optional start/end adornments, label, and error state.
+---
+
+import { Input, states } from "@dummy-products/ui-kit";
+import { WithControl } from "@/stories/input.story";
+
+## Description
+
+Composable input field for auth/forms with optional label, error message, and password support.
+
+## API
+
+Props are defined in the UI Kit contract. Key props: `label`, `value`, `type`, `error`, `startAdornment`, `endAdornment`.
+
+**Specification**
+- [`manifest.json`](../../../../../packages/ui-kit/src/generated/manifest.json)
+- [`input.schema.json`](../../../../../packages/ui-kit/src/generated/schemas/input.schema.json)
+
+## Examples
+
+<div style={{ display: "grid", gap: 12, maxWidth: 420 }}>
+  {Object.entries(states.input).map(([name, props]) => (
+    <div key={name} style={{ display: "grid", gap: 8 }}>
+      <Input {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Interactive
+
+<WithControl />

@@ -7,22 +7,71 @@ import { Icon } from "./Icon";
 const baseStyle: React.CSSProperties = {
   display: "inline-flex",
   alignItems: "center",
-  gap: "var(--ui-space-lg)",
-  padding: "var(--ui-space-md) var(--ui-space-xxl)",
+  justifyContent: "center",
+  gap: "var(--ui-space-sm)",
+  padding: "var(--ui-space-md) var(--ui-space-lg)",
   borderRadius: "var(--ui-radius-md)",
-  border: "none",
+  border: "1px solid transparent",
   cursor: "pointer",
-  fontFamily: "var(--ui-font-heading)",
   fontWeight: 600,
-  fontSize: 14,
-  lineHeight: 1.4,
+  lineHeight: 1.2,
+};
+
+const variantStyle: Record<
+  "blue" | "secondary" | "ghost",
+  React.CSSProperties
+> = {
+  blue: {
+    background: "var(--ui-color-primary)",
+    backgroundImage:
+      "linear-gradient(180deg, rgb(255 255 255 / 0%) 0%, rgb(255 255 255 / 12%) 100%)",
+    color: "var(--ui-color-on-primary)",
+    borderColor: "var(--ui-color-primary-border)",
+  },
+  secondary: {
+    background: "var(--ui-color-surface)",
+    color: "var(--ui-color-text)",
+    borderColor: "var(--ui-color-border)",
+  },
+  ghost: {
+    background: "transparent",
+    color: "var(--ui-color-text)",
+    borderColor: "var(--ui-color-border)",
+  },
+};
+
+const sizeStyle: Record<"sm" | "md" | "lg", React.CSSProperties> = {
+  sm: {
+    minHeight: 32,
+    fontSize: 12,
+    padding: "var(--ui-space-sm) var(--ui-space-md)",
+    borderRadius: "var(--ui-radius-sm)",
+    fontFamily: "var(--ui-font-ui)",
+  },
+  md: {
+    minHeight: 42,
+    fontSize: 14,
+    borderRadius: "var(--ui-radius-sm)",
+    fontFamily: "var(--ui-font-heading)",
+    fontWeight: 600,
+  },
+  lg: {
+    minHeight: 54,
+    fontSize: 18,
+    padding: "var(--ui-space-md) var(--ui-space-xl)",
+    borderRadius: "var(--ui-radius-lg)",
+    fontFamily: "var(--ui-font-ui)",
+    fontWeight: 600,
+    letterSpacing: "-0.18px",
+    lineHeight: "22px",
+  },
 };
 
 const badgeBase: React.CSSProperties = {
   display: "inline-flex",
   alignItems: "center",
   justifyContent: "center",
-  borderRadius: 999,
+  borderRadius: "var(--ui-radius-pill)",
   padding: "2px 6px",
   fontSize: 10,
   fontWeight: 700,
@@ -31,7 +80,8 @@ const badgeBase: React.CSSProperties = {
 
 export function Button({
   text,
-  variant,
+  variant = "blue",
+  size = "md",
   showIcon,
   iconName,
   showDropdown,
@@ -41,33 +91,25 @@ export function Button({
   showBadgeCount,
   disabled,
   loading,
+  fullWidth,
+  buttonType,
   onPress,
+  children,
+  className,
+  style,
+  id,
+  title,
+  ariaLabel,
+  ariaDescribedBy,
 }: ButtonProps) {
   const isDisabled = Boolean(disabled) || Boolean(loading);
   const showLabel = showBadgeLabel ?? Boolean(badgeLabel);
   const showCount = showBadgeCount ?? typeof badgeCount === "number";
-  const { background, color } = {
-    blue: {
-      background: "var(--ui-color-primary)",
-      color: "var(--ui-color-on-primary)",
-    },
-  }[variant];
 
-  return (
-    <button
-      aria-busy={loading || undefined}
-      disabled={isDisabled}
-      onClick={() => onPress?.({})}
-      style={{
-        ...baseStyle,
-        background,
-        color,
-        opacity: isDisabled ? 0.6 : 1,
-      }}
-      type="button"
-    >
+  const legacyContent = (
+    <>
       {showIcon && iconName ? <Icon name={iconName} size={18} /> : null}
-      <span>{text}</span>
+      {text ? <span>{text}</span> : null}
       {showLabel && badgeLabel ? (
         <span
           style={{
@@ -92,6 +134,31 @@ export function Button({
         </span>
       ) : null}
       {showDropdown ? <Icon name="caret_right" size={16} /> : null}
+    </>
+  );
+
+  return (
+    <button
+      aria-busy={loading || undefined}
+      aria-describedby={ariaDescribedBy}
+      aria-label={ariaLabel}
+      className={className}
+      disabled={isDisabled}
+      id={id}
+      onClick={() => onPress?.({})}
+      style={{
+        ...baseStyle,
+        ...variantStyle[variant],
+        ...sizeStyle[size],
+        width: fullWidth ? "100%" : undefined,
+        opacity: isDisabled ? 0.6 : 1,
+        cursor: isDisabled ? "not-allowed" : "pointer",
+        ...style,
+      }}
+      title={title}
+      type={buttonType ?? "button"}
+    >
+      {children ?? legacyContent}
     </button>
   );
 }

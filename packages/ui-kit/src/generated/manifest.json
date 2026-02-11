@@ -9,6 +9,10 @@
         }
       }
     },
+    "Card": {
+      "schema": "schemas/card.schema.json",
+      "propsSchema": "schemas/card.schema.json"
+    },
     "SearchInput": {
       "schema": "schemas/search-input.schema.json",
       "propsSchema": "schemas/search-input.schema.json",
@@ -27,6 +31,63 @@
       "events": {
         "checkedChange": {
           "payloadSchema": "schemas/checkbox.checked-change.schema.json"
+        }
+      }
+    },
+    "Divider": {
+      "schema": "schemas/divider.schema.json",
+      "propsSchema": "schemas/divider.schema.json"
+    },
+    "Input": {
+      "schema": "schemas/input.schema.json",
+      "propsSchema": "schemas/input.schema.json",
+      "events": {
+        "valueChange": {
+          "payloadSchema": "schemas/input.value-change.schema.json"
+        },
+        "submit": {
+          "payloadSchema": "schemas/input.submit.schema.json"
+        }
+      }
+    },
+    "Link": {
+      "schema": "schemas/link.schema.json",
+      "propsSchema": "schemas/link.schema.json",
+      "events": {
+        "press": {
+          "payloadSchema": "schemas/link.press.schema.json"
+        }
+      }
+    },
+    "Text": {
+      "schema": "schemas/text.schema.json",
+      "propsSchema": "schemas/text.schema.json"
+    },
+    "Toast": {
+      "schema": "schemas/toast.schema.json",
+      "propsSchema": "schemas/toast.schema.json",
+      "events": {
+        "dismiss": {
+          "payloadSchema": "schemas/toast.dismiss.schema.json"
+        },
+        "action": {
+          "payloadSchema": "schemas/toast.action.schema.json"
+        }
+      }
+    },
+    "Spinner": {
+      "schema": "schemas/spinner.schema.json",
+      "propsSchema": "schemas/spinner.schema.json"
+    },
+    "Image": {
+      "schema": "schemas/image.schema.json",
+      "propsSchema": "schemas/image.schema.json",
+      "events": {
+        "load": {
+          "payloadSchema": "schemas/image.load.schema.json"
+        },
+        "error": {
+          "payloadSchema": "schemas/image.error.schema.json"
         }
       }
     },

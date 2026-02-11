@@ -12,6 +12,7 @@
     "test": "tsx scripts/Test.ts"
   },
   "dependencies": {
+    "sonner": "^2.0.5",
     "zod": "catalog:"
   },
   "devDependencies": {

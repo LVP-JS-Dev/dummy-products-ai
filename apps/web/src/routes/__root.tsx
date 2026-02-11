@@ -1,3 +1,4 @@
+import { Toaster } from "@dummy-products/ui-kit";
 import {
   createRootRouteWithContext,
   HeadContent,
@@ -6,7 +7,6 @@ import {
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { Toaster } from "@/components/ui/Sonner";
 
 import "../index.css";
 
@@ -46,7 +46,7 @@ function RootComponent() {
         <div className="min-h-svh">
           <Outlet />
         </div>
-        <Toaster richColors />
+        <Toaster position="top-right" richColors />
       </ThemeProvider>
       {import.meta.env.DEV ? (
         <TanStackRouterDevtools position="bottom-left" />

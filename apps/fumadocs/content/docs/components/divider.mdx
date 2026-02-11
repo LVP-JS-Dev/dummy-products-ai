@@ -1,0 +1,34 @@
+---
+title: Divider
+description: Horizontal separator with optional centered content.
+---
+
+import { Divider, states } from "@dummy-products/ui-kit";
+import { WithControl } from "@/stories/divider.story";
+
+## Description
+
+Use to split visual sections in forms and cards.
+
+## API
+
+Props are defined in the UI Kit contract. Key props: `text`, `tone`, `thickness`.
+
+**Specification**
+- [`manifest.json`](../../../../../packages/ui-kit/src/generated/manifest.json)
+- [`divider.schema.json`](../../../../../packages/ui-kit/src/generated/schemas/divider.schema.json)
+
+## Examples
+
+<div style={{ display: "grid", gap: 12 }}>
+  {Object.entries(states.divider).map(([name, props]) => (
+    <div key={name} style={{ display: "grid", gap: 6 }}>
+      <Divider {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Interactive
+
+<WithControl />

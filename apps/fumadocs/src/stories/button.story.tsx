@@ -13,6 +13,7 @@ export function WithControl() {
   const [showCount, setShowCount] = useState<boolean>(
     Boolean(base.showBadgeCount)
   );
+  const [childMode, setChildMode] = useState<boolean>(false);
 
   return (
     <div style={{ display: "grid", gap: 16 }}>
@@ -22,7 +23,14 @@ export function WithControl() {
         showBadgeLabel={showLabel}
         showIcon={showIcon}
         text={text}
-      />
+      >
+        {childMode ? (
+          <>
+            <span aria-hidden>★</span>
+            <span>{text || "Button"}</span>
+          </>
+        ) : undefined}
+      </Button>
       <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
         <label style={{ display: "grid", gap: 4 }}>
           <span>Text</span>
@@ -54,6 +62,14 @@ export function WithControl() {
             type="checkbox"
           />
           Count
+        </label>
+        <label style={{ display: "flex", alignItems: "center", gap: 6 }}>
+          <input
+            checked={childMode}
+            onChange={(event) => setChildMode(event.target.checked)}
+            type="checkbox"
+          />
+          Children mode
         </label>
       </div>
     </div>

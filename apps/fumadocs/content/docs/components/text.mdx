@@ -1,0 +1,34 @@
+---
+title: Text
+description: Typography component with token variants and polymorphic tag.
+---
+
+import { Text, states } from "@dummy-products/ui-kit";
+import { WithControl } from "@/stories/text.story";
+
+## Description
+
+Unified typography primitive supporting `as` for semantic tags.
+
+## API
+
+Props are defined in the UI Kit contract. Key props: `variant`, `as`, `weight`, `align`.
+
+**Specification**
+- [`manifest.json`](../../../../../packages/ui-kit/src/generated/manifest.json)
+- [`text.schema.json`](../../../../../packages/ui-kit/src/generated/schemas/text.schema.json)
+
+## Examples
+
+<div style={{ display: "grid", gap: 12 }}>
+  {Object.entries(states.text).map(([name, props]) => (
+    <div key={name} style={{ display: "grid", gap: 4 }}>
+      <Text {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Interactive
+
+<WithControl />

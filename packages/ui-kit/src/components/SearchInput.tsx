@@ -4,6 +4,7 @@ import type { SearchInputProps } from "../contracts/SearchInputContract";
 import { Icon } from "./Icon";
 
 export function SearchInput({
+  ariaLabel,
   placeholder,
   value,
   state,
@@ -14,25 +15,30 @@ export function SearchInput({
   const isDisabled = state === "disabled";
   const isActive = state === "active";
   const currentValue = value ?? "";
+  const resolvedAriaLabel = ariaLabel ?? placeholder;
 
   return (
-    <label
+    <div
+      className="ui-searchInputRoot"
       style={{
         display: "inline-flex",
         alignItems: "center",
-        gap: "var(--ui-space-sm)",
-        padding: "var(--ui-space-sm) var(--ui-space-md)",
-        borderRadius: "var(--ui-radius-lg)",
-        background: "var(--ui-color-surface)",
-        border: `1px solid ${isActive ? "var(--ui-color-focus-ring)" : "var(--ui-color-border)"}`,
+        gap: "var(--ui-space-md)",
+        height: 48,
+        padding: "0 var(--ui-space-lg)",
+        borderRadius: "var(--ui-radius-md)",
+        background: "var(--ui-color-surface-muted)",
+        border: `1px solid ${isActive ? "var(--ui-color-focus-ring)" : "transparent"}`,
         minWidth: 220,
         opacity: isDisabled ? 0.6 : 1,
       }}
     >
       {showIcon ? (
-        <Icon color={"var(--ui-color-text-muted)"} name="search" size={20} />
+        <Icon color={"var(--ui-color-text-muted)"} name="search" size={24} />
       ) : null}
       <input
+        aria-label={resolvedAriaLabel}
+        className="ui-searchInput"
         disabled={isDisabled}
         onChange={(event) =>
           onValueChange?.({ value: event.currentTarget.value })
@@ -55,6 +61,6 @@ export function SearchInput({
         type="search"
         value={currentValue}
       />
-    </label>
+    </div>
   );
 }

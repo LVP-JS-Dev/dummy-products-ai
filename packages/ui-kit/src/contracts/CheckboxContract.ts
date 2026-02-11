@@ -1,3 +1,4 @@
+import type { CSSProperties, ReactNode } from "react";
 import { z } from "zod";
 
 export const checkboxContract = z.object({
@@ -5,6 +6,8 @@ export const checkboxContract = z.object({
   label: z.string().optional(),
   disabled: z.boolean().optional(),
   name: z.string().optional(),
+  id: z.string().optional(),
+  required: z.boolean().optional(),
 });
 
 export const checkboxEvents = {
@@ -27,4 +30,12 @@ export type CheckboxHandlers = {
   ) => void;
 };
 
-export type CheckboxProps = CheckboxSerializableProps & CheckboxHandlers;
+export interface CheckboxRuntimeProps {
+  children?: ReactNode;
+  className?: string;
+  style?: CSSProperties;
+}
+
+export type CheckboxProps = CheckboxSerializableProps &
+  CheckboxHandlers &
+  CheckboxRuntimeProps;

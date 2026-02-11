@@ -1,0 +1,34 @@
+---
+title: Spinner
+description: Loading indicator with size and tone variants.
+---
+
+import { Spinner, states } from "@dummy-products/ui-kit";
+import { WithControl } from "@/stories/spinner.story";
+
+## Description
+
+Visual loading status for async operations.
+
+## API
+
+Props are defined in the UI Kit contract. Key props: `size`, `tone`, `label`.
+
+**Specification**
+- [`manifest.json`](../../../../../packages/ui-kit/src/generated/manifest.json)
+- [`spinner.schema.json`](../../../../../packages/ui-kit/src/generated/schemas/spinner.schema.json)
+
+## Examples
+
+<div style={{ display: "flex", gap: 24, alignItems: "center" }}>
+  {Object.entries(states.spinner).map(([name, props]) => (
+    <div key={name} style={{ display: "grid", justifyItems: "center", gap: 4 }}>
+      <Spinner {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Interactive
+
+<WithControl />

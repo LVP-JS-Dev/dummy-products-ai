@@ -8,17 +8,29 @@
 :root {
   /* Semantic colors (preferred) */
   --ui-color-surface: #ffffff;
-  --ui-color-surface-muted: #e5e7eb;
-  --ui-color-border: #e5e7eb;
+  --ui-color-surface-muted: #f3f3f3;
+  --ui-color-border: #ededed;
+  --ui-color-border-subtle: #ececeb;
 
   --ui-color-primary: #242edb;
+  --ui-color-primary-border: #367aff;
+  --ui-color-accent: #797fea;
   --ui-color-on-primary: #ffffff;
-  --ui-color-focus-ring: #5c6cff;
+  --ui-color-focus-ring: var(--ui-color-accent);
 
-  --ui-color-text: #111827;
-  --ui-color-text-muted: #9ca3af;
+  --ui-color-text: #232323;
+  --ui-color-text-muted: #9c9c9c;
+  --ui-color-text-tertiary: #b2b3b9;
+  --ui-color-text-placeholder: #999999;
 
-  --ui-color-success-surface: #d9f4e5;
+  --ui-color-success: #15803d;
+  --ui-color-success-surface: #dcfce7;
+  --ui-color-info: #2563eb;
+  --ui-color-warning: #d97706;
+  --ui-color-danger: #dc2626;
+  --ui-color-danger-surface: #fee2e2;
+  --ui-color-link: var(--ui-color-primary);
+  --ui-color-overlay: rgb(17 24 39 / 45%);
 
   /* Deprecated palette-based aliases (kept for backward compatibility) */
   --ui-color-white: var(--ui-color-surface);
@@ -28,18 +40,35 @@
   --ui-color-gray-200: var(--ui-color-border);
   --ui-color-gray-400: var(--ui-color-text-muted);
   --ui-color-text-primary: var(--ui-color-text);
-  --ui-color-text-placeholder: var(--ui-color-text-muted);
 
+  --ui-space-xs: 4px;
   --ui-space-sm: 8px;
   --ui-space-md: 12px;
   --ui-space-lg: 16px;
+  --ui-space-xl: 20px;
   --ui-space-xxl: 24px;
 
+  --ui-radius-xs: 4px;
   --ui-radius-sm: 6px;
-  --ui-radius-md: 10px;
-  --ui-radius-lg: 14px;
+  --ui-radius-md: 8px;
+  --ui-radius-lg: 12px;
+  --ui-radius-xl: 16px;
+  --ui-radius-pill: 9999px;
 
   --ui-font-heading: "Cairo", "Inter", system-ui, sans-serif;
   --ui-font-ui: "Inter", "Inter Variable", system-ui, sans-serif;
   --ui-font-body: "Open Sans", "Inter", system-ui, sans-serif;
+}
+
+/* Minimal base styles for component internals that cannot be expressed via inline style (e.g. ::placeholder, :focus-within). */
+.ui-input::placeholder,
+.ui-searchInput::placeholder {
+  color: var(--ui-color-text-placeholder);
+}
+
+.ui-inputRoot:focus-within,
+.ui-searchInputRoot:focus-within {
+  border-color: var(--ui-color-focus-ring);
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--ui-color-focus-ring) 25%, transparent);
 }
