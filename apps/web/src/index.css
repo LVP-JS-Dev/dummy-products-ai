@@ -141,3 +141,92 @@
     transform: translateX(140%);
   }
 }
+
+/* Products page layout helpers (extracted from Tailwind for future UI-kit enrichment). */
+
+/* Centers the products page content and applies consistent page padding. */
+.products-page {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1200px;
+  padding: 32px 24px;
+}
+
+/* Top header container: title + primary search input, visually separated from the content card. */
+.products-header {
+  margin-bottom: 24px;
+  border: 1px solid var(--ui-color-border);
+  border-radius: var(--ui-radius-lg);
+  background: var(--ui-color-surface);
+  padding: 20px 16px;
+}
+
+/* Header layout: stacks on mobile, becomes a row on desktop. */
+.products-header-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Constrains header search width on desktop while allowing full-width on mobile. */
+.products-header-search {
+  width: 100%;
+}
+
+/* Main content container: wraps toolbar, progress, table, and pagination. */
+.products-card {
+  overflow: hidden;
+  border: 1px solid var(--ui-color-border);
+  border-radius: var(--ui-radius-lg);
+  background: var(--ui-color-surface);
+  padding: 16px;
+}
+
+/* Toolbar layout: stacks on mobile, becomes a row with space-between on desktop. */
+.products-card-toolbar {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Keeps action controls grouped and aligned consistently. */
+.products-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Desktop overrides for responsive layout decisions. */
+@media (min-width: 768px) {
+  /* Matches previous md: padding for the header container. */
+  .products-header {
+    padding: 20px 24px;
+  }
+
+  /* Matches previous md:flex-row + md:items-center + md:justify-between. */
+  .products-header-inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Matches previous md:max-w-[520px] for the search control. */
+  .products-header-search {
+    max-width: 520px;
+  }
+
+  /* Matches previous md: padding for the content card. */
+  .products-card {
+    padding: 24px;
+  }
+
+  /* Matches previous md:mb-6 + md:flex-row + md:items-end + md:justify-between. */
+  .products-card-toolbar {
+    margin-bottom: 24px;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+  }
+}

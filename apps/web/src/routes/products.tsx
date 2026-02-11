@@ -1,15 +1,4 @@
-import {
-  Button,
-  Card,
-  CardContent,
-  CardDescription,
-  CardTitle,
-  Input,
-  Pagination,
-  SearchInput,
-  Spinner,
-  toast,
-} from "@dummy-products/ui-kit";
+import { Button, Pagination, SearchInput } from "@dummy-products/ui-kit";
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import {
   flexRender,
@@ -29,6 +18,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { toast } from "sonner";
 
 import { fetchProductsPage, searchProductsPage } from "@/api/DummyJson";
 import { ApiError } from "@/api/Http";
@@ -261,196 +251,234 @@ export function ProductsPage() {
   const searchState = getSearchInputState(loading, inputQuery);
 
   return (
-    <div className="mx-auto w-full max-w-[1200px] px-6 py-8">
-      <div className="mb-6 flex items-end justify-between gap-4">
-        <div className="grid gap-1">
-          <div
-            style={{
-              fontFamily: "var(--ui-font-heading)",
-              color: "var(--ui-color-text)",
-              fontWeight: 700,
-              fontSize: 32,
-              lineHeight: 1.2,
-            }}
-          >
-            Товары
+    <div className="products-page">
+      <header className="products-header">
+        <div className="products-header-inner">
+          <div className="grid gap-1">
+            <h1
+              style={{
+                fontFamily: "var(--ui-font-heading)",
+                color: "var(--ui-color-text)",
+                fontWeight: 700,
+                fontSize: 32,
+                lineHeight: 1.2,
+              }}
+            >
+              Товары
+            </h1>
+            <div
+              style={{
+                color: "var(--ui-color-text-muted)",
+                fontFamily: "var(--ui-font-body)",
+                fontSize: 14,
+              }}
+            >
+              Найдите товар по названию, вендору или артикулу.
+            </div>
           </div>
-          <div
-            style={{
-              color: "var(--ui-color-text-muted)",
-              fontFamily: "var(--ui-font-body)",
-              fontSize: 14,
-            }}
-          >
-            Сортировка применяется только к текущей странице.
+          <div className="products-header-search">
+            <SearchInput
+              onSubmit={({ value }) => setInputQuery(value)}
+              onValueChange={({ value }) => setInputQuery(value)}
+              placeholder="Найти"
+              showIcon
+              state={searchState}
+              value={inputQuery}
+            />
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          <AddProductButton />
-          <Button onPress={onLogout} text="Выйти" variant="blue" />
-        </div>
-      </div>
+      </header>
 
-      <div className="mb-4 grid gap-2">
+      <section className="products-card">
+        <div className="products-card-toolbar">
+          <div className="grid gap-1">
+            <h2
+              style={{
+                fontFamily: "var(--ui-font-heading)",
+                color: "var(--ui-color-text)",
+                fontWeight: 700,
+                fontSize: 32,
+                lineHeight: 1.2,
+              }}
+            >
+              Все позиции
+            </h2>
+            <div
+              style={{
+                color: "var(--ui-color-text-muted)",
+                fontFamily: "var(--ui-font-body)",
+                fontSize: 14,
+              }}
+            >
+              Сортировка применяется только к текущей странице.
+            </div>
+          </div>
+          <div className="products-card-actions">
+            <AddProductButton />
+            <Button onPress={onLogout} text="Выйти" variant="blue" />
+          </div>
+        </div>
+
         <div
-          style={{
-            color: "var(--ui-color-text)",
-            fontFamily: "var(--ui-font-heading)",
-            fontWeight: 600,
-            fontSize: 16,
-          }}
+          className="mb-2 h-1 overflow-hidden"
+          style={{ background: "var(--ui-color-surface-muted)" }}
         >
-          Поиск
+          {loading ? (
+            <div
+              className="h-full w-2/5 animate-[indeterminate_1.2s_ease-in-out_infinite]"
+              style={{ background: "var(--ui-color-primary)" }}
+            />
+          ) : (
+            <div
+              className="h-full w-0"
+              style={{ background: "var(--ui-color-primary)" }}
+            />
+          )}
         </div>
-        <SearchInput
-          onSubmit={({ value }) => setInputQuery(value)}
-          onValueChange={({ value }) => setInputQuery(value)}
-          placeholder="Введите запрос"
-          showIcon
-          state={searchState}
-          value={inputQuery}
-        />
-      </div>
 
-      <div
-        className="mb-2 h-1 overflow-hidden"
-        style={{ background: "var(--ui-color-surface-muted)" }}
-      >
-        {loading ? (
+        {error ? (
           <div
-            className="h-full w-2/5 animate-[indeterminate_1.2s_ease-in-out_infinite]"
-            style={{ background: "var(--ui-color-primary)" }}
-          />
-        ) : (
-          <div
-            className="h-full w-0"
-            style={{ background: "var(--ui-color-primary)" }}
-          />
-        )}
-      </div>
-
-      {error ? (
-        <Card
-          elevated
-          style={{
-            borderColor: "var(--ui-color-danger)",
-          }}
-        >
-          <CardContent>
-            <CardTitle>Ошибка загрузки</CardTitle>
-            <CardDescription>{error}</CardDescription>
+            style={{
+              border: "1px solid var(--ui-color-border)",
+              borderRadius: "var(--ui-radius-md)",
+              padding: "var(--ui-space-lg)",
+              background: "var(--ui-color-surface)",
+            }}
+          >
+            <div
+              style={{
+                color: "var(--ui-color-text)",
+                fontFamily: "var(--ui-font-heading)",
+                fontWeight: 700,
+                fontSize: 16,
+              }}
+            >
+              Ошибка загрузки
+            </div>
+            <div
+              style={{
+                marginTop: 6,
+                color: "var(--ui-color-text-muted)",
+                fontFamily: "var(--ui-font-body)",
+                fontSize: 14,
+              }}
+            >
+              {error}
+            </div>
             <div className="mt-3 flex gap-2">
               <Button
                 onPress={() => setRetryToken((v) => v + 1)}
                 text="Повторить"
                 variant="blue"
               />
-              <Button onPress={forceLogout} text="Выйти" variant="secondary" />
+              <Button onPress={forceLogout} text="Выйти" variant="blue" />
             </div>
-          </CardContent>
-        </Card>
-      ) : (
-        <div
-          className="overflow-hidden"
-          data-testid="products-table-shell"
-          style={{
-            border: "1px solid var(--ui-color-border)",
-            borderRadius: "var(--ui-radius-md)",
-            background: "var(--ui-color-surface)",
-          }}
-        >
-          <table className="w-full border-collapse text-left text-xs">
-            <thead style={{ background: "var(--ui-color-surface-muted)" }}>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <tr className="[&>th]:px-3 [&>th]:py-2" key={headerGroup.id}>
-                  {headerGroup.headers.map((header) =>
-                    renderProductsHeaderCell(header)
-                  )}
-                </tr>
-              ))}
-            </thead>
-            <tbody className="[&>tr>td]:px-3 [&>tr>td]:py-2">
-              {rows.length === 0 && !loading ? (
-                <tr>
-                  <td
-                    colSpan={productsTableColumns.length}
-                    style={{
-                      textAlign: "center",
-                      padding: "32px 0",
-                      fontFamily: "var(--ui-font-body)",
-                      color: "var(--ui-color-text-muted)",
-                      fontSize: 14,
-                    }}
-                  >
-                    Нет данных
-                  </td>
-                </tr>
-              ) : (
-                rows.map((r) => (
-                  <tr
-                    className="border-t"
-                    key={r.id}
-                    style={{ borderColor: "var(--ui-color-border)" }}
-                  >
-                    {r.getVisibleCells().map((cell) => {
-                      const meta = cell.column.columnDef.meta as
-                        | ProductsColumnMeta
-                        | undefined;
-                      const alignClass =
-                        meta?.align === "right"
-                          ? "tabular-nums text-right"
-                          : "";
-                      const isName = cell.column.id === "name";
-                      const cellClassName = isName
-                        ? `font-medium ${alignClass}`.trim()
-                        : alignClass;
-                      const isLowRating =
-                        cell.column.id === "rating" && r.original.rating < 3;
-                      return (
-                        <td
-                          className={cellClassName}
-                          key={cell.id}
-                          style={{ color: isLowRating ? "#dc2626" : "inherit" }}
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-          <div
-            className="flex items-center justify-between gap-3 border-t px-3 py-2"
-            data-testid="products-table-footer"
-            style={{ borderColor: "var(--ui-color-border)" }}
-          >
-            <div
-              style={{
-                fontFamily: "var(--ui-font-body)",
-                color: "var(--ui-color-text-muted)",
-                fontSize: 14,
-              }}
-            >
-              {data ? `Страница ${page} из ${totalPages}` : "Загрузка..."}
-            </div>
-            <Pagination
-              currentPage={page}
-              disabled={loading}
-              maxVisiblePages={5}
-              nextAriaLabel="Следующая страница"
-              onPageChange={({ page: nextPage }) => setPage(nextPage)}
-              pageAriaLabelPrefix="Страница"
-              prevAriaLabel="Предыдущая страница"
-              totalPages={totalPages}
-            />
           </div>
+        ) : (
+          <div
+            className="overflow-hidden"
+            style={{
+              border: "1px solid var(--ui-color-border)",
+              borderRadius: "var(--ui-radius-md)",
+              background: "var(--ui-color-surface)",
+            }}
+          >
+            <table className="w-full border-collapse text-left text-xs">
+              <thead style={{ background: "var(--ui-color-surface-muted)" }}>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <tr className="[&>th]:px-3 [&>th]:py-2" key={headerGroup.id}>
+                    {headerGroup.headers.map((header) =>
+                      renderProductsHeaderCell(header)
+                    )}
+                  </tr>
+                ))}
+              </thead>
+              <tbody className="[&>tr>td]:px-3 [&>tr>td]:py-2">
+                {rows.length === 0 && !loading ? (
+                  <tr>
+                    <td
+                      colSpan={productsTableColumns.length}
+                      style={{
+                        textAlign: "center",
+                        padding: "32px 0",
+                        fontFamily: "var(--ui-font-body)",
+                        color: "var(--ui-color-text-muted)",
+                        fontSize: 14,
+                      }}
+                    >
+                      Нет данных
+                    </td>
+                  </tr>
+                ) : (
+                  rows.map((r) => (
+                    <tr
+                      className="border-t"
+                      key={r.id}
+                      style={{ borderColor: "var(--ui-color-border)" }}
+                    >
+                      {r.getVisibleCells().map((cell) => {
+                        const meta = cell.column.columnDef.meta as
+                          | ProductsColumnMeta
+                          | undefined;
+                        const alignClass =
+                          meta?.align === "right"
+                            ? "tabular-nums text-right"
+                            : "";
+                        const isName = cell.column.id === "name";
+                        const cellClassName = isName
+                          ? `font-medium ${alignClass}`.trim()
+                          : alignClass;
+                        const isLowRating =
+                          cell.column.id === "rating" && r.original.rating < 3;
+                        return (
+                          <td
+                            className={cellClassName}
+                            key={cell.id}
+                            style={{
+                              color: isLowRating ? "#dc2626" : "inherit",
+                            }}
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        <div className="mt-4 flex items-center justify-between gap-3">
+          <div
+            style={{
+              fontFamily: "var(--ui-font-body)",
+              color: "var(--ui-color-text-muted)",
+              fontSize: 14,
+            }}
+          >
+            {error
+              ? "Ошибка загрузки"
+              : data
+                ? `Страница ${page} из ${totalPages}`
+                : "Загрузка..."}
+          </div>
+          <Pagination
+            currentPage={page}
+            disabled={loading || Boolean(error)}
+            maxVisiblePages={5}
+            nextAriaLabel="Следующая страница"
+            onPageChange={({ page: nextPage }) => setPage(nextPage)}
+            pageAriaLabelPrefix="Страница"
+            prevAriaLabel="Предыдущая страница"
+            totalPages={totalPages}
+          />
         </div>
-      )}
+      </section>
     </div>
   );
 }
@@ -729,14 +757,46 @@ function Field(props: {
   inputMode?: HTMLAttributes<HTMLInputElement>["inputMode"];
 }) {
   return (
-    <Input
-      error={props.error}
-      id={props.id}
-      inputMode={props.inputMode}
-      label={props.label}
-      onValueChange={({ value }) => props.onChange(value)}
-      type="text"
-      value={props.value}
-    />
+    <div style={{ display: "grid", gap: 6 }}>
+      <label
+        htmlFor={props.id}
+        style={{
+          color: "var(--ui-color-text)",
+          fontFamily: "var(--ui-font-heading)",
+          fontWeight: 600,
+          fontSize: 14,
+        }}
+      >
+        {props.label}
+      </label>
+      <input
+        aria-invalid={Boolean(props.error)}
+        className="focus-visible:outline-2 focus-visible:outline-[var(--ui-color-focus-ring)] focus-visible:outline-offset-2"
+        id={props.id}
+        inputMode={props.inputMode}
+        onChange={(e) => props.onChange(e.target.value)}
+        style={{
+          border: "1px solid var(--ui-color-border)",
+          borderRadius: "var(--ui-radius-sm)",
+          height: 44,
+          padding: "0 var(--ui-space-md)",
+          fontFamily: "var(--ui-font-ui)",
+          fontSize: 14,
+          color: "var(--ui-color-text)",
+        }}
+        value={props.value}
+      />
+      {props.error ? (
+        <div
+          style={{
+            color: "#dc2626",
+            fontFamily: "var(--ui-font-body)",
+            fontSize: 12,
+          }}
+        >
+          {props.error}
+        </div>
+      ) : null}
+    </div>
   );
 }
