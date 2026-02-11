@@ -18,6 +18,7 @@ apps/
   fumadocs/       # Docs (Next.js + Fumadocs) — документация + интерактивные story
 packages/
   ui-kit/         # UI Kit — contracts + components + states + generated spec
+  gen-api/        # Gen API — OpenAPI -> typed client/types (Kubb), committed generated output
 ```
 
 ---
@@ -47,7 +48,9 @@ pnpm dev
 | Команда | Что делает |
 |---|---|
 | `pnpm dev` | Запускает `apps/web` и `apps/fumadocs`. |
-| `pnpm gen` | Генерирует спецификацию UI Kit (schemas + manifest). |
+| `pnpm gen` | Генерирует все generated-артефакты (UI Kit spec + Gen API client). |
+| `pnpm gen:ui` | Генерирует спецификацию UI Kit (schemas + manifest). |
+| `pnpm gen:api` | Генерирует typed API client из OpenAPI (Kubb). |
 | `pnpm test` | Контрактные тесты UI Kit (валидация `states` по контрактам). |
 | `pnpm check` | Полный гейт: gen + test + no-drift (generated артефакты должны быть актуальны). |
 
@@ -131,6 +134,30 @@ UI Kit генерирует:
 - `packages/ui-kit/src/generated/manifest.json`
 
 `manifest.json` — входная точка для инструментов/агентов: индекс компонентов и путей к схемам.
+
+---
+
+## `packages/gen-api` (OpenAPI client generation)
+
+`packages/gen-api` — workspace-пакет, который стандартизирует генерацию typed API-клиента из OpenAPI и даёт единый импорт для consumers:
+
+```ts
+import { login, listProducts } from "@dummy-products/gen-api";
+```
+
+Зачем нужен:
+- чтобы не держать “ручные” API-обёртки в `apps/*` без общей схемы и правил;
+- чтобы generated output был детерминированным, коммитился и проверялся на no-drift;
+- чтобы toolchain и структура выходов были однозначно задокументированы.
+
+Toolchain:
+- Kubb: `@kubb/cli` + `@kubb/core`
+- Plugins: `@kubb/plugin-oas`, `@kubb/plugin-ts`, `@kubb/plugin-client` (client на `fetch`), `@kubb/plugin-zod`, `@kubb/plugin-redoc` (+ опционально `@kubb/plugin-react-query`)
+
+Важно:
+- базовый импорт `@dummy-products/gen-api` остаётся пригодным для использования без React
+- React Query entrypoint есть отдельным экспортом `@dummy-products/gen-api/react-query` (React и `@tanstack/react-query` — optional peer deps)
+- кэш/инвалидация/ретраи делаются в app-layer (например, `apps/web`) поверх `@dummy-products/gen-api`/хуков
 
 ---
 

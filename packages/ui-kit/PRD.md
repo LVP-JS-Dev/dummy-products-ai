@@ -267,7 +267,7 @@ export const states = {
 
 ### 7.2 Артефакты
 
-Скрипт `pnpm gen` обязан генерировать:
+Скрипт генерации UI Kit (`pnpm -C packages/ui-kit gen`, или root-алиас `pnpm gen:ui`) обязан генерировать:
 
 - JSON Schema для каждого контракта: `src/generated/schemas/<component>.schema.json`;
 - `manifest.json`: `src/generated/manifest.json`.

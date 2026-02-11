@@ -48,6 +48,7 @@ Environment:
 
 ```bash
 pnpm gen
+pnpm gen:api
 pnpm test
 pnpm check
 ```
