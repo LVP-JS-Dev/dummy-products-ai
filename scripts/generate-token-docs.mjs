@@ -255,6 +255,8 @@ function buildMdx({ tokens, metadata }) {
   mdxLines.push("");
   mdxLines.push("> This page is generated. Do not edit it by hand.");
   mdxLines.push("");
+  mdxLines.push('import { WithControl } from "@/stories/design-tokens.story";');
+  mdxLines.push("");
   mdxLines.push("## Import");
   mdxLines.push("");
   mdxLines.push("Import the token stylesheet once in your app’s global CSS:");
@@ -320,6 +322,9 @@ function buildMdx({ tokens, metadata }) {
     }
   }
 
+  mdxLines.push("## Interactive");
+  mdxLines.push("");
+  mdxLines.push("<WithControl />");
   mdxLines.push("");
   return mdxLines.join("\n");
 }
