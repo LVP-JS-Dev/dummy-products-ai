@@ -503,7 +503,7 @@ function AddProductModal({ onClose }: { onClose: () => void }) {
           }}
         >
           <Button onPress={onClose} text="Отмена" variant="secondary" />
-          <Button onPress={saveProduct} text="Сохранить" variant="blue" />
+          <Button buttonType="submit" text="Сохранить" variant="blue" />
         </div>
       </form>
     </Modal>
