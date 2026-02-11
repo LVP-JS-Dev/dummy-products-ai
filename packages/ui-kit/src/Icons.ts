@@ -72,6 +72,11 @@ export const icons = {
 <circle cx="12" cy="7.25" r="4" stroke="currentColor" stroke-width="2"/>
 <path d="M9 13.75H15C16.6569 13.75 18 15.0931 18 16.75V20.75H6V16.75C6 15.0931 7.34315 13.75 9 13.75Z" stroke="currentColor" stroke-width="2"/>
 </svg>`,
+  more_horizontal: `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="6" cy="12" r="1.5" fill="currentColor"/>
+<circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+<circle cx="18" cy="12" r="1.5" fill="currentColor"/>
+</svg>`,
 } as const;
 
 export const iconNames = Object.keys(icons) as Array<keyof typeof icons>;
