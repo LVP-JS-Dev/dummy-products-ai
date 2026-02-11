@@ -191,7 +191,13 @@ function main() {
   const allIssues = [];
 
   for (const filePath of files) {
-    const contents = readFileSync(filePath, "utf8");
+    let contents = "";
+    try {
+      contents = readFileSync(filePath, "utf8");
+    } catch {
+      console.warn(`markdown-lint: skipping missing file ${filePath}`);
+      continue;
+    }
     const lines = contents.split("\n");
 
     allIssues.push(...lintMd041TopLevelHeading(filePath, lines));
