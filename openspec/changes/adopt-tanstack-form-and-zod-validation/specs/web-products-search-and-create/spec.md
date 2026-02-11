@@ -4,7 +4,7 @@
 
 ### Requirement: Add-product form state SHALL be modeled via TanStack Form
 
-The add-product modal form SHOULD use `@tanstack/react-form` as the canonical mechanism for field state, submit lifecycle, and validation gating.
+The add-product modal form SHALL use `@tanstack/react-form` as the canonical mechanism for field state, submit lifecycle, and validation gating.
 
 #### Scenario: Validation blocks submission
 

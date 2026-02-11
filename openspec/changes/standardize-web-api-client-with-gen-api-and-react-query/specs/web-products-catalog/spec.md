@@ -4,7 +4,7 @@
 
 ### Requirement: Products server state SHALL be managed by React Query
 
-The products screen SHOULD use `@tanstack/react-query` as the canonical server-state layer for list and pagination requests, including loading and error states.
+The products screen SHALL use `@tanstack/react-query` as the canonical server-state layer for list and pagination requests, including loading and error states.
 
 #### Scenario: Products query is in-flight
 

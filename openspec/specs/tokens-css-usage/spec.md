@@ -1,5 +1,9 @@
 # CSS Token Usage Specification
 
+## Purpose
+
+Define the UI Kit token consumption boundary and the public CSS token surface contract so product code can safely style components and documentation can stay in sync with the source of truth.
+
 ## Definitions
 
 **Public tokens**: Tokens exported in the UI kit public API, documented for external consumption, not marked as internal or experimental, and covered by semantic stability guarantees.
@@ -12,7 +16,7 @@
 
 - `packages/ui-kit/src/tokens.css`
 
-## ADDED Requirements
+## Requirements
 
 ### Requirement: CSS token surface is provided
 
