@@ -59,6 +59,10 @@
         }
       }
     },
+    "Spinner": {
+      "schema": "schemas/spinner.schema.json",
+      "propsSchema": "schemas/spinner.schema.json"
+    },
     "Text": {
       "schema": "schemas/text.schema.json",
       "propsSchema": "schemas/text.schema.json"
@@ -72,22 +76,6 @@
         },
         "action": {
           "payloadSchema": "schemas/toast.action.schema.json"
-        }
-      }
-    },
-    "Spinner": {
-      "schema": "schemas/spinner.schema.json",
-      "propsSchema": "schemas/spinner.schema.json"
-    },
-    "Image": {
-      "schema": "schemas/image.schema.json",
-      "propsSchema": "schemas/image.schema.json",
-      "events": {
-        "load": {
-          "payloadSchema": "schemas/image.load.schema.json"
-        },
-        "error": {
-          "payloadSchema": "schemas/image.error.schema.json"
         }
       }
     },
@@ -112,6 +100,18 @@
     "Icon": {
       "schema": "schemas/icon.schema.json",
       "propsSchema": "schemas/icon.schema.json"
+    },
+    "Image": {
+      "schema": "schemas/image.schema.json",
+      "propsSchema": "schemas/image.schema.json",
+      "events": {
+        "load": {
+          "payloadSchema": "schemas/image.load.schema.json"
+        },
+        "error": {
+          "payloadSchema": "schemas/image.error.schema.json"
+        }
+      }
     },
     "SortIndicator": {
       "schema": "schemas/sort-indicator.schema.json",

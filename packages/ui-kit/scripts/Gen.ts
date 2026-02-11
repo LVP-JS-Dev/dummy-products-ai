@@ -4,9 +4,17 @@ import { zodToJsonSchema } from "zod-to-json-schema";
 import {
   buttonContract,
   buttonEvents,
+  cardContract,
   checkboxContract,
   checkboxEvents,
+  dividerContract,
   iconContract,
+  imageContract,
+  imageEvents,
+  inputContract,
+  inputEvents,
+  linkContract,
+  linkEvents,
   pageNumberContract,
   pageNumberEvents,
   paginationContract,
@@ -14,15 +22,27 @@ import {
   searchInputContract,
   searchInputEvents,
   sortIndicatorContract,
+  spinnerContract,
+  textContract,
+  toastContract,
+  toastEvents,
 } from "../src/contracts";
 
 const components = {
   Button: { props: buttonContract, events: buttonEvents },
+  Card: { props: cardContract },
   SearchInput: { props: searchInputContract, events: searchInputEvents },
   Checkbox: { props: checkboxContract, events: checkboxEvents },
+  Divider: { props: dividerContract },
+  Input: { props: inputContract, events: inputEvents },
+  Link: { props: linkContract, events: linkEvents },
+  Spinner: { props: spinnerContract },
+  Text: { props: textContract },
+  Toast: { props: toastContract, events: toastEvents },
   Pagination: { props: paginationContract, events: paginationEvents },
   PageNumber: { props: pageNumberContract, events: pageNumberEvents },
   Icon: { props: iconContract },
+  Image: { props: imageContract, events: imageEvents },
   SortIndicator: { props: sortIndicatorContract },
 } as const;
 
@@ -30,11 +50,19 @@ const schemaDir = resolve("src/generated/schemas");
 
 const fileNameMap: Record<keyof typeof components, string> = {
   Button: "button",
+  Card: "card",
   SearchInput: "search-input",
   Checkbox: "checkbox",
+  Divider: "divider",
+  Input: "input",
+  Link: "link",
+  Spinner: "spinner",
+  Text: "text",
+  Toast: "toast",
   Pagination: "pagination",
   PageNumber: "page-number",
   Icon: "icon",
+  Image: "image",
   SortIndicator: "sort-indicator",
 };
 

@@ -55,29 +55,15 @@ temp
 
 .codex
 
-# START Ruler Generated Files
-/.agent/skills
-/.agents/skills
+# Agent tooling outputs
+# Ruler runs codex-only; OpenSpec may manage .claude/commands independently.
 /.claude/skills
-/.codex/config.toml
-/.codex/config.toml.bak
-/.codex/environments
-/.codex/skills
-/.cursor/skills
-/.factory/skills
-/.gemini/settings.json
-/.gemini/settings.json.bak
-/.gemini/skills
+/.gemini
 /.mcp.json
 /.mcp.json.bak
-/.opencode/skill
-/.pi/skills
-/.roo/skills
-/.vibe/skills
 /AGENTS.md
 /AGENTS.md.bak
 /CLAUDE.md
 /CLAUDE.md.bak
 /GEMINI.md
 /GEMINI.md.bak
-# END Ruler Generated Files

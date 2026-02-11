@@ -5,9 +5,17 @@ import { zodToJsonSchema } from "zod-to-json-schema";
 import {
   buttonContract,
   buttonEvents,
+  cardContract,
   checkboxContract,
   checkboxEvents,
+  dividerContract,
   iconContract,
+  imageContract,
+  imageEvents,
+  inputContract,
+  inputEvents,
+  linkContract,
+  linkEvents,
   pageNumberContract,
   pageNumberEvents,
   paginationContract,
@@ -15,6 +23,10 @@ import {
   searchInputContract,
   searchInputEvents,
   sortIndicatorContract,
+  spinnerContract,
+  textContract,
+  toastContract,
+  toastEvents,
 } from "../src/contracts";
 import { states } from "../src/states";
 
@@ -23,6 +35,10 @@ const components = {
     props: buttonContract,
     events: buttonEvents,
     states: states.button,
+  },
+  Card: {
+    props: cardContract,
+    states: states.card,
   },
   SearchInput: {
     props: searchInputContract,
@@ -33,6 +49,33 @@ const components = {
     props: checkboxContract,
     events: checkboxEvents,
     states: states.checkbox,
+  },
+  Divider: {
+    props: dividerContract,
+    states: states.divider,
+  },
+  Input: {
+    props: inputContract,
+    events: inputEvents,
+    states: states.input,
+  },
+  Link: {
+    props: linkContract,
+    events: linkEvents,
+    states: states.link,
+  },
+  Spinner: {
+    props: spinnerContract,
+    states: states.spinner,
+  },
+  Text: {
+    props: textContract,
+    states: states.text,
+  },
+  Toast: {
+    props: toastContract,
+    events: toastEvents,
+    states: states.toast,
   },
   Pagination: {
     props: paginationContract,
@@ -45,6 +88,11 @@ const components = {
     states: states.pageNumber,
   },
   Icon: { props: iconContract, states: states.icon },
+  Image: {
+    props: imageContract,
+    events: imageEvents,
+    states: states.image,
+  },
   SortIndicator: { props: sortIndicatorContract, states: states.sortIndicator },
 } as const;
 
@@ -78,11 +126,19 @@ function isRecord(value: unknown): value is JsonRecord {
 
 const fileNameMap: Record<keyof typeof components, string> = {
   Button: "button",
+  Card: "card",
   SearchInput: "search-input",
   Checkbox: "checkbox",
+  Divider: "divider",
+  Input: "input",
+  Link: "link",
+  Spinner: "spinner",
+  Text: "text",
+  Toast: "toast",
   Pagination: "pagination",
   PageNumber: "page-number",
   Icon: "icon",
+  Image: "image",
   SortIndicator: "sort-indicator",
 };
 

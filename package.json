@@ -10,7 +10,7 @@
     "dev": "turbo dev",
     "build": "turbo build",
     "check-types": "turbo check-types",
-    "dev:native": "turbo -F native dev",
+    "dev:native": "node scripts/dev-native.mjs",
     "dev:web": "turbo -F web dev",
     "docs:generate-tokens": "node scripts/generate-token-docs.mjs",
     "docs:check-tokens": "node scripts/generate-token-docs.mjs --check",
@@ -20,7 +20,7 @@
     "check": "ultracite check && pnpm lint:md && pnpm gen && pnpm test && pnpm docs:check-tokens && git diff --exit-code && test -z \"$(git ls-files --others --exclude-standard packages/ui-kit/src/generated)\"",
     "fix": "ultracite fix",
     "prepare": "husky",
-    "ruler:apply": "pnpm dlx @intellectronica/ruler@latest apply --local-only"
+    "ruler:apply": "pnpm dlx @intellectronica/ruler@latest apply --local-only --agents codex --no-gitignore"
   },
   "dependencies": {
     "@dummy-products/env": "workspace:*",

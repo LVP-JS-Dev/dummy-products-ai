@@ -79,7 +79,7 @@ export const Route = createFileRoute("/products")({
 
 const PAGE_LIMIT = 10;
 
-function ProductsPage() {
+export function ProductsPage() {
   const navigate = useNavigate();
   const search = Route.useSearch();
 

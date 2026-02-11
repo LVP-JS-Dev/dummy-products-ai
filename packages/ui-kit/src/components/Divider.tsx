@@ -30,10 +30,7 @@ export function Divider({
 
   return (
     <div
-      aria-label={typeof content === "string" ? content : undefined}
-      aria-orientation="horizontal"
       className={className}
-      role="separator"
       style={{
         display: "grid",
         gridTemplateColumns: "1fr auto 1fr",
