@@ -252,19 +252,16 @@ export function ProductsPage() {
 
       <div
         className="mb-2 h-1 overflow-hidden"
-        data-testid="products-loading-bar"
         style={{ background: "var(--ui-color-surface-muted)" }}
       >
         {loading ? (
           <div
             className="h-full w-2/5 animate-[indeterminate_1.2s_ease-in-out_infinite]"
-            data-testid="products-loading-indicator"
             style={{ background: "var(--ui-color-primary)" }}
           />
         ) : (
           <div
             className="h-full w-0"
-            data-testid="products-loading-indicator"
             style={{ background: "var(--ui-color-primary)" }}
           />
         )}
@@ -311,7 +308,6 @@ export function ProductsPage() {
       ) : (
         <div
           className="overflow-hidden"
-          data-testid="products-table"
           style={{
             border: "1px solid var(--ui-color-border)",
             borderRadius: "var(--ui-radius-md)",
@@ -380,10 +376,7 @@ export function ProductsPage() {
         </div>
       )}
 
-      <div
-        className="mt-4 flex items-center justify-between gap-3"
-        data-testid="products-pagination"
-      >
+      <div className="mt-4 flex items-center justify-between gap-3">
         <div
           style={{
             fontFamily: "var(--ui-font-body)",
@@ -414,7 +407,6 @@ function AddProductButton() {
     <>
       <Button
         iconName="plus_circle"
-        id="add-product-button"
         onPress={() => setOpen(true)}
         showIcon
         text="Добавить"
@@ -551,14 +543,10 @@ function AddProductModal({ onClose }: { onClose: () => void }) {
   }
 
   return (
-    <div
-      className="fixed inset-0 z-50 grid place-items-center bg-black/40 px-4"
-      data-testid="add-product-overlay"
-    >
+    <div className="fixed inset-0 z-50 grid place-items-center bg-black/40 px-4">
       <div
         aria-labelledby="add-product-title"
         aria-modal="true"
-        data-testid="add-product-modal"
         ref={modalRef}
         role="dialog"
         style={{
@@ -622,18 +610,8 @@ function AddProductModal({ onClose }: { onClose: () => void }) {
               gap: "var(--ui-space-sm)",
             }}
           >
-            <Button
-              id="add-product-cancel"
-              onPress={onClose}
-              text="Отмена"
-              variant="blue"
-            />
-            <Button
-              id="add-product-save"
-              onPress={saveProduct}
-              text="Сохранить"
-              variant="blue"
-            />
+            <Button onPress={onClose} text="Отмена" variant="blue" />
+            <Button onPress={saveProduct} text="Сохранить" variant="blue" />
           </div>
         </form>
       </div>

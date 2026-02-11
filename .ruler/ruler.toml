@@ -1,4 +1,4 @@
-default_agents = ['codex', 'gemini-cli']
+default_agents = ['codex']
 # OpenSpec can update its own assistant configs (e.g. .claude/commands);
 # Ruler is scoped to codex artifacts in this repository.
 
@@ -15,8 +15,7 @@ enabled = true
 merge_strategy = 'merge'
 
 [agents.gemini-cli]
-enabled = true
-output_path = 'GEMINI.md'
+enabled = false
 
 [skills]
 enabled = true

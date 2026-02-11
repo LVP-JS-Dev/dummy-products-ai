@@ -5,7 +5,6 @@
 Этот файл описывает как вносить изменения в репозиторий.
 
 `AGENT.md` обязателен к прочтению:
-
 - для ИИ-агента,
 - для любого контрибьютора,
 - перед началом работы над фичей или рефакторингом.
@@ -31,13 +30,13 @@
 
 Перед началом работы агент обязан определить контекст:
 
-| Задача                 | Читать                 |
-| ---------------------- | ---------------------- |
-| Общая ориентация       | PRD.md (root)          |
-| Работа с компонентами  | packages/ui-kit/PRD.md |
-| Работа с документацией | apps/fumadocs/PRD.md   |
-| Работа с приложением   | apps/web/PRD.md        |
-| Процесс и шаги         | AGENT.md (этот файл)   |
+| Задача | Читать |
+|---|---|
+| Общая ориентация | PRD.md (root) |
+| Работа с компонентами | packages/ui-kit/PRD.md |
+| Работа с документацией | apps/fumadocs/PRD.md |
+| Работа с приложением | apps/web/PRD.md |
+| Процесс и шаги | AGENT.md (этот файл) |
 
 ---
 
@@ -108,13 +107,11 @@
 ### Сценарий C: Изменение документации
 
 Допустимо:
-
 - тексты
 - структура MDX
 - Story presentation
 
 Запрещено:
-
 - добавлять новые states
 - менять shape props
 - определять поведение компонентов
@@ -126,7 +123,6 @@
 **Важно:** всегда требует обновления PRD (`packages/ui-kit/PRD.md`).
 
 Порядок:
-
 1. PRD
 2. Генератор
 3. Generated files
@@ -146,12 +142,12 @@
 
 ### 5.2 Какой PRD обновлять
 
-| Изменение                 | PRD                    |
-| ------------------------- | ---------------------- |
-| Архитектурный принцип     | Root PRD               |
+| Изменение | PRD |
+|---|---|
+| Архитектурный принцип | Root PRD |
 | Контракты / states / spec | packages/ui-kit/PRD.md |
-| Docs / Story / MDX        | apps/fumadocs/PRD.md   |
-| UX / Routing              | apps/web/PRD.md        |
+| Docs / Story / MDX | apps/fumadocs/PRD.md |
+| UX / Routing | apps/web/PRD.md |
 
 ### 5.3 Порядок
 
@@ -220,12 +216,6 @@ PR не может быть принят, если `pnpm check` не прохо�
 - не понимает архитектурное последствие
 
 Он обязан остановиться и:
-
-- не уверен, укладывается ли изменение в PRD
-- не понимает архитектурное последствие
-
-Он обязан остановиться и:
-
 1. явно сформулировать вопрос
 2. предложить вариант изменения PRD
 3. дождаться подтверждения
@@ -238,109 +228,7 @@ PR не может быть принят, если `pnpm check` не прохо�
 
 ---
 
-## 11. Работа с сессиями (Git Worktree)
-
-### 11.1 Зачем нужны сессии
-
-Для изолированной параллельной работы над несколькими задачами:
-- Каждая сессия получает свою git-ветку от `develop`
-- Каждая сессия имеет отдельный worktree (изолированная копия репозитория)
-- Все git-команды автоматически логируются
-- Полный аудит всех изменений в сессии
-
-### 11.2 Команды для работы с сессиями
-
-```bash
-# Начать сессию
-bash .claude/skills/session-worktree/session.sh start <slug> "<description>"
-
-# Пример
-bash .claude/skills/session-worktree/session.sh start "add-auth" "Add user authentication"
-
-# Получить информацию о сессии
-bash .claude/skills/session-worktree/session.sh info <session-id>
-
-# Список всех активных сессий
-bash .claude/skills/session-worktree/session.sh list
-
-# Завершить сессию (сохранить лог, оставить worktree)
-bash .claude/skills/session-worktree/session.sh end <session-id>
-
-# Завершить сессию и удалить worktree
-bash .claude/skills/session-worktree/session.sh end <session-id> --remove
-
-# Удалить worktree сессии
-bash .claude/skills/session-worktree/session.sh remove <session-id>
-```
-
-### 11.3 Структура сессии
-
-```
-.tmp/
-  ├── sessions/
-  │   └── <timestamp>/
-  │       ├── context.md          # Контекст и описание задачи
-  │       ├── git-log.md          # Лог всех git-команд
-  │       ├── manifest.md         # Что сделано (deliverables)
-  │       └── metadata.json       # Метаданные сессии
-  └── worktrees/
-      └── <timestamp>/
-          └── <repo-files>        # Изолированная копия через worktree
-```
-
-### 11.4 Workflow с сессиями
-
-**Перед началом работы:**
-1. Запустить сессию:
-   ```bash
-   bash .claude/skills/session-worktree/session.sh start "<slug>" "<description>"
-   ```
-2. Перейти в worktree:
-   ```bash
-   cd .tmp/worktrees/<timestamp>
-   ```
-3. Работать как обычно - все команды логируются автоматически
-
-**После завершения работы:**
-1. Завершить сессию:
-   ```bash
-   bash .claude/skills/session-worktree/session.sh end <session-id> --remove
-   ```
-2. Ветка сохраняется для создания PR
-3. Worktree удаляется, session-файлы архивируются
-
-### 11.5 Параллельная работа
-
-Можно работать над несколькими задачами одновременно:
-
-```bash
-# Терминал 1: Auth feature
-bash .claude/skills/session-worktree/session.sh start "add-auth" "Add user authentication"
-cd .tmp/worktrees/<timestamp1>
-
-# Терминал 2: Login fix (параллельно)
-bash .claude/skills/session-worktree/session.sh start "fix-login" "Fix login bug"
-cd .tmp/worktrees/<timestamp2>
-```
-
-### 11.6 Когда использовать сессии
-
-- Параллельная работа над несколькими фичами
-- Безопасный рефакторинг (если что-то сломается - просто удалить worktree)
-- PR-ревью с изменениями (отдельная ветка от review-сессии)
-- Эксперименты и прототипы
-
-### 11.7 Интеграция с workflow
-
-Агент обязан использовать сессии при работе над задачами:
-- Создавать сессию перед началом работы
-- Логировать все git-команды через git-log.md
-- Завершать сессию после завершения задачи
-- Архивировать session-файлы для аудита
-
----
-
-## 12. Мини-чеклист перед коммитом
+## 11. Мини-чеклист перед коммитом
 
 - Контракт есть
 - States валидны
@@ -348,4 +236,3 @@ cd .tmp/worktrees/<timestamp2>
 - Docs используют states
 - PRD не нарушен
 - pnpm check зелёный
-- Сессия завершена (если использовалась)
