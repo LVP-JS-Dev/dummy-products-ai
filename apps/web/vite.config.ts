@@ -18,5 +18,11 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: "./src/test/Setup.ts",
     css: true,
+    // `apps/web` uses two test runners:
+    // - `tsx --test` for Node's `node:test` style unit tests (e.g. src/domain/*.test.ts)
+    // - `vitest` for React/jsdom tests (src/test/*.test.tsx)
+    // Prevent Vitest from picking up Node's `node:test` files and failing with
+    // "No test suite found".
+    include: ["src/test/**/*.test.tsx"],
   },
 });
