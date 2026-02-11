@@ -1,0 +1,34 @@
+---
+title: Image
+description: Image primitive with accessibility and performance defaults.
+---
+
+import { Image, states } from "@dummy-products/ui-kit";
+import { WithControl } from "@/stories/image.story";
+
+## Description
+
+Responsive image component with `alt`/decorative semantics, loading defaults, and fallback support.
+
+## API
+
+Props are defined in the UI Kit contract. Key props: `src`, `alt`, `decorative`, `width`, `height`, `fallbackSrc`, `loading`, `decoding`.
+
+**Specification**
+- [`manifest.json`](../../../../../packages/ui-kit/src/generated/manifest.json)
+- [`image.schema.json`](../../../../../packages/ui-kit/src/generated/schemas/image.schema.json)
+
+## Examples
+
+<div style={{ display: "grid", gap: 12 }}>
+  {Object.entries(states.image).map(([name, props]) => (
+    <div key={name} style={{ display: "grid", gap: 6 }}>
+      <Image {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Interactive
+
+<WithControl />

@@ -11,8 +11,20 @@
     "description": "Default border/divider color.",
     "subgroup": "Surface"
   },
+  "--ui-color-border-subtle": {
+    "description": "Subtle border color for compact controls (e.g., pagination).",
+    "subgroup": "Surface"
+  },
   "--ui-color-primary": {
     "description": "Primary action/brand color.",
+    "subgroup": "Core"
+  },
+  "--ui-color-primary-border": {
+    "description": "Border/stroke color paired with the primary brand fill.",
+    "subgroup": "Core"
+  },
+  "--ui-color-accent": {
+    "description": "Accent color for selection highlights (e.g., active pagination).",
     "subgroup": "Core"
   },
   "--ui-color-on-primary": {
@@ -23,6 +35,14 @@
     "description": "Focus ring/outline color for interactive elements.",
     "subgroup": "Core"
   },
+  "--ui-color-link": {
+    "description": "Semantic link text color.",
+    "subgroup": "Core"
+  },
+  "--ui-color-overlay": {
+    "description": "Overlay color for dimmed backdrops.",
+    "subgroup": "Core"
+  },
   "--ui-color-text": {
     "description": "Primary text color for most UI text.",
     "subgroup": "Text"
@@ -31,8 +51,36 @@
     "description": "Muted/secondary text color (e.g., placeholders, helper text).",
     "subgroup": "Text"
   },
+  "--ui-color-text-tertiary": {
+    "description": "Tertiary text color used for low-emphasis UI labels.",
+    "subgroup": "Text"
+  },
+  "--ui-color-text-placeholder": {
+    "description": "Placeholder text color for inputs.",
+    "subgroup": "Text"
+  },
+  "--ui-color-success": {
+    "description": "Semantic success foreground color.",
+    "subgroup": "State"
+  },
   "--ui-color-success-surface": {
     "description": "Soft positive/confirmation background.",
+    "subgroup": "State"
+  },
+  "--ui-color-info": {
+    "description": "Semantic informational color.",
+    "subgroup": "State"
+  },
+  "--ui-color-warning": {
+    "description": "Semantic warning color.",
+    "subgroup": "State"
+  },
+  "--ui-color-danger": {
+    "description": "Semantic error/danger foreground color.",
+    "subgroup": "State"
+  },
+  "--ui-color-danger-surface": {
+    "description": "Soft background for destructive or error emphasis.",
     "subgroup": "State"
   },
 
@@ -71,12 +119,10 @@
     "subgroup": "Deprecated",
     "deprecated": true
   },
-  "--ui-color-text-placeholder": {
-    "description": "Deprecated. Use `--ui-color-text-muted`.",
-    "subgroup": "Deprecated",
-    "deprecated": true
-  },
 
+  "--ui-space-xs": {
+    "description": "Extra-small spacing unit."
+  },
   "--ui-space-sm": {
     "description": "Small spacing unit."
   },
@@ -86,8 +132,14 @@
   "--ui-space-lg": {
     "description": "Large spacing unit."
   },
+  "--ui-space-xl": {
+    "description": "Extra-large spacing unit."
+  },
   "--ui-space-xxl": {
     "description": "Double extra-large spacing unit."
+  },
+  "--ui-radius-xs": {
+    "description": "Extra-small corner radius."
   },
   "--ui-radius-sm": {
     "description": "Small corner radius."
@@ -97,6 +149,12 @@
   },
   "--ui-radius-lg": {
     "description": "Large corner radius."
+  },
+  "--ui-radius-xl": {
+    "description": "Extra-large corner radius."
+  },
+  "--ui-radius-pill": {
+    "description": "Pill radius for rounded badges and chips."
   },
   "--ui-font-heading": {
     "description": "Font family for headings and prominent labels."

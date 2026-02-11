@@ -1,0 +1,34 @@
+---
+title: Link
+description: Safe-by-default link component.
+---
+
+import { Link, states } from "@dummy-products/ui-kit";
+import { WithControl } from "@/stories/link.story";
+
+## Description
+
+Navigation/action link with secure defaults for external targets.
+
+## API
+
+Props are defined in the UI Kit contract. Key props: `href`, `target`, `rel`, `disabled`.
+
+**Specification**
+- [`manifest.json`](../../../../../packages/ui-kit/src/generated/manifest.json)
+- [`link.schema.json`](../../../../../packages/ui-kit/src/generated/schemas/link.schema.json)
+
+## Examples
+
+<div style={{ display: "grid", gap: 12 }}>
+  {Object.entries(states.link).map(([name, props]) => (
+    <div key={name} style={{ display: "flex", alignItems: "center", gap: 12 }}>
+      <Link {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Interactive
+
+<WithControl />

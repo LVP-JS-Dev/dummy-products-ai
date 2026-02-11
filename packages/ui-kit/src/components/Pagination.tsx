@@ -10,13 +10,13 @@ const buttonBase: React.CSSProperties = {
   justifyContent: "center",
   width: 30,
   height: 30,
-  borderRadius: "var(--ui-radius-sm)",
-  border: "1px solid var(--ui-color-border)",
+  borderRadius: "var(--ui-radius-xs)",
+  border: "1px solid var(--ui-color-border-subtle)",
   background: "var(--ui-color-surface)",
-  color: "var(--ui-color-text-muted)",
-  fontFamily: "var(--ui-font-body)",
-  fontSize: 16,
-  lineHeight: 1,
+  color: "var(--ui-color-text-tertiary)",
+  fontFamily: "var(--ui-font-heading)",
+  fontSize: 14,
+  lineHeight: "26px",
   cursor: "pointer",
 };
 
@@ -110,7 +110,7 @@ export function Pagination({
         }}
         type="button"
       >
-        <Icon name="caret_left" size={14} />
+        <Icon name="caret_left" size={20} />
       </button>
       {pageButtons.map((page) => {
         const selected = page === safeCurrentPage;
@@ -124,14 +124,14 @@ export function Pagination({
             style={{
               ...buttonBase,
               borderColor: selected
-                ? "var(--ui-color-primary)"
-                : "var(--ui-color-border)",
+                ? "var(--ui-color-accent)"
+                : "var(--ui-color-border-subtle)",
               background: selected
-                ? "var(--ui-color-primary)"
+                ? "var(--ui-color-accent)"
                 : "var(--ui-color-surface)",
               color: selected
                 ? "var(--ui-color-on-primary)"
-                : "var(--ui-color-text-muted)",
+                : "var(--ui-color-text-tertiary)",
               opacity: isDisabled ? 0.5 : 1,
               cursor: isDisabled ? "default" : "pointer",
             }}
@@ -156,7 +156,7 @@ export function Pagination({
         }}
         type="button"
       >
-        <Icon name="caret_right" size={14} />
+        <Icon name="caret_right" size={20} />
       </button>
     </nav>
   );

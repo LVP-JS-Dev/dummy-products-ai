@@ -1,10 +1,19 @@
-import { Icon } from "@dummy-products/ui-kit";
+import {
+  Button,
+  Card,
+  Checkbox,
+  Divider,
+  Icon,
+  Input,
+  Link,
+  Spinner,
+  Text,
+} from "@dummy-products/ui-kit";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Eye, EyeOff, Lock, User, X } from "lucide-react";
 import {
   type CSSProperties,
   type FormEvent,
-  type ReactNode,
   useId,
   useMemo,
   useRef,
@@ -113,220 +122,169 @@ export function LoginPage() {
           "radial-gradient(circle at 50% 20%, #f8f9fb 0%, #f1f2f5 55%, #edeef2 100%)",
       }}
     >
-      <main
-        aria-labelledby="login-title"
-        style={{
-          width: "min(100%, 372px)",
-          borderRadius: 28,
-          border: "1px solid #e8e9ef",
-          boxShadow: "0 18px 50px rgba(17, 24, 39, 0.09)",
-          background: "var(--ui-color-surface)",
-          padding: "28px 22px 26px",
-        }}
-      >
-        <header
+      <main aria-labelledby="login-title" style={{ width: "min(100%, 420px)" }}>
+        <Card
+          elevated
+          outlined
           style={{
-            display: "grid",
-            justifyItems: "center",
-            gap: 12,
-            marginBottom: 22,
+            width: "100%",
+            padding: "var(--ui-space-xxl)",
+            borderRadius: "var(--ui-radius-lg)",
           }}
         >
-          <span
-            aria-hidden
+          <header
             style={{
-              width: 44,
-              height: 44,
-              borderRadius: 999,
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              border: "1px solid #ececf0",
-              background: "#fbfbfd",
-              color: "#23252f",
+              display: "grid",
+              justifyItems: "center",
+              gap: "var(--ui-space-md)",
+              marginBottom: "var(--ui-space-lg)",
             }}
           >
-            <Icon name="square" size={18} />
-          </span>
-          <h1
-            id="login-title"
-            style={{
-              margin: 0,
-              fontFamily: "var(--ui-font-heading)",
-              fontWeight: 700,
-              color: "#22242d",
-              fontSize: 46,
-              lineHeight: 1,
-              textAlign: "center",
-            }}
-          >
-            Добро пожаловать!
-          </h1>
-          <p
-            style={{
-              margin: 0,
-              color: "#b4b6bf",
-              fontFamily: "var(--ui-font-body)",
-              fontSize: 21,
-              lineHeight: 1,
-              textAlign: "center",
-            }}
-          >
-            Пожалуйста, авторизируйтесь
-          </p>
-        </header>
+            <span
+              aria-hidden
+              style={{
+                width: 44,
+                height: 44,
+                borderRadius: "var(--ui-radius-pill)",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                border: "1px solid var(--ui-color-border)",
+                background: "var(--ui-color-surface)",
+                color: "var(--ui-color-text)",
+              }}
+            >
+              <Icon name="square" size={18} />
+            </span>
+            <Text
+              as="h1"
+              id="login-title"
+              style={{ textAlign: "center" }}
+              variant="heading"
+            >
+              Добро пожаловать!
+            </Text>
+            <Text style={{ textAlign: "center" }} variant="muted">
+              Пожалуйста, авторизируйтесь
+            </Text>
+          </header>
 
-        <form noValidate onSubmit={onSubmit}>
-          <div style={{ display: "grid", gap: 16 }}>
-            <TextField
-              autoComplete="username"
-              error={errors.username}
-              errorId={usernameErrorId}
-              icon={<User size={16} strokeWidth={2.1} />}
-              id="username"
-              label="Логин"
-              onChange={setUsername}
-              trailing={
-                username.trim() ? (
+          <form noValidate onSubmit={onSubmit}>
+            <div style={{ display: "grid", gap: "var(--ui-space-md)" }}>
+              <Input
+                autoComplete="username"
+                endAdornment={
+                  username.trim() ? (
+                    <button
+                      aria-label="Очистить логин"
+                      onClick={() => setUsername("")}
+                      style={fieldActionStyle}
+                      type="button"
+                    >
+                      <X size={14} strokeWidth={2.2} />
+                    </button>
+                  ) : null
+                }
+                error={errors.username}
+                errorId={usernameErrorId}
+                id="username"
+                label="Логин"
+                onValueChange={({ value }) => setUsername(value)}
+                startAdornment={<User size={16} strokeWidth={2.1} />}
+                type="text"
+                value={username}
+              />
+
+              <Input
+                autoComplete="current-password"
+                endAdornment={
                   <button
-                    aria-label="Очистить логин"
-                    onClick={() => setUsername("")}
+                    aria-label={
+                      showPassword ? "Скрыть пароль" : "Показать пароль"
+                    }
+                    onClick={() => setShowPassword((value) => !value)}
                     style={fieldActionStyle}
                     type="button"
                   >
-                    <X size={14} strokeWidth={2.2} />
+                    {showPassword ? (
+                      <Eye size={15} strokeWidth={2.1} />
+                    ) : (
+                      <EyeOff size={15} strokeWidth={2.1} />
+                    )}
                   </button>
-                ) : null
-              }
-              value={username}
-            />
-            <TextField
-              autoComplete="current-password"
-              error={errors.password}
-              errorId={passwordErrorId}
-              icon={<Lock size={16} strokeWidth={2.1} />}
-              id="password"
-              label="Пароль"
-              onChange={setPassword}
-              trailing={
-                <button
-                  aria-label={
-                    showPassword ? "Скрыть пароль" : "Показать пароль"
-                  }
-                  onClick={() => setShowPassword((value) => !value)}
-                  style={fieldActionStyle}
-                  type="button"
-                >
-                  {showPassword ? (
-                    <Eye size={15} strokeWidth={2.1} />
-                  ) : (
-                    <EyeOff size={15} strokeWidth={2.1} />
-                  )}
-                </button>
-              }
-              type={showPassword ? "text" : "password"}
-              value={password}
-            />
-            <label
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 9,
-                fontFamily: "var(--ui-font-body)",
-                fontSize: 14,
-                color: "#adb0ba",
-              }}
-            >
-              <input
-                checked={rememberMe}
-                onChange={(event) => setRememberMe(event.currentTarget.checked)}
-                style={{ width: 16, height: 16, margin: 0 }}
-                type="checkbox"
+                }
+                error={errors.password}
+                errorId={passwordErrorId}
+                id="password"
+                label="Пароль"
+                onValueChange={({ value }) => setPassword(value)}
+                startAdornment={<Lock size={16} strokeWidth={2.1} />}
+                type={showPassword ? "text" : "password"}
+                value={password}
               />
-              Запомнить данные
-            </label>
-            {errors.form ? (
-              <p
-                id={formErrorId}
-                role="alert"
-                style={{
-                  margin: 0,
-                  fontFamily: "var(--ui-font-body)",
-                  fontSize: 13,
-                  color: "#dc2626",
-                }}
+
+              <Checkbox
+                checked={rememberMe}
+                onCheckedChange={({ checked }) => setRememberMe(checked)}
               >
-                {errors.form}
-              </p>
-            ) : null}
-            <button
-              aria-busy={submitting || undefined}
-              aria-describedby={errors.form ? formErrorId : undefined}
-              disabled={submitting}
-              style={{
-                height: 52,
-                border: "1px solid #5965ff",
-                borderRadius: 10,
-                color: "#f4f8ff",
-                fontFamily: "var(--ui-font-heading)",
-                fontWeight: 700,
-                fontSize: 26,
-                lineHeight: 1,
-                background:
-                  "linear-gradient(180deg, #4451ff 0%, #2e3bdc 50%, #2330cb 100%)",
-                cursor: submitting ? "not-allowed" : "pointer",
-                opacity: submitting ? 0.75 : 1,
-              }}
-              type="submit"
-            >
-              {submitting ? "Вход..." : "Войти"}
-            </button>
-          </div>
-        </form>
+                Запомнить данные
+              </Checkbox>
 
-        <div
-          aria-hidden
-          style={{
-            marginTop: 18,
-            marginBottom: 14,
-            display: "grid",
-            gridTemplateColumns: "1fr auto 1fr",
-            alignItems: "center",
-            gap: 12,
-            color: "#cacbd2",
-            fontSize: 12,
-            fontWeight: 700,
-            fontFamily: "var(--ui-font-body)",
-          }}
-        >
-          <span style={{ height: 1, background: "#e8e9ee" }} />
-          <span>ИЛИ</span>
-          <span style={{ height: 1, background: "#e8e9ee" }} />
-        </div>
+              {errors.form ? (
+                <p
+                  id={formErrorId}
+                  role="alert"
+                  style={{
+                    margin: 0,
+                    fontFamily: "var(--ui-font-body)",
+                    fontSize: 13,
+                    color: "var(--ui-color-danger)",
+                  }}
+                >
+                  {errors.form}
+                </p>
+              ) : null}
 
-        <p
-          style={{
-            margin: 0,
-            textAlign: "center",
-            fontFamily: "var(--ui-font-body)",
-            fontSize: 15,
-            color: "#868995",
-          }}
-        >
-          Нет аккаунта?{" "}
-          <a
-            href="/register"
+              <Button
+                ariaDescribedBy={errors.form ? formErrorId : undefined}
+                buttonType="submit"
+                disabled={submitting}
+                fullWidth
+                loading={submitting}
+                size="lg"
+                text={submitting ? "Вход..." : "Войти"}
+                variant="blue"
+              >
+                {submitting ? (
+                  <span
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "var(--ui-space-sm)",
+                    }}
+                  >
+                    <Spinner label="" size="sm" tone="inverse" />
+                    <span>Вход...</span>
+                  </span>
+                ) : (
+                  "Войти"
+                )}
+              </Button>
+            </div>
+          </form>
+
+          <Divider
             style={{
-              color: "#3a46ea",
-              fontWeight: 700,
-              textDecoration: "underline",
-              fontFamily: "var(--ui-font-body)",
-              fontSize: 15,
+              marginTop: "var(--ui-space-lg)",
+              marginBottom: "var(--ui-space-md)",
             }}
-          >
-            Создать
-          </a>
-        </p>
+            text="ИЛИ"
+          />
+
+          <Text as="p" style={{ textAlign: "center" }} variant="muted">
+            Нет аккаунта? <Link href="/register">Создать</Link>
+          </Text>
+        </Card>
       </main>
     </div>
   );
@@ -335,7 +293,7 @@ export function LoginPage() {
 const fieldActionStyle: CSSProperties = {
   border: "none",
   background: "transparent",
-  color: "#b5b7c0",
+  color: "var(--ui-color-text-muted)",
   width: 28,
   height: 28,
   display: "inline-flex",
@@ -344,85 +302,3 @@ const fieldActionStyle: CSSProperties = {
   padding: 0,
   cursor: "pointer",
 };
-
-function TextField(props: {
-  id: string;
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-  icon: ReactNode;
-  trailing?: ReactNode;
-  error?: string;
-  errorId: string;
-  type?: "text" | "password";
-  autoComplete?: string;
-}) {
-  const error = props.error;
-
-  return (
-    <div style={{ display: "grid", gap: 6 }}>
-      <label
-        htmlFor={props.id}
-        style={{
-          fontFamily: "var(--ui-font-heading)",
-          fontSize: 28,
-          fontWeight: 700,
-          color: "#2d2f39",
-          lineHeight: 1,
-        }}
-      >
-        {props.label}
-      </label>
-      <div
-        style={{
-          height: 50,
-          borderRadius: 10,
-          border: error ? "1px solid #dc2626" : "1px solid #e2e4ea",
-          display: "grid",
-          gridTemplateColumns: "24px minmax(0, 1fr) 28px",
-          alignItems: "center",
-          gap: 8,
-          padding: "0 10px",
-          color: "#b4b6bf",
-        }}
-      >
-        <span aria-hidden>{props.icon}</span>
-        <input
-          aria-describedby={error ? props.errorId : undefined}
-          aria-invalid={Boolean(error)}
-          autoComplete={props.autoComplete}
-          id={props.id}
-          onChange={(event) => props.onChange(event.currentTarget.value)}
-          style={{
-            border: "none",
-            outline: "none",
-            width: "100%",
-            fontFamily: "var(--ui-font-ui)",
-            fontSize: 25,
-            fontWeight: 500,
-            lineHeight: 1,
-            color: "#2f3139",
-            background: "transparent",
-          }}
-          type={props.type ?? "text"}
-          value={props.value}
-        />
-        {props.trailing ?? <span aria-hidden />}
-      </div>
-      {error ? (
-        <p
-          id={props.errorId}
-          role="alert"
-          style={{
-            margin: 0,
-            color: "#dc2626",
-            fontFamily: "var(--ui-font-body)",
-            fontSize: 12,
-          }}
-        >
-          {error}
-        </p>
-      ) : null}
-    </div>
-  );
-}

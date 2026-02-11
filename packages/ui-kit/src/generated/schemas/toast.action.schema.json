@@ -1,0 +1,7 @@
+{
+  "$ref": "#/definitions/Toast.action",
+  "definitions": {
+    "Toast.action": {}
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

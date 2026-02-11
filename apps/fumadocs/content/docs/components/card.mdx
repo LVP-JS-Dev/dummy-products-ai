@@ -1,0 +1,34 @@
+---
+title: Card
+description: Reusable card container and composition slots.
+---
+
+import { Card, states } from "@dummy-products/ui-kit";
+import { WithControl } from "@/stories/card.story";
+
+## Description
+
+Base wrapper for structured blocks like login forms, summaries, and modal content.
+
+## API
+
+Props are defined in the UI Kit contract. Key props: `size`, `outlined`, `elevated`, `title`, `description`.
+
+**Specification**
+- [`manifest.json`](../../../../../packages/ui-kit/src/generated/manifest.json)
+- [`card.schema.json`](../../../../../packages/ui-kit/src/generated/schemas/card.schema.json)
+
+## Examples
+
+<div style={{ display: "grid", gap: 12, maxWidth: 420 }}>
+  {Object.entries(states.card).map(([name, props]) => (
+    <div key={name} style={{ display: "grid", gap: 6 }}>
+      <Card {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Interactive
+
+<WithControl />

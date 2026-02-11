@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const searchInputContract = z.object({
+  ariaLabel: z.string().optional(),
   placeholder: z.string().min(1),
   value: z.string().optional(),
   state: z.enum(["inactive", "active", "disabled"]),

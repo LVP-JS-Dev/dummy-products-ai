@@ -20,14 +20,17 @@ export function PageNumber({
         minWidth: 30,
         height: 30,
         padding: "0 var(--ui-space-sm)",
-        borderRadius: "var(--ui-radius-md)",
-        border: `1px solid ${selected ? "var(--ui-color-primary)" : "var(--ui-color-border)"}`,
+        borderRadius: "var(--ui-radius-xs)",
+        border: `1px solid ${selected ? "var(--ui-color-accent)" : "var(--ui-color-border-subtle)"}`,
         background: selected
-          ? "var(--ui-color-primary)"
+          ? "var(--ui-color-accent)"
           : "var(--ui-color-surface)",
-        color: selected ? "var(--ui-color-on-primary)" : "var(--ui-color-text)",
-        fontFamily: "var(--ui-font-body)",
+        color: selected
+          ? "var(--ui-color-on-primary)"
+          : "var(--ui-color-text-tertiary)",
+        fontFamily: "var(--ui-font-heading)",
         fontSize: 14,
+        lineHeight: "26px",
         opacity: disabled ? 0.5 : 1,
         cursor: disabled ? "not-allowed" : "pointer",
       }}

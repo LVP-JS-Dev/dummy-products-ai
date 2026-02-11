@@ -1,0 +1,34 @@
+---
+title: Toast
+description: Toast card and toaster primitives with configurable placement.
+---
+
+import { Toast, states } from "@dummy-products/ui-kit";
+import { WithControl } from "@/stories/toast.story";
+
+## Description
+
+Use for ephemeral feedback and operation status updates.
+
+## API
+
+Props are defined in the UI Kit contract. Key props: `title`, `description`, `tone`, `dismissible`, `actionLabel`.
+
+**Specification**
+- [`manifest.json`](../../../../../packages/ui-kit/src/generated/manifest.json)
+- [`toast.schema.json`](../../../../../packages/ui-kit/src/generated/schemas/toast.schema.json)
+
+## Examples
+
+<div style={{ display: "grid", gap: 12, maxWidth: 420 }}>
+  {Object.entries(states.toast).map(([name, props]) => (
+    <div key={name} style={{ display: "grid", gap: 4 }}>
+      <Toast {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Interactive
+
+<WithControl />

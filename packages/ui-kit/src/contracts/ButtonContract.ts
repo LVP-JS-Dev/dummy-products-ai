@@ -1,3 +1,4 @@
+import type { CSSProperties, ReactNode } from "react";
 import { z } from "zod";
 import type { IconName } from "../Icons";
 import { iconNames } from "../Icons";
@@ -5,8 +6,9 @@ import { iconNames } from "../Icons";
 const iconNameSchema = z.enum(iconNames as [IconName, ...IconName[]]);
 
 export const buttonContract = z.object({
-  text: z.string().min(1),
-  variant: z.enum(["blue"]),
+  text: z.string().min(1).optional(),
+  variant: z.enum(["blue", "secondary", "ghost"]).optional(),
+  size: z.enum(["sm", "md", "lg"]).optional(),
   showIcon: z.boolean().optional(),
   iconName: iconNameSchema.optional(),
   showDropdown: z.boolean().optional(),
@@ -16,6 +18,8 @@ export const buttonContract = z.object({
   showBadgeCount: z.boolean().optional(),
   disabled: z.boolean().optional(),
   loading: z.boolean().optional(),
+  fullWidth: z.boolean().optional(),
+  buttonType: z.enum(["button", "submit", "reset"]).optional(),
 });
 
 export const buttonEvents = {
@@ -36,4 +40,16 @@ export type ButtonHandlers = {
   ) => void;
 };
 
-export type ButtonProps = ButtonSerializableProps & ButtonHandlers;
+export interface ButtonRuntimeProps {
+  children?: ReactNode;
+  className?: string;
+  style?: CSSProperties;
+  id?: string;
+  title?: string;
+  ariaLabel?: string;
+  ariaDescribedBy?: string;
+}
+
+export type ButtonProps = ButtonSerializableProps &
+  ButtonHandlers &
+  ButtonRuntimeProps;

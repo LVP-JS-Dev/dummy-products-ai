@@ -1,4 +1,15 @@
-import { Button, Pagination, SearchInput } from "@dummy-products/ui-kit";
+import {
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardTitle,
+  Input,
+  Pagination,
+  SearchInput,
+  Spinner,
+  toast,
+} from "@dummy-products/ui-kit";
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import {
   flexRender,
@@ -18,7 +29,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { toast } from "sonner";
 
 import { fetchProductsPage, searchProductsPage } from "@/api/DummyJson";
 import { ApiError } from "@/api/Http";
@@ -320,43 +330,25 @@ function ProductsPage() {
       </div>
 
       {error ? (
-        <div
+        <Card
+          elevated
           style={{
-            border: "1px solid var(--ui-color-border)",
-            borderRadius: "var(--ui-radius-md)",
-            padding: "var(--ui-space-lg)",
-            background: "var(--ui-color-surface)",
+            borderColor: "var(--ui-color-danger)",
           }}
         >
-          <div
-            style={{
-              color: "var(--ui-color-text)",
-              fontFamily: "var(--ui-font-heading)",
-              fontWeight: 700,
-              fontSize: 16,
-            }}
-          >
-            Ошибка загрузки
-          </div>
-          <div
-            style={{
-              marginTop: 6,
-              color: "var(--ui-color-text-muted)",
-              fontFamily: "var(--ui-font-body)",
-              fontSize: 14,
-            }}
-          >
-            {error}
-          </div>
-          <div className="mt-3 flex gap-2">
-            <Button
-              onPress={() => setRetryToken((v) => v + 1)}
-              text="Повторить"
-              variant="blue"
-            />
-            <Button onPress={forceLogout} text="Выйти" variant="blue" />
-          </div>
-        </div>
+          <CardContent>
+            <CardTitle>Ошибка загрузки</CardTitle>
+            <CardDescription>{error}</CardDescription>
+            <div className="mt-3 flex gap-2">
+              <Button
+                onPress={() => setRetryToken((v) => v + 1)}
+                text="Повторить"
+                variant="blue"
+              />
+              <Button onPress={forceLogout} text="Выйти" variant="secondary" />
+            </div>
+          </CardContent>
+        </Card>
       ) : (
         <div
           className="overflow-hidden"
@@ -442,7 +434,20 @@ function ProductsPage() {
             fontSize: 14,
           }}
         >
-          {data ? `Страница ${page} из ${totalPages}` : "Загрузка..."}
+          {data ? (
+            `Страница ${page} из ${totalPages}`
+          ) : (
+            <span
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "var(--ui-space-sm)",
+              }}
+            >
+              <Spinner size="sm" tone="muted" />
+              <span>Загрузка...</span>
+            </span>
+          )}
         </div>
         <Pagination
           currentPage={page}
@@ -733,46 +738,14 @@ function Field(props: {
   inputMode?: HTMLAttributes<HTMLInputElement>["inputMode"];
 }) {
   return (
-    <div style={{ display: "grid", gap: 6 }}>
-      <label
-        htmlFor={props.id}
-        style={{
-          color: "var(--ui-color-text)",
-          fontFamily: "var(--ui-font-heading)",
-          fontWeight: 600,
-          fontSize: 14,
-        }}
-      >
-        {props.label}
-      </label>
-      <input
-        aria-invalid={Boolean(props.error)}
-        className="focus-visible:outline-2 focus-visible:outline-[var(--ui-color-focus-ring)] focus-visible:outline-offset-2"
-        id={props.id}
-        inputMode={props.inputMode}
-        onChange={(e) => props.onChange(e.target.value)}
-        style={{
-          border: "1px solid var(--ui-color-border)",
-          borderRadius: "var(--ui-radius-sm)",
-          height: 44,
-          padding: "0 var(--ui-space-md)",
-          fontFamily: "var(--ui-font-ui)",
-          fontSize: 14,
-          color: "var(--ui-color-text)",
-        }}
-        value={props.value}
-      />
-      {props.error ? (
-        <div
-          style={{
-            color: "#dc2626",
-            fontFamily: "var(--ui-font-body)",
-            fontSize: 12,
-          }}
-        >
-          {props.error}
-        </div>
-      ) : null}
-    </div>
+    <Input
+      error={props.error}
+      id={props.id}
+      inputMode={props.inputMode}
+      label={props.label}
+      onValueChange={({ value }) => props.onChange(value)}
+      type="text"
+      value={props.value}
+    />
   );
 }
