@@ -1,0 +1,1 @@
+{"type":"object","additionalProperties":true,"properties":{"message":{"type":"string"}},"x-readme-ref-name":"ErrorResponse"}
