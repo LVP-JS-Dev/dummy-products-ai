@@ -141,7 +141,7 @@ export const Route = createFileRoute("/products")({
 
 const PAGE_LIMIT = 10;
 
-function ProductsPage() {
+export function ProductsPage() {
   const navigate = useNavigate();
   const search = Route.useSearch();
 
@@ -352,6 +352,7 @@ function ProductsPage() {
       ) : (
         <div
           className="overflow-hidden"
+          data-testid="products-table-shell"
           style={{
             border: "1px solid var(--ui-color-border)",
             borderRadius: "var(--ui-radius-md)",
@@ -423,43 +424,33 @@ function ProductsPage() {
               )}
             </tbody>
           </table>
-        </div>
-      )}
-
-      <div className="mt-4 flex items-center justify-between gap-3">
-        <div
-          style={{
-            fontFamily: "var(--ui-font-body)",
-            color: "var(--ui-color-text-muted)",
-            fontSize: 14,
-          }}
-        >
-          {data ? (
-            `Страница ${page} из ${totalPages}`
-          ) : (
-            <span
+          <div
+            className="flex items-center justify-between gap-3 border-t px-3 py-2"
+            data-testid="products-table-footer"
+            style={{ borderColor: "var(--ui-color-border)" }}
+          >
+            <div
               style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "var(--ui-space-sm)",
+                fontFamily: "var(--ui-font-body)",
+                color: "var(--ui-color-text-muted)",
+                fontSize: 14,
               }}
             >
-              <Spinner size="sm" tone="muted" />
-              <span>Загрузка...</span>
-            </span>
-          )}
+              {data ? `Страница ${page} из ${totalPages}` : "Загрузка..."}
+            </div>
+            <Pagination
+              currentPage={page}
+              disabled={loading}
+              maxVisiblePages={5}
+              nextAriaLabel="Следующая страница"
+              onPageChange={({ page: nextPage }) => setPage(nextPage)}
+              pageAriaLabelPrefix="Страница"
+              prevAriaLabel="Предыдущая страница"
+              totalPages={totalPages}
+            />
+          </div>
         </div>
-        <Pagination
-          currentPage={page}
-          disabled={loading}
-          maxVisiblePages={5}
-          nextAriaLabel="Следующая страница"
-          onPageChange={({ page: nextPage }) => setPage(nextPage)}
-          pageAriaLabelPrefix="Страница"
-          prevAriaLabel="Предыдущая страница"
-          totalPages={totalPages}
-        />
-      </div>
+      )}
     </div>
   );
 }

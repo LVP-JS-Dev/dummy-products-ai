@@ -5,16 +5,21 @@ Source: `requirements/goods-list.png` and Figma node `1:451` from the assignment
 ## Pagination Structure
 
 1. Compact pagination row aligned to the table footer area.
-2. Left chevron control for previous page.
-3. Numeric page buttons with one active page.
-4. Right chevron control for next page.
-5. Disabled state on boundary pages.
+2. Footer row is rendered inside the products table shell (`products-table-footer`) and remains shared for default and search modes.
+3. Left chevron control for previous page.
+4. Numeric page buttons with one active page.
+5. Right chevron control for next page.
+6. Disabled state on boundary pages.
+
+## UI-kit Constraint
+
+- Pagination controls on `/products` are implemented via `@dummy-products/ui-kit` `Pagination` (no custom prev/next/page buttons).
 
 ## Accessibility Notes
 
 - Active page uses `aria-current="page"`.
 - Boundary controls are represented as native disabled `button` elements.
-- Prev/next controls are labeled with explicit names: `Previous page` and `Next page`.
+- Prev/next controls are labeled in route context as `Предыдущая страница` and `Следующая страница`.
 
 ## Intentional Deviations
 
@@ -27,3 +32,7 @@ Source: `requirements/goods-list.png` and Figma node `1:451` from the assignment
 Validated on February 10, 2026, via Playwright in `apps/fumadocs` (`/docs/components/pagination`):
 - Clicking `Следующая страница` in interactive example increments page value (`3 -> 4`).
 - Setting current page to `1` disables `Предыдущая страница` in interactive example.
+
+## Route-Level Validation
+
+- Verified by `apps/web/src/test/Products.test.tsx` for footer placement, search pagination requests (`q`, `limit`, `skip`) and boundary/loading disabled behavior.
