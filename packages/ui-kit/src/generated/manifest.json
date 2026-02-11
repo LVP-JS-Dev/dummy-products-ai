@@ -112,6 +112,10 @@
     "Icon": {
       "schema": "schemas/icon.schema.json",
       "propsSchema": "schemas/icon.schema.json"
+    },
+    "SortIndicator": {
+      "schema": "schemas/sort-indicator.schema.json",
+      "propsSchema": "schemas/sort-indicator.schema.json"
     }
   }
 }

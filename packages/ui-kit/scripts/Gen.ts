@@ -4,63 +4,38 @@ import { zodToJsonSchema } from "zod-to-json-schema";
 import {
   buttonContract,
   buttonEvents,
-  cardContract,
   checkboxContract,
   checkboxEvents,
-  dividerContract,
   iconContract,
-  imageContract,
-  imageEvents,
-  inputContract,
-  inputEvents,
-  linkContract,
-  linkEvents,
   pageNumberContract,
   pageNumberEvents,
   paginationContract,
   paginationEvents,
   searchInputContract,
   searchInputEvents,
-  spinnerContract,
-  textContract,
-  toastContract,
-  toastEvents,
+  sortIndicatorContract,
 } from "../src/contracts";
 
 const components = {
   Button: { props: buttonContract, events: buttonEvents },
-  Card: { props: cardContract },
   SearchInput: { props: searchInputContract, events: searchInputEvents },
   Checkbox: { props: checkboxContract, events: checkboxEvents },
-  Divider: { props: dividerContract },
-  Input: { props: inputContract, events: inputEvents },
-  Link: { props: linkContract, events: linkEvents },
-  Text: { props: textContract },
-  Toast: { props: toastContract, events: toastEvents },
-  Spinner: { props: spinnerContract },
-  Image: { props: imageContract, events: imageEvents },
   Pagination: { props: paginationContract, events: paginationEvents },
   PageNumber: { props: pageNumberContract, events: pageNumberEvents },
   Icon: { props: iconContract },
+  SortIndicator: { props: sortIndicatorContract },
 } as const;
 
 const schemaDir = resolve("src/generated/schemas");
 
 const fileNameMap: Record<keyof typeof components, string> = {
   Button: "button",
-  Card: "card",
   SearchInput: "search-input",
   Checkbox: "checkbox",
-  Divider: "divider",
-  Input: "input",
-  Link: "link",
-  Text: "text",
-  Toast: "toast",
-  Spinner: "spinner",
-  Image: "image",
   Pagination: "pagination",
   PageNumber: "page-number",
   Icon: "icon",
+  SortIndicator: "sort-indicator",
 };
 
 function toKebabCase(value: string) {

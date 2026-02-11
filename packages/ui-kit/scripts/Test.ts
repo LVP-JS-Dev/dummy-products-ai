@@ -5,27 +5,16 @@ import { zodToJsonSchema } from "zod-to-json-schema";
 import {
   buttonContract,
   buttonEvents,
-  cardContract,
   checkboxContract,
   checkboxEvents,
-  dividerContract,
   iconContract,
-  imageContract,
-  imageEvents,
-  inputContract,
-  inputEvents,
-  linkContract,
-  linkEvents,
   pageNumberContract,
   pageNumberEvents,
   paginationContract,
   paginationEvents,
   searchInputContract,
   searchInputEvents,
-  spinnerContract,
-  textContract,
-  toastContract,
-  toastEvents,
+  sortIndicatorContract,
 } from "../src/contracts";
 import { states } from "../src/states";
 
@@ -34,10 +23,6 @@ const components = {
     props: buttonContract,
     events: buttonEvents,
     states: states.button,
-  },
-  Card: {
-    props: cardContract,
-    states: states.card,
   },
   SearchInput: {
     props: searchInputContract,
@@ -48,38 +33,6 @@ const components = {
     props: checkboxContract,
     events: checkboxEvents,
     states: states.checkbox,
-  },
-  Divider: {
-    props: dividerContract,
-    states: states.divider,
-  },
-  Input: {
-    props: inputContract,
-    events: inputEvents,
-    states: states.input,
-  },
-  Link: {
-    props: linkContract,
-    events: linkEvents,
-    states: states.link,
-  },
-  Text: {
-    props: textContract,
-    states: states.text,
-  },
-  Toast: {
-    props: toastContract,
-    events: toastEvents,
-    states: states.toast,
-  },
-  Spinner: {
-    props: spinnerContract,
-    states: states.spinner,
-  },
-  Image: {
-    props: imageContract,
-    events: imageEvents,
-    states: states.image,
   },
   Pagination: {
     props: paginationContract,
@@ -92,6 +45,7 @@ const components = {
     states: states.pageNumber,
   },
   Icon: { props: iconContract, states: states.icon },
+  SortIndicator: { props: sortIndicatorContract, states: states.sortIndicator },
 } as const;
 
 interface Manifest {
@@ -124,19 +78,12 @@ function isRecord(value: unknown): value is JsonRecord {
 
 const fileNameMap: Record<keyof typeof components, string> = {
   Button: "button",
-  Card: "card",
   SearchInput: "search-input",
   Checkbox: "checkbox",
-  Divider: "divider",
-  Input: "input",
-  Link: "link",
-  Text: "text",
-  Toast: "toast",
-  Spinner: "spinner",
-  Image: "image",
   Pagination: "pagination",
   PageNumber: "page-number",
   Icon: "icon",
+  SortIndicator: "sort-indicator",
 };
 
 function toKebabCase(value: string) {

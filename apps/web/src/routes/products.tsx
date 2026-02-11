@@ -1,17 +1,14 @@
-import { Button, Icon, Pagination, SearchInput } from "@dummy-products/ui-kit";
+import { Button, Pagination, SearchInput } from "@dummy-products/ui-kit";
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import {
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
-  type Header,
-  type Row,
   useReactTable,
 } from "@tanstack/react-table";
 import {
   type FormEvent,
   type HTMLAttributes,
-  type ReactNode,
   useCallback,
   useEffect,
   useId,
@@ -25,7 +22,9 @@ import { fetchProductsPage, searchProductsPage } from "@/api/DummyJson";
 import { ApiError } from "@/api/Http";
 import { clearAuthSession, loadAuthSession } from "@/auth/Session";
 import { clearSort, loadSort, saveSort } from "@/auth/SortStorage";
-import type { ProductPage, ProductRow } from "@/domain/Products";
+import { ProductsTableHeader } from "@/components/products/ProductsTableHeader";
+import { mapTanStackHeaderGroupsToViewModel } from "@/components/products/ProductsTableHeaderModel";
+import type { ProductPage } from "@/domain/Products";
 import { mapProductToRow } from "@/domain/Products";
 import {
   type ProductsColumnMeta,
@@ -53,58 +52,6 @@ function getSearchInputState(loading: boolean, query: string) {
     return "disabled" as const;
   }
   return query.trim() ? ("active" as const) : ("inactive" as const);
-}
-
-function getSortDirection(
-  sorted: false | "asc" | "desc"
-): "asc" | "desc" | undefined {
-  if (sorted === false) {
-    return undefined;
-  }
-  if (sorted === "desc") {
-    return "desc";
-  }
-  return "asc";
-}
-
-function getHeaderLabel(
-  header: Header<ProductRow, unknown>,
-  meta?: ProductsColumnMeta
-): string {
-  if (meta?.label) {
-    return meta.label;
-  }
-  if (typeof header.column.columnDef.header === "string") {
-    return header.column.columnDef.header;
-  }
-  return header.column.id;
-}
-
-function renderProductsHeaderCell(
-  header: Header<ProductRow, unknown>
-): ReactNode {
-  const meta = header.column.columnDef.meta as ProductsColumnMeta | undefined;
-  if (header.isPlaceholder) {
-    return <th key={header.id} />;
-  }
-
-  const direction = getSortDirection(header.column.getIsSorted());
-  return (
-    <SortableTh
-      align={meta?.align}
-      direction={direction}
-      key={header.id}
-      label={getHeaderLabel(header, meta)}
-      onClick={
-        header.column.getCanSort()
-          ? () => header.column.toggleSorting(direction === "asc")
-          : undefined
-      }
-      renderHeader={() =>
-        flexRender(header.column.columnDef.header, header.getContext())
-      }
-    />
-  );
 }
 
 function fetchPageData(query: string, page: number): Promise<ProductPage> {
@@ -154,6 +101,12 @@ function ProductsPage() {
     clearSort();
     toast.error("Сессия истекла, войдите снова");
     runAsync(navigate({ to: "/login", replace: true }), "forceLogout");
+  }, [navigate]);
+
+  const onLogout = useCallback(() => {
+    clearAuthSession();
+    clearSort();
+    runAsync(navigate({ to: "/login" }), "onLogout");
   }, [navigate]);
 
   useEffect(() => {
@@ -222,7 +175,6 @@ function ProductsPage() {
   const table = useReactTable({
     data: baseRows,
     columns: productsTableColumns,
-    getRowId: (row) => String(row.id),
     state: { sorting: sortDescriptorToSortingState(sort) },
     onSortingChange: (updater) => {
       setSort((prev) => {
@@ -239,7 +191,6 @@ function ProductsPage() {
     getSortedRowModel: getSortedRowModel(),
     enableMultiSort: false,
     enableSortingRemoval: false,
-    enableRowSelection: true,
   });
 
   const rows = table.getRowModel().rows;
@@ -247,50 +198,56 @@ function ProductsPage() {
   const totalPages = data ? Math.max(1, Math.ceil(data.total / data.limit)) : 1;
   const searchState = getSearchInputState(loading, inputQuery);
 
-  const shownLabel = useMemo(() => {
-    if (!data) {
-      return "Загрузка...";
-    }
-    if (data.total <= 0) {
-      return "Показано 0 из 0";
-    }
-    const start = data.skip + 1;
-    const end = Math.min(data.skip + data.limit, data.total);
-    return `Показано ${start}-${end} из ${data.total}`;
-  }, [data]);
-
   return (
-    <div className="mx-auto w-full max-w-[1400px] px-6 py-8">
-      <div
-        className="mb-6 flex items-center justify-between gap-6"
-        style={{
-          padding: "14px 18px",
-          borderRadius: "var(--ui-radius-md)",
-          background: "var(--ui-color-surface)",
-          border: "1px solid var(--ui-color-border)",
-        }}
-      >
+    <div className="mx-auto w-full max-w-[1200px] px-6 py-8">
+      <div className="mb-6 flex items-end justify-between gap-4">
+        <div className="grid gap-1">
+          <div
+            style={{
+              fontFamily: "var(--ui-font-heading)",
+              color: "var(--ui-color-text)",
+              fontWeight: 700,
+              fontSize: 32,
+              lineHeight: 1.2,
+            }}
+          >
+            Товары
+          </div>
+          <div
+            style={{
+              color: "var(--ui-color-text-muted)",
+              fontFamily: "var(--ui-font-body)",
+              fontSize: 14,
+            }}
+          >
+            Сортировка применяется только к текущей странице.
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <AddProductButton />
+          <Button onPress={onLogout} text="Выйти" variant="blue" />
+        </div>
+      </div>
+
+      <div className="mb-4 grid gap-2">
         <div
           style={{
-            fontFamily: "var(--ui-font-heading)",
             color: "var(--ui-color-text)",
-            fontWeight: 700,
-            fontSize: 28,
-            lineHeight: 1.2,
+            fontFamily: "var(--ui-font-heading)",
+            fontWeight: 600,
+            fontSize: 16,
           }}
         >
-          Товары
+          Поиск
         </div>
-        <div style={{ width: "100%", maxWidth: 820 }}>
-          <SearchInput
-            onSubmit={({ value }) => setInputQuery(value)}
-            onValueChange={({ value }) => setInputQuery(value)}
-            placeholder="Найти"
-            showIcon
-            state={searchState}
-            value={inputQuery}
-          />
-        </div>
+        <SearchInput
+          onSubmit={({ value }) => setInputQuery(value)}
+          onValueChange={({ value }) => setInputQuery(value)}
+          placeholder="Введите запрос"
+          showIcon
+          state={searchState}
+          value={inputQuery}
+        />
       </div>
 
       <div
@@ -310,104 +267,58 @@ function ProductsPage() {
         )}
       </div>
 
-      <div
-        style={{
-          border: "1px solid var(--ui-color-border)",
-          borderRadius: "var(--ui-radius-md)",
-          background: "var(--ui-color-surface)",
-          overflow: "hidden",
-        }}
-      >
+      {error ? (
         <div
-          className="flex items-center justify-between gap-3"
-          style={{ padding: "18px 18px 8px 18px" }}
+          style={{
+            border: "1px solid var(--ui-color-border)",
+            borderRadius: "var(--ui-radius-md)",
+            padding: "var(--ui-space-lg)",
+            background: "var(--ui-color-surface)",
+          }}
         >
           <div
             style={{
-              fontFamily: "var(--ui-font-heading)",
               color: "var(--ui-color-text)",
+              fontFamily: "var(--ui-font-heading)",
               fontWeight: 700,
               fontSize: 16,
             }}
           >
-            Все позиции
+            Ошибка загрузки
           </div>
-          <div className="flex items-center gap-2">
-            <button
-              aria-label="Обновить"
-              onClick={() => setRetryToken((v) => v + 1)}
-              style={{
-                background: "transparent",
-                border: "none",
-                padding: 0,
-                cursor: "pointer",
-                color: "var(--ui-color-text-muted)",
-              }}
-              type="button"
-            >
-              <Icon name="refresh" size={42} />
-            </button>
-            <AddProductButton />
+          <div
+            style={{
+              marginTop: 6,
+              color: "var(--ui-color-text-muted)",
+              fontFamily: "var(--ui-font-body)",
+              fontSize: 14,
+            }}
+          >
+            {error}
+          </div>
+          <div className="mt-3 flex gap-2">
+            <Button
+              onPress={() => setRetryToken((v) => v + 1)}
+              text="Повторить"
+              variant="blue"
+            />
             <Button onPress={forceLogout} text="Выйти" variant="blue" />
           </div>
         </div>
-
-        {error ? (
-          <div
-            style={{
-              padding: "var(--ui-space-lg)",
-            }}
-          >
-            <div
-              style={{
-                color: "var(--ui-color-text)",
-                fontFamily: "var(--ui-font-heading)",
-                fontWeight: 700,
-                fontSize: 16,
-              }}
-            >
-              Ошибка загрузки
-            </div>
-            <div
-              style={{
-                marginTop: 6,
-                color: "var(--ui-color-text-muted)",
-                fontFamily: "var(--ui-font-body)",
-                fontSize: 14,
-              }}
-            >
-              {error}
-            </div>
-            <div className="mt-3 flex gap-2">
-              <Button
-                onPress={() => setRetryToken((v) => v + 1)}
-                text="Повторить"
-                variant="blue"
-              />
-              <Button onPress={forceLogout} text="Выйти" variant="blue" />
-            </div>
-          </div>
-        ) : (
-          <table className="w-full border-collapse text-left text-sm">
-            <thead style={{ background: "var(--ui-color-surface-muted)" }}>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <tr
-                  className="[&>th]:px-4 [&>th]:py-3"
-                  key={headerGroup.id}
-                  style={{
-                    fontFamily: "var(--ui-font-heading)",
-                    fontWeight: 600,
-                    fontSize: 14,
-                    color: "var(--ui-color-text-muted)",
-                  }}
-                >
-                  {headerGroup.headers.map((header) =>
-                    renderProductsHeaderCell(header)
-                  )}
-                </tr>
-              ))}
-            </thead>
-            <tbody className="[&>tr>td]:px-4 [&>tr>td]:py-4">
+      ) : (
+        <div
+          className="overflow-hidden"
+          style={{
+            border: "1px solid var(--ui-color-border)",
+            borderRadius: "var(--ui-radius-md)",
+            background: "var(--ui-color-surface)",
+          }}
+        >
+          <table className="w-full border-collapse text-left text-xs">
+            <ProductsTableHeader
+              rows={mapTanStackHeaderGroupsToViewModel(table.getHeaderGroups())}
+            />
+            <tbody className="[&>tr>td]:px-3 [&>tr>td]:py-2">
               {rows.length === 0 && !loading ? (
                 <tr>
                   <td
@@ -424,153 +335,69 @@ function ProductsPage() {
                   </td>
                 </tr>
               ) : (
-                rows.map((r) => <ProductsRow key={r.id} row={r} />)
+                rows.map((r) => (
+                  <tr
+                    className="border-t"
+                    key={r.id}
+                    style={{ borderColor: "var(--ui-color-border)" }}
+                  >
+                    {r.getVisibleCells().map((cell) => {
+                      const meta = cell.column.columnDef.meta as
+                        | ProductsColumnMeta
+                        | undefined;
+                      const alignClass =
+                        meta?.align === "right"
+                          ? "tabular-nums text-right"
+                          : "";
+                      const isName = cell.column.id === "name";
+                      const cellClassName = isName
+                        ? `font-medium ${alignClass}`.trim()
+                        : alignClass;
+                      const isLowRating =
+                        cell.column.id === "rating" && r.original.rating < 3;
+                      return (
+                        <td
+                          className={cellClassName}
+                          key={cell.id}
+                          style={{ color: isLowRating ? "#dc2626" : "inherit" }}
+                        >
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))
               )}
             </tbody>
           </table>
-        )}
-
-        <div
-          className="flex items-center justify-between gap-3"
-          style={{ padding: "18px" }}
-        >
-          <div
-            style={{
-              fontFamily: "var(--ui-font-body)",
-              color: "var(--ui-color-text-muted)",
-              fontSize: 14,
-            }}
-          >
-            {shownLabel}
-          </div>
-          <Pagination
-            currentPage={page}
-            disabled={loading}
-            maxVisiblePages={5}
-            nextAriaLabel="Следующая страница"
-            onPageChange={({ page: nextPage }) => setPage(nextPage)}
-            pageAriaLabelPrefix="Страница"
-            prevAriaLabel="Предыдущая страница"
-            totalPages={totalPages}
-          />
         </div>
-      </div>
+      )}
 
-      <div
-        className="mt-2"
-        style={{
-          color: "var(--ui-color-text-muted)",
-          fontFamily: "var(--ui-font-body)",
-          fontSize: 12,
-        }}
-      >
-        Сортировка применяется только к текущей странице.
+      <div className="mt-4 flex items-center justify-between gap-3">
+        <div
+          style={{
+            fontFamily: "var(--ui-font-body)",
+            color: "var(--ui-color-text-muted)",
+            fontSize: 14,
+          }}
+        >
+          {data ? `Страница ${page} из ${totalPages}` : "Загрузка..."}
+        </div>
+        <Pagination
+          currentPage={page}
+          disabled={loading}
+          maxVisiblePages={5}
+          nextAriaLabel="Следующая страница"
+          onPageChange={({ page: nextPage }) => setPage(nextPage)}
+          pageAriaLabelPrefix="Страница"
+          prevAriaLabel="Предыдущая страница"
+          totalPages={totalPages}
+        />
       </div>
     </div>
-  );
-}
-
-function ProductsRow({ row }: { row: Row<ProductRow> }) {
-  const selected = row.getIsSelected();
-  return (
-    <tr
-      className="border-t"
-      style={{
-        borderColor: "var(--ui-color-border)",
-        background: selected ? "rgba(0,0,0,0.02)" : "transparent",
-        boxShadow: selected ? "inset 3px 0 0 var(--ui-color-primary)" : "none",
-      }}
-    >
-      {row.getVisibleCells().map((cell, idx) => {
-        const meta = cell.column.columnDef.meta as
-          | ProductsColumnMeta
-          | undefined;
-        const alignClass =
-          meta?.align === "right" ? "tabular-nums text-right" : "";
-        const isFirstCell = idx === 0;
-        const leftIndicator = selected && isFirstCell;
-        return (
-          <td
-            className={alignClass}
-            key={cell.id}
-            style={{
-              position: "relative",
-              ...(leftIndicator ? { paddingLeft: 18 } : null),
-            }}
-          >
-            {leftIndicator ? (
-              <span
-                aria-hidden
-                style={{
-                  position: "absolute",
-                  left: 6,
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  width: 14,
-                  height: 14,
-                  borderRadius: 3,
-                  background: "var(--ui-color-primary)",
-                }}
-              />
-            ) : null}
-            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-          </td>
-        );
-      })}
-    </tr>
-  );
-}
-
-function SortableTh(props: {
-  label: string;
-  direction?: "asc" | "desc";
-  onClick?: () => void;
-  align?: "left" | "right";
-  renderHeader: () => ReactNode;
-}) {
-  let arrow = "";
-  if (props.direction === "asc") {
-    arrow = "↑";
-  } else if (props.direction === "desc") {
-    arrow = "↓";
-  }
-  const content = props.renderHeader();
-  let headerNode: ReactNode;
-  if (content == null) {
-    headerNode = <span>{props.label}</span>;
-  } else if (typeof content === "string") {
-    headerNode = <span>{content}</span>;
-  } else {
-    headerNode = content;
-  }
-  if (!props.onClick) {
-    return (
-      <th className={props.align === "right" ? "text-right" : ""}>
-        {headerNode}
-      </th>
-    );
-  }
-
-  return (
-    <th className={props.align === "right" ? "text-right" : ""}>
-      <button
-        onClick={props.onClick}
-        style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: 4,
-          fontFamily: "var(--ui-font-heading)",
-          color: "var(--ui-color-text-muted)",
-          fontWeight: 600,
-          width: "100%",
-          justifyContent: props.align === "right" ? "flex-end" : "flex-start",
-        }}
-        type="button"
-      >
-        {headerNode}
-        <span style={{ color: "var(--ui-color-text-muted)" }}>{arrow}</span>
-      </button>
-    </th>
   );
 }
 
