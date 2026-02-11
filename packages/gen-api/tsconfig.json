@@ -1,0 +1,8 @@
+{
+  "extends": "@dummy-products/config/tsconfig.base.json",
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "strictNullChecks": true
+  },
+  "include": ["src", "kubb.config.ts"]
+}
