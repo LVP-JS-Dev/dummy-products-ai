@@ -56,7 +56,7 @@ test("products list and search data use the same TanStack columns and sorting be
   assert.deepEqual(listNames, ["Apple", "Banana"]);
   assert.deepEqual(searchNames, ["Alpha", "Zeta"]);
 
-  assert.equal(productsTableColumns.length, 5);
+  assert.equal(productsTableColumns.length, 7);
 });
 
 test("products table supports price sorting", () => {

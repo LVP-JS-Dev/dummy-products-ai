@@ -5,6 +5,8 @@ export interface Product {
   rating: number;
   brand?: string | null;
   sku?: string | null;
+  category?: string | null;
+  thumbnail?: string | null;
 }
 
 export interface ProductPage {
@@ -17,6 +19,8 @@ export interface ProductPage {
 export interface ProductRow {
   id: number;
   name: string;
+  category: string;
+  thumbnailUrl: string | null;
   price: number;
   vendor: string;
   article: string;
@@ -27,6 +31,11 @@ export function mapProductToRow(product: Product): ProductRow {
   return {
     id: product.id,
     name: product.title,
+    category: product.category?.trim() || "",
+    thumbnailUrl:
+      typeof product.thumbnail === "string" && product.thumbnail.trim()
+        ? product.thumbnail
+        : null,
     price: product.price,
     vendor: product.brand?.trim() || "-",
     article: product.sku?.trim() || String(product.id),
