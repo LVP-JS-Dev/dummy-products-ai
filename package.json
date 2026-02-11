@@ -16,7 +16,8 @@
     "docs:check-tokens": "node scripts/generate-token-docs.mjs --check",
     "gen": "pnpm -C packages/ui-kit gen",
     "test": "pnpm -C packages/ui-kit test",
-    "check": "ultracite check && pnpm gen && pnpm test && pnpm docs:check-tokens && git diff --exit-code && test -z \"$(git ls-files --others --exclude-standard packages/ui-kit/src/generated)\"",
+    "lint:md": "node scripts/lint-markdown-headings.mjs",
+    "check": "ultracite check && pnpm lint:md && pnpm gen && pnpm test && pnpm docs:check-tokens && git diff --exit-code && test -z \"$(git ls-files --others --exclude-standard packages/ui-kit/src/generated)\"",
     "fix": "ultracite fix",
     "prepare": "husky",
     "ruler:apply": "pnpm dlx @intellectronica/ruler@latest apply --local-only"
