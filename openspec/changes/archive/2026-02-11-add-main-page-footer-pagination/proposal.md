@@ -1,26 +1,46 @@
+# Main Page Footer Pagination
+
 ## Why
 
-На странице товаров пагинация должна располагаться в футере контентной области и визуально совпадать с UI-kit, чтобы соответствовать макету и обеспечить единообразное поведение навигации между страницами. Сейчас требуется формализовать это как spec-level требование, чтобы реализация и проверка были однозначными.
+On the products page, pagination must live in the footer area below the table content and match the UI-kit look and behavior to align with the assignment/Figma and keep navigation consistent across modes. This is formalized as a spec-level requirement so implementation and verification are unambiguous.
 
 ## What Changes
 
-- Уточнить требования каталога товаров: пагинация должна рендериться в футере под таблицей товаров и использовать компонент `Pagination` из UI-kit.
-- Уточнить требования поиска товаров: в режиме активного поиска используется тот же footer-блок пагинации и те же правила доступности/состояний.
-- Зафиксировать требования к состояниям футера (loading, пустые результаты, первая/последняя страница) и поведению prev/next.
-- Добавить проверку через тесты и обновить документацию по соответствию макету.
+- Clarify the products catalog requirements: pagination renders in the footer under the products table and uses the UI-kit `Pagination` component.
+- Clarify the products search requirements: when search is active, the same footer pagination block and the same accessibility/state rules apply.
+- Specify footer states (loading, empty results, first/last page) and prev/next boundary behavior.
+- Add verification via tests and update mapping notes for Figma alignment.
 
 ## Capabilities
 
 ### New Capabilities
+
 - None.
 
 ### Modified Capabilities
-- `web-products-catalog`: уточнение требований к размещению и поведению пагинации в футере списка товаров с обязательным использованием UI-kit компонента.
-- `web-products-search-and-create`: уточнение требований к пагинации поисковой выдачи, чтобы использовать тот же footer-паттерн и состояния навигации.
+
+- `web-products-catalog`: clarify pagination placement and footer behavior with mandatory UI-kit `Pagination` usage.
+- `web-products-search-and-create`: clarify search-results pagination to use the same footer pattern and navigation states.
 
 ## Impact
 
-- Affected code: `apps/web/src/routes/products.tsx` и связанные компоненты/стили страницы товаров.
-- Affected tests: тесты пагинации и интеграционные сценарии страницы товаров.
-- Affected docs/specs: delta specs в `openspec/changes/add-main-page-footer-pagination/specs/` для `web-products-catalog` и `web-products-search-and-create`.
-- Dependencies: переиспользуется `@dummy-products/ui-kit` `Pagination`, без новых внешних API или библиотек.
+- Affected code: `apps/web/src/routes/products.tsx` and related products-page wrappers/styles.
+- Affected tests: route-level pagination placement/behavior tests for the products page.
+- Affected docs/specs: delta specs for `web-products-catalog` and `web-products-search-and-create`.
+- Dependencies: reuse `@dummy-products/ui-kit` `Pagination` (no new external APIs or libraries).
+
+## How to verify
+
+- Run `pnpm -C apps/web exec vitest run src/test/Products.test.tsx`
+- Run `pnpm check` from repo root
+- Manually verify on `/products`:
+  - pagination renders in the table footer area
+  - boundary controls disable correctly on first/last page
+  - search mode uses the same footer pagination pattern
+
+## PRD impact
+
+- [ ] Root `PRD.md`
+- [ ] `packages/ui-kit/PRD.md`
+- [x] `apps/web/PRD.md`
+- [ ] `apps/fumadocs/PRD.md`

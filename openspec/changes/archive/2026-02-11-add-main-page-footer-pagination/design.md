@@ -1,3 +1,5 @@
+# Main Page Footer Pagination
+
 ## Context
 
 `apps/web/src/routes/products.tsx` already supports API pagination (`limit`/`skip`) and renders UI controls. The change requires formalizing footer placement and behavior to match the assignment/Figma expectation for the main products page while keeping one consistent interaction model between default list mode and search mode.

@@ -3,7 +3,9 @@
 ## Purpose
 
 TBD - created by archiving change implement-dummyjson-auth-products-ui. Update Purpose after archive.
+
 ## Requirements
+
 ### Requirement: Products list SHALL load from DummyJSON with visible loading state
 
 The products screen SHALL request product data from DummyJSON and SHALL show a visible progress/loading indicator while data is being fetched.
@@ -115,7 +117,3 @@ The products screen SHALL support paginated loading from the products API using 
 
 - **WHEN** the active page is the first or last available page
 - **THEN** the previous or next footer control is disabled accordingly
-
- the active page is the first or last available page
-- **THEN** the previous or next footer control is disabled accordingly
-

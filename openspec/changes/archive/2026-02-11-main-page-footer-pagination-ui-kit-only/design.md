@@ -1,3 +1,5 @@
+# Main Page Footer Pagination (UI-kit Only)
+
 ## Context
 
 The `/products` route already uses `@dummy-products/ui-kit` for core controls (`Button`, `SearchInput`, `Pagination`) but requirements do not explicitly state that UI-kit primitives are mandatory. This change makes that constraint explicit and testable, so the footer pagination and related controls cannot drift into ad hoc implementations.

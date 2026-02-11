@@ -1,3 +1,5 @@
+# web-products-catalog - Footer Pagination (UI-kit Only Delta)
+
 ## MODIFIED Requirements
 
 ### Requirement: Products list SHALL support pagination via API parameters
