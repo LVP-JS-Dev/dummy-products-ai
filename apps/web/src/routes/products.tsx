@@ -348,6 +348,7 @@ function ProductsPage() {
               <Icon name="refresh" size={42} />
             </button>
             <AddProductButton />
+            <Button onPress={forceLogout} text="Выйти" variant="blue" />
           </div>
         </div>
 
