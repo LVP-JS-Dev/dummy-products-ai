@@ -1,4 +1,4 @@
-import { Button, Pagination, SearchInput } from "@dummy-products/ui-kit";
+import { Button, Modal, Pagination, SearchInput } from "@dummy-products/ui-kit";
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import {
   flexRender,
@@ -13,7 +13,6 @@ import {
   useEffect,
   useId,
   useMemo,
-  useRef,
   useState,
 } from "react";
 import { toast } from "sonner";
@@ -418,7 +417,6 @@ function AddProductButton() {
 }
 
 function AddProductModal({ onClose }: { onClose: () => void }) {
-  const modalRef = useRef<HTMLDivElement | null>(null);
   const nameId = useId();
   const priceId = useId();
   const vendorId = useId();
@@ -428,86 +426,6 @@ function AddProductModal({ onClose }: { onClose: () => void }) {
   const [vendor, setVendor] = useState("");
   const [article, setArticle] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
-
-  useEffect(() => {
-    const previousActive =
-      document.activeElement instanceof HTMLElement
-        ? document.activeElement
-        : null;
-
-    const focusableSelector = [
-      "a[href]",
-      "button:not([disabled])",
-      "input:not([disabled])",
-      "select:not([disabled])",
-      "textarea:not([disabled])",
-      "[tabindex]:not([tabindex='-1'])",
-    ].join(",");
-
-    function getFocusableElements(): HTMLElement[] {
-      const modal = modalRef.current;
-      if (!modal) {
-        return [];
-      }
-      return Array.from(
-        modal.querySelectorAll<HTMLElement>(focusableSelector)
-      ).filter(
-        (el) =>
-          !el.hasAttribute("disabled") &&
-          el.getAttribute("aria-hidden") !== "true"
-      );
-    }
-
-    const focusable = getFocusableElements();
-    if (focusable.length > 0) {
-      focusable[0]?.focus();
-    } else {
-      modalRef.current?.focus();
-    }
-
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        onClose();
-        return;
-      }
-      if (event.key !== "Tab") {
-        return;
-      }
-
-      const currentFocusable = getFocusableElements();
-      if (currentFocusable.length === 0) {
-        event.preventDefault();
-        return;
-      }
-
-      const first = currentFocusable[0];
-      const last = currentFocusable.at(-1);
-      if (!(first && last)) {
-        return;
-      }
-
-      const active = document.activeElement;
-      if (event.shiftKey) {
-        if (active === first || !modalRef.current?.contains(active)) {
-          event.preventDefault();
-          last.focus();
-        }
-        return;
-      }
-
-      if (active === last || !modalRef.current?.contains(active)) {
-        event.preventDefault();
-        first.focus();
-      }
-    }
-
-    document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-      previousActive?.focus();
-    };
-  }, [onClose]);
 
   function saveProduct() {
     const next: Record<string, string> = {};
@@ -543,79 +461,58 @@ function AddProductModal({ onClose }: { onClose: () => void }) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 grid place-items-center bg-black/40 px-4">
-      <div
-        aria-labelledby="add-product-title"
-        aria-modal="true"
-        ref={modalRef}
-        role="dialog"
-        style={{
-          width: "100%",
-          maxWidth: 680,
-          background: "var(--ui-color-surface)",
-          borderRadius: "var(--ui-radius-lg)",
-          border: "1px solid var(--ui-color-border)",
-          padding: "var(--ui-space-xxl)",
-        }}
-        tabIndex={-1}
-      >
+    <Modal
+      dismissible
+      onClose={() => onClose()}
+      open
+      size="lg"
+      title="Добавить товар"
+    >
+      <form onSubmit={onSubmit}>
+        <div style={{ display: "grid", gap: "var(--ui-space-md)" }}>
+          <Field
+            error={errors.name}
+            id={nameId}
+            label="Наименование"
+            onChange={setName}
+            value={name}
+          />
+          <Field
+            error={errors.price}
+            id={priceId}
+            inputMode="decimal"
+            label="Цена"
+            onChange={setPrice}
+            value={price}
+          />
+          <Field
+            error={errors.vendor}
+            id={vendorId}
+            label="Вендор"
+            onChange={setVendor}
+            value={vendor}
+          />
+          <Field
+            error={errors.article}
+            id={articleId}
+            label="Артикул"
+            onChange={setArticle}
+            value={article}
+          />
+        </div>
         <div
           style={{
-            fontFamily: "var(--ui-font-heading)",
-            color: "var(--ui-color-text)",
-            fontWeight: 700,
-            fontSize: 24,
-            marginBottom: "var(--ui-space-lg)",
+            marginTop: "var(--ui-space-lg)",
+            display: "flex",
+            justifyContent: "flex-end",
+            gap: "var(--ui-space-sm)",
           }}
         >
-          <span id="add-product-title">Добавить товар</span>
+          <Button onPress={onClose} text="Отмена" variant="blue" />
+          <Button onPress={saveProduct} text="Сохранить" variant="blue" />
         </div>
-        <form onSubmit={onSubmit}>
-          <div style={{ display: "grid", gap: "var(--ui-space-md)" }}>
-            <Field
-              error={errors.name}
-              id={nameId}
-              label="Наименование"
-              onChange={setName}
-              value={name}
-            />
-            <Field
-              error={errors.price}
-              id={priceId}
-              inputMode="decimal"
-              label="Цена"
-              onChange={setPrice}
-              value={price}
-            />
-            <Field
-              error={errors.vendor}
-              id={vendorId}
-              label="Вендор"
-              onChange={setVendor}
-              value={vendor}
-            />
-            <Field
-              error={errors.article}
-              id={articleId}
-              label="Артикул"
-              onChange={setArticle}
-              value={article}
-            />
-          </div>
-          <div
-            style={{
-              marginTop: "var(--ui-space-lg)",
-              display: "flex",
-              justifyContent: "flex-end",
-              gap: "var(--ui-space-sm)",
-            }}
-          >
-            <Button onPress={onClose} text="Отмена" variant="blue" />
-            <Button onPress={saveProduct} text="Сохранить" variant="blue" />
-          </div>
-        </form>
-      </div>
-    </div>
+      </form>
+    </Modal>
   );
 }
 
