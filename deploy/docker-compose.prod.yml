@@ -1,0 +1,26 @@
+name: dummy-products-prod
+
+services:
+  web:
+    image: ${WEB_IMAGE:?set WEB_IMAGE}
+    restart: unless-stopped
+    expose:
+      - "80"
+    networks:
+      - app
+
+  docs:
+    image: ${DOCS_IMAGE:?set DOCS_IMAGE}
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      HOSTNAME: 0.0.0.0
+      PORT: "3000"
+    expose:
+      - "3000"
+    networks:
+      - app
+
+networks:
+  app:
+    driver: bridge
