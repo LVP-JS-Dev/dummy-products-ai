@@ -17,15 +17,17 @@
 
 ### Minimal a11y checklist (if adopted)
 
-- Keyboard navigation works across rows/cells with deterministic focus order
+- Keyboard navigation works across rows/cells with predictable focus order
 - Screen reader announces headers/row context without losing semantics
-- Focus trap is not introduced; focus remains within the page and restores deterministically after interactions
+- Focus trap is not introduced; focus remains within the page and restores predictably after interactions
 
 ## ADDED Requirements
 
 ### Requirement: Products table virtualization decision SHALL be documented
 
-The products table implementation SHALL either adopt row virtualization or explicitly document why virtualization is deferred for the supported page sizes.
+The products table SHALL adopt row virtualization for supported page sizes.
+
+If virtualization is deferred for any supported page size, the deferral MUST be explicitly documented with justification and a timeline for re-evaluation.
 
 The decision record SHALL include the evaluated page sizes (`10/20/50/100`) and a brief assessment of complexity and accessibility implications.
 
