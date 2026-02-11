@@ -1,3 +1,5 @@
+# Use UI Kit SortIndicator in Products Header
+
 ## Why
 
 The products table header currently renders sort direction indicators via ad-hoc logic, which conflicts with the requirement to prefer shared ui-kit primitives. Now that a minimal ui-kit `SortIndicator` exists, the products header should use it to keep visuals consistent and reduce duplication.
@@ -13,6 +15,7 @@ The products table header currently renders sort direction indicators via ad-hoc
 ### New Capabilities
 
 ### Modified Capabilities
+
 - `web-products-catalog`: Sorting UI requirement is clarified to display sort direction via shared ui-kit `SortIndicator`.
 
 ## Impact

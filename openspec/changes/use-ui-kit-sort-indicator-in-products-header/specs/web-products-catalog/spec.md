@@ -1,4 +1,4 @@
-## MODIFIED Requirements
+# MODIFIED Requirements
 
 ### Requirement: Products table SHALL support sortable columns with stored sort state
 

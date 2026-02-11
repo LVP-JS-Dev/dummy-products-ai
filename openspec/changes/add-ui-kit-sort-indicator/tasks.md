@@ -1,4 +1,4 @@
-## 1. UI-kit Component and Contract
+# 1. UI-kit Component and Contract
 
 - [x] 1.1 Add `SortIndicator` contract, states, component implementation, and public exports in `packages/ui-kit`.
 - [x] 1.2 Update ui-kit generation and validation scripts to include `SortIndicator` and regenerate schemas/manifest.

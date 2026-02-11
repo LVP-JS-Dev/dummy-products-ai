@@ -1,4 +1,4 @@
-## 1. Products Header Integration
+# 1. Products Header Integration
 
 - [x] 1.1 Update `apps/web` products table header to render ui-kit `SortIndicator` for active sort direction.
 - [x] 1.2 Update header tests to assert indicator is rendered in sorted states and interactions remain unchanged.

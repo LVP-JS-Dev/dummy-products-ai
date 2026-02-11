@@ -1,3 +1,5 @@
+# Add UI Kit SortIndicator
+
 ## Why
 
 Table UIs need a consistent, reusable visual indicator for sort direction. Today sort arrows are implemented ad-hoc per screen/component, which makes Figma-aligned behavior and maintenance harder. Adding a minimal `SortIndicator` to `@dummy-products/ui-kit` centralizes this UI primitive and enables mandatory ui-kit usage in table headers.
