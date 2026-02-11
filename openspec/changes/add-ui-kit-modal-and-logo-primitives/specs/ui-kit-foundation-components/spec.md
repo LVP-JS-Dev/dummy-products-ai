@@ -2,9 +2,9 @@
 
 ## ADDED Requirements
 
-### Requirement: UI Kit foundation surface MAY include Modal and Logo primitives
+### Requirement: UI Kit foundation surface SHALL include Modal and Logo primitives
 
-The UI kit MAY include `Modal` and `Logo` as foundation primitives if they are required by product flows and documented via contracts/states/schemas.
+The UI kit SHALL include `Modal` and `Logo` as foundation primitives when required by product flows, and SHALL document them via contracts, states, generated schemas, and docs.
 
 #### Scenario: Consumer imports new primitives
 

@@ -4,7 +4,7 @@
 
 ### Requirement: Login form state SHALL be modeled via TanStack Form
 
-The web app login form SHOULD use `@tanstack/react-form` as the canonical mechanism for field state, submit lifecycle, and validation gating.
+The web app login form SHALL use `@tanstack/react-form` as the canonical mechanism for field state, submit lifecycle, and validation gating.
 
 #### Scenario: Form submit lifecycle is deterministic
 

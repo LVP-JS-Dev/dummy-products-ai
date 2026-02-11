@@ -1,4 +1,10 @@
-## ADDED Requirements
+# submission-docs Specification
+
+## Purpose
+
+Define the required submission and reviewer documentation so the assignment can be run and verified with minimal context.
+
+## Requirements
 
 ### Requirement: Provide a reviewer entrypoint for running and verifying the assignment
 The repository SHALL include a root-level `SUBMISSION.md` that enables a reviewer to run and verify the assignment with minimal context.
