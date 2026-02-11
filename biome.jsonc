@@ -147,6 +147,21 @@
       }
     },
     {
+      "includes": [
+        "packages/gen-api/src/index.ts",
+        "packages/gen-api/src/Client.ts",
+        "packages/gen-api/src/ReactQuery.ts",
+        "packages/gen-api/src/Zod.ts"
+      ],
+      "linter": {
+        "rules": {
+          "performance": {
+            "noBarrelFile": "off"
+          }
+        }
+      }
+    },
+    {
       "includes": ["packages/ui-kit/src/components/**/*.tsx"],
       "linter": {
         "rules": {

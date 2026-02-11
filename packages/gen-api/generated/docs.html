@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf8" />
+  <title>DummyJSON API (subset)</title>
+  <!-- needed for adaptive design -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700" rel="stylesheet">
+</head>
+
+<body>
+  
+     <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"> </script>
+ <div id="redoc-container"></div>
+ <script>
+   const data = {
+  "openapi": "3.1.0",
+  "info": {
+    "title": "DummyJSON API (subset)",
+    "version": "1.0.0",
+    "description": "OpenAPI description for the subset of DummyJSON endpoints used by this repo (`apps/web`).\nIncludes auth login and products listing/search.\n",
+    "license": {
+      "name": "MIT",
+      "identifier": "MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://dummyjson.com"
+    }
+  ],
+  "security": [],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authentication endpoints"
+    },
+    {
+      "name": "Products",
+      "description": "Products listing and search"
+    }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "operationId": "login",
+        "summary": "Login",
+        "description": "Authenticates a user and returns an access token. The web app accepts either `token` or `accessToken`.\n",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "username",
+                  "password"
+                ],
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "x-readme-ref-name": "LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login succeeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "DummyJSON response is not fully stable across versions; this repo only requires a non-empty token.\n",
+                  "additionalProperties": true,
+                  "properties": {
+                    "username": {
+                      "type": "string"
+                    },
+                    "token": {
+                      "type": "string",
+                      "description": "Some responses may include `token` instead of `accessToken`."
+                    },
+                    "accessToken": {
+                      "type": "string",
+                      "description": "Preferred token field in newer DummyJSON responses."
+                    }
+                  },
+                  "anyOf": [
+                    {
+                      "required": [
+                        "token"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "accessToken"
+                      ]
+                    }
+                  ],
+                  "x-readme-ref-name": "LoginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-readme-ref-name": "ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-readme-ref-name": "ErrorResponse"
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Request timeout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-readme-ref-name": "ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-readme-ref-name": "ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "operationId": "listProducts",
+        "summary": "List products (paginated)",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "description": "Page size",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "required": true,
+            "description": "Number of items to skip (offset)",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Products page",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "required": [
+                    "products",
+                    "total",
+                    "skip",
+                    "limit"
+                  ],
+                  "properties": {
+                    "products": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "description": "DummyJSON product object. This repo relies only on a small subset of fields.\n",
+                        "additionalProperties": true,
+                        "required": [
+                          "id",
+                          "title",
+                          "price",
+                          "rating"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "price": {
+                            "type": "number"
+                          },
+                          "rating": {
+                            "type": "number"
+                          },
+                          "brand": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "sku": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          }
+                        },
+                        "x-readme-ref-name": "Product"
+                      }
+                    },
+                    "total": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "skip": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "minimum": 1
+                    }
+                  },
+                  "x-readme-ref-name": "ProductPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-readme-ref-name": "ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-readme-ref-name": "ErrorResponse"
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Request timeout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-readme-ref-name": "ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-readme-ref-name": "ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/search": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "operationId": "searchProducts",
+        "summary": "Search products (paginated)",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "description": "Search query",
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "description": "Page size",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "required": true,
+            "description": "Number of items to skip (offset)",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Products page",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "required": [
+                    "products",
+                    "total",
+                    "skip",
+                    "limit"
+                  ],
+                  "properties": {
+                    "products": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "description": "DummyJSON product object. This repo relies only on a small subset of fields.\n",
+                        "additionalProperties": true,
+                        "required": [
+                          "id",
+                          "title",
+                          "price",
+                          "rating"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "price": {
+                            "type": "number"
+                          },
+                          "rating": {
+                            "type": "number"
+                          },
+                          "brand": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "sku": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          }
+                        },
+                        "x-readme-ref-name": "Product"
+                      }
+                    },
+                    "total": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "skip": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "minimum": 1
+                    }
+                  },
+                  "x-readme-ref-name": "ProductPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-readme-ref-name": "ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-readme-ref-name": "ErrorResponse"
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Request timeout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-readme-ref-name": "ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-readme-ref-name": "ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "Limit": {
+        "name": "limit",
+        "in": "query",
+        "required": true,
+        "description": "Page size",
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        }
+      },
+      "Skip": {
+        "name": "skip",
+        "in": "query",
+        "required": true,
+        "description": "Number of items to skip (offset)",
+        "schema": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "schemas": {
+      "LoginRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "username",
+          "password"
+        ],
+        "properties": {
+          "username": {
+            "type": "string",
+            "minLength": 1
+          },
+          "password": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "x-readme-ref-name": "LoginRequest"
+      },
+      "LoginResponse": {
+        "type": "object",
+        "description": "DummyJSON response is not fully stable across versions; this repo only requires a non-empty token.\n",
+        "additionalProperties": true,
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string",
+            "description": "Some responses may include `token` instead of `accessToken`."
+          },
+          "accessToken": {
+            "type": "string",
+            "description": "Preferred token field in newer DummyJSON responses."
+          }
+        },
+        "anyOf": [
+          {
+            "required": [
+              "token"
+            ]
+          },
+          {
+            "required": [
+              "accessToken"
+            ]
+          }
+        ],
+        "x-readme-ref-name": "LoginResponse"
+      },
+      "ProductPage": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "products",
+          "total",
+          "skip",
+          "limit"
+        ],
+        "properties": {
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "DummyJSON product object. This repo relies only on a small subset of fields.\n",
+              "additionalProperties": true,
+              "required": [
+                "id",
+                "title",
+                "price",
+                "rating"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "number"
+                },
+                "rating": {
+                  "type": "number"
+                },
+                "brand": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "sku": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "x-readme-ref-name": "Product"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "x-readme-ref-name": "ProductPage"
+      },
+      "Product": {
+        "type": "object",
+        "description": "DummyJSON product object. This repo relies only on a small subset of fields.\n",
+        "additionalProperties": true,
+        "required": [
+          "id",
+          "title",
+          "price",
+          "rating"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "rating": {
+            "type": "number"
+          },
+          "brand": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "sku": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "x-readme-ref-name": "Product"
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "x-readme-ref-name": "ErrorResponse"
+      }
+    }
+  }
+};
+   Redoc.init(data, {
+     "expandResponses": "200,400"
+   }, document.getElementById('redoc-container'))
+ </script>
+    
+</body>
+
+</html>
