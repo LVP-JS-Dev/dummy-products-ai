@@ -16,6 +16,9 @@ import {
   inputEvents,
   linkContract,
   linkEvents,
+  logoContract,
+  modalContract,
+  modalEvents,
   pageNumberContract,
   pageNumberEvents,
   paginationContract,
@@ -94,6 +97,8 @@ const components = {
     states: states.image,
   },
   SortIndicator: { props: sortIndicatorContract, states: states.sortIndicator },
+  Logo: { props: logoContract, states: states.logo },
+  Modal: { props: modalContract, events: modalEvents, states: states.modal },
 } as const;
 
 interface Manifest {
@@ -140,6 +145,8 @@ const fileNameMap: Record<keyof typeof components, string> = {
   Icon: "icon",
   Image: "image",
   SortIndicator: "sort-indicator",
+  Logo: "logo",
+  Modal: "modal",
 };
 
 function toKebabCase(value: string) {

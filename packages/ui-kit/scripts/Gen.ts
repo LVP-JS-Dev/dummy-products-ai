@@ -15,6 +15,9 @@ import {
   inputEvents,
   linkContract,
   linkEvents,
+  logoContract,
+  modalContract,
+  modalEvents,
   pageNumberContract,
   pageNumberEvents,
   paginationContract,
@@ -44,6 +47,8 @@ const components = {
   Icon: { props: iconContract },
   Image: { props: imageContract, events: imageEvents },
   SortIndicator: { props: sortIndicatorContract },
+  Logo: { props: logoContract },
+  Modal: { props: modalContract, events: modalEvents },
 } as const;
 
 const schemaDir = resolve("src/generated/schemas");
@@ -64,6 +69,8 @@ const fileNameMap: Record<keyof typeof components, string> = {
   Icon: "icon",
   Image: "image",
   SortIndicator: "sort-indicator",
+  Logo: "logo",
+  Modal: "modal",
 };
 
 function toKebabCase(value: string) {

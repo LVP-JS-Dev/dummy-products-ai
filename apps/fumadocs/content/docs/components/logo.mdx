@@ -1,0 +1,35 @@
+---
+title: Logo
+description: Brand mark primitive for consistent app headers and auth screens.
+---
+
+import { Logo, states } from "@dummy-products/ui-kit";
+import { WithControl } from "@/stories/logo.story";
+
+## Description
+
+Deterministic SVG logo mark with token-friendly sizing and accessibility options.
+
+## API
+
+Props are defined in the UI Kit contract. Key props: `size`, `label`, `decorative`, `variant`.
+
+**Specification**
+- [`manifest.json`](../../../../../packages/ui-kit/src/generated/manifest.json)
+- [`logo.schema.json`](../../../../../packages/ui-kit/src/generated/schemas/logo.schema.json)
+
+## Examples
+
+<div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+  {Object.entries(states.logo).map(([name, props]) => (
+    <div key={name} style={{ display: "grid", gap: 6, justifyItems: "center" }}>
+      <Logo {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Interactive
+
+<WithControl />
+

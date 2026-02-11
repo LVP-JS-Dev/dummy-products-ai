@@ -1,0 +1,41 @@
+---
+title: Modal
+description: Accessible overlay dialog primitive with deterministic events.
+---
+
+import { Modal, states } from "@dummy-products/ui-kit";
+import { WithControl } from "@/stories/modal.story";
+
+## Description
+
+Overlay dialog with focus management, Escape/backdrop dismissal (when enabled), and a close event contract.
+
+## API
+
+Props are defined in the UI Kit contract. Key props: `open`, `title`, `description`, `size`, `dismissible`, `closeAriaLabel`.
+
+**Specification**
+- [`manifest.json`](../../../../../packages/ui-kit/src/generated/manifest.json)
+- [`modal.schema.json`](../../../../../packages/ui-kit/src/generated/schemas/modal.schema.json)
+
+## Examples
+
+<div style={{ display: "grid", gap: 12 }}>
+  {Object.entries(states.modal).map(([name, props]) => (
+    <div key={name} style={{ display: "grid", gap: 6 }}>
+      <div style={{ fontFamily: "var(--ui-font-body)", color: "var(--ui-color-text-muted)" }}>
+        {name}
+      </div>
+      <Modal {...props}>
+        <div style={{ fontFamily: "var(--ui-font-body)", fontSize: 14 }}>
+          Example content inside the modal.
+        </div>
+      </Modal>
+    </div>
+  ))}
+</div>
+
+## Interactive
+
+<WithControl />
+

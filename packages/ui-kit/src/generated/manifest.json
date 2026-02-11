@@ -116,6 +116,19 @@
     "SortIndicator": {
       "schema": "schemas/sort-indicator.schema.json",
       "propsSchema": "schemas/sort-indicator.schema.json"
+    },
+    "Logo": {
+      "schema": "schemas/logo.schema.json",
+      "propsSchema": "schemas/logo.schema.json"
+    },
+    "Modal": {
+      "schema": "schemas/modal.schema.json",
+      "propsSchema": "schemas/modal.schema.json",
+      "events": {
+        "close": {
+          "payloadSchema": "schemas/modal.close.schema.json"
+        }
+      }
     }
   }
 }
