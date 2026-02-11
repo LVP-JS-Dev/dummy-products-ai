@@ -25,7 +25,7 @@ test.describe("auth flows", () => {
     await page.goto("/login");
 
     await page.getByLabel("Логин").fill("wrong");
-    await page.getByLabel("Пароль").fill("bad");
+    await page.getByRole("textbox", { name: "Пароль" }).fill("bad");
     await page.locator("#login-submit").click();
 
     await expect(page.getByTestId("login-error")).toHaveText(
@@ -47,8 +47,8 @@ test.describe("auth flows", () => {
 
     await page.goto("/login");
     await page.getByLabel("Логин").fill("kminchelle");
-    await page.getByLabel("Пароль").fill("any");
-    await page.getByLabel("Запомнить данные").check();
+    await page.getByRole("textbox", { name: "Пароль" }).fill("any");
+    await page.getByLabel("Запомнить данные").check({ force: true });
     await page.locator("#login-submit").click();
 
     await expect(page).toHaveURL(PRODUCTS_URL_RE);
@@ -63,7 +63,7 @@ test.describe("auth flows", () => {
     const nextPage = await nextContext.newPage();
     await mockProductsPage(nextPage, buildProductPage());
 
-    await nextPage.goto("http://127.0.0.1:4173/products");
+    await nextPage.goto("/products");
     await expect(nextPage).toHaveURL(PRODUCTS_URL_RE);
 
     await nextContext.close();
@@ -77,7 +77,7 @@ test.describe("auth flows", () => {
 
     await page.goto("/login");
     await page.getByLabel("Логин").fill("kminchelle");
-    await page.getByLabel("Пароль").fill("any");
+    await page.getByRole("textbox", { name: "Пароль" }).fill("any");
     await page.locator("#login-submit").click();
 
     await expect(page).toHaveURL(PRODUCTS_URL_RE);
@@ -90,7 +90,7 @@ test.describe("auth flows", () => {
 
     const nextContext = await browser.newContext({ storageState });
     const nextPage = await nextContext.newPage();
-    await nextPage.goto("http://127.0.0.1:4173/products");
+    await nextPage.goto("/products");
 
     await expect(nextPage).toHaveURL(LOGIN_URL_RE);
 

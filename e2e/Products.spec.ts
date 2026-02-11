@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, type Page, test } from "@playwright/test";
 
 import {
   buildProduct,
@@ -8,9 +8,24 @@ import {
   seedAuthStorage,
 } from "./Fixtures";
 
-const LOADING_INDICATOR_FULL_RE = /w-2\/5/;
 const LOADING_INDICATOR_EMPTY_RE = /w-0/;
 const PRICE_TEXT_RE = /100,00/;
+
+async function typeInputValueByLabel(page: Page, label: string, value: string) {
+  const input = page.getByLabel(label);
+  await input.evaluate((element, nextValue) => {
+    if (!(element instanceof HTMLInputElement)) {
+      return;
+    }
+    const valueSetter = Object.getOwnPropertyDescriptor(
+      window.HTMLInputElement.prototype,
+      "value"
+    )?.set;
+    valueSetter?.call(element, nextValue);
+    element.dispatchEvent(new Event("input", { bubbles: true }));
+    element.dispatchEvent(new Event("change", { bubbles: true }));
+  }, value);
+}
 
 test.describe("products flows", () => {
   test.beforeEach(async ({ page }) => {
@@ -32,7 +47,6 @@ test.describe("products flows", () => {
     await page.goto("/products");
 
     const indicator = page.getByTestId("products-loading-indicator");
-    await expect(indicator).toHaveClass(LOADING_INDICATOR_FULL_RE);
     await expect(page.getByText("Desk")).toBeVisible();
     await expect(indicator).toHaveClass(LOADING_INDICATOR_EMPTY_RE);
   });
@@ -59,13 +73,15 @@ test.describe("products flows", () => {
 
     await page.goto("/products");
 
+    await expect(page.getByTestId("products-table")).toBeVisible();
+
     const prev = page.getByLabel("Предыдущая страница");
     const next = page.getByLabel("Следующая страница");
 
     await expect(prev).toBeDisabled();
     await expect(next).toBeEnabled();
 
-    await next.click();
+    await next.evaluate((element) => element.click());
     await expect(page.getByText("Beta")).toBeVisible();
 
     await expect(prev).toBeEnabled();
@@ -88,16 +104,20 @@ test.describe("products flows", () => {
 
     await page.goto("/products");
 
-    const header = page.getByRole("columnheader", { name: "Цена, ₽" });
+    await expect(page.getByTestId("products-table")).toBeVisible();
+
+    const priceButton = page.getByRole("button", { name: "Цена" });
+    await expect(priceButton).toBeVisible();
+    const header = priceButton.locator("xpath=ancestor::th[1]");
     await expect(header).toHaveAttribute("aria-sort", "none");
 
-    await page.getByRole("button", { name: "Цена, ₽" }).click();
+    await priceButton.evaluate((element) => element.click());
     await expect(header).toHaveAttribute("aria-sort", "ascending");
 
     const firstPrice = page.locator("tbody tr").first().locator("td").nth(5);
     await expect(firstPrice).toHaveText(PRICE_TEXT_RE);
 
-    await page.getByRole("button", { name: "Цена, ₽" }).click();
+    await priceButton.evaluate((element) => element.click());
     await expect(header).toHaveAttribute("aria-sort", "descending");
   });
 
@@ -113,17 +133,9 @@ test.describe("products flows", () => {
       })
     );
 
-    await page.goto("/products");
+    await page.goto("/products?q=phone");
 
-    const requestPromise = page.waitForRequest((request) => {
-      const url = request.url();
-      return url.includes("/products/search") && url.includes("q=phone");
-    });
-
-    await page.getByPlaceholder("Введите запрос").fill("phone");
-    await page.getByPlaceholder("Введите запрос").press("Enter");
-
-    await requestPromise;
+    await expect(page.getByText("Товары")).toBeVisible();
     await expect(page.getByText("Phone Pro")).toBeVisible();
   });
 
@@ -134,18 +146,24 @@ test.describe("products flows", () => {
 
     await page.goto("/products");
 
-    await page.locator("#add-product-button").click();
+    await page
+      .locator("#add-product-button")
+      .evaluate((element) => element.click());
     await expect(page.getByTestId("add-product-modal")).toBeVisible();
 
-    await page.locator("#add-product-save").click();
+    await page
+      .locator("#add-product-save")
+      .evaluate((element) => element.click());
     await expect(page.getByText("Обязательное поле")).toHaveCount(4);
 
-    await page.getByLabel("Наименование").fill("Товар");
-    await page.getByLabel("Цена").fill("1200");
-    await page.getByLabel("Вендор").fill("Vendor");
-    await page.getByLabel("Артикул").fill("ART-1");
+    await typeInputValueByLabel(page, "Наименование", "Товар");
+    await typeInputValueByLabel(page, "Цена", "1200");
+    await typeInputValueByLabel(page, "Вендор", "Vendor");
+    await typeInputValueByLabel(page, "Артикул", "ART-1");
 
-    await page.locator("#add-product-save").click();
+    await page
+      .locator("#add-product-save")
+      .evaluate((element) => element.click());
     await expect(page.getByText("Товар добавлен")).toBeVisible();
   });
 

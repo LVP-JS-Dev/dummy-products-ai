@@ -1,8 +1,8 @@
 import type { Page, Route } from "@playwright/test";
 
-export const AUTH_ENDPOINT = "**/auth/login";
-export const PRODUCTS_ENDPOINT = "**/products?*";
-export const SEARCH_ENDPOINT = "**/products/search?*";
+export const AUTH_ENDPOINT = "**/dummyjson.com/auth/login";
+export const PRODUCTS_ENDPOINT = "**/dummyjson.com/products?*";
+export const SEARCH_ENDPOINT = "**/dummyjson.com/products/search?*";
 
 export interface Product {
   id: number;
