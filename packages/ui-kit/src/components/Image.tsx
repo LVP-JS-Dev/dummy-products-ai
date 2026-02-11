@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { ImageProps } from "../contracts/ImageContract";
 
 function resolvedAlt(alt: string | undefined, decorative: boolean | undefined) {
@@ -29,6 +29,10 @@ export function Image({
   style,
 }: ImageProps) {
   const [currentSrc, setCurrentSrc] = useState(src);
+
+  useEffect(() => {
+    setCurrentSrc(src);
+  }, [src]);
 
   const finalAlt = useMemo(
     () => resolvedAlt(alt, decorative),
