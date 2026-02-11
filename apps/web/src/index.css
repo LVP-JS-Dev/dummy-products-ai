@@ -162,14 +162,14 @@
 }
 
 /* Header layout: stacks on mobile, becomes a row on desktop. */
-.products-header__inner {
+.products-header-inner {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
 /* Constrains header search width on desktop while allowing full-width on mobile. */
-.products-header__search {
+.products-header-search {
   width: 100%;
 }
 
@@ -183,7 +183,7 @@
 }
 
 /* Toolbar layout: stacks on mobile, becomes a row with space-between on desktop. */
-.products-card__toolbar {
+.products-card-toolbar {
   margin-bottom: 16px;
   display: flex;
   flex-direction: column;
@@ -191,7 +191,7 @@
 }
 
 /* Keeps action controls grouped and aligned consistently. */
-.products-card__actions {
+.products-card-actions {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -205,14 +205,14 @@
   }
 
   /* Matches previous md:flex-row + md:items-center + md:justify-between. */
-  .products-header__inner {
+  .products-header-inner {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
   }
 
   /* Matches previous md:max-w-[520px] for the search control. */
-  .products-header__search {
+  .products-header-search {
     max-width: 520px;
   }
 
@@ -222,7 +222,7 @@
   }
 
   /* Matches previous md:mb-6 + md:flex-row + md:items-end + md:justify-between. */
-  .products-card__toolbar {
+  .products-card-toolbar {
     margin-bottom: 24px;
     flex-direction: row;
     align-items: flex-end;

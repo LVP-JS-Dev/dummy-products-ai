@@ -253,7 +253,7 @@ export function ProductsPage() {
   return (
     <div className="products-page">
       <header className="products-header">
-        <div className="products-header__inner">
+        <div className="products-header-inner">
           <div className="grid gap-1">
             <h1
               style={{
@@ -276,7 +276,7 @@ export function ProductsPage() {
               Найдите товар по названию, вендору или артикулу.
             </div>
           </div>
-          <div className="products-header__search">
+          <div className="products-header-search">
             <SearchInput
               onSubmit={({ value }) => setInputQuery(value)}
               onValueChange={({ value }) => setInputQuery(value)}
@@ -290,7 +290,7 @@ export function ProductsPage() {
       </header>
 
       <section className="products-card">
-        <div className="products-card__toolbar">
+        <div className="products-card-toolbar">
           <div className="grid gap-1">
             <h2
               style={{
@@ -313,7 +313,7 @@ export function ProductsPage() {
               Сортировка применяется только к текущей странице.
             </div>
           </div>
-          <div className="products-card__actions">
+          <div className="products-card-actions">
             <AddProductButton />
             <Button onPress={onLogout} text="Выйти" variant="blue" />
           </div>
@@ -461,11 +461,15 @@ export function ProductsPage() {
               fontSize: 14,
             }}
           >
-            {data ? `Страница ${page} из ${totalPages}` : "Загрузка..."}
+            {error
+              ? "Ошибка загрузки"
+              : data
+                ? `Страница ${page} из ${totalPages}`
+                : "Загрузка..."}
           </div>
           <Pagination
             currentPage={page}
-            disabled={loading}
+            disabled={loading || Boolean(error)}
             maxVisiblePages={5}
             nextAriaLabel="Следующая страница"
             onPageChange={({ page: nextPage }) => setPage(nextPage)}
