@@ -2,18 +2,17 @@
 
 ## 1. Login -> Logo
 
-- [ ] Replace placeholder emblem with `Logo` in login header
-- [ ] Decide Logo a11y mode for login (`decorative` vs `label`)
-- [ ] Update login tests to assert Logo instead of placeholder icon
+- [x] Replace placeholder emblem with `Logo` in login header
+- [x] Decide Logo a11y mode for login (`decorative` vs `label`)
+- [x] Update login tests to assert Logo instead of placeholder icon
 
 ## 2. Add Product -> Modal
 
-- [ ] Replace app-local dialog overlay with UI-kit `Modal`
-- [ ] Preserve close semantics (escape/backdrop/close button)
-- [ ] Remove duplicated focus-trap logic from route
-- [ ] Update products tests if DOM structure assumptions changed
+- [x] Replace app-local dialog overlay with UI-kit `Modal`
+- [x] Preserve close semantics (escape/backdrop/close button)
+- [x] Remove duplicated focus-trap logic from route
+- [x] Update products tests if DOM structure assumptions changed (no updates required)
 
 ## 3. Verification
 
-- [ ] Run `pnpm check`
-
+- [x] Run `pnpm check`

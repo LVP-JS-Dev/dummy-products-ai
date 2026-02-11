@@ -3,9 +3,9 @@ import {
   Card,
   Checkbox,
   Divider,
-  Icon,
   Input,
   Link,
+  Logo,
   Spinner,
   Text,
 } from "@dummy-products/ui-kit";
@@ -140,22 +140,7 @@ export function LoginPage() {
               marginBottom: "var(--ui-space-lg)",
             }}
           >
-            <span
-              aria-hidden
-              style={{
-                width: 44,
-                height: 44,
-                borderRadius: "var(--ui-radius-pill)",
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                border: "1px solid var(--ui-color-border)",
-                background: "var(--ui-color-surface)",
-                color: "var(--ui-color-text)",
-              }}
-            >
-              <Icon name="square" size={18} />
-            </span>
+            <Logo decorative label="Dummy Products" size={44} />
             <Text
               as="h1"
               id="login-title"
