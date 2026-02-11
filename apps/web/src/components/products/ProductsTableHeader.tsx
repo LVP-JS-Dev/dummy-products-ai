@@ -25,14 +25,14 @@ function ProductsTableHeaderCell({
   cell: ProductsTableHeaderCellViewModel;
 }) {
   if (cell.isPlaceholder) {
-    return <th key={cell.id} />;
+    return <th />;
   }
 
   const alignClass = cell.align === "right" ? "text-right" : "";
 
   if (!(cell.sortable && cell.onSortToggle)) {
     return (
-      <th aria-sort={getAriaSort(cell)} className={alignClass} key={cell.id}>
+      <th aria-sort={getAriaSort(cell)} className={alignClass}>
         <span
           style={{
             fontFamily: "var(--ui-font-heading)",
@@ -47,7 +47,7 @@ function ProductsTableHeaderCell({
   }
 
   return (
-    <th aria-sort={getAriaSort(cell)} className={alignClass} key={cell.id}>
+    <th aria-sort={getAriaSort(cell)} className={alignClass}>
       <button
         onClick={cell.onSortToggle}
         style={{
