@@ -1,5 +1,26 @@
 # web-products-catalog Specification
 
+## ADR: Products Table Virtualization
+
+**Decision locus**: this ADR section (plus supporting detail in `openspec/changes/add-products-table-virtualization/design.md`).
+
+**Status**: Pending implementation spike.
+
+### Evaluated page sizes (target)
+
+| Page size | Complexity assessment | Accessibility assessment |
+| --- | --- | --- |
+| 10 | Low; no expected benefit | Low risk; standard table semantics |
+| 20 | Low; likely no benefit | Low risk; standard table semantics |
+| 50 | Medium; may help if cells become heavier | Medium risk; ensure focus order remains stable |
+| 100 | Medium/High; likely the first size where virtualization could matter | Medium/High risk; validate SR reading order + keyboard navigation |
+
+### Minimal a11y checklist (if adopted)
+
+- Keyboard navigation works across rows/cells with deterministic focus order
+- Screen reader announces headers/row context without losing semantics
+- Focus trap is not introduced; focus remains within the page and restores deterministically after interactions
+
 ## ADDED Requirements
 
 ### Requirement: Products table virtualization decision SHALL be documented

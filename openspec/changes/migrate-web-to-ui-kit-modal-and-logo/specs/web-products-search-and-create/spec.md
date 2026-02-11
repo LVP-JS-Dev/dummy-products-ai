@@ -4,7 +4,7 @@
 
 ### Requirement: Add-product dialog SHALL use ui-kit Modal
 
-The add-product flow SHALL render its dialog surface via the UI Kit `Modal` primitive rather than an app-local overlay implementation, while preserving close semantics and focus management behavior.
+The add-product flow SHALL render its dialog surface via the UI Kit `Modal` primitive rather than an app-local overlay implementation, while preserving close semantics and focus management behavior (focus trap while open, deterministic focus restore on close).
 
 #### Scenario: User opens add-product dialog
 
@@ -14,5 +14,4 @@ The add-product flow SHALL render its dialog surface via the UI Kit `Modal` prim
 #### Scenario: User dismisses add-product dialog
 
 - **WHEN** the dialog is dismissible and the user presses Escape or clicks the backdrop
-- **THEN** the dialog closes and focus is restored deterministically
-
+- **THEN** the dialog closes and focus is restored deterministically to the triggering control (e.g., the “Add product” button)
