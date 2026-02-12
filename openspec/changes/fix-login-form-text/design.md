@@ -1,13 +1,15 @@
+# Design
+
 ## Context
 
-The login route (`apps/web/src/routes/login.tsx`) renders a centered card with a title (“Добро пожаловать!”) and subtitle (“Пожалуйста, авторизируйтесь”). The desired visual design specifies two inner-shadow treatments for these texts and a much narrower card width constraint than the current `min(100%, 420px)` container.
+The login route (`apps/web/src/routes/login.tsx`) renders a centered card with a title (“Добро пожаловать!”) and subtitle (“Пожалуйста, авторизируйтесь”). The desired visual design specifies two inner-shadow treatments for these texts and constrains the card/container width so the layout remains consistent across viewports.
 
 ## Goals / Non-Goals
 
 **Goals:**
 - Define reusable CSS classes that implement the specified inner-shadow text treatments.
 - Apply the classes to the exact title/subtitle strings on the login screen.
-- Constrain the login card/container to an adaptive `max-width: 180px` while keeping it responsive on small viewports (`width: 100%`).
+- Constrain the login card/container to an adaptive `max-width: 420px` while keeping it responsive on small viewports (`width: 100%`).
 
 **Non-Goals:**
 - Changing auth/session behavior, validation rules, or API integration.
@@ -25,9 +27,9 @@ The login route (`apps/web/src/routes/login.tsx`) renders a centered card with a
    - Alternative: Add to UI kit. Rejected to avoid expanding UI-kit surface for a single screen tweak.
 
 3. Apply the width constraint at the login page container that currently uses `width: "min(100%, 420px)"`.
-   - Replace it with a `width: "100%"` + `maxWidth: "180px"` (or `width: "min(100%, 180px)"`) so the card remains usable on narrow screens while matching the requested cap.
+   - Replace it with a `width: "100%"` + `maxWidth: "420px"` (or `width: "min(100%, 420px)"`) so the card remains usable on narrow screens while matching the requested cap.
 
 ## Risks / Trade-offs
 
 - [Risk] Text-shadow can reduce text contrast on some backgrounds. → Mitigation: keep opacity values exactly as specified and apply only to the two headline texts.
-- [Risk] A strict 180px cap can make the form feel cramped. → Mitigation: keep adaptive behavior (`width: 100%`) and verify input layout remains usable.
+- [Risk] A strict max-width cap can feel constrained on wide screens. → Mitigation: keep adaptive behavior (`width: 100%`) and verify input layout remains usable.

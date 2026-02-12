@@ -233,9 +233,9 @@
 
 /* Login page helpers. */
 .inner-shadow {
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.17);
+  text-shadow: 0 4px 4px rgb(0 0 0 / 0.17);
 }
 
 .inner-shadow-top {
-  text-shadow: 0px -2px 0px rgba(255, 255, 255, 0.12);
+  text-shadow: 0 -2px 0 rgb(255 255 255 / 0.12);
 }

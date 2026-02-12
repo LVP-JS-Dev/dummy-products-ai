@@ -1,3 +1,5 @@
+# Proposal
+
 ## Why
 
 The login screen is close to the intended design, but the title/subtitle text treatments and the card width constraint are not currently captured or enforced, which makes the UI drift-prone.
@@ -6,7 +8,7 @@ The login screen is close to the intended design, but the title/subtitle text tr
 
 - Add two reusable CSS classes for the login title/subtitle inner shadow treatments: `.inner-shadow-top` and `.inner-shadow` (implemented as `text-shadow`).
 - Apply `.inner-shadow-top` to the title text “Добро пожаловать!” and `.inner-shadow` to the subtitle text “Пожалуйста, авторизируйтесь”.
-- Constrain the login form card/container to an adaptive `max-width: 180px` so it stays narrow without overflowing small screens.
+- Constrain the login form card/container to an adaptive `max-width: 420px` so it stays narrow without overflowing small screens.
 
 ## Capabilities
 

@@ -125,7 +125,7 @@ export function LoginPage() {
       <main
         aria-labelledby="login-title"
         data-testid="login-page"
-        style={{ width: "100%", maxWidth: 180 }}
+        style={{ width: "100%", maxWidth: 420 }}
       >
         <Card
           elevated
