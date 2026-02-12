@@ -37,8 +37,8 @@ command = 'npx'
 
 [mcp_servers.figma-bridge]
 command = 'npx'
-args = ['-y', '@gethopp/figma-mcp-bridge']
+args = ['-y', '@gethopp/figma-mcp-bridge@0.0.5']
 
 [mcp_servers.Framelink_Figma_MCP]
 command = 'npx'
-args = ["-y", "figma-developer-mcp", "--allow-net", "--env=.env", "--stdio"]
+args = ["-y", "figma-developer-mcp@0.6.4", "--allow-net", "--env=.env.mcp", "--stdio"]
