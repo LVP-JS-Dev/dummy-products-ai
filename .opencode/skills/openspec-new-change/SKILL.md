@@ -9,6 +9,8 @@ metadata:
   generatedBy: "1.1.1"
 ---
 
+# openspec-new-change
+
 Start a new change using the experimental artifact-driven approach.
 
 **Input**: The user's request should include a change name (kebab-case) OR a description of what they want to build.

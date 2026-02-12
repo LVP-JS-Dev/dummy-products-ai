@@ -1,3 +1,5 @@
+# Design
+
 ## Context
 
 `apps/web` lacks E2E coverage for core user journeys. The monorepo already uses pnpm and Turborepo; existing specs describe functional requirements for web flows. We need a deterministic, CI-friendly E2E layer that aligns with those requirements without coupling to implementation details.

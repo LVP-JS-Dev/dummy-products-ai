@@ -6,10 +6,12 @@
 **Last Updated**: 2025-02-11
 
 ## Quick Reference
+
 **Update Triggers**: Tech stack changes | New component patterns | Architecture decisions
 **Audience**: Developers, AI agents
 
 ## Primary Stack
+
 | Layer | Technology | Version | Rationale |
 |-------|-----------|---------|-----------|
 | Framework | React | 19.2.3 | Latest stable, concurrent rendering |
@@ -24,6 +26,7 @@
 ## Code Patterns
 
 ### Programmatic Route
+
 ```typescript
 import { createRoute } from "@tanstack/react-router";
 
@@ -40,6 +43,7 @@ export const productsRoute = createRoute({
 ```
 
 ### Contract-First Component
+
 ```typescript
 // Contract: packages/ui-kit/src/contracts/CardContract.ts
 export const cardContract = z.object({
@@ -58,6 +62,7 @@ export function Card({ size, outlined, title, children }: CardProps) {
 ```
 
 ## Naming Conventions
+
 | Type | Convention | Example |
 |------|-----------|---------|
 | Components | PascalCase | Card.tsx, Button.tsx |
@@ -67,6 +72,7 @@ export function Card({ size, outlined, title, children }: CardProps) {
 | Routes | PascalCase + "Route" | productsRoute, loginRoute |
 
 ## Code Standards
+
 - Contract-first: Contract → Type → Component → States (one-way flow)
 - React imports: Named only (`useState`, not `* as React`)
 - "use client" directive in `.tsx` when client-side needed
@@ -79,12 +85,14 @@ export function Card({ size, outlined, title, children }: CardProps) {
 - TypeScript strict mode enabled
 
 ## Security Requirements
+
 - Session-based authentication for protected routes
 - Zod validation for all user input
 - Environment variables for secrets
 - Parameterized queries for database access
 
 ## 📂 Codebase References
+
 **Component Pattern**: `packages/ui-kit/src/components/Card.tsx` - Contract-first component structure
 **Contract Example**: `packages/ui-kit/src/contracts/CardContract.ts` - Zod schema definition
 **States Pattern**: `packages/ui-kit/src/states/CardStates.ts` - Public API states
@@ -93,5 +101,6 @@ export function Card({ size, outlined, title, children }: CardProps) {
 **Config**: `package.json`, `pnpm-workspace.yaml`, `turbo.json`
 
 ## Related Files
+
 - [Business Domain](business-domain.md)
 - [Decisions Log](decisions-log.md)

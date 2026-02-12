@@ -2,6 +2,8 @@
 description: Archive multiple completed changes at once
 ---
 
+# opsx-bulk-archive
+
 Archive multiple completed changes in a single operation.
 
 This skill allows you to batch-archive changes, handling spec conflicts intelligently by checking the codebase to determine what's actually implemented.

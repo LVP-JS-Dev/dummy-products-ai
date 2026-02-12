@@ -1,3 +1,5 @@
+# Proposal
+
 ## Why
 
 Critical user journeys in `apps/web` are currently unprotected by end-to-end tests, making regressions likely and slowing confident releases. We need a focused E2E suite now to cover the main product flows aligned with the app's functional requirements.
@@ -11,9 +13,11 @@ Critical user journeys in `apps/web` are currently unprotected by end-to-end tes
 ## Capabilities
 
 ### New Capabilities
+
 - `web-e2e-user-flows`: End-to-end test coverage for core `apps/web` user journeys aligned with functional requirements.
 
 ### Modified Capabilities
+
 - (none)
 
 ## Impact

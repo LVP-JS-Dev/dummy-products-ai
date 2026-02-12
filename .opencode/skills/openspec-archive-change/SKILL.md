@@ -9,6 +9,8 @@ metadata:
   generatedBy: "1.1.1"
 ---
 
+# openspec-archive-change
+
 Archive a completed change in the experimental workflow.
 
 **Input**: Optionally specify a change name. If omitted, check if it can be inferred from conversation context. If vague or ambiguous you MUST prompt for available changes.

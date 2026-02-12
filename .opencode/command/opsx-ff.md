@@ -2,6 +2,8 @@
 description: Create a change and generate all artifacts needed for implementation in one go
 ---
 
+# opsx-ff
+
 Fast-forward through artifact creation - generate everything needed to start implementation.
 
 **Input**: The argument after `/opsx-ff` is the change name (kebab-case), OR a description of what the user wants to build.
