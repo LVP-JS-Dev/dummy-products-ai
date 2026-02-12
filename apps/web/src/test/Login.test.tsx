@@ -40,6 +40,7 @@ describe("LoginPage", () => {
   it("renders core figma-aligned login structure", () => {
     render(<LoginPage />);
 
+    expect(screen.getByTitle("Dummy Products")).toBeInTheDocument();
     expect(
       screen.getByRole("heading", { name: "Добро пожаловать!" })
     ).toBeInTheDocument();

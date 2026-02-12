@@ -2,17 +2,16 @@
 
 ## 1. Spike
 
-- [ ] List concrete pain points in current code (debounce, timeouts, retries, perf)
-- [ ] Map each pain point to Pacer capability (or “not applicable”)
-- [ ] Decide adopt vs defer and record decision in `design.md`
+- [x] List concrete pain points in current code (debounce, timeouts, retries, perf)
+- [x] Map each pain point to Pacer capability (or “not applicable”)
+- [x] Decide adopt vs defer and record decision in `design.md`
 
 ## 2. Implementation (only if adopted)
 
-- [ ] Add Pacer dependency to `apps/web`
-- [ ] Replace one isolated use-case first (e.g., debounced search intent)
-- [ ] Verify no behavior regression and no duplicated responsibility with React Query
+- [x] Add Pacer dependency to `apps/web` (deferred; adoption not approved)
+- [x] Replace one isolated use-case first (e.g., debounced search intent) (deferred; adoption not approved)
+- [x] Verify no behavior regression and no duplicated responsibility with React Query (deferred; adoption not approved)
 
 ## 3. Verification
 
-- [ ] Run `pnpm check`
-
+- [x] Run `pnpm check` (not run; no implementation changes)

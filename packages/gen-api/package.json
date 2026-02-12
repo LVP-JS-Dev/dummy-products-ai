@@ -11,7 +11,7 @@
     "./openapi": "./dummyjson.openapi.yaml"
   },
   "scripts": {
-    "gen": "kubb generate",
+    "gen": "kubb generate && node scripts/patch-fetch-client.mjs",
     "format": "pnpm -w exec biome format --write packages/gen-api/src packages/gen-api/kubb.config.ts",
     "lint:openapi": "pnpm --package=@redocly/cli dlx redocly lint dummyjson.openapi.yaml"
   },

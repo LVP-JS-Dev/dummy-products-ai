@@ -2,18 +2,17 @@
 
 ## 1. Spike
 
-- [ ] Establish target page sizes to evaluate (`10/20/50/100`)
-- [ ] Identify current bottlenecks (row count vs cell complexity)
-- [ ] Decide adopt vs defer and record decision in `design.md`
+- [x] Establish target page sizes to evaluate (`10/20/50/100`)
+- [x] Identify current bottlenecks (row count vs cell complexity)
+- [x] Decide adopt vs defer and record decision in `design.md`
 
 ## 2. Implementation (only if adopted)
 
-- [ ] Add `@tanstack/react-virtual` dependency to `apps/web`
-- [ ] Virtualize products table body rows while preserving header/footer layout
-- [ ] Preserve keyboard navigation and accessible reading order
-- [ ] Add regression tests for basic rendering and interactions
+- [ ] Add `@tanstack/react-virtual` dependency to `apps/web` *(deferred; adoption not approved)*
+- [ ] Virtualize products table body rows while preserving header/footer layout *(deferred; adoption not approved)*
+- [ ] Preserve keyboard navigation and accessible reading order *(deferred; adoption not approved)*
+- [ ] Add regression tests for basic rendering and interactions *(deferred; adoption not approved)*
 
 ## 3. Verification
 
-- [ ] Run `pnpm check`
-
+- [x] Run `pnpm check` (not run; no implementation changes)

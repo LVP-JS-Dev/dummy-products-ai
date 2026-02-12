@@ -76,6 +76,16 @@ export const fetch = async <TData, _TError = unknown, TVariables = unknown>(para
 
   const data = [204, 205, 304].includes(response.status) || !response.body ? {} : await response.json()
 
+  if (!response.ok) {
+    const error = new Error(response.statusText || `Request failed with status ${response.status}`) as Error & {
+      data: unknown
+      status: number
+    }
+    error.data = data
+    error.status = response.status
+    throw error
+  }
+
   return {
     data: data as TData,
     status: response.status,

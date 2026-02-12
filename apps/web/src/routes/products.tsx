@@ -1,4 +1,4 @@
-import { Button, Pagination, SearchInput } from "@dummy-products/ui-kit";
+import { Button, Modal, Pagination, SearchInput } from "@dummy-products/ui-kit";
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import {
   flexRender,
@@ -13,7 +13,6 @@ import {
   useEffect,
   useId,
   useMemo,
-  useRef,
   useState,
 } from "react";
 import { toast } from "sonner";
@@ -426,7 +425,6 @@ function AddProductButton() {
 }
 
 function AddProductModal({ onClose }: { onClose: () => void }) {
-  const modalRef = useRef<HTMLDivElement | null>(null);
   const nameId = useId();
   const priceId = useId();
   const vendorId = useId();
@@ -436,86 +434,6 @@ function AddProductModal({ onClose }: { onClose: () => void }) {
   const [vendor, setVendor] = useState("");
   const [article, setArticle] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
-
-  useEffect(() => {
-    const previousActive =
-      document.activeElement instanceof HTMLElement
-        ? document.activeElement
-        : null;
-
-    const focusableSelector = [
-      "a[href]",
-      "button:not([disabled])",
-      "input:not([disabled])",
-      "select:not([disabled])",
-      "textarea:not([disabled])",
-      "[tabindex]:not([tabindex='-1'])",
-    ].join(",");
-
-    function getFocusableElements(): HTMLElement[] {
-      const modal = modalRef.current;
-      if (!modal) {
-        return [];
-      }
-      return Array.from(
-        modal.querySelectorAll<HTMLElement>(focusableSelector)
-      ).filter(
-        (el) =>
-          !el.hasAttribute("disabled") &&
-          el.getAttribute("aria-hidden") !== "true"
-      );
-    }
-
-    const focusable = getFocusableElements();
-    if (focusable.length > 0) {
-      focusable[0]?.focus();
-    } else {
-      modalRef.current?.focus();
-    }
-
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        onClose();
-        return;
-      }
-      if (event.key !== "Tab") {
-        return;
-      }
-
-      const currentFocusable = getFocusableElements();
-      if (currentFocusable.length === 0) {
-        event.preventDefault();
-        return;
-      }
-
-      const first = currentFocusable[0];
-      const last = currentFocusable.at(-1);
-      if (!(first && last)) {
-        return;
-      }
-
-      const active = document.activeElement;
-      if (event.shiftKey) {
-        if (active === first || !modalRef.current?.contains(active)) {
-          event.preventDefault();
-          last.focus();
-        }
-        return;
-      }
-
-      if (active === last || !modalRef.current?.contains(active)) {
-        event.preventDefault();
-        first.focus();
-      }
-    }
-
-    document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-      previousActive?.focus();
-    };
-  }, [onClose]);
 
   function saveProduct() {
     const next: Record<string, string> = {};
@@ -551,37 +469,8 @@ function AddProductModal({ onClose }: { onClose: () => void }) {
   }
 
   return (
-    <div
-      className="fixed inset-0 z-50 grid place-items-center bg-black/40 px-4"
-      data-testid="add-product-overlay"
-    >
-      <div
-        aria-labelledby="add-product-title"
-        aria-modal="true"
-        data-testid="add-product-modal"
-        ref={modalRef}
-        role="dialog"
-        style={{
-          width: "100%",
-          maxWidth: 680,
-          background: "var(--ui-color-surface)",
-          borderRadius: "var(--ui-radius-lg)",
-          border: "1px solid var(--ui-color-border)",
-          padding: "var(--ui-space-xxl)",
-        }}
-        tabIndex={-1}
-      >
-        <div
-          style={{
-            fontFamily: "var(--ui-font-heading)",
-            color: "var(--ui-color-text)",
-            fontWeight: 700,
-            fontSize: 24,
-            marginBottom: "var(--ui-space-lg)",
-          }}
-        >
-          <span id="add-product-title">Добавить товар</span>
-        </div>
+    <Modal dismissible onClose={onClose} open size="lg" title="Добавить товар">
+      <div data-testid="add-product-modal">
         <form onSubmit={onSubmit}>
           <div style={{ display: "grid", gap: "var(--ui-space-md)" }}>
             <Field
@@ -626,18 +515,18 @@ function AddProductModal({ onClose }: { onClose: () => void }) {
               id="add-product-cancel"
               onPress={onClose}
               text="Отмена"
-              variant="blue"
+              variant="secondary"
             />
             <Button
+              buttonType="submit"
               id="add-product-save"
-              onPress={saveProduct}
               text="Сохранить"
               variant="blue"
             />
           </div>
         </form>
       </div>
-    </div>
+    </Modal>
   );
 }
 
@@ -649,6 +538,7 @@ function Field(props: {
   error?: string;
   inputMode?: HTMLAttributes<HTMLInputElement>["inputMode"];
 }) {
+  const errorId = `${props.id}-error`;
   return (
     <div style={{ display: "grid", gap: 6 }}>
       <label
@@ -663,6 +553,7 @@ function Field(props: {
         {props.label}
       </label>
       <input
+        aria-describedby={props.error ? errorId : undefined}
         aria-invalid={Boolean(props.error)}
         className="focus-visible:outline-2 focus-visible:outline-[var(--ui-color-focus-ring)] focus-visible:outline-offset-2"
         id={props.id}
@@ -681,6 +572,7 @@ function Field(props: {
       />
       {props.error ? (
         <div
+          id={errorId}
           style={{
             color: "#dc2626",
             fontFamily: "var(--ui-font-body)",
