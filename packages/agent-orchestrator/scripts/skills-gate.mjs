@@ -99,43 +99,46 @@ function detectSkillsUsed(logText, knownSkills) {
   return [...used].sort();
 }
 
-function main() {
-  const args = parseArgs(process.argv.slice(2));
-  if (!(args.matrix && args.stage)) {
-    console.error(
-      "Usage: skills-gate --matrix <path> --stage <stage> [--agent <name>] [--log <path>]"
-    );
-    process.exit(2);
-  }
+function failWithUsage() {
+  console.error(
+    "Usage: skills-gate --matrix <path> --stage <stage> [--agent <name>] [--log <path>]"
+  );
+  process.exit(2);
+}
 
-  const matrixPath = resolve(args.matrix);
+function loadMatrix(matrixPath) {
   if (!existsSync(matrixPath)) {
     console.error(`Matrix not found: ${matrixPath}`);
     process.exit(2);
   }
-
-  const matrix = JSON.parse(readFileSync(matrixPath, "utf8"));
-  const stage = matrix?.stages?.[args.stage];
-  if (!stage) {
-    console.error(`Stage not found in matrix: ${args.stage}`);
-    process.exit(2);
+  try {
+    return JSON.parse(readFileSync(matrixPath, "utf8"));
+  } catch (error) {
+    console.error(`Failed to parse matrix file: ${matrixPath}`);
+    console.error(error);
+    process.exit(1);
   }
+}
 
-  const requiredSkills = Array.isArray(stage.requiredSkills)
-    ? stage.requiredSkills
-    : [];
-  const optionalSkills = Array.isArray(stage.optionalSkills)
-    ? stage.optionalSkills
-    : [];
-  const forbiddenSkills = Array.isArray(stage.forbiddenSkills)
-    ? stage.forbiddenSkills
-    : [];
-  const installedSkills = collectInstalledSkills();
+function getStageSkills(stage) {
+  return {
+    requiredSkills: Array.isArray(stage.requiredSkills)
+      ? stage.requiredSkills
+      : [],
+    optionalSkills: Array.isArray(stage.optionalSkills)
+      ? stage.optionalSkills
+      : [],
+    forbiddenSkills: Array.isArray(stage.forbiddenSkills)
+      ? stage.forbiddenSkills
+      : [],
+  };
+}
 
+function collectReasons(requiredSkills, installedSkills, stage, args) {
+  const reasons = [];
   const skillsMissing = requiredSkills.filter(
     (name) => !installedSkills.includes(name)
   );
-  const reasons = [];
   if (skillsMissing.length > 0) {
     reasons.push(`missing required skills: ${skillsMissing.join(", ")}`);
   }
@@ -145,13 +148,38 @@ function main() {
     : [];
   if (
     allowedAgents.length > 0 &&
-    args.agent &&
-    !allowedAgents.includes(args.agent)
+    !(args.agent && allowedAgents.includes(args.agent))
   ) {
     reasons.push(
       `agent '${args.agent}' is not allowed for stage '${args.stage}'`
     );
   }
+  return { reasons, skillsMissing };
+}
+
+function main() {
+  const args = parseArgs(process.argv.slice(2));
+  if (!(args.matrix && args.stage)) {
+    failWithUsage();
+  }
+
+  const matrixPath = resolve(args.matrix);
+  const matrix = loadMatrix(matrixPath);
+  const stage = matrix?.stages?.[args.stage];
+  if (!stage) {
+    console.error(`Stage not found in matrix: ${args.stage}`);
+    process.exit(2);
+  }
+
+  const { requiredSkills, optionalSkills, forbiddenSkills } =
+    getStageSkills(stage);
+  const installedSkills = collectInstalledSkills();
+  const { reasons, skillsMissing } = collectReasons(
+    requiredSkills,
+    installedSkills,
+    stage,
+    args
+  );
 
   let skillsUsed = [];
   let forbiddenSkillsUsed = [];
@@ -193,7 +221,10 @@ function main() {
   };
 
   process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
-  process.exit(0);
+  if (status === "pass") {
+    process.exit(0);
+  }
+  process.exit(1);
 }
 
 main();

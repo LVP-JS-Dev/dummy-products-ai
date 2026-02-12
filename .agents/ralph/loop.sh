@@ -168,10 +168,20 @@ run_skill_gate() {
     return 0
   fi
 
+  local node_exit=0
+  set +e
   if [ -n "$log_file" ]; then
     node "$SKILLS_GATE_SCRIPT" --matrix "$SKILLS_MATRIX_PATH" --stage "$stage" --agent "$agent_name" --log "$log_file" > "$out_file"
+    node_exit=$?
   else
     node "$SKILLS_GATE_SCRIPT" --matrix "$SKILLS_MATRIX_PATH" --stage "$stage" --agent "$agent_name" > "$out_file"
+    node_exit=$?
+  fi
+  set -e
+
+  if [ ! -s "$out_file" ]; then
+    echo "blocked|(none)|(none)|(none)|skills gate failed (exit=$node_exit)"
+    return 0
   fi
 
   python3 - "$out_file" <<'PY'
@@ -284,10 +294,9 @@ done
 PROMPT_FILE="$PROMPT_BUILD"
 
 if [ "$MODE" = "prd" ]; then
-  PRD_USE_INLINE=1
+  PRD_USE_INLINE="${PRD_USE_INLINE:-0}"
   if [ -z "${PRD_AGENT_CMD:-}" ]; then
     PRD_AGENT_CMD="$AGENT_CMD"
-    PRD_USE_INLINE=0
   fi
   if [ "${RALPH_DRY_RUN:-}" != "1" ]; then
     require_agent "${PRD_AGENT_CMD:-$AGENT_CMD}"
@@ -311,7 +320,7 @@ if [ "$MODE" = "prd" ]; then
 
   SKILL_STAGE="$(stage_for_mode "$MODE")"
   SKILL_GATE_RESULT="$(run_skill_gate "$SKILL_STAGE")"
-  IFS='|' read -r SKILL_GATE_STATUS SKILLS_MISSING SKILLS_USED SKILLS_FORBIDDEN_USED SKILL_GATE_REASONS <<<"$SKILL_GATE_RESULT"
+  IFS='|' read -r SKILL_GATE_STATUS SKILLS_MISSING SKILLS_USED _SKILLS_FORBIDDEN_USED SKILL_GATE_REASONS <<<"$SKILL_GATE_RESULT"
   if [ "$SKILL_GATE_STATUS" = "blocked" ]; then
     echo "Skill gate blocked stage '$SKILL_STAGE': $SKILL_GATE_REASONS"
     exit 1
@@ -858,7 +867,8 @@ write_run_meta() {
   local skill_gate_status="${17}"
   local skills_used="${18}"
   local skills_missing="${19}"
-  local skill_gate_reasons="${20}"
+  local skills_forbidden_used="${20}"
+  local skill_gate_reasons="${21}"
   {
     echo "# Ralph Run Summary"
     echo ""
@@ -903,6 +913,7 @@ write_run_meta() {
     echo "- skillGateStatus: ${skill_gate_status:-pass}"
     echo "- skillsUsed: ${skills_used:-(none)}"
     echo "- skillsMissing: ${skills_missing:-(none)}"
+    echo "- skillsForbiddenUsed: ${skills_forbidden_used:-(none)}"
     echo "- reasons: ${skill_gate_reasons:-(none)}"
     echo ""
   } > "$path"
@@ -1056,7 +1067,7 @@ for i in $(seq 1 "$MAX_ITERATIONS"); do
   if [ "$MODE" = "build" ] && [ "$NO_COMMIT" = "false" ] && [ -n "$DIRTY_FILES" ]; then
     log_error "ITERATION $i left uncommitted changes; review run summary at $RUN_META"
   fi
-  write_run_meta "$RUN_META" "$MODE" "$i" "$RUN_TAG" "${STORY_ID:-}" "${STORY_TITLE:-}" "$ITER_START_FMT" "$ITER_END_FMT" "$ITER_DURATION" "$STATUS_LABEL" "$LOG_FILE" "$HEAD_BEFORE" "$HEAD_AFTER" "$COMMIT_LIST" "$CHANGED_FILES" "$DIRTY_FILES" "$SKILL_GATE_STATUS" "$SKILLS_USED" "$SKILLS_MISSING" "$SKILL_GATE_REASONS"
+  write_run_meta "$RUN_META" "$MODE" "$i" "$RUN_TAG" "${STORY_ID:-}" "${STORY_TITLE:-}" "$ITER_START_FMT" "$ITER_END_FMT" "$ITER_DURATION" "$STATUS_LABEL" "$LOG_FILE" "$HEAD_BEFORE" "$HEAD_AFTER" "$COMMIT_LIST" "$CHANGED_FILES" "$DIRTY_FILES" "$SKILL_GATE_STATUS" "$SKILLS_USED" "$SKILLS_MISSING" "$SKILLS_FORBIDDEN_USED" "$SKILL_GATE_REASONS"
   if [ "$MODE" = "build" ] && [ -n "${STORY_ID:-}" ]; then
     append_run_summary "$(date '+%Y-%m-%d %H:%M:%S') | run=$RUN_TAG | iter=$i | mode=$MODE | story=$STORY_ID | duration=${ITER_DURATION}s | status=$STATUS_LABEL"
   else

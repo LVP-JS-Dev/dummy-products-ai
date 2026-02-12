@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Optional Ralph config overrides.
 # All paths are relative to repo root unless absolute.
 # Uncomment and edit as needed.

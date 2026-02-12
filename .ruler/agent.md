@@ -40,7 +40,7 @@
 
 ## 2. Архитектура проекта
 
-```
+```text
 apps/
   web/          # Main app (Vite + TanStack Router) — продуктовое использование UI Kit
   fumadocs/     # Docs (Next.js + Fumadocs) — документация + интерактивные stories
@@ -160,10 +160,12 @@ pnpm -C packages/agent-orchestrator skills:gate -- --matrix ./agent-skills-matri
    - `packages/ui-kit/src/index.ts`
    - `packages/ui-kit/src/states/index.ts`
 5. **Генерация и тесты**:
+
    ```bash
    pnpm -C packages/ui-kit gen
    pnpm -C packages/ui-kit test
    ```
+
 6. **Docs**
    - Story: `apps/fumadocs/src/stories/<Name>Story.tsx`
      - `'use client'`
@@ -463,9 +465,11 @@ cd .tmp/worktrees/<timestamp2>
 
 1. Любые изменения процессных правил вносить в `.ruler/*.md` как source-of-truth.
 2. После изменений запускать:
+
    ```bash
    pnpm ruler:apply
    ```
+
 3. Изменения в сгенерированных `AGENTS.md`/`CLAUDE.md` коммитить вместе с правками `./ruler/*`.
 4. Не редактировать `AGENTS.md`/`CLAUDE.md` вручную как source-of-truth: эти файлы считаются generated-выходом Ruler и могут быть под `.gitignore`.
 
