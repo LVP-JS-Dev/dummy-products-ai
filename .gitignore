@@ -71,6 +71,13 @@ temp
 /GEMINI.md
 /GEMINI.md.bak
 
-
 # START Ruler Generated Files
 # END Ruler Generated Files
+
+# Local agent runtime/state artifacts
+/.ralph/
+/.agents/ralph/agents.sh
+/.agents/ralph/diagram.svg
+/.agents/ralph/log-activity.sh
+/.agents/ralph/ralph.webp
+/.agents/ralph/references/
