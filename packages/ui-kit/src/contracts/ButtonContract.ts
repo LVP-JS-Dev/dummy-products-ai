@@ -7,7 +7,7 @@ const iconNameSchema = z.enum(iconNames as [IconName, ...IconName[]]);
 
 export const buttonContract = z.object({
   text: z.string().min(1).optional(),
-  variant: z.enum(["blue", "secondary", "ghost"]).optional(),
+  variant: z.enum(["blue", "secondary", "icon", "ghost"]).optional(),
   size: z.enum(["sm", "md", "lg"]).optional(),
   showIcon: z.boolean().optional(),
   iconName: iconNameSchema.optional(),

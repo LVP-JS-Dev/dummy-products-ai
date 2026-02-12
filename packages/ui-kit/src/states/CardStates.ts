@@ -9,6 +9,7 @@ export const cardStates = {
   Compact: {
     size: "sm",
     outlined: true,
+    elevated: false,
     title: "Компактная карточка",
   },
   Flat: {

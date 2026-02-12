@@ -57,6 +57,7 @@
 - `--ui-font-heading` (`Cairo`) для заголовков экранов, блоков и акцентных label;
 - `--ui-font-body` (`Open Sans`) для основного и вспомогательного текста;
 - `--ui-font-ui` (`Inter`) для элементов управления (input/button/search/table controls).
+- `--ui-font-roboto` (`Roboto`) для Roboto-совместимых UI сценариев, когда это явно требуется дизайн-спецификацией.
 
 Fallback stack задаётся токенами (`Inter`/`system-ui`/`sans-serif`) и не переопределяется локально без отдельного решения.
 

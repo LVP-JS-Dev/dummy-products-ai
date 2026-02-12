@@ -6,9 +6,6 @@ import { useState } from "react";
 export function WithControl() {
   const base = states.modal.DefaultOpen;
   const [open, setOpen] = useState<boolean>(true);
-  const [dismissible, setDismissible] = useState<boolean>(
-    Boolean(base.dismissible)
-  );
   const [size, setSize] = useState<"sm" | "md" | "lg">(base.size ?? "md");
 
   return (
@@ -19,14 +16,6 @@ export function WithControl() {
           text="Open modal"
           variant="blue"
         />
-        <label style={{ display: "inline-flex", gap: 8, alignItems: "center" }}>
-          <input
-            checked={dismissible}
-            onChange={(event) => setDismissible(event.target.checked)}
-            type="checkbox"
-          />
-          <span>Dismissible</span>
-        </label>
         <label style={{ display: "inline-flex", gap: 8, alignItems: "center" }}>
           <span>Size</span>
           <select
@@ -45,7 +34,7 @@ export function WithControl() {
       <Modal
         closeAriaLabel={base.closeAriaLabel}
         description={base.description}
-        dismissible={dismissible}
+        dismissible
         onClose={() => setOpen(false)}
         open={open}
         size={size}

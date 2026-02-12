@@ -1,6 +1,6 @@
 ---
 title: Icon
-description: Vector glyphs sourced from the Figma file.
+description: Token-colorable SVG glyphs with centered fit in a 24x24 box by default.
 ---
 
 import { Icon, states } from "@dummy-products/ui-kit";
@@ -8,13 +8,14 @@ import { WithControl } from "@/stories/icon.story";
 
 ## Description
 
-Icon component that renders the SVG glyphs from the Aiti Guru design set.
+Icon component that renders SVG glyphs from the shared asset set.
 When to use: to reinforce meaning or aid scanning alongside text labels.
 When not to use: as the only indicator for critical actions without text or aria-labels.
 
 ## API
 
 Props are defined in the UI Kit contract. Key props: `name`, `size`, `color`, `title`.
+Use token values for `color` (for example `var(--ui-color-text-muted)`) to keep icon styling design-system compliant.
 
 **Specification**
 - [`manifest.json`](../../../../../packages/ui-kit/src/generated/manifest.json)

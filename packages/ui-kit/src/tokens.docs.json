@@ -15,6 +15,10 @@
     "description": "Subtle border color for compact controls (e.g., pagination).",
     "subgroup": "Surface"
   },
+  "--ui-color-border-secondary": {
+    "description": "Border color for secondary controls and neutral outlined actions.",
+    "subgroup": "Surface"
+  },
   "--ui-color-primary": {
     "description": "Primary action/brand color.",
     "subgroup": "Core"
@@ -42,6 +46,18 @@
   "--ui-color-overlay": {
     "description": "Overlay color for dimmed backdrops.",
     "subgroup": "Core"
+  },
+  "--ui-color-card-surface": {
+    "description": "Card surface color for emphasized dark containers.",
+    "subgroup": "Surface"
+  },
+  "--ui-color-card-border": {
+    "description": "Card border color used for high-contrast outlined card shells.",
+    "subgroup": "Surface"
+  },
+  "--ui-color-checkbox-checked": {
+    "description": "Fill and border color for checked checkbox state.",
+    "subgroup": "State"
   },
   "--ui-color-text": {
     "description": "Primary text color for most UI text.",
@@ -164,5 +180,8 @@
   },
   "--ui-font-body": {
     "description": "Font family for body text and long-form content."
+  },
+  "--ui-font-roboto": {
+    "description": "Font family token for Roboto-driven UI text styles."
   }
 }

@@ -34,7 +34,7 @@ export function SearchInput({
       }}
     >
       {showIcon ? (
-        <Icon color={"var(--ui-color-text-muted)"} name="search" size={24} />
+        <Icon color={"var(--ui-color-text-muted)"} name="search_v2" size={24} />
       ) : null}
       <input
         aria-label={resolvedAriaLabel}

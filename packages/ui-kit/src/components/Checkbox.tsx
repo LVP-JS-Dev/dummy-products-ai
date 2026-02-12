@@ -65,21 +65,13 @@ export function Checkbox({
           width: 24,
           height: 24,
           borderRadius: "var(--ui-radius-xs)",
-          border: `1px solid ${checked ? "var(--ui-color-accent)" : "var(--ui-color-border)"}`,
+          border: `1px solid ${checked ? "var(--ui-color-checkbox-checked)" : "var(--ui-color-border)"}`,
           background: checked
-            ? "var(--ui-color-accent)"
+            ? "var(--ui-color-checkbox-checked)"
             : "var(--ui-color-surface)",
-          display: "inline-flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "var(--ui-color-on-primary)",
-          fontSize: 14,
-          lineHeight: 1,
           flexShrink: 0,
         }}
-      >
-        {checked ? "✓" : ""}
-      </span>
+      />
       {labelContent ? <span>{labelContent}</span> : null}
     </label>
   );

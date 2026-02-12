@@ -21,12 +21,12 @@ export function Card({
         flexDirection: "column",
         gap: size === "sm" ? "var(--ui-space-sm)" : "var(--ui-space-md)",
         borderRadius: "var(--ui-radius-lg)",
-        border: outlined ? "1px solid var(--ui-color-border)" : "none",
+        border: outlined ? "6px solid var(--ui-color-card-border)" : "none",
         boxShadow: elevated
           ? "0 12px 30px color-mix(in srgb, var(--ui-color-text) 12%, transparent)"
           : "none",
-        background: "var(--ui-color-surface)",
-        color: "var(--ui-color-text)",
+        background: "var(--ui-color-card-surface)",
+        color: "var(--ui-color-surface)",
         padding: size === "sm" ? "var(--ui-space-md)" : "var(--ui-space-lg)",
         ...style,
       }}
@@ -92,7 +92,7 @@ export function CardDescription({
       style={{
         fontFamily: "var(--ui-font-body)",
         fontSize: 14,
-        color: "var(--ui-color-text-muted)",
+        color: "var(--ui-color-text-tertiary)",
         ...style,
       }}
       {...props}

@@ -7,12 +7,12 @@ export const modalStates = {
     dismissible: true,
     closeAriaLabel: "Close dialog",
   },
-  NonDismissible: {
+  Small: {
     open: true,
-    title: "Non-dismissible modal",
-    description: "Escape and backdrop click are disabled in this state.",
-    size: "md",
-    dismissible: false,
+    title: "Small modal",
+    description: "Compact variant with regular close controls.",
+    size: "sm",
+    dismissible: true,
   },
   LongContent: {
     open: true,
