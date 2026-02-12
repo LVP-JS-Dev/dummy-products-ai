@@ -54,7 +54,7 @@ function getSkillDirs() {
 function getSkillNameFromDir(pathname) {
   const skillFile = join(pathname, "SKILL.md");
   if (!existsSync(skillFile)) {
-    return "";
+    return basename(pathname);
   }
   const raw = readFileSync(skillFile, "utf8");
   const match = raw.match(SKILL_NAME_RE);

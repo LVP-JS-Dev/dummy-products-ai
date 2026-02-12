@@ -45,7 +45,7 @@ If the story details are empty or missing, STOP and report that the PRD story fo
 - If No-commit is true, do NOT commit or push changes.
 - Empty commits are forbidden. Never use `--allow-empty`. If no file changes were produced, do not commit and do not output `<promise>COMPLETE</promise>`.
 - Do NOT edit the PRD JSON (status is handled by the loop).
-- All changes made during the run must be committed (including updates to progress/logs).
+- If No-commit is false, all changes made during the run must be committed (including updates to progress/logs).
 - Before committing, perform a final **security**, **performance**, and **regression** review of your changes.
 
 ## Agent Role and Skill Matrix (Coder Stage)

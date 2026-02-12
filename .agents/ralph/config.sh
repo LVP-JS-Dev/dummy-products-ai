@@ -12,6 +12,8 @@
 # RUNS_DIR=".ralph/runs"
 # SKILLS_MATRIX_PATH="packages/agent-orchestrator/agent-skills-matrix.json"
 # SKILLS_GATE_SCRIPT="packages/agent-orchestrator/scripts/skills-gate.mjs"
+# Optional comma-separated policies passed to skills-gate (e.g. review-mode-only,ignore-generated-paths)
+# SKILL_POLICIES=""
 # GUARDRAILS_REF=".agents/ralph/references/GUARDRAILS.md"
 # CONTEXT_REF=".agents/ralph/references/CONTEXT_ENGINEERING.md"
 # ACTIVITY_CMD=".agents/ralph/log-activity.sh"

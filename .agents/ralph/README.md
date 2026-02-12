@@ -104,6 +104,7 @@ If a loop crashes and a story stays `in_progress`, you can set `STALE_SECONDS` i
 
 - Before each stage run, Ralph validates required/forbidden skills.
 - Run summaries include `skillGateStatus`, `skillsUsed`, and `skillsMissing`.
+- If a stage requires matrix policies, pass them via `SKILL_POLICIES` (CSV), e.g. `review-mode-only,ignore-generated-paths`.
 - Empty commits are forbidden (`--allow-empty` is not allowed).
 - A story cannot be marked complete without a real commit that changes files.
 

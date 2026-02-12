@@ -155,6 +155,7 @@ run_skill_gate() {
   local stage="$1"
   local log_file="${2:-}"
   local out_file="$TMP_DIR/skills-gate-${RUN_TAG:-$(date +%s)}-${stage}-$$.json"
+  local policies="${SKILL_POLICIES:-}"
   local agent_name
   if [ "$stage" = "manager" ]; then
     agent_name="$(infer_agent_name "${PRD_AGENT_CMD:-$AGENT_CMD}")"
@@ -169,12 +170,16 @@ run_skill_gate() {
   fi
 
   local node_exit=0
+  local policies_args=()
+  if [ -n "$policies" ]; then
+    policies_args=(--policies "$policies")
+  fi
   set +e
   if [ -n "$log_file" ]; then
-    node "$SKILLS_GATE_SCRIPT" --matrix "$SKILLS_MATRIX_PATH" --stage "$stage" --agent "$agent_name" --log "$log_file" > "$out_file"
+    node "$SKILLS_GATE_SCRIPT" --matrix "$SKILLS_MATRIX_PATH" --stage "$stage" --agent "$agent_name" --log "$log_file" "${policies_args[@]}" > "$out_file"
     node_exit=$?
   else
-    node "$SKILLS_GATE_SCRIPT" --matrix "$SKILLS_MATRIX_PATH" --stage "$stage" --agent "$agent_name" > "$out_file"
+    node "$SKILLS_GATE_SCRIPT" --matrix "$SKILLS_MATRIX_PATH" --stage "$stage" --agent "$agent_name" "${policies_args[@]}" > "$out_file"
     node_exit=$?
   fi
   set -e
@@ -248,17 +253,15 @@ run_agent() {
 
 run_agent_inline() {
   local prompt_file="$1"
-  local prompt_content
-  prompt_content="$(cat "$prompt_file")"
-  local escaped_prompt
-  escaped_prompt=$(printf '%q' "$prompt_content")
   local cmd="${PRD_AGENT_CMD:-$AGENT_CMD}"
   if [[ "$cmd" == *"{prompt}"* ]]; then
-    cmd="${cmd//\{prompt\}/$escaped_prompt}"
+    local escaped_path
+    escaped_path=$(printf '%q' "$prompt_file")
+    cmd="${cmd//\{prompt\}/$escaped_path}"
+    eval "$cmd"
   else
-    cmd="$cmd $escaped_prompt"
+    cat "$prompt_file" | eval "$cmd"
   fi
-  eval "$cmd"
 }
 
 MODE="build"
