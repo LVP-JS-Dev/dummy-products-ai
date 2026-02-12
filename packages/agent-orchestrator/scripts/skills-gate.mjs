@@ -13,6 +13,7 @@ function parseArgs(argv) {
     stage: "",
     agent: "",
     log: "",
+    policies: "",
   };
   for (let i = 0; i < argv.length; i += 1) {
     const arg = argv[i];
@@ -28,6 +29,9 @@ function parseArgs(argv) {
     } else if (arg === "--log") {
       out.log = argv[i + 1] ?? "";
       i += 1;
+    } else if (arg === "--policies") {
+      out.policies = argv[i + 1] ?? "";
+      i += 1;
     }
   }
   return out;
@@ -37,11 +41,13 @@ function getSkillDirs() {
   const codeXHome = process.env.CODEX_HOME ?? join(homedir(), ".codex");
   const cwd = process.cwd();
   return [
-    join(codeXHome, "skills"),
-    join(homedir(), ".codex", "skills"),
-    join(cwd, ".codex", "skills"),
-    join(cwd, ".agents", "skills"),
-    join(cwd, ".ruler", "skills"),
+    ...new Set([
+      join(codeXHome, "skills"),
+      join(homedir(), ".codex", "skills"),
+      join(cwd, ".codex", "skills"),
+      join(cwd, ".agents", "skills"),
+      join(cwd, ".ruler", "skills"),
+    ]),
   ];
 }
 
@@ -101,7 +107,7 @@ function detectSkillsUsed(logText, knownSkills) {
 
 function failWithUsage() {
   console.error(
-    "Usage: skills-gate --matrix <path> --stage <stage> [--agent <name>] [--log <path>]"
+    "Usage: skills-gate --matrix <path> --stage <stage> [--agent <name>] [--log <path>] [--policies <csv>]"
   );
   process.exit(2);
 }
@@ -131,10 +137,29 @@ function getStageSkills(stage) {
     forbiddenSkills: Array.isArray(stage.forbiddenSkills)
       ? stage.forbiddenSkills
       : [],
+    requiredPolicies: Array.isArray(stage.requiredPolicies)
+      ? stage.requiredPolicies
+      : [],
   };
 }
 
-function collectReasons(requiredSkills, installedSkills, stage, args) {
+function parseCsv(value) {
+  if (!value) {
+    return [];
+  }
+  return value
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+function collectReasons(
+  requiredSkills,
+  requiredPolicies,
+  installedSkills,
+  stage,
+  args
+) {
   const reasons = [];
   const skillsMissing = requiredSkills.filter(
     (name) => !installedSkills.includes(name)
@@ -146,15 +171,26 @@ function collectReasons(requiredSkills, installedSkills, stage, args) {
   const allowedAgents = Array.isArray(stage?.agentConstraints?.allowedAgents)
     ? stage.agentConstraints.allowedAgents
     : [];
-  if (
-    allowedAgents.length > 0 &&
-    !(args.agent && allowedAgents.includes(args.agent))
-  ) {
-    reasons.push(
-      `agent '${args.agent}' is not allowed for stage '${args.stage}'`
-    );
+  if (allowedAgents.length > 0) {
+    if (!args.agent) {
+      reasons.push(
+        `agent is required for stage '${args.stage}' (allowed: ${allowedAgents.join(", ")})`
+      );
+    } else if (!allowedAgents.includes(args.agent)) {
+      reasons.push(
+        `agent '${args.agent}' is not allowed for stage '${args.stage}'`
+      );
+    }
   }
-  return { reasons, skillsMissing };
+
+  const providedPolicies = parseCsv(args.policies);
+  const policiesMissing = requiredPolicies.filter(
+    (name) => !providedPolicies.includes(name)
+  );
+  if (policiesMissing.length > 0) {
+    reasons.push(`missing required policies: ${policiesMissing.join(", ")}`);
+  }
+  return { reasons, skillsMissing, providedPolicies, policiesMissing };
 }
 
 function main() {
@@ -171,18 +207,21 @@ function main() {
     process.exit(2);
   }
 
-  const { requiredSkills, optionalSkills, forbiddenSkills } =
+  const { requiredSkills, optionalSkills, forbiddenSkills, requiredPolicies } =
     getStageSkills(stage);
   const installedSkills = collectInstalledSkills();
-  const { reasons, skillsMissing } = collectReasons(
-    requiredSkills,
-    installedSkills,
-    stage,
-    args
-  );
+  const { reasons, skillsMissing, providedPolicies, policiesMissing } =
+    collectReasons(
+      requiredSkills,
+      requiredPolicies,
+      installedSkills,
+      stage,
+      args
+    );
 
   let skillsUsed = [];
   let forbiddenSkillsUsed = [];
+  const warnings = [];
   const allKnownSkills = [
     ...new Set([
       ...installedSkills,
@@ -191,7 +230,13 @@ function main() {
       ...forbiddenSkills,
     ]),
   ];
-  if (args.log && existsSync(args.log)) {
+  if (!args.log) {
+    if (forbiddenSkills.length > 0) {
+      warnings.push(
+        "forbidden skills usage check skipped: pass --log <path> to enable detection"
+      );
+    }
+  } else if (existsSync(args.log)) {
     const logText = readFileSync(args.log, "utf8");
     skillsUsed = detectSkillsUsed(logText, allKnownSkills);
     forbiddenSkillsUsed = skillsUsed.filter((name) =>
@@ -200,6 +245,10 @@ function main() {
     if (forbiddenSkillsUsed.length > 0) {
       reasons.push(`forbidden skills used: ${forbiddenSkillsUsed.join(", ")}`);
     }
+  } else {
+    warnings.push(
+      `log file not found: ${args.log}; forbidden skills usage check skipped`
+    );
   }
 
   const status = reasons.length === 0 ? "pass" : "blocked";
@@ -213,11 +262,15 @@ function main() {
     requiredSkills,
     optionalSkills,
     forbiddenSkills,
+    requiredPolicies,
+    providedPolicies,
+    policiesMissing,
     skillsMissing,
     skillsUsed,
     forbiddenSkillsUsed,
     installedSkills,
     reasons,
+    warnings,
   };
 
   const exitCode = status === "pass" ? 0 : 1;

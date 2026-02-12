@@ -141,6 +141,7 @@ Log major actions to {{ACTIVITY_LOG_PATH}} using the helper:
 ```bash
 {{ACTIVITY_CMD}} "message"
 ```
+
 Log at least:
 - Start of work on the story
 - After major code changes

@@ -100,7 +100,10 @@ pnpm fix              # Auto-fix lint (ultracite)
 pnpm -C packages/ui-kit gen     # UI Kit только
 pnpm -C packages/ui-kit test    # UI Kit тесты
 pnpm -C packages/gen-api gen    # API client только
-pnpm -C packages/agent-orchestrator skills:gate -- --matrix ./agent-skills-matrix.json --stage coder --agent claude
+pnpm -C packages/agent-orchestrator skills:gate -- \
+  --matrix ./agent-skills-matrix.json \
+  --stage coder \
+  --agent claude
 ```
 
 ---
@@ -429,8 +432,12 @@ cd .tmp/worktrees/<timestamp2>
 Перед запуском стадии оркестратор обязан проверить:
 
 - `requiredSkills` присутствуют (иначе стадия `blocked`);
+- `requiredPolicies` переданы в gate (через `--policies`) для стадий, где они обязательны;
 - `forbiddenSkills` не используются в стадии;
 - ограничения роли соблюдены (например, для `Coder` только `Claude Code` путь).
+
+Примечание:
+- проверка фактического использования `forbiddenSkills` выполняется только при передаче `--log <path>` в gate.
 
 Роли и базовая матрица:
 
