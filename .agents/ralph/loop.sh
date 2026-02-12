@@ -949,7 +949,7 @@ git_changed_files() {
 
 git_dirty_files() {
   if git -C "$ROOT_DIR" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    git -C "$ROOT_DIR" status --porcelain | awk '{print "- " $2}'
+    git -C "$ROOT_DIR" status --porcelain | awk '{$1=""; print "- " substr($0,2)}'
   else
     echo ""
   fi

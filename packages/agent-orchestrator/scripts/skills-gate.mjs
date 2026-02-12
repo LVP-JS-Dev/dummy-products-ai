@@ -220,11 +220,10 @@ function main() {
     reasons,
   };
 
-  process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
-  if (status === "pass") {
-    process.exit(0);
-  }
-  process.exit(1);
+  const exitCode = status === "pass" ? 0 : 1;
+  process.stdout.write(`${JSON.stringify(result, null, 2)}\n`, () => {
+    process.exit(exitCode);
+  });
 }
 
 main();
