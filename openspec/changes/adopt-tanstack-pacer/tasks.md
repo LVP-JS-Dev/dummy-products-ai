@@ -8,10 +8,10 @@
 
 ## 2. Implementation (only if adopted)
 
-- [x] Add Pacer dependency to `apps/web` (deferred; adoption not approved)
-- [x] Replace one isolated use-case first (e.g., debounced search intent) (deferred; adoption not approved)
-- [x] Verify no behavior regression and no duplicated responsibility with React Query (deferred; adoption not approved)
+- [ ] Add Pacer dependency to `apps/web` (deferred; adoption not approved)
+- [ ] Replace one isolated use-case first (e.g., debounced search intent) (deferred; adoption not approved)
+- [ ] Verify no behavior regression and no duplicated responsibility with React Query (deferred; adoption not approved)
 
 ## 3. Verification
 
-- [x] Run `pnpm check` (not run; no implementation changes)
+- [ ] Run `pnpm check`
