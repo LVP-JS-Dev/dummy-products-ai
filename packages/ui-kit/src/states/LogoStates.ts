@@ -1,14 +1,12 @@
 export const logoStates = {
   Default: {
-    size: 44,
     label: "dummy-products",
   },
-  DecorativeSmall: {
-    size: 32,
+  Decorative: {
     decorative: true,
   },
-  Large: {
-    size: 64,
+  CustomSize: {
+    size: 104,
     label: "dummy-products",
   },
 } as const;

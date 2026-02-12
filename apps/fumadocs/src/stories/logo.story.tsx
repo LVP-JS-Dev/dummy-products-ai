@@ -6,8 +6,8 @@ export function WithControl() {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
       <Logo {...states.logo.Default} />
-      <Logo {...states.logo.DecorativeSmall} />
-      <Logo {...states.logo.Large} />
+      <Logo {...states.logo.Decorative} />
+      <Logo {...states.logo.CustomSize} />
     </div>
   );
 }
