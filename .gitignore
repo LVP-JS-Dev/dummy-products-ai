@@ -46,6 +46,9 @@ coverage
 .nyc_output
 .playwright-cli/
 output/playwright/
+.playwright/
+playwright-report/
+playwright-results.xml
 
 # Misc
 *.tgz

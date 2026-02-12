@@ -251,16 +251,19 @@ export function ProductsPage() {
 
       <div
         className="mb-2 h-1 overflow-hidden"
+        data-testid="products-loading-bar"
         style={{ background: "var(--ui-color-surface-muted)" }}
       >
         {loading ? (
           <div
             className="h-full w-2/5 animate-[indeterminate_1.2s_ease-in-out_infinite]"
+            data-testid="products-loading-indicator"
             style={{ background: "var(--ui-color-primary)" }}
           />
         ) : (
           <div
             className="h-full w-0"
+            data-testid="products-loading-indicator"
             style={{ background: "var(--ui-color-primary)" }}
           />
         )}
@@ -307,6 +310,7 @@ export function ProductsPage() {
       ) : (
         <div
           className="overflow-hidden"
+          data-testid="products-table"
           style={{
             border: "1px solid var(--ui-color-border)",
             borderRadius: "var(--ui-radius-md)",
@@ -375,7 +379,10 @@ export function ProductsPage() {
         </div>
       )}
 
-      <div className="mt-4 flex items-center justify-between gap-3">
+      <div
+        className="mt-4 flex items-center justify-between gap-3"
+        data-testid="products-pagination"
+      >
         <div
           style={{
             fontFamily: "var(--ui-font-body)",
@@ -406,6 +413,7 @@ function AddProductButton() {
     <>
       <Button
         iconName="plus_circle"
+        id="add-product-button"
         onPress={() => setOpen(true)}
         showIcon
         text="Добавить"
@@ -462,50 +470,62 @@ function AddProductModal({ onClose }: { onClose: () => void }) {
 
   return (
     <Modal dismissible onClose={onClose} open size="lg" title="Добавить товар">
-      <form onSubmit={onSubmit}>
-        <div style={{ display: "grid", gap: "var(--ui-space-md)" }}>
-          <Field
-            error={errors.name}
-            id={nameId}
-            label="Наименование"
-            onChange={setName}
-            value={name}
-          />
-          <Field
-            error={errors.price}
-            id={priceId}
-            inputMode="decimal"
-            label="Цена"
-            onChange={setPrice}
-            value={price}
-          />
-          <Field
-            error={errors.vendor}
-            id={vendorId}
-            label="Вендор"
-            onChange={setVendor}
-            value={vendor}
-          />
-          <Field
-            error={errors.article}
-            id={articleId}
-            label="Артикул"
-            onChange={setArticle}
-            value={article}
-          />
-        </div>
-        <div
-          style={{
-            marginTop: "var(--ui-space-lg)",
-            display: "flex",
-            justifyContent: "flex-end",
-            gap: "var(--ui-space-sm)",
-          }}
-        >
-          <Button onPress={onClose} text="Отмена" variant="secondary" />
-          <Button buttonType="submit" text="Сохранить" variant="blue" />
-        </div>
-      </form>
+      <div data-testid="add-product-modal">
+        <form onSubmit={onSubmit}>
+          <div style={{ display: "grid", gap: "var(--ui-space-md)" }}>
+            <Field
+              error={errors.name}
+              id={nameId}
+              label="Наименование"
+              onChange={setName}
+              value={name}
+            />
+            <Field
+              error={errors.price}
+              id={priceId}
+              inputMode="decimal"
+              label="Цена"
+              onChange={setPrice}
+              value={price}
+            />
+            <Field
+              error={errors.vendor}
+              id={vendorId}
+              label="Вендор"
+              onChange={setVendor}
+              value={vendor}
+            />
+            <Field
+              error={errors.article}
+              id={articleId}
+              label="Артикул"
+              onChange={setArticle}
+              value={article}
+            />
+          </div>
+          <div
+            style={{
+              marginTop: "var(--ui-space-lg)",
+              display: "flex",
+              justifyContent: "flex-end",
+              gap: "var(--ui-space-sm)",
+            }}
+          >
+            <Button
+              id="add-product-cancel"
+              onPress={onClose}
+              text="Отмена"
+              variant="secondary"
+            />
+            <Button
+              buttonType="submit"
+              id="add-product-save"
+              text="Сохранить"
+              variant="blue"
+            />
+          </div>
+        </form>
+      </div>
     </Modal>
   );
 }

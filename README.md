@@ -52,7 +52,19 @@ pnpm dev
 | `pnpm gen:ui` | Генерирует спецификацию UI Kit (schemas + manifest). |
 | `pnpm gen:api` | Генерирует typed API client из OpenAPI (Kubb). |
 | `pnpm test` | Контрактные тесты UI Kit (валидация `states` по контрактам). |
+| `pnpm e2e` | Запускает Playwright E2E тесты для `apps/web`. |
+| `pnpm e2e:ui` | Запускает Playwright UI runner. |
 | `pnpm check` | Полный гейт: gen + test + no-drift (generated артефакты должны быть актуальны). |
+
+---
+
+## E2E тесты (apps/web)
+
+```bash
+pnpm e2e
+```
+
+Playwright сам поднимет `apps/web` через встроенный `webServer` в `playwright.config.ts`.
 
 ---
 

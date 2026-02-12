@@ -122,7 +122,11 @@ export function LoginPage() {
           "radial-gradient(circle at 50% 20%, #f8f9fb 0%, #f1f2f5 55%, #edeef2 100%)",
       }}
     >
-      <main aria-labelledby="login-title" style={{ width: "min(100%, 420px)" }}>
+      <main
+        aria-labelledby="login-title"
+        data-testid="login-page"
+        style={{ width: "min(100%, 420px)" }}
+      >
         <Card
           elevated
           outlined
@@ -154,7 +158,7 @@ export function LoginPage() {
             </Text>
           </header>
 
-          <form noValidate onSubmit={onSubmit}>
+          <form data-testid="login-form" noValidate onSubmit={onSubmit}>
             <div style={{ display: "grid", gap: "var(--ui-space-md)" }}>
               <Input
                 autoComplete="username"
@@ -217,6 +221,7 @@ export function LoginPage() {
 
               {errors.form ? (
                 <p
+                  data-testid="login-error"
                   id={formErrorId}
                   role="alert"
                   style={{
@@ -235,6 +240,7 @@ export function LoginPage() {
                 buttonType="submit"
                 disabled={submitting}
                 fullWidth
+                id="login-submit"
                 loading={submitting}
                 size="lg"
                 text={submitting ? "Вход..." : "Войти"}
