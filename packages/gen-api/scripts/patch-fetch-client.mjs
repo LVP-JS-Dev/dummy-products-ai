@@ -67,6 +67,9 @@ const replacements = [
 
 let updatedFetch = fetchSource;
 for (const { marker, insert } of replacements) {
+  if (updatedFetch.includes(insert)) {
+    continue;
+  }
   if (!updatedFetch.includes(marker)) {
     throw new Error(`fetch.ts template marker not found: ${marker}`);
   }
