@@ -230,3 +230,12 @@
     gap: 12px;
   }
 }
+
+/* Login page helpers. */
+.inner-shadow {
+  text-shadow: 0 4px 4px rgb(0 0 0 / 0.17);
+}
+
+.inner-shadow-top {
+  text-shadow: 0 -2px 0 rgb(255 255 255 / 0.12);
+}

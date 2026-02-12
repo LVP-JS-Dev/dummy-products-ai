@@ -125,7 +125,7 @@ export function LoginPage() {
       <main
         aria-labelledby="login-title"
         data-testid="login-page"
-        style={{ width: "min(100%, 420px)" }}
+        style={{ width: "100%", maxWidth: 420 }}
       >
         <Card
           elevated
@@ -147,13 +147,18 @@ export function LoginPage() {
             <Logo decorative />
             <Text
               as="h1"
+              className="inner-shadow-top"
               id="login-title"
               style={{ textAlign: "center" }}
               variant="heading"
             >
               Добро пожаловать!
             </Text>
-            <Text style={{ textAlign: "center" }} variant="muted">
+            <Text
+              className="inner-shadow"
+              style={{ textAlign: "center" }}
+              variant="muted"
+            >
               Пожалуйста, авторизируйтесь
             </Text>
           </header>

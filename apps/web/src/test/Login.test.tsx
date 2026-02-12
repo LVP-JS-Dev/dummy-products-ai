@@ -41,10 +41,13 @@ describe("LoginPage", () => {
     render(<LoginPage />);
 
     expect(screen.getByTitle("Dummy Products")).toBeInTheDocument();
-    expect(
-      screen.getByRole("heading", { name: "Добро пожаловать!" })
-    ).toBeInTheDocument();
-    expect(screen.getByText("Пожалуйста, авторизируйтесь")).toBeInTheDocument();
+    const heading = screen.getByRole("heading", { name: "Добро пожаловать!" });
+    expect(heading).toBeInTheDocument();
+    expect(heading).toHaveClass("inner-shadow-top");
+
+    const subtitle = screen.getByText("Пожалуйста, авторизируйтесь");
+    expect(subtitle).toBeInTheDocument();
+    expect(subtitle).toHaveClass("inner-shadow");
     expect(screen.getByLabelText("Логин")).toBeInTheDocument();
     expect(screen.getByLabelText("Пароль")).toBeInTheDocument();
     expect(
