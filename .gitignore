@@ -70,3 +70,11 @@ temp
 /CLAUDE.md.bak
 /GEMINI.md
 /GEMINI.md.bak
+
+# Local agent runtime/state artifacts
+/.ralph/
+/.agents/ralph/agents.sh
+/.agents/ralph/diagram.svg
+/.agents/ralph/log-activity.sh
+/.agents/ralph/ralph.webp
+/.agents/ralph/references/
