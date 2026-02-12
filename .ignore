@@ -1,1 +1,4 @@
-packages/ui-kit/src/generated/schemas/
+packages/ui-kit/src/generated/
+packages/gen-api/generated/
+apps/web/src/routeTree.gen.ts
+**/*.gen.ts
