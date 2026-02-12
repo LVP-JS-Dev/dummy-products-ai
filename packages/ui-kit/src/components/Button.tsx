@@ -11,14 +11,14 @@ const baseStyle: React.CSSProperties = {
   gap: "var(--ui-space-sm)",
   padding: "var(--ui-space-md) var(--ui-space-lg)",
   borderRadius: "var(--ui-radius-md)",
-  border: "1px solid transparent",
+  border: "none",
   cursor: "pointer",
   fontWeight: 600,
   lineHeight: 1.2,
 };
 
 const variantStyle: Record<
-  "blue" | "secondary" | "ghost",
+  "blue" | "secondary" | "icon" | "ghost",
   React.CSSProperties
 > = {
   blue: {
@@ -26,17 +26,25 @@ const variantStyle: Record<
     backgroundImage:
       "linear-gradient(180deg, rgb(255 255 255 / 0%) 0%, rgb(255 255 255 / 12%) 100%)",
     color: "var(--ui-color-on-primary)",
-    borderColor: "var(--ui-color-primary-border)",
+    border: "none",
   },
   secondary: {
     background: "var(--ui-color-surface)",
     color: "var(--ui-color-text)",
-    borderColor: "var(--ui-color-border)",
+    border: "1px solid var(--ui-color-border-secondary)",
+  },
+  icon: {
+    background: "transparent",
+    color: "var(--ui-color-text)",
+    border: "none",
+    padding: "var(--ui-space-sm)",
+    minWidth: 32,
+    minHeight: 32,
   },
   ghost: {
     background: "transparent",
     color: "var(--ui-color-text)",
-    borderColor: "var(--ui-color-border)",
+    border: "none",
   },
 };
 

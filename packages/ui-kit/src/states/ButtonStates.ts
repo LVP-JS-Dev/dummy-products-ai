@@ -15,6 +15,16 @@ export const buttonStates = {
     showIcon: true,
     iconName: "refresh",
   },
+  Secondary: {
+    text: "Подробнее",
+    variant: "secondary",
+    showIcon: false,
+  },
+  IconOnly: {
+    variant: "icon",
+    showIcon: true,
+    iconName: "more_horizontal",
+  },
   EdgeCaseLongText: {
     text: "Очень длинное название действия",
     variant: "blue",

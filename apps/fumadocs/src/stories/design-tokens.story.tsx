@@ -15,12 +15,15 @@ const COLOR_TEXT_TOKENS = [
 ] as const;
 const COLOR_BORDER_TOKENS = [
   "--ui-color-border",
+  "--ui-color-border-secondary",
+  "--ui-color-card-border",
   "--ui-color-focus-ring",
 ] as const;
 const FONT_TOKENS = [
   "--ui-font-ui",
   "--ui-font-body",
   "--ui-font-heading",
+  "--ui-font-roboto",
 ] as const;
 const SPACE_TOKENS = [
   "--ui-space-sm",

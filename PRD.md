@@ -92,6 +92,8 @@
   Использование: основной текст, описания, вспомогательные подписи.
 - `--ui-font-ui`: `"Inter", "Inter Variable", system-ui, sans-serif`
   Использование: инпуты, контролы, компактные UI-элементы и табличные ячейки.
+- `--ui-font-roboto`: `"Roboto", "Inter", system-ui, sans-serif`
+  Использование: UI-сценарии, где требуется совместимость с макетами на Roboto при сохранении токенизированного подключения.
 
 Правило fallback: если кастомный шрифт недоступен, применяется следующий в стеке до `system-ui`.
 
@@ -99,6 +101,7 @@
 - `font-family: var(--ui-font-heading);` для `h1/h2`
 - `font-family: var(--ui-font-body);` для paragraph/helper text
 - `font-family: var(--ui-font-ui);` для form controls
+- `font-family: var(--ui-font-roboto);` для Roboto-specific UI случаев
 
 ---
 

@@ -4,6 +4,7 @@ export const tokenCssVars = {
     surfaceMuted: "var(--ui-color-surface-muted)",
     border: "var(--ui-color-border)",
     borderSubtle: "var(--ui-color-border-subtle)",
+    borderSecondary: "var(--ui-color-border-secondary)",
     primary: "var(--ui-color-primary)",
     primaryBorder: "var(--ui-color-primary-border)",
     accent: "var(--ui-color-accent)",
@@ -21,6 +22,9 @@ export const tokenCssVars = {
     dangerSurface: "var(--ui-color-danger-surface)",
     link: "var(--ui-color-link)",
     overlay: "var(--ui-color-overlay)",
+    cardSurface: "var(--ui-color-card-surface)",
+    cardBorder: "var(--ui-color-card-border)",
+    checkboxChecked: "var(--ui-color-checkbox-checked)",
   },
   space: {
     xs: "var(--ui-space-xs)",
@@ -42,5 +46,6 @@ export const tokenCssVars = {
     heading: "var(--ui-font-heading)",
     ui: "var(--ui-font-ui)",
     body: "var(--ui-font-body)",
+    roboto: "var(--ui-font-roboto)",
   },
 } as const;

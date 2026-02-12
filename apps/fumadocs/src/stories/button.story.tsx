@@ -14,6 +14,9 @@ export function WithControl() {
     Boolean(base.showBadgeCount)
   );
   const [childMode, setChildMode] = useState<boolean>(false);
+  const [variant, setVariant] = useState<
+    "blue" | "secondary" | "icon" | "ghost"
+  >(base.variant ?? "blue");
 
   return (
     <div style={{ display: "grid", gap: 16 }}>
@@ -23,6 +26,7 @@ export function WithControl() {
         showBadgeLabel={showLabel}
         showIcon={showIcon}
         text={text}
+        variant={variant}
       >
         {childMode ? (
           <>
@@ -46,6 +50,22 @@ export function WithControl() {
             type="checkbox"
           />
           Icon
+        </label>
+        <label style={{ display: "flex", alignItems: "center", gap: 6 }}>
+          <span>Variant</span>
+          <select
+            onChange={(event) =>
+              setVariant(
+                event.target.value as "blue" | "secondary" | "icon" | "ghost"
+              )
+            }
+            value={variant}
+          >
+            <option value="blue">blue</option>
+            <option value="secondary">secondary</option>
+            <option value="icon">icon</option>
+            <option value="ghost">ghost</option>
+          </select>
         </label>
         <label style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <input

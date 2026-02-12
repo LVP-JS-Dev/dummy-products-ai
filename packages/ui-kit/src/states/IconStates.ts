@@ -6,11 +6,11 @@ export const iconStates = {
   UserLarge: {
     name: "user",
     size: 32,
-    color: "#242EDB",
+    color: "var(--ui-color-primary)",
   },
   Alert: {
     name: "eye_off",
     size: 24,
-    color: "#6C6C6C",
+    color: "var(--ui-color-text-muted)",
   },
 } as const;

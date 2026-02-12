@@ -11,6 +11,7 @@
   --ui-color-surface-muted: #f3f3f3;
   --ui-color-border: #ededed;
   --ui-color-border-subtle: #ececeb;
+  --ui-color-border-secondary: #ececeb;
 
   --ui-color-primary: #242edb;
   --ui-color-primary-border: #367aff;
@@ -31,6 +32,9 @@
   --ui-color-danger-surface: #fee2e2;
   --ui-color-link: var(--ui-color-primary);
   --ui-color-overlay: rgb(17 24 39 / 45%);
+  --ui-color-card-surface: #232323;
+  --ui-color-card-border: #ffffff;
+  --ui-color-checkbox-checked: #3c538e;
 
   /* Deprecated palette-based aliases (kept for backward compatibility) */
   --ui-color-white: var(--ui-color-surface);
@@ -58,6 +62,7 @@
   --ui-font-heading: "Cairo", "Inter", system-ui, sans-serif;
   --ui-font-ui: "Inter", "Inter Variable", system-ui, sans-serif;
   --ui-font-body: "Open Sans", "Inter", system-ui, sans-serif;
+  --ui-font-roboto: "Roboto", "Inter", system-ui, sans-serif;
 }
 
 /* Minimal base styles for component internals that cannot be expressed via inline style (e.g. ::placeholder, :focus-within). */
