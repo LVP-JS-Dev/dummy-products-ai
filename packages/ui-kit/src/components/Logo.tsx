@@ -1,11 +1,34 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import type { LogoProps } from "../contracts/LogoContract";
 
-const viewBox = "0 0 68 74";
+const wrapperDefaultSize = 52;
+const markSizeAtDefault = 35;
+
+const wrapperBaseStyles: CSSProperties = {
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  borderRadius: 9999,
+  flexShrink: 0,
+  border: "1px solid transparent",
+  backgroundOrigin: "border-box, border-box, border-box",
+  backgroundClip: "padding-box, padding-box, border-box",
+  backgroundImage: [
+    "linear-gradient(var(--ui-color-surface), var(--ui-color-surface))",
+    "linear-gradient(180deg, rgb(35 35 35 / 0%) 50%, rgb(35 35 35 / 6%) 100%)",
+    "linear-gradient(180deg, rgb(237 237 237 / 70%) 0%, rgb(237 237 237 / 0%) 70%)",
+  ].join(", "),
+  boxShadow: "0 0 0 2px var(--ui-color-surface), 0 12px 8px rgb(0 0 0 / 3%)",
+};
+
+function getMarkSize(size: number) {
+  return Math.round((size * markSizeAtDefault) / wrapperDefaultSize);
+}
 
 export function Logo({
-  size = 44,
+  size = wrapperDefaultSize,
   label = "Logo",
   decorative,
   variant = "mark",
@@ -20,157 +43,67 @@ export function Logo({
     ? { "aria-hidden": true as const }
     : { role: "img" as const, "aria-label": label };
 
+  const markSize = getMarkSize(size);
+
   return (
-    <svg
+    <span
       className={className}
-      height={size}
-      style={{ display: "block", width: size, height: size, ...style }}
-      viewBox={viewBox}
-      width={size}
-      xmlns="http://www.w3.org/2000/svg"
+      style={{ ...wrapperBaseStyles, width: size, height: size, ...style }}
       {...ariaProps}
     >
-      <title>{label}</title>
-      <g filter="url(#filter0_dd_1046_53)">
-        <rect fill="white" height="52" rx="26" width="52" x="8" y="2" />
-        <rect
-          fill="url(#paint0_linear_1046_53)"
-          height="52"
-          rx="26"
-          width="52"
-          x="8"
-          y="2"
-        />
-        <rect
-          height="51"
-          rx="25.5"
-          stroke="url(#paint1_linear_1046_53)"
-          width="51"
-          x="8.5"
-          y="2.5"
-        />
+      <svg
+        aria-hidden="true"
+        height={markSize}
+        style={{ display: "block" }}
+        viewBox="0 0 35 34"
+        width={markSize}
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <path
-          d="M21.12 33.5692C21.4254 33.5692 21.673 31.0758 21.673 28C21.673 24.9242 21.4254 22.4308 21.12 22.4308C20.8146 22.4308 20.567 24.9242 20.567 28C20.567 31.0758 20.8146 33.5692 21.12 33.5692Z"
+          d="M4.62002 22.5692C4.92543 22.5692 5.17302 20.0758 5.17302 17C5.17302 13.9242 4.92543 11.4308 4.62002 11.4308C4.3146 11.4308 4.06702 13.9242 4.06702 17C4.06702 20.0758 4.3146 22.5692 4.62002 22.5692Z"
           fill="black"
         />
         <path
-          d="M22.59 34.188C22.9302 34.188 23.206 31.4176 23.206 28C23.206 24.5825 22.9302 21.812 22.59 21.812C22.2498 21.812 21.974 24.5825 21.974 28C21.974 31.4176 22.2498 34.188 22.59 34.188Z"
+          d="M6.09 23.188C6.43021 23.188 6.706 20.4176 6.706 17C6.706 13.5825 6.43021 10.812 6.09 10.812C5.74979 10.812 5.474 13.5825 5.474 17C5.474 20.4176 5.74979 23.188 6.09 23.188Z"
           fill="black"
         />
         <path
-          d="M24.228 34.8816C24.603 34.8816 24.907 31.8006 24.907 28C24.907 24.1994 24.603 21.1184 24.228 21.1184C23.853 21.1184 23.549 24.1994 23.549 28C23.549 31.8006 23.853 34.8816 24.228 34.8816Z"
+          d="M7.72801 23.8816C8.103 23.8816 8.40701 20.8006 8.40701 17C8.40701 13.1994 8.103 10.1184 7.72801 10.1184C7.35302 10.1184 7.04901 13.1994 7.04901 17C7.04901 20.8006 7.35302 23.8816 7.72801 23.8816Z"
           fill="black"
         />
         <path
-          d="M26.041 35.6432C26.4585 35.6432 26.797 32.2212 26.797 28C26.797 23.7788 26.4585 20.3568 26.041 20.3568C25.6234 20.3568 25.285 23.7788 25.285 28C25.285 32.2212 25.6234 35.6432 26.041 35.6432Z"
+          d="M9.54097 24.6432C9.95852 24.6432 10.297 21.2212 10.297 17C10.297 12.7788 9.95852 9.35681 9.54097 9.35681C9.12342 9.35681 8.78497 12.7788 8.78497 17C8.78497 21.2212 9.12342 24.6432 9.54097 24.6432Z"
           fill="black"
         />
         <path
-          d="M28.057 36.4932C28.5209 36.4932 28.897 32.6906 28.897 28C28.897 23.3094 28.5209 19.5068 28.057 19.5068C27.5931 19.5068 27.217 23.3094 27.217 28C27.217 32.6906 27.5931 36.4932 28.057 36.4932Z"
+          d="M11.557 25.4932C12.0209 25.4932 12.397 21.6906 12.397 17C12.397 12.3094 12.0209 8.50681 11.557 8.50681C11.0931 8.50681 10.717 12.3094 10.717 17C10.717 21.6906 11.0931 25.4932 11.557 25.4932Z"
           fill="black"
         />
         <path
-          d="M30.304 37.4384C30.8181 37.4384 31.235 33.2127 31.235 28C31.235 22.7873 30.8181 18.5616 30.304 18.5616C29.7898 18.5616 29.373 22.7873 29.373 28C29.373 33.2127 29.7898 37.4384 30.304 37.4384Z"
+          d="M13.804 26.4384C14.3181 26.4384 14.735 22.2127 14.735 17C14.735 11.7873 14.3181 7.56158 13.804 7.56158C13.2898 7.56158 12.873 11.7873 12.873 17C12.873 22.2127 13.2898 26.4384 13.804 26.4384Z"
           fill="black"
         />
         <path
-          d="M32.796 38.4856C33.3682 38.4856 33.832 33.791 33.832 28C33.832 22.209 33.3682 17.5144 32.796 17.5144C32.2238 17.5144 31.76 22.209 31.76 28C31.76 33.791 32.2238 38.4856 32.796 38.4856Z"
+          d="M16.296 27.4856C16.8682 27.4856 17.332 22.791 17.332 17C17.332 11.209 16.8682 6.5144 16.296 6.5144C15.7238 6.5144 15.26 11.209 15.26 17C15.26 22.791 15.7238 27.4856 16.296 27.4856Z"
           fill="black"
         />
         <path
-          d="M35.561 39.6484C36.1989 39.6484 36.716 34.4332 36.716 28C36.716 21.5668 36.1989 16.3516 35.561 16.3516C34.9231 16.3516 34.406 21.5668 34.406 28C34.406 34.4332 34.9231 39.6484 35.561 39.6484Z"
+          d="M19.061 28.6484C19.6989 28.6484 20.216 23.4332 20.216 17C20.216 10.5668 19.6989 5.35159 19.061 5.35159C18.4231 5.35159 17.906 10.5668 17.906 17C17.906 23.4332 18.4231 28.6484 19.061 28.6484Z"
           fill="black"
         />
         <path
-          d="M38.634 40.9472C39.3415 40.9472 39.915 35.1505 39.915 28C39.915 20.8495 39.3415 15.0528 38.634 15.0528C37.9265 15.0528 37.353 20.8495 37.353 28C37.353 35.1505 37.9265 40.9472 38.634 40.9472Z"
+          d="M22.134 29.9472C22.8415 29.9472 23.415 24.1505 23.415 17C23.415 9.84946 22.8415 4.0528 22.134 4.0528C21.4265 4.0528 20.853 9.84946 20.853 17C20.853 24.1505 21.4265 29.9472 22.134 29.9472Z"
           fill="black"
         />
         <path
-          d="M42.05 42.382C42.8348 42.382 43.471 35.943 43.471 28C43.471 20.0571 42.8348 13.618 42.05 13.618C41.2653 13.618 40.629 20.0571 40.629 28C40.629 35.943 41.2653 42.382 42.05 42.382Z"
+          d="M25.55 31.382C26.3348 31.382 26.971 24.943 26.971 17C26.971 9.05707 26.3348 2.61801 25.55 2.61801C24.7653 2.61801 24.129 9.05707 24.129 17C24.129 24.943 24.7653 31.382 25.55 31.382Z"
           fill="black"
         />
         <path
-          d="M45.844 43.98C46.7178 43.98 47.426 36.8255 47.426 28C47.426 19.1745 46.7178 12.02 45.844 12.02C44.9703 12.02 44.262 19.1745 44.262 28C44.262 36.8255 44.9703 43.98 45.844 43.98Z"
+          d="M29.344 32.98C30.2178 32.98 30.926 25.8255 30.926 17C30.926 8.17447 30.2178 1.01999 29.344 1.01999C28.4703 1.01999 27.762 8.17447 27.762 17C27.762 25.8255 28.4703 32.98 29.344 32.98Z"
           fill="black"
         />
-      </g>
-      <defs>
-        <filter
-          colorInterpolationFilters="sRGB"
-          filterUnits="userSpaceOnUse"
-          height="74"
-          id="filter0_dd_1046_53"
-          width="68"
-          x="0"
-          y="0"
-        >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            result="hardAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-          />
-          <feOffset dy="12" />
-          <feGaussianBlur stdDeviation="4" />
-          <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.03 0"
-          />
-          <feBlend
-            in2="BackgroundImageFix"
-            mode="normal"
-            result="effect1_dropShadow_1046_53"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            result="hardAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-          />
-          <feMorphology in="SourceAlpha" operator="dilate" radius="2" />
-          <feOffset />
-          <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
-          />
-          <feBlend
-            in2="effect1_dropShadow_1046_53"
-            mode="normal"
-            result="effect2_dropShadow_1046_53"
-          />
-          <feBlend
-            in="SourceGraphic"
-            in2="effect2_dropShadow_1046_53"
-            mode="normal"
-            result="shape"
-          />
-        </filter>
-        <linearGradient
-          gradientUnits="userSpaceOnUse"
-          id="paint0_linear_1046_53"
-          x1="34"
-          x2="34"
-          y1="54"
-          y2="2"
-        >
-          <stop offset="0.5" stopColor="#232323" stopOpacity="0" />
-          <stop offset="1" stopColor="#232323" stopOpacity="0.06" />
-        </linearGradient>
-        <linearGradient
-          gradientUnits="userSpaceOnUse"
-          id="paint1_linear_1046_53"
-          x1="34"
-          x2="34"
-          y1="2"
-          y2="54"
-        >
-          <stop stopColor="#EDEDED" stopOpacity="0.7" />
-          <stop offset="0.7" stopColor="#EDEDED" stopOpacity="0" />
-        </linearGradient>
-      </defs>
-    </svg>
+      </svg>
+    </span>
   );
 }

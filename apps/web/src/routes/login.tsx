@@ -144,7 +144,7 @@ export function LoginPage() {
               marginBottom: "var(--ui-space-lg)",
             }}
           >
-            <Logo decorative label="Dummy Products" size={44} />
+            <Logo decorative />
             <Text
               as="h1"
               id="login-title"
