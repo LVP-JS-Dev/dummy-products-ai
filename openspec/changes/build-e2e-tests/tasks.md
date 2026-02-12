@@ -1,3 +1,5 @@
+# Tasks
+
 ## 1. E2E Test Harness
 
 - [x] 1.1 Review existing test tooling and decide Playwright location and config
