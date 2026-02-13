@@ -23,6 +23,9 @@
   --ui-color-text-muted: #9c9c9c;
   --ui-color-text-tertiary: #b2b3b9;
   --ui-color-text-placeholder: #999999;
+  --ui-color-text-subtle: #6c6c6c;
+  --ui-color-text-faint: #e0e0e0;
+  --ui-color-border-faint: #ebebeb;
 
   --ui-color-success: #15803d;
   --ui-color-success-surface: #dcfce7;
