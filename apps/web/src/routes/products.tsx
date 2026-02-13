@@ -6,6 +6,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { RefreshCw } from "lucide-react";
 import {
   type FormEvent,
   type HTMLAttributes,
@@ -46,10 +47,7 @@ function runAsync(promise: Promise<unknown>, context: string): void {
   });
 }
 
-function getSearchInputState(loading: boolean, query: string) {
-  if (loading) {
-    return "disabled" as const;
-  }
+function getSearchInputState(query: string) {
   return query.trim() ? ("active" as const) : ("inactive" as const);
 }
 
@@ -100,12 +98,6 @@ export function ProductsPage() {
     clearSort();
     toast.error("Сессия истекла, войдите снова");
     runAsync(navigate({ to: "/login", replace: true }), "forceLogout");
-  }, [navigate]);
-
-  const onLogout = useCallback(() => {
-    clearAuthSession();
-    clearSort();
-    runAsync(navigate({ to: "/login" }), "onLogout");
   }, [navigate]);
 
   useEffect(() => {
@@ -195,214 +187,239 @@ export function ProductsPage() {
   const rows = table.getRowModel().rows;
 
   const totalPages = data ? Math.max(1, Math.ceil(data.total / data.limit)) : 1;
-  const searchState = getSearchInputState(loading, inputQuery);
+  const searchState = getSearchInputState(inputQuery);
+  const shownRangeLabel = useMemo(() => {
+    if (!data) {
+      return "Загрузка...";
+    }
+    if (data.total === 0) {
+      return "Показано 0-0 из 0";
+    }
+    const from = data.products.length > 0 ? data.skip + 1 : 0;
+    const to = Math.min(data.total, data.skip + data.products.length);
+    return `Показано ${from}-${to} из ${data.total}`;
+  }, [data]);
 
   return (
-    <div className="mx-auto w-full max-w-[1200px] px-6 py-8">
-      <div className="mb-6 flex items-end justify-between gap-4">
-        <div className="grid gap-1">
-          <div
+    <div className="products-shell">
+      <header className="products-nav" data-testid="products-nav">
+        <div className="products-nav-inner">
+          <h1
+            className="products-nav-title"
             style={{
               fontFamily: "var(--ui-font-heading)",
-              color: "var(--ui-color-text)",
               fontWeight: 700,
-              fontSize: 32,
-              lineHeight: 1.2,
+              fontSize: 24,
+              lineHeight: "44.976px",
+              color: "#202020",
             }}
           >
             Товары
-          </div>
-          <div
-            style={{
-              color: "var(--ui-color-text-muted)",
-              fontFamily: "var(--ui-font-body)",
-              fontSize: 14,
-            }}
-          >
-            Сортировка применяется только к текущей странице.
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <AddProductButton />
-          <Button onPress={onLogout} text="Выйти" variant="blue" />
-        </div>
-      </div>
-
-      <div className="mb-4 grid gap-2">
-        <div
-          style={{
-            color: "var(--ui-color-text)",
-            fontFamily: "var(--ui-font-heading)",
-            fontWeight: 600,
-            fontSize: 16,
-          }}
-        >
-          Поиск
-        </div>
-        <SearchInput
-          onSubmit={({ value }) => setInputQuery(value)}
-          onValueChange={({ value }) => setInputQuery(value)}
-          placeholder="Введите запрос"
-          showIcon
-          state={searchState}
-          value={inputQuery}
-        />
-      </div>
-
-      <div
-        className="mb-2 h-1 overflow-hidden"
-        data-testid="products-loading-bar"
-        style={{ background: "var(--ui-color-surface-muted)" }}
-      >
-        {loading ? (
-          <div
-            className="h-full w-2/5 animate-[indeterminate_1.2s_ease-in-out_infinite]"
-            data-testid="products-loading-indicator"
-            style={{ background: "var(--ui-color-primary)" }}
-          />
-        ) : (
-          <div
-            className="h-full w-0"
-            data-testid="products-loading-indicator"
-            style={{ background: "var(--ui-color-primary)" }}
-          />
-        )}
-      </div>
-
-      {error ? (
-        <div
-          style={{
-            border: "1px solid var(--ui-color-border)",
-            borderRadius: "var(--ui-radius-md)",
-            padding: "var(--ui-space-lg)",
-            background: "var(--ui-color-surface)",
-          }}
-        >
-          <div
-            style={{
-              color: "var(--ui-color-text)",
-              fontFamily: "var(--ui-font-heading)",
-              fontWeight: 700,
-              fontSize: 16,
-            }}
-          >
-            Ошибка загрузки
-          </div>
-          <div
-            style={{
-              marginTop: 6,
-              color: "var(--ui-color-text-muted)",
-              fontFamily: "var(--ui-font-body)",
-              fontSize: 14,
-            }}
-          >
-            {error}
-          </div>
-          <div className="mt-3 flex gap-2">
-            <Button
-              onPress={() => setRetryToken((v) => v + 1)}
-              text="Повторить"
-              variant="blue"
+          </h1>
+          <div className="products-nav-search">
+            <SearchInput
+              ariaLabel="Поиск товаров"
+              onSubmit={({ value }) => setInputQuery(value)}
+              onValueChange={({ value }) => setInputQuery(value)}
+              placeholder="Найти"
+              showIcon
+              state={searchState}
+              value={inputQuery}
             />
-            <Button onPress={forceLogout} text="Выйти" variant="blue" />
           </div>
+          <div aria-hidden className="products-nav-spacer" />
         </div>
-      ) : (
-        <div
-          className="overflow-hidden"
-          data-testid="products-table"
-          style={{
-            border: "1px solid var(--ui-color-border)",
-            borderRadius: "var(--ui-radius-md)",
-            background: "var(--ui-color-surface)",
-          }}
-        >
-          <table className="w-full border-collapse text-left text-xs">
-            <ProductsTableHeader
-              rows={mapTanStackHeaderGroupsToViewModel(table.getHeaderGroups())}
-            />
-            <tbody className="[&>tr>td]:px-3 [&>tr>td]:py-2">
-              {rows.length === 0 && !loading ? (
-                <tr>
-                  <td
-                    colSpan={productsTableColumns.length}
-                    style={{
-                      textAlign: "center",
-                      padding: "32px 0",
-                      fontFamily: "var(--ui-font-body)",
-                      color: "var(--ui-color-text-muted)",
-                      fontSize: 14,
-                    }}
-                  >
-                    Нет данных
-                  </td>
-                </tr>
-              ) : (
-                rows.map((r) => (
-                  <tr
-                    className="border-t"
-                    key={r.id}
-                    style={{ borderColor: "var(--ui-color-border)" }}
-                  >
-                    {r.getVisibleCells().map((cell) => {
-                      const meta = cell.column.columnDef.meta as
-                        | ProductsColumnMeta
-                        | undefined;
-                      const alignClass =
-                        meta?.align === "right"
-                          ? "tabular-nums text-right"
-                          : "";
-                      const isName = cell.column.id === "name";
-                      const cellClassName = isName
-                        ? `font-medium ${alignClass}`.trim()
-                        : alignClass;
-                      const isLowRating =
-                        cell.column.id === "rating" && r.original.rating < 3;
-                      return (
-                        <td
-                          className={cellClassName}
-                          key={cell.id}
-                          style={{ color: isLowRating ? "#dc2626" : "inherit" }}
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-      )}
+      </header>
 
-      <div
-        className="mt-4 flex items-center justify-between gap-3"
-        data-testid="products-pagination"
-      >
-        <div
-          style={{
-            fontFamily: "var(--ui-font-body)",
-            color: "var(--ui-color-text-muted)",
-            fontSize: 14,
-          }}
-        >
-          {data ? `Страница ${page} из ${totalPages}` : "Загрузка..."}
-        </div>
-        <Pagination
-          currentPage={page}
-          disabled={loading}
-          maxVisiblePages={5}
-          nextAriaLabel="Следующая страница"
-          onPageChange={({ page: nextPage }) => setPage(nextPage)}
-          pageAriaLabelPrefix="Страница"
-          prevAriaLabel="Предыдущая страница"
-          totalPages={totalPages}
-        />
-      </div>
+      <main className="products-content">
+        <section className="products-card" data-testid="products-table-shell">
+          <div className="products-card-header">
+            <div
+              className="products-card-title"
+              style={{
+                fontFamily: "var(--ui-font-heading)",
+                fontWeight: 700,
+                fontSize: 20,
+                lineHeight: "20px",
+                color: "#333333",
+              }}
+            >
+              Все позиции
+            </div>
+            <div className="products-card-actions">
+              <button
+                aria-label="Обновить"
+                className="products-refresh"
+                onClick={() => setRetryToken((v) => v + 1)}
+                type="button"
+              >
+                <RefreshCw size={22} />
+              </button>
+              <AddProductButton />
+            </div>
+          </div>
+
+          <div
+            className="mb-2 h-1 overflow-hidden"
+            data-testid="products-loading-bar"
+            style={{ background: "var(--ui-color-surface-muted)" }}
+          >
+            {loading ? (
+              <div
+                className="h-full w-2/5 animate-[indeterminate_1.2s_ease-in-out_infinite]"
+                data-testid="products-loading-indicator"
+                style={{ background: "var(--ui-color-primary)" }}
+              />
+            ) : (
+              <div
+                className="h-full w-0"
+                data-testid="products-loading-indicator"
+                style={{ background: "var(--ui-color-primary)" }}
+              />
+            )}
+          </div>
+
+          {error ? (
+            <div
+              style={{
+                border: "1px solid var(--ui-color-border)",
+                borderRadius: "var(--ui-radius-md)",
+                padding: "var(--ui-space-lg)",
+                background: "var(--ui-color-surface)",
+              }}
+            >
+              <div
+                style={{
+                  color: "var(--ui-color-text)",
+                  fontFamily: "var(--ui-font-heading)",
+                  fontWeight: 700,
+                  fontSize: 16,
+                }}
+              >
+                Ошибка загрузки
+              </div>
+              <div
+                style={{
+                  marginTop: 6,
+                  color: "var(--ui-color-text-muted)",
+                  fontFamily: "var(--ui-font-body)",
+                  fontSize: 14,
+                }}
+              >
+                {error}
+              </div>
+              <div className="mt-3 flex gap-2">
+                <Button
+                  onPress={() => setRetryToken((v) => v + 1)}
+                  text="Повторить"
+                  variant="blue"
+                />
+                <Button onPress={forceLogout} text="Выйти" variant="blue" />
+              </div>
+            </div>
+          ) : (
+            <div
+              className="overflow-hidden"
+              data-testid="products-table"
+              style={{
+                border: "1px solid var(--ui-color-border)",
+                borderRadius: "var(--ui-radius-md)",
+                background: "var(--ui-color-surface)",
+              }}
+            >
+              <table className="w-full border-collapse text-left text-xs">
+                <ProductsTableHeader
+                  rows={mapTanStackHeaderGroupsToViewModel(
+                    table.getHeaderGroups()
+                  )}
+                />
+                <tbody className="[&>tr>td]:px-3 [&>tr>td]:py-2">
+                  {rows.length === 0 && !loading ? (
+                    <tr>
+                      <td
+                        colSpan={productsTableColumns.length}
+                        style={{
+                          textAlign: "center",
+                          padding: "32px 0",
+                          fontFamily: "var(--ui-font-body)",
+                          color: "var(--ui-color-text-muted)",
+                          fontSize: 14,
+                        }}
+                      >
+                        Нет данных
+                      </td>
+                    </tr>
+                  ) : (
+                    rows.map((r) => (
+                      <tr
+                        className="border-t"
+                        key={r.id}
+                        style={{ borderColor: "var(--ui-color-border)" }}
+                      >
+                        {r.getVisibleCells().map((cell) => {
+                          const meta = cell.column.columnDef.meta as
+                            | ProductsColumnMeta
+                            | undefined;
+                          const alignClass =
+                            meta?.align === "right"
+                              ? "tabular-nums text-right"
+                              : "";
+                          const isName = cell.column.id === "name";
+                          const cellClassName = isName
+                            ? `font-medium ${alignClass}`.trim()
+                            : alignClass;
+                          const isLowRating =
+                            cell.column.id === "rating" &&
+                            r.original.rating < 3;
+                          return (
+                            <td
+                              className={cellClassName}
+                              key={cell.id}
+                              style={{
+                                color: isLowRating ? "#dc2626" : "inherit",
+                              }}
+                            >
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext()
+                              )}
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          <div className="products-footer" data-testid="products-pagination">
+            <div
+              style={{
+                fontFamily: "var(--ui-font-roboto)",
+                color: "#333333",
+                fontSize: 18,
+                lineHeight: "21.094px",
+              }}
+            >
+              {shownRangeLabel}
+            </div>
+            <div data-testid="products-table-footer">
+              <Pagination
+                currentPage={page}
+                disabled={loading}
+                maxVisiblePages={5}
+                nextAriaLabel="Следующая страница"
+                onPageChange={({ page: nextPage }) => setPage(nextPage)}
+                pageAriaLabelPrefix="Страница"
+                prevAriaLabel="Предыдущая страница"
+                totalPages={totalPages}
+              />
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
   );
 }

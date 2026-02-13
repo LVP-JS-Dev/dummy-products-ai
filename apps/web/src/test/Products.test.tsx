@@ -135,7 +135,6 @@ describe("ProductsPage", () => {
     const footer = screen.getByTestId("products-table-footer");
 
     expect(shell).toContainElement(footer);
-    expect(within(footer).getByText("Страница 1 из 3")).toBeInTheDocument();
     expect(
       within(footer).getByRole("navigation", { name: "Pagination" })
     ).toBeInTheDocument();
@@ -171,7 +170,7 @@ describe("ProductsPage", () => {
     });
 
     expect(fetchProductsPageMock).not.toHaveBeenCalled();
-    expect(await screen.findByText("Страница 2 из 3")).toBeInTheDocument();
+    expect(await screen.findByText("Показано 11-20 из 30")).toBeInTheDocument();
   });
 
   it("disables boundary controls and keeps controls disabled while page is loading", async () => {
@@ -213,7 +212,7 @@ describe("ProductsPage", () => {
     secondPageDeferred.resolve(createProductPage({ total: 20, skip: 10 }));
 
     await waitFor(() => {
-      expect(screen.getByText("Страница 2 из 2")).toBeInTheDocument();
+      expect(screen.getByText("Показано 11-20 из 20")).toBeInTheDocument();
     });
 
     expect(

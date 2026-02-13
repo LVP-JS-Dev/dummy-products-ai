@@ -75,6 +75,18 @@
     "description": "Placeholder text color for inputs.",
     "subgroup": "Text"
   },
+  "--ui-color-text-subtle": {
+    "description": "Subtle text color used for low-emphasis informational copy (e.g., footers).",
+    "subgroup": "Text"
+  },
+  "--ui-color-text-faint": {
+    "description": "Very low-emphasis text color for secondary copy on light backgrounds.",
+    "subgroup": "Text"
+  },
+  "--ui-color-border-faint": {
+    "description": "Faint divider/border color for separators with minimal contrast.",
+    "subgroup": "Surface"
+  },
   "--ui-color-success": {
     "description": "Semantic success foreground color.",
     "subgroup": "State"

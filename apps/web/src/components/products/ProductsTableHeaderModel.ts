@@ -34,7 +34,7 @@ function getHeaderLabel(
   header: Header<ProductRow, unknown>,
   meta?: ProductsColumnMeta
 ): string {
-  if (meta?.label) {
+  if (meta && typeof meta.label === "string") {
     return meta.label;
   }
   if (typeof header.column.columnDef.header === "string") {

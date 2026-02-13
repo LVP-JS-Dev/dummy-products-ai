@@ -9,6 +9,7 @@ const loadLastUsedUsernameMock = vi.fn();
 
 vi.mock("@tanstack/react-router", () => ({
   createFileRoute: () => () => ({}),
+  redirect: (value: unknown) => value,
   useNavigate: () => navigateMock,
 }));
 
@@ -17,6 +18,7 @@ vi.mock("@/api/DummyJson", () => ({
 }));
 
 vi.mock("@/auth/Session", () => ({
+  loadAuthSession: () => null,
   saveAuthSession: (input: unknown) => saveAuthSessionMock(input),
   loadLastUsedUsername: () => loadLastUsedUsernameMock(),
 }));
@@ -40,14 +42,11 @@ describe("LoginPage", () => {
   it("renders core figma-aligned login structure", () => {
     render(<LoginPage />);
 
-    expect(screen.getByTitle("Dummy Products")).toBeInTheDocument();
     const heading = screen.getByRole("heading", { name: "Добро пожаловать!" });
     expect(heading).toBeInTheDocument();
-    expect(heading).toHaveClass("inner-shadow-top");
 
     const subtitle = screen.getByText("Пожалуйста, авторизируйтесь");
     expect(subtitle).toBeInTheDocument();
-    expect(subtitle).toHaveClass("inner-shadow");
     expect(screen.getByLabelText("Логин")).toBeInTheDocument();
     expect(screen.getByLabelText("Пароль")).toBeInTheDocument();
     expect(

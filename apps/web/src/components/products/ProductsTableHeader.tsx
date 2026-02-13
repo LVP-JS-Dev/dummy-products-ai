@@ -36,8 +36,10 @@ function ProductsTableHeaderCell({
         <span
           style={{
             fontFamily: "var(--ui-font-heading)",
-            color: "var(--ui-color-text)",
-            fontWeight: 600,
+            color: "var(--ui-color-text-tertiary)",
+            fontWeight: 700,
+            fontSize: 16,
+            lineHeight: "29.984px",
           }}
         >
           {cell.label}
@@ -55,8 +57,10 @@ function ProductsTableHeaderCell({
           alignItems: "center",
           gap: 4,
           fontFamily: "var(--ui-font-heading)",
-          color: "var(--ui-color-text)",
-          fontWeight: 600,
+          color: "var(--ui-color-text-tertiary)",
+          fontWeight: 700,
+          fontSize: 16,
+          lineHeight: "29.984px",
         }}
         type="button"
       >
@@ -73,7 +77,7 @@ export function ProductsTableHeader({
   rows: ProductsTableHeaderRowViewModel[];
 }) {
   return (
-    <thead style={{ background: "var(--ui-color-surface-muted)" }}>
+    <thead style={{ background: "var(--ui-color-surface)" }}>
       {rows.map((row) => (
         <tr className="[&>th]:px-3 [&>th]:py-2" key={row.id}>
           {row.cells.map((cell) => (

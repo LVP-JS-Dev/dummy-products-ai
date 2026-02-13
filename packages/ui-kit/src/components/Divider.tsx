@@ -13,8 +13,12 @@ export function Divider({
   const content = children ?? text;
   const lineColor =
     tone === "muted"
-      ? "var(--ui-color-border-subtle)"
+      ? "var(--ui-color-border-faint)"
       : "var(--ui-color-border-subtle)";
+  const labelColor =
+    tone === "muted"
+      ? "var(--ui-color-border-faint)"
+      : "var(--ui-color-text-muted)";
 
   const lineStyle = {
     border: 0,
@@ -42,7 +46,7 @@ export function Divider({
       <hr aria-hidden style={lineStyle} />
       <span
         style={{
-          color: "var(--ui-color-text-muted)",
+          color: labelColor,
           fontSize: 16,
           fontWeight: 500,
           fontFamily: "var(--ui-font-ui)",

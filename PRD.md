@@ -88,7 +88,7 @@
 
 ## 4.1 Typography tokens (design system baseline)
 
-Во всех пакетах, где используется UI Kit, типографика должна идти через токены:
+Во всех пакетах, где используется UI Kit, типографика **по умолчанию** должна идти через токены:
 
 - `--ui-font-heading`: `"Cairo", "Inter", system-ui, sans-serif`
   Использование: заголовки экранов, секций, важные label в UI.
@@ -106,6 +106,14 @@
 - `font-family: var(--ui-font-body);` для paragraph/helper text
 - `font-family: var(--ui-font-ui);` для form controls
 - `font-family: var(--ui-font-roboto);` для Roboto-specific UI случаев
+
+### Исключение: Figma-first для consumer apps
+
+Для consumer приложений (например, `apps/web`) **визуальное соответствие макету Figma первично**. Если типографика из Figma конфликтует с текущим набором typography tokens, допускается локальное отклонение в приложении при соблюдении условий:
+
+1. Отклонение ограничено конкретным экраном/компонентом приложения и не меняет публичный API UI Kit.
+2. Решение и область применения зафиксированы в PRD соответствующего приложения (например, `apps/web/PRD.md`).
+3. UI Kit остаётся источником истины для контрактов и UI API (contract-first инварианты не нарушаются).
 
 ---
 

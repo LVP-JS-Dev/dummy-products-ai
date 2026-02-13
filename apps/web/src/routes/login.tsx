@@ -9,22 +9,26 @@ import {
   Spinner,
   Text,
 } from "@dummy-products/ui-kit";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { Eye, EyeOff, Lock, User, X } from "lucide-react";
-import {
-  type CSSProperties,
-  type FormEvent,
-  useId,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { type FormEvent, useId, useMemo, useRef, useState } from "react";
+import { toast } from "sonner";
 
 import { login } from "@/api/DummyJson";
 import { ApiError } from "@/api/Http";
-import { loadLastUsedUsername, saveAuthSession } from "@/auth/Session";
+import {
+  loadAuthSession,
+  loadLastUsedUsername,
+  saveAuthSession,
+} from "@/auth/Session";
 
 export const Route = createFileRoute("/login")({
+  beforeLoad: () => {
+    const session = loadAuthSession();
+    if (session) {
+      throw redirect({ to: "/products" });
+    }
+  },
   component: LoginPage,
 });
 
@@ -110,67 +114,62 @@ export function LoginPage() {
   }
 
   return (
-    <div
-      style={{
-        minHeight: "100svh",
-        width: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "24px 16px",
-        background:
-          "radial-gradient(circle at 50% 20%, #f8f9fb 0%, #f1f2f5 55%, #edeef2 100%)",
-      }}
-    >
+    <div className="login-shell">
       <main
         aria-labelledby="login-title"
+        className="login-main"
         data-testid="login-page"
-        style={{ width: "100%", maxWidth: 420 }}
       >
-        <Card
-          elevated
-          outlined
-          style={{
-            width: "100%",
-          }}
-        >
-          <header
-            style={{
-              display: "grid",
-              justifyItems: "center",
-              gap: "var(--ui-space-md)",
-              marginBottom: "var(--ui-space-lg)",
-            }}
-          >
+        <Card elevated outlined style={{ width: "100%" }}>
+          <header className="login-card-header">
             <Logo decorative />
             <Text
               as="h1"
-              className="inner-shadow-top"
               id="login-title"
-              style={{ textAlign: "center" }}
+              style={{
+                textAlign: "center",
+                fontFamily: "var(--ui-font-ui)",
+                fontSize: 40,
+                lineHeight: "44px",
+                letterSpacing: "-0.6px",
+              }}
               variant="heading"
+              weight="semibold"
             >
               Добро пожаловать!
             </Text>
             <Text
-              className="inner-shadow"
-              style={{ textAlign: "center" }}
+              style={{
+                textAlign: "center",
+                fontFamily: "var(--ui-font-ui)",
+                fontSize: 18,
+                lineHeight: "27px",
+                color: "var(--ui-color-text-faint)",
+              }}
               variant="muted"
+              weight="medium"
             >
               Пожалуйста, авторизируйтесь
             </Text>
           </header>
 
           <form data-testid="login-form" noValidate onSubmit={onSubmit}>
-            <div style={{ display: "grid", gap: "var(--ui-space-md)" }}>
+            <div className="login-form-fields">
               <Input
                 autoComplete="username"
                 endAdornment={
                   username.trim() ? (
                     <button
                       aria-label="Очистить логин"
-                      onClick={() => setUsername("")}
-                      style={fieldActionStyle}
+                      className="login-field-action"
+                      onClick={() => {
+                        setUsername("");
+                        setErrors((prev) => ({
+                          ...prev,
+                          username: undefined,
+                          form: undefined,
+                        }));
+                      }}
                       type="button"
                     >
                       <X size={14} strokeWidth={2.2} />
@@ -181,7 +180,14 @@ export function LoginPage() {
                 errorId={usernameErrorId}
                 id="username"
                 label="Логин"
-                onValueChange={({ value }) => setUsername(value)}
+                onValueChange={({ value }) => {
+                  setUsername(value);
+                  setErrors((prev) => ({
+                    ...prev,
+                    username: undefined,
+                    form: undefined,
+                  }));
+                }}
                 startAdornment={<User size={16} strokeWidth={2.1} />}
                 type="text"
                 value={username}
@@ -194,8 +200,8 @@ export function LoginPage() {
                     aria-label={
                       showPassword ? "Скрыть пароль" : "Показать пароль"
                     }
+                    className="login-field-action"
                     onClick={() => setShowPassword((value) => !value)}
-                    style={fieldActionStyle}
                     type="button"
                   >
                     {showPassword ? (
@@ -209,7 +215,14 @@ export function LoginPage() {
                 errorId={passwordErrorId}
                 id="password"
                 label="Пароль"
-                onValueChange={({ value }) => setPassword(value)}
+                onValueChange={({ value }) => {
+                  setPassword(value);
+                  setErrors((prev) => ({
+                    ...prev,
+                    password: undefined,
+                    form: undefined,
+                  }));
+                }}
                 startAdornment={<Lock size={16} strokeWidth={2.1} />}
                 type={showPassword ? "text" : "password"}
                 value={password}
@@ -224,15 +237,10 @@ export function LoginPage() {
 
               {errors.form ? (
                 <p
+                  className="login-form-error"
                   data-testid="login-error"
                   id={formErrorId}
                   role="alert"
-                  style={{
-                    margin: 0,
-                    fontFamily: "var(--ui-font-body)",
-                    fontSize: 13,
-                    color: "var(--ui-color-danger)",
-                  }}
                 >
                   {errors.form}
                 </p>
@@ -246,7 +254,6 @@ export function LoginPage() {
                 id="login-submit"
                 loading={submitting}
                 size="lg"
-                text={submitting ? "Вход..." : "Войти"}
                 variant="blue"
               >
                 {submitting ? (
@@ -272,27 +279,36 @@ export function LoginPage() {
               marginTop: "var(--ui-space-lg)",
               marginBottom: "var(--ui-space-md)",
             }}
-            text="ИЛИ"
+            text="или"
+            tone="muted"
           />
 
-          <Text as="p" style={{ textAlign: "center" }} variant="muted">
-            Нет аккаунта? <Link href="/register">Создать</Link>
+          <Text
+            as="p"
+            style={{
+              marginTop: "var(--ui-space-md)",
+              textAlign: "center",
+              fontFamily: "var(--ui-font-ui)",
+              fontSize: 18,
+              lineHeight: "27px",
+              color: "var(--ui-color-text-subtle)",
+            }}
+            variant="muted"
+            weight="regular"
+          >
+            Нет аккаунта?{" "}
+            <Link
+              href="/register"
+              onClick={(event) => {
+                event.preventDefault();
+                toast.message("Регистрация пока недоступна");
+              }}
+            >
+              Создать
+            </Link>
           </Text>
         </Card>
       </main>
     </div>
   );
 }
-
-const fieldActionStyle: CSSProperties = {
-  border: "none",
-  background: "transparent",
-  color: "var(--ui-color-text-muted)",
-  width: 28,
-  height: 28,
-  display: "inline-flex",
-  alignItems: "center",
-  justifyContent: "center",
-  padding: 0,
-  cursor: "pointer",
-};

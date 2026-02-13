@@ -24,6 +24,7 @@ vi.mock("@dummy-products/ui-kit", () => ({
     </button>
   ),
   Pagination: () => <div>pagination</div>,
+  SortIndicator: () => <span aria-hidden="true" />,
   SearchInput: ({
     onSubmit,
     onValueChange,
@@ -121,9 +122,6 @@ describe("ProductsPage header search", () => {
       screen.getByRole("heading", { level: 1, name: "Товары" })
     ).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Найти")).toBeInTheDocument();
-    expect(
-      screen.getByText("Найдите товар по названию, вендору или артикулу.")
-    ).toBeInTheDocument();
 
     await waitFor(() => {
       expect(fetchProductsPageMock).toHaveBeenCalled();
