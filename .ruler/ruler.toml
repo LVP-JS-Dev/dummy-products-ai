@@ -1,9 +1,12 @@
-default_agents = ['codex', 'gemini-cli']
-# OpenSpec can update its own assistant configs (e.g. .claude/commands);
-# Ruler is scoped to codex artifacts in this repository.
+default_agents = ['claude']
 
 [agents.claude]
-enabled = false
+enabled = true
+output_path = 'CLAUDE.md'
+
+[agents.claude.mcp]
+enabled = true
+merge_strategy = 'merge'
 
 [agents.codex]
 enabled = true
@@ -22,7 +25,7 @@ output_path = 'GEMINI.md'
 enabled = true
 
 [gitignore]
-enabled = false
+enabled = true
 
 [mcp]
 enabled = true
@@ -31,3 +34,11 @@ merge_strategy = 'merge'
 [mcp_servers.context7]
 args = ['-y', '@upstash/context7-mcp']
 command = 'npx'
+
+[mcp_servers.figma-bridge]
+command = 'npx'
+args = ['-y', '@gethopp/figma-mcp-bridge@0.0.5']
+
+[mcp_servers.Framelink_Figma_MCP]
+command = 'npx'
+args = ["-y", "figma-developer-mcp@0.6.4", "--allow-net", "--env=.env.mcp", "--stdio"]

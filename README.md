@@ -34,6 +34,14 @@ pnpm dev
 - main app: `apps/web`
 - docs: `apps/fumadocs`
 
+## MCP Environment (`.env.mcp`)
+
+Файл `.env.mcp` используется MCP-серверами (например Figma MCP) для переменных окружения, которые нужны только MCP-интеграциям.
+
+- Храните в нем только MCP-переменные (минимально необходимый набор).
+- Обычно это токены вида `FIGMA_API_KEY`/`FIGMA_ACCESS_TOKEN` (точный набор зависит от MCP-сервера).
+- Файл чувствительный: не коммитьте его в репозиторий.
+
 ## Submission (reviewer entrypoint)
 
 - Run + verification checklist: `SUBMISSION.md`

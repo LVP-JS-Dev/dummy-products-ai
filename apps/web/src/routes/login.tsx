@@ -132,8 +132,6 @@ export function LoginPage() {
           outlined
           style={{
             width: "100%",
-            padding: "var(--ui-space-xxl)",
-            borderRadius: "var(--ui-radius-lg)",
           }}
         >
           <header
