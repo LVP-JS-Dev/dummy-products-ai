@@ -106,6 +106,10 @@ Round 9-10 (`VITE_FIGMA_PARITY=true` deterministic mode):
 - Round 9: login `16.8353%`, products `12.8067%`
 - Round 10: login `16.8353%`, products `12.8067%`
 
+Round 11 (checkbox default size = 22px):
+
+- Round 11: login `16.8387%`, products `12.8084%`
+
 Parity mode adjustments:
 
 - Products table sorting is suppressed in parity mode.
