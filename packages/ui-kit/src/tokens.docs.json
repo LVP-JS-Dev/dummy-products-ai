@@ -76,15 +76,15 @@
     "subgroup": "Text"
   },
   "--ui-color-text-subtle": {
-    "description": "Subtle text color used for low-emphasis informational copy (e.g., footers).",
+    "description": "Subtle UI text color between primary and muted text (e.g., secondary captions in marketing-like layouts).",
     "subgroup": "Text"
   },
   "--ui-color-text-faint": {
-    "description": "Very low-emphasis text color for secondary copy on light backgrounds.",
+    "description": "Very low-emphasis text color for decorative subtitles and background hints.",
     "subgroup": "Text"
   },
   "--ui-color-border-faint": {
-    "description": "Faint divider/border color for separators with minimal contrast.",
+    "description": "Faint divider/border color used for low-contrast separators (e.g., auth dividers).",
     "subgroup": "Surface"
   },
   "--ui-color-success": {
