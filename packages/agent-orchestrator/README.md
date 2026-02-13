@@ -17,6 +17,12 @@ Optional flags:
 - `--log <path>`: enables detection of actually used/forbidden skills from run logs.
 - `--policies <csv>`: passes satisfied policy checks (needed for stages with `requiredPolicies`).
 
+Manager stage dependency:
+
+- `brainstorming` skill is required before `/ao-start` PRD creation.
+- Install command:
+  `npx skills add obra/superpowers@brainstorming -g -y`
+
 ## Codex prompts (slash commands)
 
 This repo ships shared Codex prompt files (slash commands) under:
@@ -37,7 +43,7 @@ pnpm -C packages/agent-orchestrator prompts:install -- --force
 
 Main workflow prompts:
 
-- `/ao-start` - manager stage: create/clarify PRD and task plan.
+- `/ao-start` - manager stage: run brainstorming first, then create/clarify PRD and task plan.
 - `/ao-run` - start coder loop after PRD approval (default 5 iterations).
 - `/ao-continue` - resume an interrupted loop (default 1 iteration).
 - `/ao-human` - list tasks tagged for human escalation (default tag `@human`).
