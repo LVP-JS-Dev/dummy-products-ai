@@ -17,11 +17,14 @@ Optional flags:
 - `--log <path>`: enables detection of actually used/forbidden skills from run logs.
 - `--policies <csv>`: passes satisfied policy checks (needed for stages with `requiredPolicies`).
 
-Manager stage dependency:
+## Manager stage dependency
 
 - `brainstorming` skill is required before `/ao-start` PRD creation.
 - Install command:
-  `npx skills add obra/superpowers@brainstorming -g -y`
+
+```bash
+npx skills add obra/superpowers@brainstorming -g -y
+```
 
 ## Codex prompts (slash commands)
 

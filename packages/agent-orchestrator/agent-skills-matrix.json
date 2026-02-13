@@ -3,7 +3,7 @@
   "stages": {
     "manager": {
       "label": "Manager/Architect",
-      "requiredSkills": ["prd", "brainstorming"],
+      "requiredSkills": ["brainstorming", "prd"],
       "optionalSkills": ["find-skills", "web-search", "ui-design-system"],
       "forbiddenSkills": ["coding-agent", "yeet"]
     },

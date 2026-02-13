@@ -16,20 +16,25 @@ Start workflow via Ralph manager stage: collect requirements, create PRD, and pr
 - produce candidate solution directions, key trade-offs, and unknowns
 - convert output to concrete PRD inputs (scope boundaries and decisions to confirm)
 - if skill is missing, stop and suggest installation:
+
 ```bash
 npx skills add obra/superpowers@brainstorming -g -y
 ```
 
 3) Run manager stage with Ralph PRD flow:
+
 ```bash
 ralph prd
 ```
+
 Or pass a direct prompt when supported by your local Ralph setup.
 
 4) Ensure output PRD path is known (default):
+
 ```bash
 .agents/tasks/prd.json
 ```
+
 If a different PRD path is used, mention it explicitly.
 
 5) Validate that PRD includes:
