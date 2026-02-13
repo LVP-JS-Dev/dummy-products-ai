@@ -17,6 +17,7 @@
     "gen:ui": "pnpm -C packages/ui-kit gen",
     "gen:api": "pnpm -C packages/gen-api gen",
     "agents:skills-gate": "pnpm -C packages/agent-orchestrator skills:gate",
+    "codex:prompts:install": "pnpm -C packages/agent-orchestrator prompts:install",
     "gen": "pnpm gen:ui && pnpm gen:api",
     "test": "pnpm -C packages/ui-kit test",
     "e2e": "playwright test",

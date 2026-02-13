@@ -8,6 +8,7 @@
     "./cli": "./scripts/skills-gate.mjs"
   },
   "scripts": {
-    "skills:gate": "node scripts/skills-gate.mjs"
+    "skills:gate": "node scripts/skills-gate.mjs",
+    "prompts:install": "node scripts/install-codex-prompts.mjs"
   }
 }
