@@ -6,6 +6,7 @@ import type { CheckboxProps } from "../contracts/CheckboxContract";
 export function Checkbox({
   checked,
   label,
+  size = "sm",
   disabled,
   name,
   id,
@@ -18,6 +19,11 @@ export function Checkbox({
   const autoId = useId();
   const inputId = id ?? autoId;
   const labelContent = children ?? label;
+  const sizeMap = {
+    sm: 22,
+    md: 24,
+  } as const;
+  const boxSize = sizeMap[size] ?? sizeMap.sm;
 
   return (
     <label
@@ -63,8 +69,8 @@ export function Checkbox({
       <span
         aria-hidden
         style={{
-          width: 24,
-          height: 24,
+          width: boxSize,
+          height: boxSize,
           borderRadius: "var(--ui-radius-xs)",
           border: `1px solid ${checked ? "var(--ui-color-checkbox-checked)" : "var(--ui-color-border-control)"}`,
           background: checked
