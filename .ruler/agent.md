@@ -38,7 +38,77 @@
 
 ---
 
-## 2. Какой файл читать первым
+## 2. Архитектура проекта
+
+```text
+apps/
+  web/          # Main app (Vite + TanStack Router) — продуктовое использование UI Kit
+  fumadocs/     # Docs (Next.js + Fumadocs) — документация + интерактивные stories
+packages/
+  ui-kit/       # UI Kit — contracts + components + states + generated spec
+  gen-api/      # Generated typed API client from OpenAPI (Kubb)
+  agent-orchestrator/ # Agent workflow orchestration: skill matrix + skill gate
+  config/       # Shared config (biome, TypeScript)
+  env/          # Environment validation (zod)
+```
+
+### Контракты и ключевые пути
+
+- `packages/ui-kit/src/contracts/*.ts` — Zod schemas (React-free)
+- `packages/ui-kit/src/components/*.tsx` — React-компоненты
+- `packages/ui-kit/src/states/*.ts` — Serializable fixtures
+- `packages/ui-kit/src/generated/` — JSON schemas + manifest.json
+
+---
+
+## 3. Команды
+
+### Разработка
+
+```bash
+pnpm dev              # Запуск web + fumadocs
+pnpm dev:web          # Только web app
+```
+
+### Генерация
+
+```bash
+pnpm gen              # Все артефакты (UI Kit + API client)
+pnpm gen:ui           # UI Kit schemas + manifest
+pnpm gen:api          # Typed API client (Kubb)
+```
+
+### Тестирование
+
+```bash
+pnpm test             # UI Kit контрактные тесты
+pnpm e2e              # Playwright E2E для web
+pnpm e2e:ui           # Playwright UI runner
+```
+
+### Quality gates
+
+```bash
+pnpm check            # Полный гейт: gen + test + docs:check-tokens + no-drift
+pnpm check-types      # TypeScript type checking
+pnpm fix              # Auto-fix lint (ultracite)
+```
+
+### Per-package
+
+```bash
+pnpm -C packages/ui-kit gen     # UI Kit только
+pnpm -C packages/ui-kit test    # UI Kit тесты
+pnpm -C packages/gen-api gen    # API client только
+pnpm -C packages/agent-orchestrator skills:gate -- \
+  --matrix ./agent-skills-matrix.json \
+  --stage coder \
+  --agent claude
+```
+
+---
+
+## 4. Какой файл читать первым
 
 Перед началом работы агент обязан определить контекст:
 
@@ -52,19 +122,19 @@
 
 ---
 
-## 3. Decision flow: можно ли сразу писать код?
+## 5. Decision flow: можно ли сразу писать код?
 
 Перед началом работы агент обязан ответить на вопрос:
 
 **Укладывается ли изменение в существующий PRD?**
 
-### 3.1 Если ДА
+### 5.1 Если ДА
 
-- PRD не меняется
-- агент следует шагам из этого файла
-- изменения локальны
+- Сохранить PRD без изменений
+- Следовать шагам из этого файла
+- Делать изменения локальными
 
-### 3.2 Если НЕТ
+### 5.2 Если НЕТ
 
 - агент сначала предлагает изменения в PRD
 - код не пишется, пока PRD не обновлён
@@ -73,7 +143,7 @@
 
 ---
 
-## 4. Типовые сценарии и точные шаги
+## 6. Типовые сценарии и точные шаги
 
 ### Сценарий A: Добавление нового компонента (основной)
 
@@ -92,9 +162,14 @@
 4. **Экспорт**
    - `packages/ui-kit/src/index.ts`
    - `packages/ui-kit/src/states/index.ts`
-5. **Генерация**: `pnpm -C packages/ui-kit gen`
-6. **Тесты**: `pnpm -C packages/ui-kit test`
-7. **Docs**
+5. **Генерация и тесты**:
+
+   ```bash
+   pnpm -C packages/ui-kit gen
+   pnpm -C packages/ui-kit test
+   ```
+
+6. **Docs**
    - Story: `apps/fumadocs/src/stories/<Name>Story.tsx`
      - `'use client'`
      - экспорт story
@@ -145,9 +220,9 @@
 
 ---
 
-## 5. Обновление PRD (Change Management)
+## 7. Обновление PRD (Change Management)
 
-### 5.1 Когда PRD ОБЯЗАН быть обновлён
+### 7.1 Когда PRD ОБЯЗАН быть обновлён
 
 - добавление новых полей в manifest.json
 - изменение требований к states
@@ -155,7 +230,7 @@
 - ослабление или усиление инвариантов
 - новый допустимый паттерн
 
-### 5.2 Какой PRD обновлять
+### 7.2 Какой PRD обновлять
 
 | Изменение                 | PRD                    |
 | ------------------------- | ---------------------- |
@@ -164,7 +239,7 @@
 | Docs / Story / MDX        | apps/fumadocs/PRD.md   |
 | UX / Routing              | apps/web/PRD.md        |
 
-### 5.3 Порядок
+### 7.3 Порядок
 
 1. PRD
 2. Код
@@ -172,19 +247,21 @@
 
 ---
 
-## 6. Обязательные команды перед PR
+## 8. Обязательные команды перед PR
 
 Из корня репозитория:
 
-- `pnpm gen`
-- `pnpm test`
-- `pnpm check`
+```bash
+pnpm gen
+pnpm test
+pnpm check
+```
 
 PR не может быть принят, если `pnpm check` не проходит.
 
 ---
 
-## 7. Требования к PR-описанию
+## 9. Требования к PR-описанию
 
 Каждый PR обязан содержать:
 
@@ -211,7 +288,7 @@ PR не может быть принят, если `pnpm check` не прохо�
 
 ---
 
-## 8. Запрещённые действия (жёстко)
+## 10. Запрещённые действия (жёстко)
 
 Агенту запрещено:
 
@@ -219,18 +296,13 @@ PR не может быть принят, если `pnpm check` не прохо�
 - добавлять props без контракта
 - создавать states только для docs
 - коммитить generated файлы без `gen`
-- “угадывать” архитектурные решения
+- "угадывать" архитектурные решения
 
 ---
 
-## 9. Поведение при неопределённости
+## 11. Поведение при неопределённости
 
 Если агент:
-
-- не уверен, укладывается ли изменение в PRD
-- не понимает архитектурное последствие
-
-Он обязан остановиться и:
 
 - не уверен, укладывается ли изменение в PRD
 - не понимает архитектурное последствие
@@ -243,23 +315,23 @@ PR не может быть принят, если `pnpm check` не прохо�
 
 ---
 
-## 10. Короткая формула системы (для агента)
+## 12. Короткая формула системы (для агента)
 
 **PRD определяет правила → AGENT определяет процесс → код следует им.**
 
 ---
 
-## 11. Работа с сессиями (Git Worktree)
+## 13. Работа с сессиями (Git Worktree)
 
-### 11.1 Зачем нужны сессии
+### 13.1 Зачем нужны сессии
 
 Для изолированной параллельной работы над несколькими задачами:
-- Каждая сессия получает свою git-ветку от `develop`
+- Каждая сессия получает свою git-ветку из ветки `develop`
 - Каждая сессия имеет отдельный worktree (изолированная копия репозитория)
 - Все git-команды автоматически логируются
 - Полный аудит всех изменений в сессии
 
-### 11.2 Команды для работы с сессиями
+### 13.2 Команды для работы с сессиями
 
 ```bash
 # Начать сессию
@@ -284,7 +356,7 @@ bash .claude/skills/session-worktree/session.sh end <session-id> --remove
 bash .claude/skills/session-worktree/session.sh remove <session-id>
 ```
 
-### 11.3 Структура сессии
+### 13.3 Структура сессии
 
 ```
 .tmp/
@@ -299,7 +371,7 @@ bash .claude/skills/session-worktree/session.sh remove <session-id>
           └── <repo-files>        # Изолированная копия через worktree
 ```
 
-### 11.4 Workflow с сессиями
+### 13.4 Workflow с сессиями
 
 **Перед началом работы:**
 1. Запустить сессию:
@@ -320,7 +392,7 @@ bash .claude/skills/session-worktree/session.sh remove <session-id>
 2. Ветка сохраняется для создания PR
 3. Worktree удаляется, session-файлы архивируются
 
-### 11.5 Параллельная работа
+### 13.5 Параллельная работа
 
 Можно работать над несколькими задачами одновременно:
 
@@ -334,14 +406,14 @@ bash .claude/skills/session-worktree/session.sh start "fix-login" "Fix login bug
 cd .tmp/worktrees/<timestamp2>
 ```
 
-### 11.6 Когда использовать сессии
+### 13.6 Когда использовать сессии
 
 - Параллельная работа над несколькими фичами
 - Безопасный рефакторинг (если что-то сломается - просто удалить worktree)
 - PR-ревью с изменениями (отдельная ветка от review-сессии)
 - Эксперименты и прототипы
 
-### 11.7 Интеграция с workflow
+### 13.7 Интеграция с workflow
 
 Агент обязан использовать сессии при работе над задачами:
 - Создавать сессию перед началом работы
@@ -351,12 +423,107 @@ cd .tmp/worktrees/<timestamp2>
 
 ---
 
-## 12. Мини-чеклист перед коммитом
+## 14. Agent Skills Matrix (обязательно)
 
-- Контракт есть
-- States валидны
-- Generated актуален
-- Docs используют states
-- PRD не нарушен
-- pnpm check зелёный
-- Сессия завершена (если использовалась)
+Единый источник истины для ролей и skill-gate:
+
+- `packages/agent-orchestrator/agent-skills-matrix.json`
+
+Перед запуском стадии оркестратор обязан проверить:
+
+- `requiredSkills` присутствуют (иначе стадия `blocked`);
+- `requiredPolicies` переданы в gate (через `--policies`) для стадий, где они обязательны;
+- `forbiddenSkills` не используются в стадии;
+- ограничения роли соблюдены (например, для `Coder` только `Claude Code` путь).
+
+Примечание:
+- проверка фактического использования `forbiddenSkills` выполняется только при передаче `--log <path>` в gate.
+
+Роли и базовая матрица:
+
+- Manager/Architect
+  - required: `prd`
+  - optional: `find-skills`, `web-search`, `ui-design-system`
+  - forbidden: `coding-agent`, `yeet`
+- Coder (Claude Code only)
+  - required: `coding-agent`, `react-best-practices`, `typescript-advanced-types`
+  - optional: `ui-skills`, `design-system-patterns`, `openai-docs`
+  - forbidden: `yeet`, `security-best-practices`
+- Tester
+  - required: `e2e-testing-patterns`, `playwright`
+  - optional: `chrome-devtools`, `screenshot`
+  - forbidden: `coding-agent`
+- Reviewer
+  - required: review-mode + ignore generated paths
+  - optional: `security-best-practices` (только для security review)
+  - forbidden: `coding-agent`
+- DevOps
+  - required: фиксированные CI/deploy команды
+  - optional: `coding-agent` (только для infra-изменений)
+  - forbidden: изменение продуктового scope
+
+---
+
+## 15. Ruler integration (обязательно)
+
+`AGENTS.md` генерируется из `./ruler/*`.
+
+Правила:
+
+1. Любые изменения процессных правил вносить в `.ruler/*.md` как source-of-truth.
+2. После изменений запускать:
+
+   ```bash
+   pnpm ruler:apply
+   ```
+
+3. Изменения в сгенерированных `AGENTS.md`/`CLAUDE.md` коммитить вместе с правками `./ruler/*`.
+4. Не редактировать `AGENTS.md`/`CLAUDE.md` вручную как source-of-truth: эти файлы считаются generated-выходом Ruler и могут быть под `.gitignore`.
+
+---
+
+## 16. Пустые коммиты запрещены
+
+Запрещено:
+
+- создавать пустые коммиты (`git commit --allow-empty`);
+- завершать story без нового коммита с изменениями.
+
+Если изменений нет, story не считается завершенной и возвращается в работу/эскалацию.
+
+---
+
+## 17. Typography Tokens
+
+Использовать CSS-переменные для шрифтов:
+
+- `--ui-font-heading` — заголовки, section labels (`"Cairo", "Inter", system-ui, sans-serif`)
+- `--ui-font-body` — основной текст, описания (`"Open Sans", "Inter", system-ui, sans-serif`)
+- `--ui-font-ui` — инпуты, контролы, компактный UI (`"Inter", "Inter Variable", system-ui, sans-serif`)
+- `--ui-font-roboto` — Roboto-совместимые UI кейсы (`"Roboto", "Inter", system-ui, sans-serif`)
+
+```css
+font-family: var(--ui-font-heading);  /* для h1/h2 */
+font-family: var(--ui-font-body);     /* для paragraph/helper text */
+font-family: var(--ui-font-ui);       /* для form controls */
+font-family: var(--ui-font-roboto);   /* для Roboto-specific UI */
+```
+
+---
+
+## 18. Package Manager
+
+Проект использует **pnpm v10**. Всегда использовать `pnpm` команды.
+
+---
+
+## 19. Мини-чеклист перед коммитом
+
+- [ ] Контракт есть
+- [ ] States валидны
+- [ ] Generated актуален (`pnpm gen`)
+- [ ] Docs используют states
+- [ ] PRD не нарушен
+- [ ] `pnpm check` зелёный
+- [ ] Сессия завершена (если использовалась)
+- [ ] Нет пустого коммита
