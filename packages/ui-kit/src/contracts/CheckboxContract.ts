@@ -4,6 +4,7 @@ import { z } from "zod";
 export const checkboxContract = z.object({
   checked: z.boolean(),
   label: z.string().optional(),
+  size: z.enum(["sm", "md"]).optional(),
   disabled: z.boolean().optional(),
   name: z.string().optional(),
   id: z.string().optional(),

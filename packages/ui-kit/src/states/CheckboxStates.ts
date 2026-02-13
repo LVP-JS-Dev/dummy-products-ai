@@ -12,4 +12,9 @@ export const checkboxStates = {
     label: "Недоступно",
     disabled: true,
   },
+  Compact: {
+    checked: false,
+    label: "Компактный",
+    size: "sm",
+  },
 } as const;
