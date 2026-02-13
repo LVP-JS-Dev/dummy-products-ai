@@ -1,10 +1,10 @@
 "use client";
 
-import type * as React from "react";
+import type { CSSProperties } from "react";
 import type { PaginationProps } from "../contracts/PaginationContract";
 import { Icon } from "./Icon";
 
-const buttonBase: React.CSSProperties = {
+const buttonBase: CSSProperties = {
   display: "inline-flex",
   alignItems: "center",
   justifyContent: "center",
@@ -92,7 +92,7 @@ export function Pagination({
       style={{
         display: "inline-flex",
         alignItems: "center",
-        gap: "var(--ui-space-sm)",
+        gap: 6,
       }}
     >
       <button

@@ -7,8 +7,24 @@
     "description": "Muted surface/background for subtle fills (e.g., progress tracks).",
     "subgroup": "Surface"
   },
+  "--ui-color-surface-app": {
+    "description": "Products page app-level background surface from Figma.",
+    "subgroup": "Surface"
+  },
+  "--ui-color-surface-auth": {
+    "description": "Auth page app-level background surface from Figma.",
+    "subgroup": "Surface"
+  },
   "--ui-color-border": {
     "description": "Default border/divider color.",
+    "subgroup": "Surface"
+  },
+  "--ui-color-border-control": {
+    "description": "Control border color for auth fields and lightweight checkboxes.",
+    "subgroup": "Surface"
+  },
+  "--ui-color-border-strong": {
+    "description": "Stronger divider color used for table row separators.",
     "subgroup": "Surface"
   },
   "--ui-color-border-subtle": {
@@ -61,6 +77,10 @@
   },
   "--ui-color-text": {
     "description": "Primary text color for most UI text.",
+    "subgroup": "Text"
+  },
+  "--ui-color-text-secondary": {
+    "description": "Secondary strong text color used for table/card headings.",
     "subgroup": "Text"
   },
   "--ui-color-text-muted": {
@@ -195,5 +215,8 @@
   },
   "--ui-font-roboto": {
     "description": "Font family token for Roboto-driven UI text styles."
+  },
+  "--ui-font-mono": {
+    "description": "Font family token for monospaced numeric values (e.g., prices)."
   }
 }

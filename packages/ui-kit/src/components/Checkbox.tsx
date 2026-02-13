@@ -32,6 +32,7 @@ export function Checkbox({
         fontFamily: "var(--ui-font-ui)",
         fontSize: 16,
         fontWeight: 500,
+        lineHeight: "24px",
         color: "var(--ui-color-text-muted)",
         cursor: disabled ? "not-allowed" : "pointer",
         ...style,
@@ -65,7 +66,7 @@ export function Checkbox({
           width: 24,
           height: 24,
           borderRadius: "var(--ui-radius-xs)",
-          border: `1px solid ${checked ? "var(--ui-color-checkbox-checked)" : "var(--ui-color-border)"}`,
+          border: `1px solid ${checked ? "var(--ui-color-checkbox-checked)" : "var(--ui-color-border-control)"}`,
           background: checked
             ? "var(--ui-color-checkbox-checked)"
             : "var(--ui-color-surface)",

@@ -1,10 +1,10 @@
 "use client";
 
-import type * as React from "react";
+import type { CSSProperties } from "react";
 import type { ButtonProps } from "../contracts/ButtonContract";
 import { Icon } from "./Icon";
 
-const baseStyle: React.CSSProperties = {
+const baseStyle: CSSProperties = {
   display: "inline-flex",
   alignItems: "center",
   justifyContent: "center",
@@ -14,19 +14,18 @@ const baseStyle: React.CSSProperties = {
   border: "none",
   cursor: "pointer",
   fontWeight: 600,
-  lineHeight: 1.2,
 };
 
 const variantStyle: Record<
   "blue" | "secondary" | "icon" | "ghost",
-  React.CSSProperties
+  CSSProperties
 > = {
   blue: {
     background: "var(--ui-color-primary)",
     backgroundImage:
       "linear-gradient(180deg, rgb(255 255 255 / 0%) 0%, rgb(255 255 255 / 12%) 100%)",
     color: "var(--ui-color-on-primary)",
-    border: "none",
+    border: "1px solid var(--ui-color-primary-border)",
   },
   secondary: {
     background: "var(--ui-color-surface)",
@@ -48,7 +47,7 @@ const variantStyle: Record<
   },
 };
 
-const sizeStyle: Record<"sm" | "md" | "lg", React.CSSProperties> = {
+const sizeStyle: Record<"sm" | "md" | "lg", CSSProperties> = {
   sm: {
     minHeight: 32,
     fontSize: 12,
@@ -62,6 +61,8 @@ const sizeStyle: Record<"sm" | "md" | "lg", React.CSSProperties> = {
     borderRadius: "var(--ui-radius-sm)",
     fontFamily: "var(--ui-font-heading)",
     fontWeight: 600,
+    lineHeight: "26.236px",
+    letterSpacing: 0,
   },
   lg: {
     minHeight: 54,
@@ -75,7 +76,7 @@ const sizeStyle: Record<"sm" | "md" | "lg", React.CSSProperties> = {
   },
 };
 
-const badgeBase: React.CSSProperties = {
+const badgeBase: CSSProperties = {
   display: "inline-flex",
   alignItems: "center",
   justifyContent: "center",

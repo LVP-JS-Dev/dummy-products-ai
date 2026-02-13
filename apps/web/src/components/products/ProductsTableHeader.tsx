@@ -28,11 +28,24 @@ function ProductsTableHeaderCell({
     return <th />;
   }
 
-  const alignClass = cell.align === "right" ? "text-right" : "";
+  let alignClass = "";
+  if (cell.align === "right") {
+    alignClass = "text-right";
+  } else if (cell.align === "center") {
+    alignClass = "text-center";
+  }
+  const baseCellStyle = {
+    padding: "22px 12px",
+    verticalAlign: "middle",
+  } as const;
 
   if (!(cell.sortable && cell.onSortToggle)) {
     return (
-      <th aria-sort={getAriaSort(cell)} className={alignClass}>
+      <th
+        aria-sort={getAriaSort(cell)}
+        className={alignClass}
+        style={baseCellStyle}
+      >
         <span
           style={{
             fontFamily: "var(--ui-font-heading)",
@@ -49,7 +62,11 @@ function ProductsTableHeaderCell({
   }
 
   return (
-    <th aria-sort={getAriaSort(cell)} className={alignClass}>
+    <th
+      aria-sort={getAriaSort(cell)}
+      className={alignClass}
+      style={baseCellStyle}
+    >
       <button
         onClick={cell.onSortToggle}
         style={{
@@ -79,7 +96,7 @@ export function ProductsTableHeader({
   return (
     <thead style={{ background: "var(--ui-color-surface)" }}>
       {rows.map((row) => (
-        <tr className="[&>th]:px-3 [&>th]:py-2" key={row.id}>
+        <tr key={row.id}>
           {row.cells.map((cell) => (
             <ProductsTableHeaderCell cell={cell} key={cell.id} />
           ))}
