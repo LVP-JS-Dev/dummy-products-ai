@@ -723,9 +723,9 @@
       },
       {
         "name": "--ui-effect-shadow-card",
-        "value": "0 24px 28px rgba(0, 0, 0, 0.04)",
+        "value": "0 24px 32px 0px rgba(0, 0, 0, 0.04)",
         "pencilValue": {
-          "blur": 28,
+          "blur": 32,
           "color": "#0000000a",
           "offset": { "x": 0, "y": 24 },
           "shadowType": "outer"
@@ -753,9 +753,9 @@
       },
       {
         "name": "--ui-effect-shadow-logo-1",
-        "value": "0 12px 7px rgba(0, 0, 0, 0.03)",
+        "value": "0 12px 8px rgba(0, 0, 0, 0.03)",
         "pencilValue": {
-          "blur": 7,
+          "blur": 8,
           "color": "#00000008",
           "offset": { "x": 0, "y": 12 },
           "shadowType": "outer"
@@ -795,6 +795,22 @@
         "screens": ["Products"],
         "status": "new",
         "aliasOf": null
+      },
+      {
+        "name": "--ui-effect-shadow-modal",
+        "value": "0 18px 40px color-mix(in srgb, var(--ui-color-text) 20%, transparent)",
+        "pencilValue": {
+          "blur": 40,
+          "color": "#23232333",
+          "offset": { "x": 0, "y": 18 },
+          "shadowType": "outer"
+        },
+        "semanticRole": "Modal shadow",
+        "usage": ["Add product modal"],
+        "screens": ["Products"],
+        "status": "new",
+        "aliasOf": null,
+        "aliasNote": "Shadow mixes text color at 20% for theme alignment"
       }
     ],
     "gradients": [
@@ -829,7 +845,7 @@
           ]
         },
         "semanticRole": "Auth inner card stroke gradient",
-        "usage": ["Auth inner card border"],
+        "usage": ["Auth inner card border", "Auth card inner outline"],
         "screens": ["Auth"],
         "status": "new",
         "aliasOf": "--ui-color-border",
@@ -837,18 +853,18 @@
       },
       {
         "name": "--ui-effect-gradient-auth-outer-stroke",
-        "value": "linear-gradient(180deg, #ededed 19.56%, transparent 100%)",
+        "value": "linear-gradient(180deg, #ededed 20%, transparent 100%)",
         "pencilValue": {
           "type": "gradient",
           "gradientType": "linear",
           "rotation": -180,
           "colors": [
-            { "color": "#edededff", "position": 0.1956 },
+            { "color": "#edededff", "position": 0.2 },
             { "color": "#ededed00", "position": 1 }
           ]
         },
         "semanticRole": "Auth outer card stroke gradient",
-        "usage": ["Auth inner card border"],
+        "usage": ["Auth outer card border", "Auth card outline"],
         "screens": ["Auth"],
         "status": "new",
         "aliasOf": "--ui-color-border",
@@ -856,11 +872,11 @@
       },
       {
         "name": "--ui-effect-gradient-logo",
-        "value": "linear-gradient(0deg, rgba(35, 35, 35, 0.06) 50%, transparent 100%)",
+        "value": "linear-gradient(180deg, rgba(35, 35, 35, 0) 50%, rgba(35, 35, 35, 0.06) 100%)",
         "pencilValue": {
           "type": "gradient",
           "gradientType": "linear",
-          "rotation": -360,
+          "rotation": -180,
           "colors": [
             { "color": "#23232300", "position": 0.5 },
             { "color": "#2323230f", "position": 1 }
@@ -874,11 +890,11 @@
       },
       {
         "name": "--ui-effect-gradient-button",
-        "value": "linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.12) 100%)",
+        "value": "linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.12) 100%)",
         "pencilValue": {
           "type": "gradient",
           "gradientType": "linear",
-          "rotation": -360,
+          "rotation": -180,
           "colors": [
             { "color": "#ffffff00", "position": 0 },
             { "color": "#ffffff1f", "position": 1 }
@@ -984,6 +1000,7 @@
       "--ui-effect-shadow-logo-1",
       "--ui-effect-shadow-page",
       "--ui-effect-shadow-pagination",
+      "--ui-effect-shadow-modal",
       "--ui-font-mono",
       "--ui-font-size-2xl",
       "--ui-font-size-3xl",
@@ -1206,7 +1223,8 @@
       "button": "var(--ui-effect-shadow-button)",
       "logo-1": "var(--ui-effect-shadow-logo-1)",
       "logo-2": "var(--ui-effect-shadow-logo-2)",
-      "pagination": "var(--ui-effect-shadow-pagination)"
+      "pagination": "var(--ui-effect-shadow-pagination)",
+      "modal": "var(--ui-effect-shadow-modal)"
     },
     "backgroundImage": {
       "auth-inner-bg": "var(--ui-effect-gradient-auth-inner-bg)",
