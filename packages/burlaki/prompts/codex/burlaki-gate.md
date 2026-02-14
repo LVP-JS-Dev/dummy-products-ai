@@ -1,9 +1,9 @@
 ---
-description: Run agent-orchestrator skills gate (matrix + optional log scan)
+description: Run burlaki skills gate (matrix + optional log scan)
 argument-hint: "<stage> <agent> [--log <path>] [--policies <csv>]"
 ---
 
-# AO Gate
+# Burlaki Gate
 
 Run the skill gate for this repo and summarize the result.
 
@@ -19,7 +19,7 @@ If `stage` is missing/ambiguous, ask the user for it.
 
 ```bash
 pnpm agents:skills-gate -- \
-  --matrix packages/agent-orchestrator/agent-skills-matrix.json \
+  --matrix packages/burlaki/agent-skills-matrix.json \
   --stage "<stage>" \
   --agent "<agent>" \
   --log "<path-if-provided>" \

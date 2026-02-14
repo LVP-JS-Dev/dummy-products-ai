@@ -1,0 +1,1351 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Pencil Token Specification - Auth Form + Products",
+  "description": "Complete token list extracted from Pencil designs for Auth form and Products screens",
+  "version": "1.0.0",
+  "source": "Pencil (.pen) designs",
+  "screens": ["Auth (Desktop)", "Products (Desktop)"],
+  "extractedAt": "2026-02-14",
+
+  "colors": {
+    "description": "Color tokens extracted from Pencil designs",
+    "tokens": [
+      {
+        "name": "--ui-color-surface",
+        "value": "#ffffff",
+        "pencilValue": "#ffffffff",
+        "semanticRole": "Primary background/surface",
+        "usage": [
+          "Auth card background",
+          "Products table background",
+          "Input fields",
+          "Checkboxes"
+        ],
+        "screens": ["Auth", "Products"],
+        "aliasOf": null
+      },
+      {
+        "name": "--ui-color-surface-muted",
+        "value": "#f3f3f3",
+        "pencilValue": "#f3f3f3ff",
+        "semanticRole": "Muted surface/search input background",
+        "usage": ["Products search input background"],
+        "screens": ["Products"],
+        "aliasOf": null
+      },
+      {
+        "name": "--ui-color-page-background",
+        "value": "#f6f6f6",
+        "pencilValue": "#f6f6f6ff",
+        "semanticRole": "Page background",
+        "usage": ["Products page background"],
+        "screens": ["Products"],
+        "aliasOf": null,
+        "status": "new"
+      },
+      {
+        "name": "--ui-color-auth-background",
+        "value": "#f9f9f9",
+        "pencilValue": "#f9f9f9ff",
+        "semanticRole": "Auth page background",
+        "usage": ["Auth page background"],
+        "screens": ["Auth"],
+        "aliasOf": null,
+        "status": "new"
+      },
+      {
+        "name": "--ui-color-text",
+        "value": "#232323",
+        "pencilValue": "#232323ff",
+        "semanticRole": "Primary text color",
+        "usage": [
+          "Auth welcome title",
+          "Input labels",
+          "Input values",
+          "Product names"
+        ],
+        "screens": ["Auth", "Products"],
+        "aliasOf": null
+      },
+      {
+        "name": "--ui-color-text-dark",
+        "value": "#202020",
+        "pencilValue": "#202020ff",
+        "semanticRole": "Dark text for headings",
+        "usage": ["Products page title"],
+        "screens": ["Products"],
+        "aliasOf": null,
+        "status": "new"
+      },
+      {
+        "name": "--ui-color-text-darker",
+        "value": "#161919",
+        "pencilValue": "#161919ff",
+        "semanticRole": "Darker text for product titles",
+        "usage": ["Product title in table"],
+        "screens": ["Products"],
+        "aliasOf": null,
+        "status": "new"
+      },
+      {
+        "name": "--ui-color-text-tertiary",
+        "value": "#b2b3b9",
+        "pencilValue": "#b2b3b9ff",
+        "semanticRole": "Tertiary text, table headers, category labels",
+        "usage": [
+          "Table column headers",
+          "Product category",
+          "Checkbox border"
+        ],
+        "screens": ["Products"],
+        "aliasOf": null
+      },
+      {
+        "name": "--ui-color-text-muted",
+        "value": "#9c9c9c",
+        "pencilValue": "#9c9c9cff",
+        "semanticRole": "Muted text, helper text",
+        "usage": ["Remember me text"],
+        "screens": ["Auth"],
+        "aliasOf": null
+      },
+      {
+        "name": "--ui-color-text-placeholder",
+        "value": "#999999",
+        "pencilValue": "#999999ff",
+        "semanticRole": "Placeholder text",
+        "usage": ["Search placeholder text"],
+        "screens": ["Products"],
+        "aliasOf": null
+      },
+      {
+        "name": "--ui-color-text-subtle",
+        "value": "#6c6c6c",
+        "pencilValue": "#6c6c6cff",
+        "semanticRole": "Subtle text, links",
+        "usage": ["No account link text"],
+        "screens": ["Auth"],
+        "aliasOf": null
+      },
+      {
+        "name": "--ui-color-text-faint",
+        "value": "#e0e0e0",
+        "pencilValue": "#e0e0e0ff",
+        "semanticRole": "Faint text, subtitles",
+        "usage": ["Auth subtitle"],
+        "screens": ["Auth"],
+        "aliasOf": null
+      },
+      {
+        "name": "--ui-color-text-body",
+        "value": "#333333",
+        "pencilValue": "#333333ff",
+        "semanticRole": "Body text",
+        "usage": ["Table pagination text", "Section title"],
+        "screens": ["Products"],
+        "aliasOf": null,
+        "status": "new"
+      },
+      {
+        "name": "--ui-color-text-black",
+        "value": "#000000",
+        "pencilValue": "#000000ff",
+        "semanticRole": "Pure black for icons and pagination arrows",
+        "usage": ["Logo icons", "Pagination arrows"],
+        "screens": ["Auth", "Products"],
+        "aliasOf": null,
+        "status": "new"
+      },
+      {
+        "name": "--ui-color-border",
+        "value": "#ededed",
+        "pencilValue": "#edededff",
+        "semanticRole": "Primary border color",
+        "usage": ["Input borders", "Card borders"],
+        "screens": ["Auth", "Products"],
+        "aliasOf": null
+      },
+      {
+        "name": "--ui-color-border-subtle",
+        "value": "#ececeb",
+        "pencilValue": "#ececebff",
+        "semanticRole": "Subtle border for photo placeholders",
+        "usage": ["Product photo border", "Button border"],
+        "screens": ["Products"],
+        "aliasOf": null
+      },
+      {
+        "name": "--ui-color-border-row",
+        "value": "#e2e2e2",
+        "pencilValue": "#e2e2e2ff",
+        "semanticRole": "Table row borders",
+        "usage": ["Table row separators"],
+        "screens": ["Products"],
+        "aliasOf": null,
+        "status": "new"
+      },
+      {
+        "name": "--ui-color-icon-muted",
+        "value": "#c9c9c9",
+        "pencilValue": "#c9c9c9ff",
+        "semanticRole": "Muted icon color",
+        "usage": ["User icon in login", "Clear button"],
+        "screens": ["Auth"],
+        "aliasOf": null,
+        "status": "new"
+      },
+      {
+        "name": "--ui-color-icon-light",
+        "value": "#cacaca",
+        "pencilValue": "#cacacaff",
+        "semanticRole": "Light icon color",
+        "usage": ["User icon detail"],
+        "screens": ["Auth"],
+        "aliasOf": null,
+        "status": "new"
+      },
+      {
+        "name": "--ui-color-icon-lock",
+        "value": "#cfcfcf",
+        "pencilValue": "#cfcfcfff",
+        "semanticRole": "Lock icon placeholder",
+        "usage": ["Search icon stroke"],
+        "screens": ["Products"],
+        "aliasOf": null,
+        "status": "new"
+      },
+      {
+        "name": "--ui-color-primary",
+        "value": "#242edb",
+        "pencilValue": "#242edbff",
+        "semanticRole": "Primary brand color",
+        "usage": ["Login button fill"],
+        "screens": ["Auth"],
+        "aliasOf": null
+      },
+      {
+        "name": "--ui-color-primary-border",
+        "value": "#367aff",
+        "pencilValue": "#367affff",
+        "semanticRole": "Primary border accent",
+        "usage": ["Login button stroke"],
+        "screens": ["Auth"],
+        "aliasOf": null
+      },
+      {
+        "name": "--ui-color-accent",
+        "value": "#797fea",
+        "pencilValue": "#797feaff",
+        "semanticRole": "Accent color for active states",
+        "usage": ["Active pagination number background"],
+        "screens": ["Products"],
+        "aliasOf": null
+      },
+      {
+        "name": "--ui-color-selection-stripe",
+        "value": "#3c538e",
+        "pencilValue": "#3c538eff",
+        "semanticRole": "Row selection indicator stripe",
+        "usage": ["Selected product row stripe"],
+        "screens": ["Products"],
+        "aliasOf": "--ui-color-checkbox-checked",
+        "aliasNote": "Color value matches existing checkbox-checked token"
+      },
+      {
+        "name": "--ui-color-checkbox-selected",
+        "value": "#3c538e",
+        "pencilValue": "#3c538eff",
+        "semanticRole": "Selected checkbox fill",
+        "usage": ["Selected checkbox"],
+        "screens": ["Products"],
+        "aliasOf": "--ui-color-checkbox-checked",
+        "aliasNote": "Color value matches existing checkbox-checked token"
+      },
+      {
+        "name": "--ui-color-on-primary",
+        "value": "#ffffff",
+        "pencilValue": "#ffffffff",
+        "semanticRole": "Text on primary color",
+        "usage": ["Login button text"],
+        "screens": ["Auth"],
+        "aliasOf": "--ui-color-surface"
+      },
+      {
+        "name": "--ui-color-photo-placeholder",
+        "value": "#c4c4c4",
+        "pencilValue": "#c4c4c4ff",
+        "semanticRole": "Photo placeholder background",
+        "usage": ["Product photo placeholder"],
+        "screens": ["Products"],
+        "aliasOf": null,
+        "status": "new"
+      }
+    ]
+  },
+
+  "spacing": {
+    "description": "Spacing tokens extracted from Pencil designs",
+    "tokens": [
+      {
+        "name": "--ui-space-3xs",
+        "value": "2px",
+        "pencilValue": 2,
+        "semanticRole": "Extra extra small spacing",
+        "usage": ["Icon stroke thickness"],
+        "screens": ["Auth"],
+        "status": "new"
+      },
+      {
+        "name": "--ui-space-2xs",
+        "value": "3px",
+        "pencilValue": 3,
+        "semanticRole": "Extra small spacing",
+        "usage": ["Row selection stripe width"],
+        "screens": ["Products"],
+        "status": "new"
+      },
+      {
+        "name": "--ui-space-xs",
+        "value": "4px",
+        "pencilValue": 4,
+        "semanticRole": "Extra small spacing",
+        "usage": ["Corner radius small", "Pagination number padding"],
+        "screens": ["Products"]
+      },
+      {
+        "name": "--ui-space-sm",
+        "value": "6px",
+        "pencilValue": 6,
+        "semanticRole": "Small spacing",
+        "usage": ["Form label gap", "Auth card inner padding"],
+        "screens": ["Auth"]
+      },
+      {
+        "name": "--ui-space-md",
+        "value": "8px",
+        "pencilValue": 8,
+        "semanticRole": "Medium spacing",
+        "usage": ["Input internal gap", "Button gap", "Table header gap"],
+        "screens": ["Auth", "Products"],
+        "aliasOf": "--ui-space-sm",
+        "aliasNote": "Value matches existing space-sm (8px)"
+      },
+      {
+        "name": "--ui-space-lg",
+        "value": "10px",
+        "pencilValue": 10,
+        "semanticRole": "Large spacing",
+        "usage": ["Icon padding", "Input padding"],
+        "screens": ["Auth", "Products"]
+      },
+      {
+        "name": "--ui-space-xl",
+        "value": "12px",
+        "pencilValue": 12,
+        "semanticRole": "Extra large spacing",
+        "usage": ["Search input padding vertical", "Section gaps"],
+        "screens": ["Products"],
+        "aliasOf": "--ui-space-md",
+        "aliasNote": "Value matches existing space-md (12px)"
+      },
+      {
+        "name": "--ui-space-2xl",
+        "value": "14px",
+        "pencilValue": 14,
+        "semanticRole": "2x large spacing",
+        "usage": ["Input padding vertical"],
+        "screens": ["Auth"],
+        "status": "new"
+      },
+      {
+        "name": "--ui-space-3xl",
+        "value": "16px",
+        "pencilValue": 16,
+        "semanticRole": "3x large spacing",
+        "usage": [
+          "Input padding horizontal",
+          "Button padding",
+          "Typography sizes"
+        ],
+        "screens": ["Auth", "Products"],
+        "aliasOf": "--ui-space-lg",
+        "aliasNote": "Value matches existing space-lg (16px)"
+      },
+      {
+        "name": "--ui-space-4xl",
+        "value": "18px",
+        "pencilValue": 18,
+        "semanticRole": "4x large spacing",
+        "usage": ["Checkbox gap", "Typography sizes"],
+        "screens": ["Auth", "Products"],
+        "status": "new"
+      },
+      {
+        "name": "--ui-space-5xl",
+        "value": "20px",
+        "pencilValue": 20,
+        "semanticRole": "5x large spacing",
+        "usage": ["Page padding", "Section title gap", "Form gap"],
+        "screens": ["Auth", "Products"],
+        "aliasOf": "--ui-space-xl",
+        "aliasNote": "Value matches existing space-xl (20px)"
+      },
+      {
+        "name": "--ui-space-6xl",
+        "value": "30px",
+        "pencilValue": 30,
+        "semanticRole": "6x large spacing",
+        "usage": [
+          "Table container padding",
+          "Navigation bar padding horizontal"
+        ],
+        "screens": ["Products"],
+        "status": "new"
+      },
+      {
+        "name": "--ui-space-7xl",
+        "value": "32px",
+        "pencilValue": 32,
+        "semanticRole": "7x large spacing",
+        "usage": ["Auth form section gap", "Icon size"],
+        "screens": ["Auth"],
+        "status": "new"
+      },
+      {
+        "name": "--ui-space-8xl",
+        "value": "40px",
+        "pencilValue": 40,
+        "semanticRole": "8x large spacing",
+        "usage": ["Card corner radius large", "Section gaps"],
+        "screens": ["Auth", "Products"],
+        "status": "new"
+      },
+      {
+        "name": "--ui-space-9xl",
+        "value": "48px",
+        "pencilValue": 48,
+        "semanticRole": "9x large spacing",
+        "usage": ["Auth form padding", "Photo size"],
+        "screens": ["Auth", "Products"],
+        "status": "new"
+      }
+    ]
+  },
+
+  "radii": {
+    "description": "Border radius tokens extracted from Pencil designs",
+    "tokens": [
+      {
+        "name": "--ui-radius-xs",
+        "value": "4px",
+        "pencilValue": 4,
+        "semanticRole": "Extra small radius",
+        "usage": ["Checkbox", "Pagination number", "Photo corner"],
+        "screens": ["Products"]
+      },
+      {
+        "name": "--ui-radius-sm",
+        "value": "6px",
+        "pencilValue": 6,
+        "semanticRole": "Small radius",
+        "usage": ["Dropdown/button corner"],
+        "screens": ["Products"]
+      },
+      {
+        "name": "--ui-radius-md",
+        "value": "8px",
+        "pencilValue": 8,
+        "semanticRole": "Medium radius",
+        "usage": ["Input fields", "Small buttons", "Photo placeholder"],
+        "screens": ["Auth", "Products"]
+      },
+      {
+        "name": "--ui-radius-lg",
+        "value": "12px",
+        "pencilValue": 12,
+        "semanticRole": "Large radius",
+        "usage": ["Auth input fields", "Login button", "Table container"],
+        "screens": ["Auth", "Products"]
+      },
+      {
+        "name": "--ui-radius-xl",
+        "value": "16px",
+        "pencilValue": 16,
+        "semanticRole": "Extra large radius",
+        "usage": ["Not currently used"],
+        "screens": []
+      },
+      {
+        "name": "--ui-radius-2xl",
+        "value": "34px",
+        "pencilValue": 34,
+        "semanticRole": "2x large radius for cards",
+        "usage": ["Auth inner card"],
+        "screens": ["Auth"],
+        "status": "new"
+      },
+      {
+        "name": "--ui-radius-3xl",
+        "value": "40px",
+        "pencilValue": 40,
+        "semanticRole": "3x large radius for main cards",
+        "usage": ["Auth main card"],
+        "screens": ["Auth"],
+        "status": "new"
+      },
+      {
+        "name": "--ui-radius-pill",
+        "value": "100px",
+        "pencilValue": 100,
+        "semanticRole": "Pill/circle shape",
+        "usage": ["Logo container"],
+        "screens": ["Auth"],
+        "status": "modified"
+      }
+    ]
+  },
+
+  "typography": {
+    "description": "Typography tokens extracted from Pencil designs",
+    "fontFamilies": [
+      {
+        "name": "--ui-font-heading",
+        "value": "\"Cairo\", \"Inter\", system-ui, sans-serif",
+        "pencilValue": "Cairo",
+        "semanticRole": "Headings, titles, labels",
+        "usage": [
+          "Page title",
+          "Table headers",
+          "Product names",
+          "Section titles"
+        ],
+        "screens": ["Products"]
+      },
+      {
+        "name": "--ui-font-ui",
+        "value": "\"Inter\", \"Inter Variable\", system-ui, sans-serif",
+        "pencilValue": "Inter",
+        "semanticRole": "UI text, form labels, buttons",
+        "usage": ["Auth title", "Input labels", "Button text", "Helper text"],
+        "screens": ["Auth"]
+      },
+      {
+        "name": "--ui-font-body",
+        "value": "\"Open Sans\", \"Inter\", system-ui, sans-serif",
+        "pencilValue": "Open Sans",
+        "semanticRole": "Body text, table data",
+        "usage": ["Table cell content", "Vendor names", "SKUs"],
+        "screens": ["Products"]
+      },
+      {
+        "name": "--ui-font-roboto",
+        "value": "\"Roboto\", \"Inter\", system-ui, sans-serif",
+        "pencilValue": "Roboto",
+        "semanticRole": "Roboto-compatible text",
+        "usage": ["Pagination text"],
+        "screens": ["Products"]
+      },
+      {
+        "name": "--ui-font-mono",
+        "value": "\"Roboto Mono\", monospace",
+        "pencilValue": "Roboto Mono",
+        "semanticRole": "Monospace for prices/codes",
+        "usage": ["Price display"],
+        "screens": ["Products"],
+        "status": "new"
+      }
+    ],
+    "fontSizes": [
+      {
+        "name": "--ui-font-size-xs",
+        "value": "12px",
+        "pencilValue": 12,
+        "semanticRole": "Extra small text",
+        "usage": ["Helper text"],
+        "screens": ["Auth"]
+      },
+      {
+        "name": "--ui-font-size-sm",
+        "value": "14px",
+        "pencilValue": 14,
+        "semanticRole": "Small text",
+        "usage": ["Product category", "Placeholder"],
+        "screens": ["Products"]
+      },
+      {
+        "name": "--ui-font-size-md",
+        "value": "16px",
+        "pencilValue": 16,
+        "semanticRole": "Medium/default text",
+        "usage": ["Table cell content", "Product category"],
+        "screens": ["Products"]
+      },
+      {
+        "name": "--ui-font-size-lg",
+        "value": "18px",
+        "pencilValue": 18,
+        "semanticRole": "Large text",
+        "usage": ["Input text", "Labels", "Button text", "Pagination"],
+        "screens": ["Auth", "Products"]
+      },
+      {
+        "name": "--ui-font-size-xl",
+        "value": "20px",
+        "pencilValue": 20,
+        "semanticRole": "Extra large text",
+        "usage": ["Section title"],
+        "screens": ["Products"]
+      },
+      {
+        "name": "--ui-font-size-2xl",
+        "value": "24px",
+        "pencilValue": 24,
+        "semanticRole": "2x large text",
+        "usage": ["Page title"],
+        "screens": ["Products"]
+      },
+      {
+        "name": "--ui-font-size-3xl",
+        "value": "40px",
+        "pencilValue": 40,
+        "semanticRole": "3x large text for hero/auth",
+        "usage": ["Auth welcome title"],
+        "screens": ["Auth"],
+        "status": "new"
+      }
+    ],
+    "fontWeights": [
+      {
+        "name": "--ui-font-weight-normal",
+        "value": "normal",
+        "pencilValue": "normal",
+        "semanticRole": "Normal weight",
+        "usage": ["Body text", "SKUs", "Prices"],
+        "screens": ["Auth", "Products"]
+      },
+      {
+        "name": "--ui-font-weight-medium",
+        "value": "500",
+        "pencilValue": "500",
+        "semanticRole": "Medium weight",
+        "usage": ["Labels", "Subtitles"],
+        "screens": ["Auth"]
+      },
+      {
+        "name": "--ui-font-weight-semibold",
+        "value": "600",
+        "pencilValue": "600",
+        "semanticRole": "Semibold weight",
+        "usage": ["Auth title", "Button text"],
+        "screens": ["Auth"]
+      },
+      {
+        "name": "--ui-font-weight-bold",
+        "value": "700",
+        "pencilValue": "700",
+        "semanticRole": "Bold weight",
+        "usage": ["Page title", "Table headers", "Vendor names"],
+        "screens": ["Products"]
+      }
+    ],
+    "lineHeights": [
+      {
+        "name": "--ui-line-height-tight",
+        "value": "1.0",
+        "pencilValue": 1.0,
+        "semanticRole": "Tight line height",
+        "usage": ["Section title"],
+        "screens": ["Products"]
+      },
+      {
+        "name": "--ui-line-height-normal",
+        "value": "1.1",
+        "pencilValue": 1.1,
+        "semanticRole": "Normal line height",
+        "usage": ["Prices", "Placeholder"],
+        "screens": ["Products"]
+      },
+      {
+        "name": "--ui-line-height-relaxed",
+        "value": "1.2",
+        "pencilValue": 1.2,
+        "semanticRole": "Relaxed line height",
+        "usage": ["Button text"],
+        "screens": ["Auth"]
+      },
+      {
+        "name": "--ui-line-height-loose",
+        "value": "1.5",
+        "pencilValue": 1.5,
+        "semanticRole": "Loose line height",
+        "usage": ["Subtitle", "Helper text"],
+        "screens": ["Auth"]
+      }
+    ],
+    "letterSpacing": [
+      {
+        "name": "--ui-letter-spacing-tight",
+        "value": "-0.6px",
+        "pencilValue": -0.6,
+        "semanticRole": "Tight letter spacing",
+        "usage": ["Auth title"],
+        "screens": ["Auth"],
+        "status": "new"
+      },
+      {
+        "name": "--ui-letter-spacing-normal-tight",
+        "value": "-0.27px",
+        "pencilValue": -0.27,
+        "semanticRole": "Slightly tight letter spacing",
+        "usage": ["Input labels and values"],
+        "screens": ["Auth"],
+        "status": "new"
+      },
+      {
+        "name": "--ui-letter-spacing-button",
+        "value": "-0.18px",
+        "pencilValue": -0.18,
+        "semanticRole": "Button letter spacing",
+        "usage": ["Button text"],
+        "screens": ["Auth"],
+        "status": "new"
+      }
+    ]
+  },
+
+  "effects": {
+    "description": "Effects tokens (shadows, gradients, strokes) extracted from Pencil designs",
+    "shadows": [
+      {
+        "name": "--ui-effect-shadow-page",
+        "value": "0 4px 4px rgba(0, 0, 0, 0.25)",
+        "pencilValue": {
+          "blur": 4,
+          "color": "#00000040",
+          "offset": { "x": 0, "y": 4 },
+          "shadowType": "outer"
+        },
+        "semanticRole": "Page shadow",
+        "usage": ["Products page container"],
+        "screens": ["Products"],
+        "status": "new",
+        "aliasOf": null
+      },
+      {
+        "name": "--ui-effect-shadow-card",
+        "value": "0 24px 32px 0px rgba(0, 0, 0, 0.04)",
+        "pencilValue": {
+          "blur": 32,
+          "color": "#0000000a",
+          "offset": { "x": 0, "y": 24 },
+          "shadowType": "outer"
+        },
+        "semanticRole": "Card shadow",
+        "usage": ["Auth card"],
+        "screens": ["Auth"],
+        "status": "new",
+        "aliasOf": null
+      },
+      {
+        "name": "--ui-effect-shadow-button",
+        "value": "0 8px 7px rgba(54, 122, 255, 0.03)",
+        "pencilValue": {
+          "blur": 7,
+          "color": "#367aff08",
+          "offset": { "x": 0, "y": 8 },
+          "shadowType": "outer"
+        },
+        "semanticRole": "Button shadow",
+        "usage": ["Login button"],
+        "screens": ["Auth"],
+        "status": "new",
+        "aliasOf": null
+      },
+      {
+        "name": "--ui-effect-shadow-logo-1",
+        "value": "0 12px 8px rgba(0, 0, 0, 0.03)",
+        "pencilValue": {
+          "blur": 8,
+          "color": "#00000008",
+          "offset": { "x": 0, "y": 12 },
+          "shadowType": "outer"
+        },
+        "semanticRole": "Logo shadow 1",
+        "usage": ["Logo container"],
+        "screens": ["Auth"],
+        "status": "new",
+        "aliasOf": null
+      },
+      {
+        "name": "--ui-effect-shadow-logo-2",
+        "value": "0 0 0 2px #ffffff",
+        "pencilValue": {
+          "color": "#ffffff",
+          "shadowType": "outer",
+          "spread": 2
+        },
+        "semanticRole": "Logo inner glow",
+        "usage": ["Logo container"],
+        "screens": ["Auth"],
+        "status": "new",
+        "aliasOf": "--ui-color-surface",
+        "aliasNote": "Color value matches surface (white)"
+      },
+      {
+        "name": "--ui-effect-shadow-pagination",
+        "value": "0 20px 43.75px rgba(0, 0, 0, 0.12)",
+        "pencilValue": {
+          "blur": 43.75,
+          "color": "#0000001f",
+          "offset": { "x": 0, "y": 20 },
+          "shadowType": "outer"
+        },
+        "semanticRole": "Pagination number shadow",
+        "usage": ["Pagination numbers"],
+        "screens": ["Products"],
+        "status": "new",
+        "aliasOf": null
+      },
+      {
+        "name": "--ui-effect-shadow-modal",
+        "value": "0 18px 40px color-mix(in srgb, var(--ui-color-text) 20%, transparent)",
+        "pencilValue": {
+          "blur": 40,
+          "color": "#23232333",
+          "offset": { "x": 0, "y": 18 },
+          "shadowType": "outer"
+        },
+        "semanticRole": "Modal shadow",
+        "usage": ["Add product modal"],
+        "screens": ["Products"],
+        "status": "new",
+        "aliasOf": null,
+        "aliasNote": "Shadow mixes text color at 20% for theme alignment"
+      }
+    ],
+    "gradients": [
+      {
+        "name": "--ui-effect-gradient-auth-inner-bg",
+        "value": "linear-gradient(180deg, rgba(35, 35, 35, 0.03) 0%, transparent 50%)",
+        "pencilValue": {
+          "type": "gradient",
+          "gradientType": "linear",
+          "rotation": -180,
+          "colors": [
+            { "color": "#23232308", "position": 0 },
+            { "color": "#23232300", "position": 0.5 }
+          ]
+        },
+        "semanticRole": "Auth inner card gradient (disabled)",
+        "usage": ["Auth inner card background"],
+        "screens": ["Auth"],
+        "status": "new",
+        "aliasOf": null
+      },
+      {
+        "name": "--ui-effect-gradient-auth-inner-stroke",
+        "value": "linear-gradient(180deg, rgba(237, 237, 237, 0.7) 0%, transparent 70%)",
+        "pencilValue": {
+          "type": "gradient",
+          "gradientType": "linear",
+          "rotation": -180,
+          "colors": [
+            { "color": "#edededb2", "position": 0 },
+            { "color": "#ededed00", "position": 0.7 }
+          ]
+        },
+        "semanticRole": "Auth inner card stroke gradient",
+        "usage": ["Auth inner card border", "Auth card inner outline"],
+        "screens": ["Auth"],
+        "status": "new",
+        "aliasOf": "--ui-color-border",
+        "aliasNote": "Base color matches existing border token"
+      },
+      {
+        "name": "--ui-effect-gradient-auth-outer-stroke",
+        "value": "linear-gradient(180deg, #ededed 20%, transparent 100%)",
+        "pencilValue": {
+          "type": "gradient",
+          "gradientType": "linear",
+          "rotation": -180,
+          "colors": [
+            { "color": "#edededff", "position": 0.2 },
+            { "color": "#ededed00", "position": 1 }
+          ]
+        },
+        "semanticRole": "Auth outer card stroke gradient",
+        "usage": ["Auth outer card border", "Auth card outline"],
+        "screens": ["Auth"],
+        "status": "new",
+        "aliasOf": "--ui-color-border",
+        "aliasNote": "Base color matches existing border token"
+      },
+      {
+        "name": "--ui-effect-gradient-logo",
+        "value": "linear-gradient(180deg, rgba(35, 35, 35, 0) 50%, rgba(35, 35, 35, 0.06) 100%)",
+        "pencilValue": {
+          "type": "gradient",
+          "gradientType": "linear",
+          "rotation": -180,
+          "colors": [
+            { "color": "#23232300", "position": 0.5 },
+            { "color": "#2323230f", "position": 1 }
+          ]
+        },
+        "semanticRole": "Logo gradient",
+        "usage": ["Logo container"],
+        "screens": ["Auth"],
+        "status": "new",
+        "aliasOf": null
+      },
+      {
+        "name": "--ui-effect-gradient-button",
+        "value": "linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.12) 100%)",
+        "pencilValue": {
+          "type": "gradient",
+          "gradientType": "linear",
+          "rotation": -180,
+          "colors": [
+            { "color": "#ffffff00", "position": 0 },
+            { "color": "#ffffff1f", "position": 1 }
+          ]
+        },
+        "semanticRole": "Button overlay gradient",
+        "usage": ["Login button"],
+        "screens": ["Auth"],
+        "status": "new",
+        "aliasOf": "--ui-color-surface",
+        "aliasNote": "Base color matches surface (white)"
+      }
+    ],
+    "strokes": [
+      {
+        "name": "--ui-stroke-input",
+        "value": "1.5px solid #ededed",
+        "pencilValue": { "thickness": 1.5, "fill": "#edededff" },
+        "semanticRole": "Input border",
+        "usage": ["Auth input fields"],
+        "screens": ["Auth"],
+        "status": "new",
+        "aliasOf": "--ui-color-border",
+        "aliasNote": "Color value matches existing border token"
+      },
+      {
+        "name": "--ui-stroke-table-row",
+        "value": "1px solid #e2e2e2",
+        "pencilValue": { "thickness": 1, "fill": "#e2e2e2ff" },
+        "semanticRole": "Table row separator",
+        "usage": ["Product rows"],
+        "screens": ["Products"],
+        "status": "new",
+        "aliasOf": "--ui-color-border-row",
+        "aliasNote": "References new border-row color token (same value)"
+      },
+      {
+        "name": "--ui-stroke-checkbox",
+        "value": "1px solid #b2b3b9",
+        "pencilValue": { "thickness": 1, "fill": "#b2b3b9ff" },
+        "semanticRole": "Checkbox border",
+        "usage": ["Checkboxes"],
+        "screens": ["Products"],
+        "status": "new",
+        "aliasOf": "--ui-color-text-tertiary",
+        "aliasNote": "Color value matches existing tertiary text token"
+      },
+      {
+        "name": "--ui-stroke-photo",
+        "value": "1px solid #ececeb",
+        "pencilValue": { "thickness": 1, "fill": "#ececebff" },
+        "semanticRole": "Photo placeholder border",
+        "usage": ["Product photos"],
+        "screens": ["Products"],
+        "status": "new",
+        "aliasOf": "--ui-color-border-subtle",
+        "aliasNote": "Color value matches existing subtle border token"
+      },
+      {
+        "name": "--ui-stroke-button",
+        "value": "1px solid #367aff",
+        "pencilValue": { "thickness": 1, "fill": "#367affff" },
+        "semanticRole": "Primary button stroke",
+        "usage": ["Login button"],
+        "screens": ["Auth"],
+        "status": "new",
+        "aliasOf": "--ui-color-primary-border",
+        "aliasNote": "Color value matches existing primary border token"
+      },
+      {
+        "name": "--ui-stroke-icon-muted",
+        "value": "2px solid #ededed",
+        "pencilValue": { "thickness": 2, "fill": "#edededff" },
+        "semanticRole": "Muted icon stroke",
+        "usage": ["Lock icon", "Eye icon"],
+        "screens": ["Auth"],
+        "status": "new",
+        "aliasOf": "--ui-color-border",
+        "aliasNote": "Color value matches existing border token"
+      }
+    ]
+  },
+
+  "diff": {
+    "description": "Diff analysis vs current UI-kit tokens with complete alias mapping",
+    "additions": [
+      "--ui-color-auth-background",
+      "--ui-color-border-row",
+      "--ui-color-icon-light",
+      "--ui-color-icon-lock",
+      "--ui-color-icon-muted",
+      "--ui-color-page-background",
+      "--ui-color-photo-placeholder",
+      "--ui-color-selection-stripe",
+      "--ui-color-text-black",
+      "--ui-color-text-body",
+      "--ui-color-text-dark",
+      "--ui-color-text-darker",
+      "--ui-effect-gradient-auth-inner-bg",
+      "--ui-effect-gradient-logo",
+      "--ui-effect-shadow-button",
+      "--ui-effect-shadow-card",
+      "--ui-effect-shadow-logo-1",
+      "--ui-effect-shadow-page",
+      "--ui-effect-shadow-pagination",
+      "--ui-effect-shadow-modal",
+      "--ui-font-mono",
+      "--ui-font-size-2xl",
+      "--ui-font-size-3xl",
+      "--ui-font-size-lg",
+      "--ui-font-size-md",
+      "--ui-font-size-sm",
+      "--ui-font-size-xl",
+      "--ui-font-size-xs",
+      "--ui-font-weight-bold",
+      "--ui-font-weight-medium",
+      "--ui-font-weight-normal",
+      "--ui-font-weight-semibold",
+      "--ui-letter-spacing-button",
+      "--ui-letter-spacing-normal-tight",
+      "--ui-letter-spacing-tight",
+      "--ui-line-height-loose",
+      "--ui-line-height-normal",
+      "--ui-line-height-relaxed",
+      "--ui-line-height-tight",
+      "--ui-radius-2xl",
+      "--ui-radius-3xl",
+      "--ui-space-2xl",
+      "--ui-space-2xs",
+      "--ui-space-3xl",
+      "--ui-space-3xs",
+      "--ui-space-4xl",
+      "--ui-space-5xl",
+      "--ui-space-6xl",
+      "--ui-space-7xl",
+      "--ui-space-8xl",
+      "--ui-space-9xl"
+    ],
+    "modifications": [
+      "--ui-space-sm: 8px -> 6px (Pencil scale)",
+      "--ui-space-md: 12px -> 8px (Pencil scale)",
+      "--ui-space-lg: 16px -> 10px (Pencil scale)",
+      "--ui-space-xl: 20px -> 12px (Pencil scale)",
+      "--ui-radius-pill: 9999px -> 100px (value used in Pencil)"
+    ],
+    "aliases": [
+      {
+        "newToken": "--ui-color-selection-stripe",
+        "aliasOf": "--ui-color-checkbox-checked",
+        "value": "#3c538e",
+        "notes": "Selection stripe color matches existing checkbox-checked token"
+      },
+      {
+        "newToken": "--ui-color-checkbox-selected",
+        "aliasOf": "--ui-color-checkbox-checked",
+        "value": "#3c538e",
+        "notes": "Checkbox selected color matches existing checkbox-checked token"
+      },
+      {
+        "newToken": "--ui-space-md",
+        "aliasOf": "--ui-space-sm",
+        "value": "8px",
+        "notes": "Pencil medium spacing matches existing space-sm"
+      },
+      {
+        "newToken": "--ui-space-xl",
+        "aliasOf": "--ui-space-md",
+        "value": "12px",
+        "notes": "Pencil xl spacing matches existing space-md"
+      },
+      {
+        "newToken": "--ui-space-3xl",
+        "aliasOf": "--ui-space-lg",
+        "value": "16px",
+        "notes": "Pencil 3xl spacing matches existing space-lg"
+      },
+      {
+        "newToken": "--ui-space-5xl",
+        "aliasOf": "--ui-space-xl",
+        "value": "20px",
+        "notes": "Pencil 5xl spacing matches existing space-xl"
+      },
+      {
+        "newToken": "--ui-color-on-primary",
+        "aliasOf": "--ui-color-surface",
+        "value": "#ffffff",
+        "notes": "Text on primary uses white, same as surface"
+      },
+      {
+        "newToken": "--ui-stroke-input",
+        "aliasOf": "--ui-color-border",
+        "value": "#ededed",
+        "notes": "Input stroke color matches border token"
+      },
+      {
+        "newToken": "--ui-stroke-icon-muted",
+        "aliasOf": "--ui-color-border",
+        "value": "#ededed",
+        "notes": "Icon muted stroke matches border token"
+      },
+      {
+        "newToken": "--ui-stroke-checkbox",
+        "aliasOf": "--ui-color-text-tertiary",
+        "value": "#b2b3b9",
+        "notes": "Checkbox stroke matches tertiary text color"
+      },
+      {
+        "newToken": "--ui-stroke-photo",
+        "aliasOf": "--ui-color-border-subtle",
+        "value": "#ececeb",
+        "notes": "Photo border matches subtle border token"
+      },
+      {
+        "newToken": "--ui-stroke-button",
+        "aliasOf": "--ui-color-primary-border",
+        "value": "#367aff",
+        "notes": "Button stroke matches primary border token"
+      },
+      {
+        "newToken": "--ui-stroke-table-row",
+        "aliasOf": "--ui-color-border-row",
+        "value": "#e2e2e2",
+        "notes": "Table row stroke references new border-row color token"
+      },
+      {
+        "newToken": "--ui-effect-shadow-logo-2",
+        "aliasOf": "--ui-color-surface",
+        "value": "#ffffff",
+        "notes": "Logo inner glow uses surface color (white)"
+      },
+      {
+        "newToken": "--ui-effect-gradient-auth-inner-stroke",
+        "aliasOf": "--ui-color-border",
+        "value": "#ededed",
+        "notes": "Auth inner stroke gradient base color matches border"
+      },
+      {
+        "newToken": "--ui-effect-gradient-auth-outer-stroke",
+        "aliasOf": "--ui-color-border",
+        "value": "#ededed",
+        "notes": "Auth outer stroke gradient base color matches border"
+      }
+    ],
+    "deprecations": [],
+    "noChange": [
+      "--ui-color-surface",
+      "--ui-color-surface-muted",
+      "--ui-color-text",
+      "--ui-color-text-tertiary",
+      "--ui-color-text-muted",
+      "--ui-color-text-placeholder",
+      "--ui-color-text-subtle",
+      "--ui-color-text-faint",
+      "--ui-color-border",
+      "--ui-color-border-subtle",
+      "--ui-color-primary",
+      "--ui-color-primary-border",
+      "--ui-color-accent",
+      "--ui-space-xs",
+      "--ui-radius-xs",
+      "--ui-radius-sm",
+      "--ui-radius-md",
+      "--ui-radius-lg",
+      "--ui-radius-xl",
+      "--ui-font-heading",
+      "--ui-font-ui",
+      "--ui-font-body",
+      "--ui-font-roboto"
+    ],
+    "valueConflicts": [
+      {
+        "token": "--ui-space-sm",
+        "existingValue": "8px",
+        "pencilValue": "6px",
+        "resolution": "Pencil uses different scale; keep as new token if needed or use existing sm/md"
+      },
+      {
+        "token": "--ui-space-md",
+        "existingValue": "12px",
+        "pencilValue": "8px",
+        "resolution": "Pencil scale is tighter; consider adding new token or adjusting mapping"
+      },
+      {
+        "token": "--ui-space-lg",
+        "existingValue": "16px",
+        "pencilValue": "10px",
+        "resolution": "Pencil scale is tighter; consider adding new token or adjusting mapping"
+      },
+      {
+        "token": "--ui-space-xl",
+        "existingValue": "20px",
+        "pencilValue": "12px",
+        "resolution": "Pencil scale is tighter; consider adding new token or adjusting mapping"
+      },
+      {
+        "token": "--ui-space-2xl",
+        "existingValue": "24px",
+        "pencilValue": "14px",
+        "resolution": "Different values; Pencil's 14px is unique"
+      },
+      {
+        "token": "--ui-radius-pill",
+        "existingValue": "9999px",
+        "pencilValue": "100px",
+        "resolution": "Pencil uses a finite radius; decide whether to keep pill or adopt 100px"
+      },
+      {
+        "token": "--ui-space-xxl",
+        "existingValue": "24px",
+        "pencilValue": "not used",
+        "resolution": "Pencil uses different scale starting from 2xl=14px"
+      }
+    ],
+    "aliasingRules": [
+      "If a Pencil color value matches an existing UI-kit color token, define the new token as an alias to the existing token.",
+      "If a Pencil gradient/shadow/stroke uses a base color matching an existing token, reference that token.",
+      "Document alias relationships with 'aliasOf' metadata.",
+      "No duplicate raw values should be introduced where an existing token provides the same value."
+    ]
+  },
+
+  "tailwindMapping": {
+    "description": "Tailwind theme extension mapping for all Pencil-derived tokens (via CSS variables).",
+    "colors": {
+      "surface": "var(--ui-color-surface)",
+      "surface-muted": "var(--ui-color-surface-muted)",
+      "page-background": "var(--ui-color-page-background)",
+      "auth-background": "var(--ui-color-auth-background)",
+      "text": "var(--ui-color-text)",
+      "text-dark": "var(--ui-color-text-dark)",
+      "text-darker": "var(--ui-color-text-darker)",
+      "text-tertiary": "var(--ui-color-text-tertiary)",
+      "text-muted": "var(--ui-color-text-muted)",
+      "text-placeholder": "var(--ui-color-text-placeholder)",
+      "text-subtle": "var(--ui-color-text-subtle)",
+      "text-faint": "var(--ui-color-text-faint)",
+      "text-body": "var(--ui-color-text-body)",
+      "text-black": "var(--ui-color-text-black)",
+      "border": "var(--ui-color-border)",
+      "border-subtle": "var(--ui-color-border-subtle)",
+      "border-row": "var(--ui-color-border-row)",
+      "icon-muted": "var(--ui-color-icon-muted)",
+      "icon-light": "var(--ui-color-icon-light)",
+      "icon-lock": "var(--ui-color-icon-lock)",
+      "primary": "var(--ui-color-primary)",
+      "primary-border": "var(--ui-color-primary-border)",
+      "accent": "var(--ui-color-accent)",
+      "selection-stripe": "var(--ui-color-selection-stripe)",
+      "checkbox-selected": "var(--ui-color-checkbox-selected)",
+      "on-primary": "var(--ui-color-on-primary)",
+      "photo-placeholder": "var(--ui-color-photo-placeholder)"
+    },
+    "boxShadow": {
+      "page": "var(--ui-effect-shadow-page)",
+      "card": "var(--ui-effect-shadow-card)",
+      "button": "var(--ui-effect-shadow-button)",
+      "logo-1": "var(--ui-effect-shadow-logo-1)",
+      "logo-2": "var(--ui-effect-shadow-logo-2)",
+      "pagination": "var(--ui-effect-shadow-pagination)",
+      "modal": "var(--ui-effect-shadow-modal)"
+    },
+    "backgroundImage": {
+      "auth-inner-bg": "var(--ui-effect-gradient-auth-inner-bg)",
+      "auth-inner-stroke": "var(--ui-effect-gradient-auth-inner-stroke)",
+      "auth-outer-stroke": "var(--ui-effect-gradient-auth-outer-stroke)",
+      "logo": "var(--ui-effect-gradient-logo)",
+      "button": "var(--ui-effect-gradient-button)"
+    },
+    "borderColor": {
+      "border": "var(--ui-color-border)",
+      "border-subtle": "var(--ui-color-border-subtle)",
+      "border-row": "var(--ui-color-border-row)",
+      "primary-border": "var(--ui-color-primary-border)"
+    },
+    "spacing": {
+      "3xs": "var(--ui-space-3xs)",
+      "2xs": "var(--ui-space-2xs)",
+      "xs": "var(--ui-space-xs)",
+      "sm": "var(--ui-space-sm)",
+      "md": "var(--ui-space-md)",
+      "lg": "var(--ui-space-lg)",
+      "xl": "var(--ui-space-xl)",
+      "2xl": "var(--ui-space-2xl)",
+      "3xl": "var(--ui-space-3xl)",
+      "4xl": "var(--ui-space-4xl)",
+      "5xl": "var(--ui-space-5xl)",
+      "6xl": "var(--ui-space-6xl)",
+      "7xl": "var(--ui-space-7xl)",
+      "8xl": "var(--ui-space-8xl)",
+      "9xl": "var(--ui-space-9xl)"
+    },
+    "borderRadius": {
+      "xs": "var(--ui-radius-xs)",
+      "sm": "var(--ui-radius-sm)",
+      "md": "var(--ui-radius-md)",
+      "lg": "var(--ui-radius-lg)",
+      "xl": "var(--ui-radius-xl)",
+      "2xl": "var(--ui-radius-2xl)",
+      "3xl": "var(--ui-radius-3xl)",
+      "pill": "var(--ui-radius-pill)"
+    },
+    "fontFamily": {
+      "heading": "var(--ui-font-heading)",
+      "ui": "var(--ui-font-ui)",
+      "body": "var(--ui-font-body)",
+      "roboto": "var(--ui-font-roboto)",
+      "mono": "var(--ui-font-mono)"
+    },
+    "fontSize": {
+      "xs": "var(--ui-font-size-xs)",
+      "sm": "var(--ui-font-size-sm)",
+      "md": "var(--ui-font-size-md)",
+      "lg": "var(--ui-font-size-lg)",
+      "xl": "var(--ui-font-size-xl)",
+      "2xl": "var(--ui-font-size-2xl)",
+      "3xl": "var(--ui-font-size-3xl)"
+    },
+    "fontWeight": {
+      "normal": "var(--ui-font-weight-normal)",
+      "medium": "var(--ui-font-weight-medium)",
+      "semibold": "var(--ui-font-weight-semibold)",
+      "bold": "var(--ui-font-weight-bold)"
+    },
+    "lineHeight": {
+      "tight": "var(--ui-line-height-tight)",
+      "normal": "var(--ui-line-height-normal)",
+      "relaxed": "var(--ui-line-height-relaxed)",
+      "loose": "var(--ui-line-height-loose)"
+    },
+    "letterSpacing": {
+      "tight": "var(--ui-letter-spacing-tight)",
+      "normal-tight": "var(--ui-letter-spacing-normal-tight)",
+      "button": "var(--ui-letter-spacing-button)"
+    },
+    "stroke": {
+      "input": "var(--ui-stroke-input)",
+      "table-row": "var(--ui-stroke-table-row)",
+      "checkbox": "var(--ui-stroke-checkbox)",
+      "photo": "var(--ui-stroke-photo)",
+      "button": "var(--ui-stroke-button)",
+      "icon-muted": "var(--ui-stroke-icon-muted)"
+    }
+  }
+}

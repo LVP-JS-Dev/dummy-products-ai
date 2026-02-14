@@ -1,9 +1,9 @@
 ---
+name: burlaki-continue
 description: Continue interrupted Ralph development cycle
-argument-hint: "[iterations]"
 ---
 
-# AO Continue
+# Burlaki Continue
 
 Continue interrupted cycle using existing PRD/task state and Ralph loop.
 
@@ -17,7 +17,7 @@ Continue interrupted cycle using existing PRD/task state and Ralph loop.
 test -f .agents/tasks/prd.json
 ```
 
-If missing, stop and ask to run `/ao-start` first.
+If missing, stop and ask to run `/burlaki-start` first.
 
 1) Run one or more iterations to resume:
 
@@ -28,13 +28,13 @@ ralph build <iterations>
 Use default `1` when not provided.
 
 1) Summarize result from latest run metadata/log:
-- story handled this iteration
-- status (`done`, reset to `open`, or blocked)
-- key fail reasons if blocked (tests/review/skill gate)
-- whether escalation tag is present
-- whether PRD/specs drift was detected (`@spec-drift`)
+   - story handled this iteration
+   - status (`done`, reset to `open`, or blocked)
+   - key fail reasons if blocked (tests/review/skill gate)
+   - whether escalation tag is present
+   - whether PRD/specs drift was detected (`@spec-drift`)
 
-1) If a story is stuck across attempts, propose escalation with `@human` tag and show it via `/ao-human`.
+1) If a story is stuck across attempts, propose escalation with `@human` tag and show it via `/burlaki-human`.
 
 **Guardrails**
 - Continue from existing state; do not rewrite PRD unless user asks

@@ -1,0 +1,4 @@
+{
+  "enabledMcpjsonServers": ["context7", "figma-bridge"],
+  "disabledMcpjsonServers": ["Framelink_Figma_MCP"]
+}
