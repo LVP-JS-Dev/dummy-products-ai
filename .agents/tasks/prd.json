@@ -298,10 +298,7 @@
       "acceptanceCriteria": [
         "Effects tokens cover all gradients/shadows/strokes, including Auth form outlines."
       ],
-      "status": "in_progress",
-      "startedAt": "2026-02-14T17:32:05.654132+00:00",
-      "completedAt": null,
-      "updatedAt": "2026-02-14T17:32:05.654364+00:00"
+      "status": "open"
     },
     {
       "id": "TASK-003",
@@ -310,10 +307,7 @@
       "acceptanceCriteria": [
         "All matching values are aliased; no duplicate raw values introduced."
       ],
-      "status": "in_progress",
-      "startedAt": "2026-02-14T17:41:40.527011+00:00",
-      "completedAt": null,
-      "updatedAt": "2026-02-14T17:41:40.527239+00:00"
+      "status": "open"
     },
     {
       "id": "TASK-004",
@@ -322,20 +316,14 @@
       "acceptanceCriteria": [
         "Every token has a Tailwind mapping referencing CSS vars."
       ],
-      "status": "done",
-      "updatedAt": "2026-02-14T21:40:54.528359+00:00",
-      "completedAt": "2026-02-14T21:40:54.528584+00:00",
-      "startedAt": "2026-02-14T21:40:54.528587+00:00"
+      "status": "open"
     },
     {
       "id": "TASK-005",
       "title": "Diff report vs current UI-kit tokens",
       "description": "Classify each Pencil-derived token as add/modify/deprecate/alias relative to current tokens.\nSummarize deltas in a compact list for review.",
       "acceptanceCriteria": ["Diff report is complete and categorized."],
-      "status": "done",
-      "startedAt": "2026-02-14T21:40:56.616298+00:00",
-      "completedAt": "2026-02-14T21:48:04.883328+00:00",
-      "updatedAt": "2026-02-14T21:48:04.882877+00:00"
+      "status": "open"
     }
   ],
   "qualityGates": []
