@@ -98,6 +98,8 @@
   Использование: инпуты, контролы, компактные UI-элементы и табличные ячейки.
 - `--ui-font-roboto`: `"Roboto", "Inter", system-ui, sans-serif`
   Использование: UI-сценарии, где требуется совместимость с макетами на Roboto при сохранении токенизированного подключения.
+- `--ui-font-mono`: `"Roboto Mono", "Roboto", "Inter", system-ui, sans-serif`
+  Использование: табличные и денежные значения с фиксированной шириной символов.
 
 Правило fallback: если кастомный шрифт недоступен, применяется следующий в стеке до `system-ui`.
 
@@ -106,6 +108,7 @@
 - `font-family: var(--ui-font-body);` для paragraph/helper text
 - `font-family: var(--ui-font-ui);` для form controls
 - `font-family: var(--ui-font-roboto);` для Roboto-specific UI случаев
+- `font-family: var(--ui-font-mono);` для цен и других табличных чисел
 
 ### Исключение: Figma-first для consumer apps
 

@@ -1,0 +1,24 @@
+{
+  "baseUrl": "http://127.0.0.1:3001",
+  "timestamp": "2026-02-13T22:32:07Z",
+  "pairs": [
+    {
+      "name": "login",
+      "captured": "openspec/changes/ui-kit-figma-playwright-parity/artifacts/screenshots/round9/web-requirements/login.png",
+      "reference": "requirements/auth-form.png",
+      "diff": "openspec/changes/ui-kit-figma-playwright-parity/artifacts/diffs/round9/login-diff.png",
+      "different_pixels": 349097,
+      "total_pixels": 2073600,
+      "different_percent": 16.8353
+    },
+    {
+      "name": "products",
+      "captured": "openspec/changes/ui-kit-figma-playwright-parity/artifacts/screenshots/round9/web-requirements/products.png",
+      "reference": "requirements/goods-list.png",
+      "diff": "openspec/changes/ui-kit-figma-playwright-parity/artifacts/diffs/round9/products-diff.png",
+      "different_pixels": 202612,
+      "total_pixels": 1582080,
+      "different_percent": 12.8067
+    }
+  ]
+}

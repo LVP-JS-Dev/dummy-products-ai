@@ -9,7 +9,26 @@ import {
 } from "./Fixtures";
 
 const LOADING_INDICATOR_EMPTY_RE = /w-0/;
-const PRICE_TEXT_RE = /100,00/;
+function parsePrice(value: string) {
+  const normalized = value.replace(/\s/g, "").replace(",", ".");
+  const parsed = Number.parseFloat(normalized);
+  if (!Number.isFinite(parsed)) {
+    throw new Error(`Unable to parse price: ${value}`);
+  }
+  return parsed;
+}
+
+async function readPriceColumnValues(page: Page) {
+  const rows = page.locator("tbody tr");
+  const count = await rows.count();
+  const values: number[] = [];
+  for (let i = 0; i < count; i += 1) {
+    const cell = rows.nth(i).locator("td").nth(5);
+    const text = (await cell.textContent()) ?? "";
+    values.push(parsePrice(text));
+  }
+  return values;
+}
 
 async function typeInputValueByLabel(page: Page, label: string, value: string) {
   const input = page.getByLabel(label);
@@ -47,6 +66,7 @@ test.describe("products flows", () => {
     await page.goto("/products");
 
     const indicator = page.getByTestId("products-loading-indicator");
+    await expect(indicator).not.toHaveClass(LOADING_INDICATOR_EMPTY_RE);
     await expect(page.getByText("Desk")).toBeVisible();
     await expect(indicator).toHaveClass(LOADING_INDICATOR_EMPTY_RE);
   });
@@ -114,11 +134,21 @@ test.describe("products flows", () => {
     await priceButton.evaluate((element) => element.click());
     await expect(header).toHaveAttribute("aria-sort", "ascending");
 
-    const firstPrice = page.locator("tbody tr").first().locator("td").nth(5);
-    await expect(firstPrice).toHaveText(PRICE_TEXT_RE);
+    const ascending = await readPriceColumnValues(page);
+    const ascendingSorted = [...ascending].sort((a, b) => a - b);
+    expect(ascending).toEqual(ascendingSorted);
 
     await priceButton.evaluate((element) => element.click());
     await expect(header).toHaveAttribute("aria-sort", "descending");
+
+    await page.reload();
+    await expect(page.getByTestId("products-table")).toBeVisible();
+    const priceButtonReload = page.getByRole("button", { name: "Цена" });
+    const headerReload = priceButtonReload.locator("xpath=ancestor::th[1]");
+    await expect(headerReload).toHaveAttribute("aria-sort", "descending");
+    const descending = await readPriceColumnValues(page);
+    const descendingSorted = [...descending].sort((a, b) => b - a);
+    expect(descending).toEqual(descendingSorted);
   });
 
   test("search queries the API and renders results", async ({ page }) => {
@@ -165,6 +195,7 @@ test.describe("products flows", () => {
       .locator("#add-product-save")
       .evaluate((element) => element.click());
     await expect(page.getByText("Товар добавлен")).toBeVisible();
+    await expect(page.getByTestId("add-product-modal")).not.toBeVisible();
   });
 
   test("rating below 3 is highlighted in red", async ({ page }) => {

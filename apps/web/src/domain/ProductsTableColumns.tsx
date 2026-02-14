@@ -5,7 +5,7 @@ import type { ProductRow } from "@/domain/Products";
 
 export interface ProductsColumnMeta {
   label: string;
-  align?: "left" | "right";
+  align?: "left" | "right" | "center";
 }
 
 const priceFormatter = new Intl.NumberFormat("ru-RU", {
@@ -54,22 +54,22 @@ export const productsTableColumns: ColumnDef<ProductRow>[] = [
           <div
             aria-hidden
             style={{
-              width: 44,
-              height: 44,
+              width: 48,
+              height: 48,
               borderRadius: 8,
               background: "var(--ui-color-surface-muted)",
               overflow: "hidden",
-              border: "1px solid var(--ui-color-border)",
+              border: "1px solid var(--ui-color-border-subtle)",
               flex: "0 0 auto",
             }}
           >
             {img ? (
               <img
                 alt=""
-                height={44}
+                height={48}
                 src={img}
                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                width={44}
+                width={48}
               />
             ) : null}
           </div>
@@ -78,9 +78,9 @@ export const productsTableColumns: ColumnDef<ProductRow>[] = [
               style={{
                 fontFamily: "var(--ui-font-heading)",
                 fontWeight: 700,
-                fontSize: 15,
-                color: "var(--ui-color-text)",
-                lineHeight: 1.2,
+                fontSize: 16,
+                color: "#161919",
+                lineHeight: "29.984px",
               }}
             >
               {row.original.name}
@@ -89,9 +89,9 @@ export const productsTableColumns: ColumnDef<ProductRow>[] = [
               <div
                 style={{
                   fontFamily: "var(--ui-font-body)",
-                  fontSize: 12,
+                  fontSize: 14,
                   color: "var(--ui-color-text-muted)",
-                  lineHeight: 1.2,
+                  lineHeight: "26.236px",
                 }}
               >
                 {category}
@@ -111,16 +111,17 @@ export const productsTableColumns: ColumnDef<ProductRow>[] = [
     cell: ({ row }) => (
       <span
         style={{
-          fontFamily: "var(--ui-font-heading)",
+          fontFamily: "var(--ui-font-body)",
           fontWeight: 700,
-          fontSize: 14,
-          color: "var(--ui-color-text)",
+          fontSize: 16,
+          color: "#000000",
+          lineHeight: "21.789px",
         }}
       >
         {row.original.vendor}
       </span>
     ),
-    meta: { label: "Вендор", align: "left" } satisfies ProductsColumnMeta,
+    meta: { label: "Вендор", align: "center" } satisfies ProductsColumnMeta,
   },
   {
     id: "article",
@@ -131,14 +132,15 @@ export const productsTableColumns: ColumnDef<ProductRow>[] = [
       <span
         style={{
           fontFamily: "var(--ui-font-body)",
-          fontSize: 14,
-          color: "var(--ui-color-text)",
+          fontSize: 16,
+          color: "#000000",
+          lineHeight: "21.789px",
         }}
       >
         {row.original.article}
       </span>
     ),
-    meta: { label: "Артикул", align: "left" } satisfies ProductsColumnMeta,
+    meta: { label: "Артикул", align: "center" } satisfies ProductsColumnMeta,
   },
   {
     id: "rating",
@@ -151,15 +153,16 @@ export const productsTableColumns: ColumnDef<ProductRow>[] = [
         <span
           style={{
             fontFamily: "var(--ui-font-body)",
-            fontSize: 14,
-            color: low ? "#dc2626" : "var(--ui-color-text)",
+            fontSize: 16,
+            lineHeight: "21.789px",
+            color: low ? "#dc2626" : "#000000",
           }}
         >
           {formatRating(row.original.rating)}
         </span>
       );
     },
-    meta: { label: "Оценка", align: "right" } satisfies ProductsColumnMeta,
+    meta: { label: "Оценка", align: "center" } satisfies ProductsColumnMeta,
   },
   {
     id: "price",
@@ -169,15 +172,16 @@ export const productsTableColumns: ColumnDef<ProductRow>[] = [
     cell: ({ row }) => (
       <span
         style={{
-          fontFamily: "var(--ui-font-body)",
-          fontSize: 14,
-          color: "var(--ui-color-text)",
+          fontFamily: "var(--ui-font-mono)",
+          fontSize: 16,
+          color: "#222222",
+          lineHeight: "17.6px",
         }}
       >
         {formatPriceRUB(row.original.price)}
       </span>
     ),
-    meta: { label: "Цена", align: "right" } satisfies ProductsColumnMeta,
+    meta: { label: "Цена, ₽", align: "center" } satisfies ProductsColumnMeta,
   },
   {
     id: "actions",
@@ -190,8 +194,8 @@ export const productsTableColumns: ColumnDef<ProductRow>[] = [
           style={{
             display: "inline-flex",
             width: 52,
-            height: 32,
-            borderRadius: 999,
+            height: 27,
+            borderRadius: 23,
             alignItems: "center",
             justifyContent: "center",
             background: "var(--ui-color-primary)",
