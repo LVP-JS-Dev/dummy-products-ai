@@ -8,6 +8,9 @@
     "./matrix": "./agent-skills-matrix.json",
     "./cli": "./scripts/skills-gate.mjs"
   },
+  "bin": {
+    "burlaki-skills-gate": "./scripts/skills-gate.mjs"
+  },
   "scripts": {
     "skills:gate": "node scripts/skills-gate.mjs",
     "prompts:install": "node scripts/install-prompts.mjs --tool codex && node scripts/install-prompts.mjs --tool opencode && node scripts/install-prompts.mjs --tool claude",

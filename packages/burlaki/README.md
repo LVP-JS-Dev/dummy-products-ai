@@ -11,15 +11,7 @@ npm install @lvpjsdev/burlaki
 ## Usage
 
 ```js
-import matrix from '@lvpjsdev/burlaki';
-
-console.log(matrix.stages.coder.requiredSkills);
-```
-
-Or import the matrix directly:
-
-```js
-import matrix from '@lvpjsdev/burlaki/matrix';
+import matrix from '@dummy-products/burlaki/matrix';
 ```
 
 ## Compound Engineering Workflow
@@ -54,7 +46,7 @@ See [WORKFLOW_DIAGRAMS.md](docs/WORKFLOW_DIAGRAMS.md) for visual reference.
 ## CLI
 
 ```bash
-npx burlaki-skills-gate --matrix ./agent-skills-matrix.json --stage coder --agent claude
+pnpm skills:gate -- --matrix ./agent-skills-matrix.json --stage coder --agent claude
 ```
 
 Optional flags:
