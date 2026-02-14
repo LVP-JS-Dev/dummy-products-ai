@@ -316,14 +316,17 @@
       "acceptanceCriteria": [
         "Every token has a Tailwind mapping referencing CSS vars."
       ],
-      "status": "open"
+      "status": "done",
+      "startedAt": "2026-02-14T21:58:59.792707+00:00",
+      "completedAt": null,
+      "updatedAt": "2026-02-14T21:58:59.793038+00:00"
     },
     {
       "id": "TASK-005",
       "title": "Diff report vs current UI-kit tokens",
       "description": "Classify each Pencil-derived token as add/modify/deprecate/alias relative to current tokens.\nSummarize deltas in a compact list for review.",
       "acceptanceCriteria": ["Diff report is complete and categorized."],
-      "status": "open"
+      "status": "done"
     }
   ],
   "qualityGates": []
