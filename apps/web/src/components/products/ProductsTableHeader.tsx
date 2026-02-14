@@ -68,6 +68,7 @@ function ProductsTableHeaderCell({
       style={baseCellStyle}
     >
       <button
+        data-testid={`sort-${cell.id}`}
         onClick={cell.onSortToggle}
         style={{
           display: "inline-flex",

@@ -52,6 +52,12 @@ test.describe("auth flows", () => {
     await page.locator("#login-submit").click();
 
     await expect(page).toHaveURL(PRODUCTS_URL_RE);
+    const rememberOnStorage = await page.evaluate(() => ({
+      local: localStorage.getItem("dummy-products.auth"),
+      session: sessionStorage.getItem("dummy-products.auth"),
+    }));
+    expect(rememberOnStorage.local).toBeTruthy();
+    expect(rememberOnStorage.session).toBeNull();
 
     const storageState = await page.context().storageState();
     const browser = page.context().browser();
@@ -81,6 +87,12 @@ test.describe("auth flows", () => {
     await page.locator("#login-submit").click();
 
     await expect(page).toHaveURL(PRODUCTS_URL_RE);
+    const rememberOffStorage = await page.evaluate(() => ({
+      local: localStorage.getItem("dummy-products.auth"),
+      session: sessionStorage.getItem("dummy-products.auth"),
+    }));
+    expect(rememberOffStorage.local).toBeNull();
+    expect(rememberOffStorage.session).toBeTruthy();
 
     const storageState = await page.context().storageState();
     const browser = page.context().browser();

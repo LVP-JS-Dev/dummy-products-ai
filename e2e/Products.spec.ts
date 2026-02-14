@@ -47,6 +47,7 @@ test.describe("products flows", () => {
     await page.goto("/products");
 
     const indicator = page.getByTestId("products-loading-indicator");
+    await expect(indicator).not.toHaveClass(LOADING_INDICATOR_EMPTY_RE);
     await expect(page.getByText("Desk")).toBeVisible();
     await expect(indicator).toHaveClass(LOADING_INDICATOR_EMPTY_RE);
   });
@@ -119,6 +120,12 @@ test.describe("products flows", () => {
 
     await priceButton.evaluate((element) => element.click());
     await expect(header).toHaveAttribute("aria-sort", "descending");
+
+    await page.reload();
+    await expect(page.getByTestId("products-table")).toBeVisible();
+    const priceButtonReload = page.getByRole("button", { name: "Цена" });
+    const headerReload = priceButtonReload.locator("xpath=ancestor::th[1]");
+    await expect(headerReload).toHaveAttribute("aria-sort", "descending");
   });
 
   test("search queries the API and renders results", async ({ page }) => {
@@ -165,6 +172,7 @@ test.describe("products flows", () => {
       .locator("#add-product-save")
       .evaluate((element) => element.click());
     await expect(page.getByText("Товар добавлен")).toBeVisible();
+    await expect(page.getByTestId("add-product-modal")).not.toBeVisible();
   });
 
   test("rating below 3 is highlighted in red", async ({ page }) => {
