@@ -1,9 +1,9 @@
 ---
+name: burlaki-run
 description: Run coder cycle after PRD approval (Ralph loop)
-argument-hint: "[iterations] [--no-commit]"
 ---
 
-# AO Run
+# Burlaki Run
 
 Run the development cycle after PRD/tasks are approved by a human.
 
@@ -19,10 +19,10 @@ Run the development cycle after PRD/tasks are approved by a human.
 test -f .agents/tasks/prd.json
 ```
 
-If missing, stop and suggest `/ao-start`.
+If missing, stop and suggest `/burlaki-start`.
 
 1) Ensure execution happens in a dedicated worktree for the current feature branch.
-Recommended pattern:
+   Recommended pattern:
 
 ```bash
 git worktree add .codex/worktrees/<story-id> -b feature/<story-id>-<slug> develop
@@ -42,13 +42,13 @@ ralph build <iterations> --no-commit
 ```
 
 1) After run, report:
-- processed stories/tasks
-- completed vs reopened tasks
-- test/review blockers
-- stories tagged for escalation (`@human`)
-- potential PRD vs specs drift findings (tag as `@spec-drift`)
+   - processed stories/tasks
+   - completed vs reopened tasks
+   - test/review blockers
+   - stories tagged for escalation (`@human`)
+   - potential PRD vs specs drift findings (tag as `@spec-drift`)
 
-1) If iteration cap is reached and tasks still fail, ensure they are tagged `@human` and direct user to `/ao-human`.
+1) If iteration cap is reached and tasks still fail, ensure they are tagged `@human` and direct user to `/burlaki-human`.
 
 **Guardrails**
 - Do not start run before human approval of PRD/tasks

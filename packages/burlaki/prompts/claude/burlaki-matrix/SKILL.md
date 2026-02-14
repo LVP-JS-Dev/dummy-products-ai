@@ -1,13 +1,13 @@
 ---
-description: Inspect the agent-orchestrator skill matrix for a stage
-argument-hint: "<stage>"
+name: burlaki-matrix
+description: Inspect the burlaki skill matrix for a stage
 ---
 
-# AO Matrix
+# Burlaki Matrix
 
-Inspect `packages/agent-orchestrator/agent-skills-matrix.json` and summarize the constraints for the requested stage.
+Inspect `packages/burlaki/agent-skills-matrix.json` and summarize the constraints for the requested stage.
 
-1) Parse command arguments (`$ARGUMENTS`) as `stage`.
+1) Parse user input as `stage`.
    - If missing/ambiguous, ask the user which stage they mean and show available stage keys from the matrix.
 
 2) Read the matrix and output:

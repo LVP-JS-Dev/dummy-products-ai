@@ -1,0 +1,9 @@
+node_modules
+dist
+.ralph
+.agents
+.codex
+.opencode/
+.claude/
+*.log
+.DS_Store
