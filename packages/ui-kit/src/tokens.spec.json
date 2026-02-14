@@ -834,7 +834,7 @@
       },
       {
         "name": "--ui-effect-gradient-auth-inner-stroke",
-        "value": "linear-gradient(180deg, #ededed 0%, transparent 70%)",
+        "value": "linear-gradient(180deg, rgba(237, 237, 237, 0.7) 0%, transparent 70%)",
         "pencilValue": {
           "type": "gradient",
           "gradientType": "linear",
