@@ -5,6 +5,9 @@ import { chromium } from "@playwright/test";
 
 const baseUrl = process.env.BASE_URL ?? "http://127.0.0.1:3001";
 const round = process.env.PARITY_ROUND ?? "round2";
+const STABLE_RENDER_DELAY = 600;
+const PRODUCT_STABLE_RENDER_DELAY = 1500;
+const PRODUCT_SELECT_RENDER_DELAY = 300;
 
 const outDir = `openspec/changes/ui-kit-figma-playwright-parity/artifacts/screenshots/${round}/web-requirements`;
 
@@ -73,7 +76,8 @@ await loginPage.goto(`${baseUrl}/login`, { waitUntil: "networkidle" });
 await loginPage.locator("#username").fill("test");
 await loginPage.locator("#password").fill("1234567890123");
 await loginPage.locator("body").click({ position: { x: 10, y: 10 } });
-await loginPage.waitForTimeout(600);
+// Allow UI to settle for parity screenshots (input render + font swap).
+await loginPage.waitForTimeout(STABLE_RENDER_DELAY);
 await loginPage.screenshot({ path: `${outDir}/login.png` });
 await loginCtx.close();
 
@@ -90,9 +94,9 @@ const productsPage = await productsCtx.newPage();
 await productsPage.route("**/products?*", async (route) => {
   const url = route.request().url();
   const parsed = new URL(url);
-  const _limit = Number(parsed.searchParams.get("limit") || "20");
+  const limit = Number(parsed.searchParams.get("limit") || "20");
   const skip = Number(parsed.searchParams.get("skip") || "0");
-  const products = figmaProducts.slice(0, 5);
+  const products = figmaProducts.slice(0, limit);
   await route.fulfill({
     status: 200,
     contentType: "application/json",
@@ -100,7 +104,7 @@ await productsPage.route("**/products?*", async (route) => {
       products,
       total: 120,
       skip,
-      limit: 20,
+      limit,
     }),
   });
 });
@@ -118,9 +122,11 @@ await productsPage.route("**/products/search?*", async (route) => {
 });
 
 await productsPage.goto(`${baseUrl}/products`, { waitUntil: "networkidle" });
-await productsPage.waitForTimeout(1500);
+// Allow table rows and fonts to stabilize before selection.
+await productsPage.waitForTimeout(PRODUCT_STABLE_RENDER_DELAY);
 await productsPage.locator("tbody tr").nth(2).locator("button").first().click();
-await productsPage.waitForTimeout(300);
+// Wait for row selection styles to apply before capturing.
+await productsPage.waitForTimeout(PRODUCT_SELECT_RENDER_DELAY);
 await productsPage.screenshot({ path: `${outDir}/products.png` });
 await productsCtx.close();
 
