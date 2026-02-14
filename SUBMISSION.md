@@ -67,6 +67,9 @@ Run Playwright against the running server:
 PLAYWRIGHT_SKIP_WEB_SERVER=1 pnpm e2e
 ```
 
+Note: the dev server host must match the Playwright `baseURL` value. Use either
+`127.0.0.1` everywhere or `localhost` everywhere to avoid connection mismatches.
+
 ## AI usage disclosure
 
 See `AI_USAGE.md`.

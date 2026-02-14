@@ -92,7 +92,7 @@ export function Pagination({
       style={{
         display: "inline-flex",
         alignItems: "center",
-        gap: 6,
+        gap: "var(--ui-space-sm)",
       }}
     >
       <button

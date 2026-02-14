@@ -72,6 +72,7 @@ test.describe("auth flows", () => {
     await nextPage.goto("/products");
     await expect(nextPage).toHaveURL(PRODUCTS_URL_RE);
 
+    await nextPage.close();
     await nextContext.close();
   });
 
@@ -106,6 +107,7 @@ test.describe("auth flows", () => {
 
     await expect(nextPage).toHaveURL(LOGIN_URL_RE);
 
+    await nextPage.close();
     await nextContext.close();
   });
 });

@@ -20,6 +20,7 @@ const figmaProducts = [
     thumbnail: null,
   },
   {
+    id: 2,
     title: "Игровая консоль PlaySta...",
     category: "Игровые приставки",
     brand: "Sony",
