@@ -298,7 +298,10 @@
       "acceptanceCriteria": [
         "Effects tokens cover all gradients/shadows/strokes, including Auth form outlines."
       ],
-      "status": "open"
+      "status": "done",
+      "updatedAt": "2026-02-14T22:07:41.952810+00:00",
+      "completedAt": "2026-02-14T22:07:41.953054+00:00",
+      "startedAt": "2026-02-14T22:07:41.953057+00:00"
     },
     {
       "id": "TASK-003",
