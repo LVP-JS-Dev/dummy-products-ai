@@ -179,6 +179,12 @@ Fallback stack задаётся токенами (`Inter`/`system-ui`/`sans-seri
 6. Визуальная структура экранов соответствует макету Figma.
 7. Приложение сохраняет архитектурную границу: `apps/web` потребляет, но не определяет API UI Kit.
 8. Кодовая база остается со строгой TypeScript-типизацией.
+9. Для `FR-1..FR-7` существует e2e-чеклист и отчёт покрытия, фиксирующие статус формальной верификации.
+
+## 9.1 E2E checklist & coverage
+
+- `requirements/figma/e2e-checklist.md`
+- `requirements/figma/e2e-coverage.md`
 
 ## 10. Traceability (PDF -> PRD -> DoD)
 
