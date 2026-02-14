@@ -27,7 +27,7 @@
 - `packages/gen-api`
   Пакет для генерации typed API клиента из OpenAPI (toolchain: Kubb), предназначенный для приложений и инструментов как единый источник истины по API client-слою.
 
-- `packages/agent-orchestrator`
+- `packages/burlaki`
   Пакет процессной оркестрации агентного workflow (skill-matrix, skill-gate, init/recovery утилиты), не влияющий на runtime приложения и UI API.
 
 - `apps/web`
@@ -67,7 +67,7 @@
 - Приложения импортируют UI Kit только через публичный API.
 - Внутренние файлы пакетов не импортируются напрямую.
 - Docs-зависимости не попадают в UI Kit.
-- Процессная автоматизация (`packages/agent-orchestrator`) не изменяет product runtime-контракты UI Kit и не подменяет PRD как источник требований.
+- Процессная автоматизация (`packages/burlaki`) не изменяет product runtime-контракты UI Kit и не подменяет PRD как источник требований.
 
 ### 3.5 Пагинация как кросс-пакетный инвариант
 
