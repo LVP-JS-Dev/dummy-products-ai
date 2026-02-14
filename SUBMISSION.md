@@ -53,6 +53,20 @@ pnpm test
 pnpm check
 ```
 
+## E2E tests
+
+Start the web app (required for Playwright):
+
+```bash
+pnpm -C apps/web dev -- --host 127.0.0.1 --port 3001
+```
+
+Run Playwright against the running server:
+
+```bash
+PLAYWRIGHT_SKIP_WEB_SERVER=1 pnpm e2e
+```
+
 ## AI usage disclosure
 
 See `AI_USAGE.md`.
