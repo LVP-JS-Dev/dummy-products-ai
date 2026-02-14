@@ -718,7 +718,8 @@
         "semanticRole": "Page shadow",
         "usage": ["Products page container"],
         "screens": ["Products"],
-        "status": "new"
+        "status": "new",
+        "aliasOf": null
       },
       {
         "name": "--ui-effect-shadow-card",
@@ -732,7 +733,8 @@
         "semanticRole": "Card shadow",
         "usage": ["Auth card"],
         "screens": ["Auth"],
-        "status": "new"
+        "status": "new",
+        "aliasOf": null
       },
       {
         "name": "--ui-effect-shadow-button",
@@ -746,7 +748,8 @@
         "semanticRole": "Button shadow",
         "usage": ["Login button"],
         "screens": ["Auth"],
-        "status": "new"
+        "status": "new",
+        "aliasOf": null
       },
       {
         "name": "--ui-effect-shadow-logo-1",
@@ -760,7 +763,8 @@
         "semanticRole": "Logo shadow 1",
         "usage": ["Logo container"],
         "screens": ["Auth"],
-        "status": "new"
+        "status": "new",
+        "aliasOf": null
       },
       {
         "name": "--ui-effect-shadow-logo-2",
@@ -773,7 +777,9 @@
         "semanticRole": "Logo inner glow",
         "usage": ["Logo container"],
         "screens": ["Auth"],
-        "status": "new"
+        "status": "new",
+        "aliasOf": "--ui-color-surface",
+        "aliasNote": "Color value matches surface (white)"
       },
       {
         "name": "--ui-effect-shadow-pagination",
@@ -787,7 +793,8 @@
         "semanticRole": "Pagination number shadow",
         "usage": ["Pagination numbers"],
         "screens": ["Products"],
-        "status": "new"
+        "status": "new",
+        "aliasOf": null
       }
     ],
     "gradients": [
@@ -806,7 +813,8 @@
         "semanticRole": "Auth inner card gradient (disabled)",
         "usage": ["Auth inner card background"],
         "screens": ["Auth"],
-        "status": "new"
+        "status": "new",
+        "aliasOf": null
       },
       {
         "name": "--ui-effect-gradient-auth-inner-stroke",
@@ -823,7 +831,9 @@
         "semanticRole": "Auth inner card stroke gradient",
         "usage": ["Auth inner card border"],
         "screens": ["Auth"],
-        "status": "new"
+        "status": "new",
+        "aliasOf": "--ui-color-border",
+        "aliasNote": "Base color matches existing border token"
       },
       {
         "name": "--ui-effect-gradient-auth-outer-stroke",
@@ -840,7 +850,9 @@
         "semanticRole": "Auth outer card stroke gradient",
         "usage": ["Auth inner card border"],
         "screens": ["Auth"],
-        "status": "new"
+        "status": "new",
+        "aliasOf": "--ui-color-border",
+        "aliasNote": "Base color matches existing border token"
       },
       {
         "name": "--ui-effect-gradient-logo",
@@ -857,7 +869,8 @@
         "semanticRole": "Logo gradient",
         "usage": ["Logo container"],
         "screens": ["Auth"],
-        "status": "new"
+        "status": "new",
+        "aliasOf": null
       },
       {
         "name": "--ui-effect-gradient-button",
@@ -874,7 +887,9 @@
         "semanticRole": "Button overlay gradient",
         "usage": ["Login button"],
         "screens": ["Auth"],
-        "status": "new"
+        "status": "new",
+        "aliasOf": "--ui-color-surface",
+        "aliasNote": "Base color matches surface (white)"
       }
     ],
     "strokes": [
@@ -885,7 +900,9 @@
         "semanticRole": "Input border",
         "usage": ["Auth input fields"],
         "screens": ["Auth"],
-        "status": "new"
+        "status": "new",
+        "aliasOf": "--ui-color-border",
+        "aliasNote": "Color value matches existing border token"
       },
       {
         "name": "--ui-stroke-table-row",
@@ -894,7 +911,9 @@
         "semanticRole": "Table row separator",
         "usage": ["Product rows"],
         "screens": ["Products"],
-        "status": "new"
+        "status": "new",
+        "aliasOf": "--ui-color-border-row",
+        "aliasNote": "References new border-row color token (same value)"
       },
       {
         "name": "--ui-stroke-checkbox",
@@ -903,7 +922,9 @@
         "semanticRole": "Checkbox border",
         "usage": ["Checkboxes"],
         "screens": ["Products"],
-        "status": "new"
+        "status": "new",
+        "aliasOf": "--ui-color-text-tertiary",
+        "aliasNote": "Color value matches existing tertiary text token"
       },
       {
         "name": "--ui-stroke-photo",
@@ -912,7 +933,9 @@
         "semanticRole": "Photo placeholder border",
         "usage": ["Product photos"],
         "screens": ["Products"],
-        "status": "new"
+        "status": "new",
+        "aliasOf": "--ui-color-border-subtle",
+        "aliasNote": "Color value matches existing subtle border token"
       },
       {
         "name": "--ui-stroke-button",
@@ -921,7 +944,9 @@
         "semanticRole": "Primary button stroke",
         "usage": ["Login button"],
         "screens": ["Auth"],
-        "status": "new"
+        "status": "new",
+        "aliasOf": "--ui-color-primary-border",
+        "aliasNote": "Color value matches existing primary border token"
       },
       {
         "name": "--ui-stroke-icon-muted",
@@ -930,13 +955,15 @@
         "semanticRole": "Muted icon stroke",
         "usage": ["Lock icon", "Eye icon"],
         "screens": ["Auth"],
-        "status": "new"
+        "status": "new",
+        "aliasOf": "--ui-color-border",
+        "aliasNote": "Color value matches existing border token"
       }
     ]
   },
 
   "diff": {
-    "description": "Diff analysis vs current UI-kit tokens",
+    "description": "Diff analysis vs current UI-kit tokens with complete alias mapping",
     "additions": [
       "--ui-color-page-background",
       "--ui-color-auth-background",
@@ -949,6 +976,7 @@
       "--ui-color-icon-light",
       "--ui-color-icon-lock",
       "--ui-color-photo-placeholder",
+      "--ui-color-selection-stripe",
       "--ui-font-mono",
       "--ui-font-size-3xl",
       "--ui-letter-spacing-tight",
@@ -975,12 +1003,68 @@
       {
         "newToken": "--ui-color-checkbox-selected",
         "aliasOf": "--ui-color-selection-stripe",
-        "value": "#3c538e"
+        "value": "#3c538e",
+        "notes": "Pencil uses same color for checkbox fill and selection stripe"
       },
       {
         "newToken": "--ui-color-on-primary",
         "aliasOf": "--ui-color-surface",
-        "value": "#ffffff"
+        "value": "#ffffff",
+        "notes": "Text on primary uses white, same as surface"
+      },
+      {
+        "newToken": "--ui-stroke-input",
+        "aliasOf": "--ui-color-border",
+        "value": "#ededed",
+        "notes": "Input stroke color matches border token"
+      },
+      {
+        "newToken": "--ui-stroke-icon-muted",
+        "aliasOf": "--ui-color-border",
+        "value": "#ededed",
+        "notes": "Icon muted stroke matches border token"
+      },
+      {
+        "newToken": "--ui-stroke-checkbox",
+        "aliasOf": "--ui-color-text-tertiary",
+        "value": "#b2b3b9",
+        "notes": "Checkbox stroke matches tertiary text color"
+      },
+      {
+        "newToken": "--ui-stroke-photo",
+        "aliasOf": "--ui-color-border-subtle",
+        "value": "#ececeb",
+        "notes": "Photo border matches subtle border token"
+      },
+      {
+        "newToken": "--ui-stroke-button",
+        "aliasOf": "--ui-color-primary-border",
+        "value": "#367aff",
+        "notes": "Button stroke matches primary border token"
+      },
+      {
+        "newToken": "--ui-stroke-table-row",
+        "aliasOf": "--ui-color-border-row",
+        "value": "#e2e2e2",
+        "notes": "Table row stroke references new border-row color token"
+      },
+      {
+        "newToken": "--ui-effect-shadow-logo-2",
+        "aliasOf": "--ui-color-surface",
+        "value": "#ffffff",
+        "notes": "Logo inner glow uses surface color (white)"
+      },
+      {
+        "newToken": "--ui-effect-gradient-auth-inner-stroke",
+        "aliasOf": "--ui-color-border",
+        "value": "#ededed",
+        "notes": "Auth inner stroke gradient base color matches border"
+      },
+      {
+        "newToken": "--ui-effect-gradient-auth-outer-stroke",
+        "aliasOf": "--ui-color-border",
+        "value": "#ededed",
+        "notes": "Auth outer stroke gradient base color matches border"
       }
     ],
     "noChange": [
@@ -998,7 +1082,6 @@
       "--ui-color-primary-border",
       "--ui-color-accent",
       "--ui-space-xs",
-      "--ui-space-sm",
       "--ui-space-md",
       "--ui-space-lg",
       "--ui-space-xl",
@@ -1013,6 +1096,32 @@
       "--ui-font-ui",
       "--ui-font-body",
       "--ui-font-roboto"
+    ],
+    "valueConflicts": [
+      {
+        "token": "--ui-space-sm",
+        "existingValue": "8px",
+        "pencilValue": "6px",
+        "resolution": "Pencil uses different scale; keep as new token if needed or use existing sm/md"
+      },
+      {
+        "token": "--ui-space-2xl",
+        "existingValue": "24px",
+        "pencilValue": "14px",
+        "resolution": "Different values; Pencil's 14px is unique"
+      },
+      {
+        "token": "--ui-space-xxl",
+        "existingValue": "24px",
+        "pencilValue": "not used",
+        "resolution": "Pencil uses different scale starting from 2xl=14px"
+      }
+    ],
+    "aliasingRules": [
+      "If a Pencil color value matches an existing UI-kit color token, define the new token as an alias to the existing token.",
+      "If a Pencil gradient/shadow/stroke uses a base color matching an existing token, reference that token.",
+      "Document alias relationships with 'aliasOf' metadata.",
+      "No duplicate raw values should be introduced where an existing token provides the same value."
     ]
   },
 
