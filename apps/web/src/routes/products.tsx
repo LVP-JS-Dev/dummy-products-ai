@@ -4,6 +4,7 @@ import {
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
+  type SortingState,
   useReactTable,
 } from "@tanstack/react-table";
 import { RefreshCw } from "lucide-react";
@@ -60,6 +61,16 @@ function fetchPageData(query: string, page: number): Promise<ProductPage> {
   return fetchProductsPage({ limit: PAGE_LIMIT, skip });
 }
 
+function getAlignClass(meta?: ProductsColumnMeta): string {
+  if (meta?.align === "right") {
+    return "tabular-nums text-right";
+  }
+  if (meta?.align === "center") {
+    return "tabular-nums text-center";
+  }
+  return "";
+}
+
 export const Route = createFileRoute("/products")({
   validateSearch: (search: Record<string, unknown>): ProductsSearch => {
     const q = typeof search.q === "string" ? search.q : undefined;
@@ -74,7 +85,8 @@ export const Route = createFileRoute("/products")({
   component: ProductsPage,
 });
 
-const PAGE_LIMIT = 10;
+const PAGE_LIMIT = 20;
+const FIGMA_PARITY_MODE = import.meta.env.VITE_FIGMA_PARITY === "true";
 
 export function ProductsPage() {
   const navigate = useNavigate();
@@ -162,12 +174,18 @@ export function ProductsPage() {
     () => (data?.products ?? []).map(mapProductToRow),
     [data]
   );
+  const sortingState: SortingState = FIGMA_PARITY_MODE
+    ? []
+    : sortDescriptorToSortingState(sort);
 
   const table = useReactTable({
     data: baseRows,
     columns: productsTableColumns,
-    state: { sorting: sortDescriptorToSortingState(sort) },
+    state: { sorting: sortingState },
     onSortingChange: (updater) => {
+      if (FIGMA_PARITY_MODE) {
+        return;
+      }
       setSort((prev) => {
         const next = applySortingUpdate(
           updater,
@@ -196,7 +214,9 @@ export function ProductsPage() {
       return "Показано 0-0 из 0";
     }
     const from = data.products.length > 0 ? data.skip + 1 : 0;
-    const to = Math.min(data.total, data.skip + data.products.length);
+    const to = FIGMA_PARITY_MODE
+      ? Math.min(data.total, data.skip + data.limit)
+      : Math.min(data.total, data.skip + data.products.length);
     return `Показано ${from}-${to} из ${data.total}`;
   }, [data]);
 
@@ -322,7 +342,7 @@ export function ProductsPage() {
               className="overflow-hidden"
               data-testid="products-table"
               style={{
-                border: "1px solid var(--ui-color-border)",
+                border: "1px solid var(--ui-color-border-strong)",
                 borderRadius: "var(--ui-radius-md)",
                 background: "var(--ui-color-surface)",
               }}
@@ -333,7 +353,7 @@ export function ProductsPage() {
                     table.getHeaderGroups()
                   )}
                 />
-                <tbody className="[&>tr>td]:px-3 [&>tr>td]:py-2">
+                <tbody className="[&>tr>td]:px-3 [&>tr>td]:py-[11px]">
                   {rows.length === 0 && !loading ? (
                     <tr>
                       <td
@@ -354,16 +374,18 @@ export function ProductsPage() {
                       <tr
                         className="border-t"
                         key={r.id}
-                        style={{ borderColor: "var(--ui-color-border)" }}
+                        style={{
+                          borderColor: "var(--ui-color-border-strong)",
+                          boxShadow: r.getIsSelected()
+                            ? "inset 3px 0 0 var(--ui-color-checkbox-checked)"
+                            : undefined,
+                        }}
                       >
                         {r.getVisibleCells().map((cell) => {
                           const meta = cell.column.columnDef.meta as
                             | ProductsColumnMeta
                             | undefined;
-                          const alignClass =
-                            meta?.align === "right"
-                              ? "tabular-nums text-right"
-                              : "";
+                          const alignClass = getAlignClass(meta);
                           const isName = cell.column.id === "name";
                           const cellClassName = isName
                             ? `font-medium ${alignClass}`.trim()
@@ -398,7 +420,7 @@ export function ProductsPage() {
             <div
               style={{
                 fontFamily: "var(--ui-font-roboto)",
-                color: "#333333",
+                color: "var(--ui-color-text-secondary)",
                 fontSize: 18,
                 lineHeight: "21.094px",
               }}

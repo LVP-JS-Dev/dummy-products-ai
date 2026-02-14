@@ -9,7 +9,11 @@
   /* Semantic colors (preferred) */
   --ui-color-surface: #ffffff;
   --ui-color-surface-muted: #f3f3f3;
+  --ui-color-surface-app: #f6f6f6;
+  --ui-color-surface-auth: #f9f9f9;
   --ui-color-border: #ededed;
+  --ui-color-border-control: #c9c9c9;
+  --ui-color-border-strong: #e2e2e2;
   --ui-color-border-subtle: #ececeb;
   --ui-color-border-secondary: #ececeb;
 
@@ -20,6 +24,7 @@
   --ui-color-focus-ring: var(--ui-color-accent);
 
   --ui-color-text: #232323;
+  --ui-color-text-secondary: #333333;
   --ui-color-text-muted: #9c9c9c;
   --ui-color-text-tertiary: #b2b3b9;
   --ui-color-text-placeholder: #999999;
@@ -66,6 +71,7 @@
   --ui-font-ui: "Inter", "Inter Variable", system-ui, sans-serif;
   --ui-font-body: "Open Sans", "Inter", system-ui, sans-serif;
   --ui-font-roboto: "Roboto", "Inter", system-ui, sans-serif;
+  --ui-font-mono: "Roboto Mono", "Roboto", "Inter", system-ui, sans-serif;
 }
 
 /* Minimal base styles for component internals that cannot be expressed via inline style (e.g. ::placeholder, :focus-within). */

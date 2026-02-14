@@ -2,7 +2,11 @@ export const tokenCssVars = {
   color: {
     surface: "var(--ui-color-surface)",
     surfaceMuted: "var(--ui-color-surface-muted)",
+    surfaceApp: "var(--ui-color-surface-app)",
+    surfaceAuth: "var(--ui-color-surface-auth)",
     border: "var(--ui-color-border)",
+    borderControl: "var(--ui-color-border-control)",
+    borderStrong: "var(--ui-color-border-strong)",
     borderSubtle: "var(--ui-color-border-subtle)",
     borderSecondary: "var(--ui-color-border-secondary)",
     borderFaint: "var(--ui-color-border-faint)",
@@ -12,6 +16,7 @@ export const tokenCssVars = {
     onPrimary: "var(--ui-color-on-primary)",
     focusRing: "var(--ui-color-focus-ring)",
     text: "var(--ui-color-text)",
+    textSecondary: "var(--ui-color-text-secondary)",
     textSubtle: "var(--ui-color-text-subtle)",
     textMuted: "var(--ui-color-text-muted)",
     textTertiary: "var(--ui-color-text-tertiary)",
@@ -50,5 +55,6 @@ export const tokenCssVars = {
     ui: "var(--ui-font-ui)",
     body: "var(--ui-font-body)",
     roboto: "var(--ui-font-roboto)",
+    mono: "var(--ui-font-mono)",
   },
 } as const;

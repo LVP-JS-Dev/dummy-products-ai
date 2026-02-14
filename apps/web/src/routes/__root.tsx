@@ -48,7 +48,8 @@ function RootComponent() {
         </div>
         <Toaster position="top-right" richColors />
       </ThemeProvider>
-      {import.meta.env.DEV ? (
+      {import.meta.env.DEV &&
+      import.meta.env.VITE_ENABLE_ROUTER_DEVTOOLS === "true" ? (
         <TanStackRouterDevtools position="bottom-left" />
       ) : null}
     </>

@@ -79,7 +79,7 @@ export function Input({
         style={{
           minHeight: 55,
           borderRadius: "var(--ui-radius-lg)",
-          border: `1px solid ${error ? "var(--ui-color-danger)" : "var(--ui-color-border)"}`,
+          border: `1px solid ${error ? "var(--ui-color-danger)" : "var(--ui-color-border-control)"}`,
           display: "grid",
           gridTemplateColumns: getGridTemplate(hasStart, hasEnd),
           alignItems: "center",

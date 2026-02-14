@@ -34,7 +34,11 @@ export function SearchInput({
       }}
     >
       {showIcon ? (
-        <Icon color={"var(--ui-color-text-muted)"} name="search_v2" size={24} />
+        <Icon
+          color={"var(--ui-color-text-placeholder)"}
+          name="search_v2"
+          size={22}
+        />
       ) : null}
       <input
         aria-label={resolvedAriaLabel}
@@ -56,6 +60,9 @@ export function SearchInput({
           color: "var(--ui-color-text)",
           fontFamily: "var(--ui-font-ui)",
           fontSize: 14,
+          lineHeight: "24px",
+          fontWeight: 400,
+          letterSpacing: 0,
           minWidth: 160,
         }}
         type="search"

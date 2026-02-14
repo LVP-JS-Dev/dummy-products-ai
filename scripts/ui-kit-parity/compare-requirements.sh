@@ -3,9 +3,10 @@ set -euo pipefail
 
 BASE_URL="${1:-http://localhost:3001}"
 CHANGE_DIR="${CHANGE_DIR:-openspec/changes/ui-kit-figma-playwright-parity}"
+ROUND="${PARITY_ROUND:-round1}"
 
-CAP_DIR="${CHANGE_DIR}/artifacts/screenshots/round1/web-requirements"
-DIFF_DIR="${CHANGE_DIR}/artifacts/diffs/round1"
+CAP_DIR="${CHANGE_DIR}/artifacts/screenshots/${ROUND}/web-requirements"
+DIFF_DIR="${CHANGE_DIR}/artifacts/diffs/${ROUND}"
 SUMMARY_JSON="${DIFF_DIR}/requirements-diff.json"
 
 mkdir -p "$CAP_DIR" "$DIFF_DIR"
