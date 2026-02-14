@@ -248,7 +248,8 @@
         "semanticRole": "Row selection indicator stripe",
         "usage": ["Selected product row stripe"],
         "screens": ["Products"],
-        "aliasOf": null
+        "aliasOf": "--ui-color-checkbox-checked",
+        "aliasNote": "Color value matches existing checkbox-checked token"
       },
       {
         "name": "--ui-color-checkbox-selected",
@@ -257,7 +258,8 @@
         "semanticRole": "Selected checkbox fill",
         "usage": ["Selected checkbox"],
         "screens": ["Products"],
-        "aliasOf": "--ui-color-selection-stripe"
+        "aliasOf": "--ui-color-checkbox-checked",
+        "aliasNote": "Color value matches existing checkbox-checked token"
       },
       {
         "name": "--ui-color-on-primary",
@@ -324,7 +326,9 @@
         "pencilValue": 8,
         "semanticRole": "Medium spacing",
         "usage": ["Input internal gap", "Button gap", "Table header gap"],
-        "screens": ["Auth", "Products"]
+        "screens": ["Auth", "Products"],
+        "aliasOf": "--ui-space-sm",
+        "aliasNote": "Value matches existing space-sm (8px)"
       },
       {
         "name": "--ui-space-lg",
@@ -340,7 +344,9 @@
         "pencilValue": 12,
         "semanticRole": "Extra large spacing",
         "usage": ["Search input padding vertical", "Section gaps"],
-        "screens": ["Products"]
+        "screens": ["Products"],
+        "aliasOf": "--ui-space-md",
+        "aliasNote": "Value matches existing space-md (12px)"
       },
       {
         "name": "--ui-space-2xl",
@@ -361,7 +367,9 @@
           "Button padding",
           "Typography sizes"
         ],
-        "screens": ["Auth", "Products"]
+        "screens": ["Auth", "Products"],
+        "aliasOf": "--ui-space-lg",
+        "aliasNote": "Value matches existing space-lg (16px)"
       },
       {
         "name": "--ui-space-4xl",
@@ -378,7 +386,9 @@
         "pencilValue": 20,
         "semanticRole": "5x large spacing",
         "usage": ["Page padding", "Section title gap", "Form gap"],
-        "screens": ["Auth", "Products"]
+        "screens": ["Auth", "Products"],
+        "aliasOf": "--ui-space-xl",
+        "aliasNote": "Value matches existing space-xl (20px)"
       },
       {
         "name": "--ui-space-6xl",
@@ -1042,10 +1052,40 @@
     ],
     "aliases": [
       {
-        "newToken": "--ui-color-checkbox-selected",
-        "aliasOf": "--ui-color-selection-stripe",
+        "newToken": "--ui-color-selection-stripe",
+        "aliasOf": "--ui-color-checkbox-checked",
         "value": "#3c538e",
-        "notes": "Pencil uses same color for checkbox fill and selection stripe"
+        "notes": "Selection stripe color matches existing checkbox-checked token"
+      },
+      {
+        "newToken": "--ui-color-checkbox-selected",
+        "aliasOf": "--ui-color-checkbox-checked",
+        "value": "#3c538e",
+        "notes": "Checkbox selected color matches existing checkbox-checked token"
+      },
+      {
+        "newToken": "--ui-space-md",
+        "aliasOf": "--ui-space-sm",
+        "value": "8px",
+        "notes": "Pencil medium spacing matches existing space-sm"
+      },
+      {
+        "newToken": "--ui-space-xl",
+        "aliasOf": "--ui-space-md",
+        "value": "12px",
+        "notes": "Pencil xl spacing matches existing space-md"
+      },
+      {
+        "newToken": "--ui-space-3xl",
+        "aliasOf": "--ui-space-lg",
+        "value": "16px",
+        "notes": "Pencil 3xl spacing matches existing space-lg"
+      },
+      {
+        "newToken": "--ui-space-5xl",
+        "aliasOf": "--ui-space-xl",
+        "value": "20px",
+        "notes": "Pencil 5xl spacing matches existing space-xl"
       },
       {
         "newToken": "--ui-color-on-primary",
