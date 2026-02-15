@@ -199,6 +199,14 @@ Toolchain:
 
 ---
 
+## CI/CD
+
+- Сборка с помощью GitLab CI/CD
+
+__раздел будет дополняться__
+
+---
+
 ## Non-goals
 
 - Полноценная замена Storybook (аддоны, visual testing и т.п.)
