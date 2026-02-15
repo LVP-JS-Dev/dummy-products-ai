@@ -479,6 +479,7 @@ cd .tmp/worktrees/<timestamp2>
 
 3. Изменения в сгенерированных `AGENTS.md`/`CLAUDE.md` коммитить вместе с правками `./ruler/*`.
 4. Не редактировать `AGENTS.md`/`CLAUDE.md` вручную как source-of-truth: эти файлы считаются generated-выходом Ruler и могут быть под `.gitignore`.
+5. Roadmap правила см. `.ruler/roadmap.md`.
 
 ---
 
