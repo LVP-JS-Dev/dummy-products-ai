@@ -34,6 +34,11 @@ pnpm dev
 - main app: `apps/web`
 - docs: `apps/fumadocs`
 
+## Configuration management
+
+See `docs/configuration.md` for the configuration layout, decision rationale,
+and instructions for adding new tool configs.
+
 ## MCP Environment (`.env.mcp`)
 
 Файл `.env.mcp` используется MCP-серверами (например Figma MCP) для переменных окружения, которые нужны только MCP-интеграциям.
