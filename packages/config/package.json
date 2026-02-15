@@ -5,6 +5,7 @@
   "type": "module",
   "exports": {
     "./biome": "./biome.jsonc",
+    "./playwright": "./playwright.config.js",
     "./tsconfig.base.json": "./tsconfig.base.json"
   }
 }
