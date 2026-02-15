@@ -17,8 +17,11 @@ placeholder и иконки берется из `--ui-color-text-placeholder`.
 
 ## API
 
-Props определены в контракте UI Kit. Ключевые props:
-`placeholder`, `state`, `showIcon`, `value`.
+Props определены в контракте UI Kit. Ключевые props: `placeholder`, `state`,
+`showIcon`, `value`, `ariaLabel`.
+
+`ariaLabel` — основной источник для `aria-label`. Если его нет, компонент
+использует `placeholder` как fallback.
 
 **Спецификация**
 - [`manifest.json`](../../../../../packages/ui-kit/src/generated/manifest.json)
