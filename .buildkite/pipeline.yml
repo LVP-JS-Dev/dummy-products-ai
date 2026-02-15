@@ -1,3 +1,4 @@
+# Buildkite pipeline (release smoke trigger)
 steps:
   - label: ":docker: Build and push web image"
     if: build.branch == "master" || build.env("MANUAL") == "true"
