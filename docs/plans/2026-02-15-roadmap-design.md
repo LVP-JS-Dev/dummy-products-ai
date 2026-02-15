@@ -51,7 +51,7 @@ Rules:
 - A table with columns `Area | Item | Status`
 - Grouped in the order: In Progress → Planned → Done
 - Parsing rules:
-  - `Area` comes from the `[area:NAME]` tag; if missing, `Area` is empty.
+  - `Area` comes from the `[area:NAME]` tag; if missing, default to `general` and log a warning.
   - `Item` is the text after the area tag.
   - `Status` is defined by the section first; if no section is found, fallback to checkbox state (`[x]` = Done, `[ ]` = Planned).
   - If section and checkbox conflict (e.g. `[ ]` inside `Done`), section wins, but log a warning.
