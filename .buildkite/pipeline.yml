@@ -1,4 +1,4 @@
-# Buildkite pipeline (release retry trigger)
+# Buildkite pipeline (release retry trigger 2)
 steps:
   - label: ":docker: Build and push web image"
     if: build.branch == "master" || build.env("MANUAL") == "true"
