@@ -7,11 +7,10 @@ steps:
       - GHCR_TOKEN
     commands:
       - "set -euo pipefail"
-      - "GHCR_USERNAME=${GHCR_USERNAME:-lvpjsdev}"
-      - "GIT_SHA=$(echo \"$BUILDKITE_COMMIT\" | cut -c1-7)"
-      - "echo \"$GHCR_TOKEN\" | docker login ghcr.io -u \"$GHCR_USERNAME\" --password-stdin"
+      - "[ -n \"${GHCR_TOKEN:-}\" ] || (echo \"GHCR_TOKEN secret is empty\"; exit 1)"
+      - "echo \"$GHCR_TOKEN\" | docker login ghcr.io -u \"${GHCR_USERNAME:-lvpjsdev}\" --password-stdin"
       - "docker buildx create --use --name bk-builder || docker buildx use bk-builder"
-      - "docker buildx build --platform linux/amd64 -f deploy/docker/web.Dockerfile -t ghcr.io/${GHCR_USERNAME}/dummy-products-web:stage-${GIT_SHA} --push ."
+      - "docker buildx build --platform linux/amd64 -f deploy/docker/web.Dockerfile -t ghcr.io/${GHCR_USERNAME:-lvpjsdev}/dummy-products-web:stage-$(echo \"$BUILDKITE_COMMIT\" | cut -c1-7) --push ."
 
   - label: ":docker: Build and push docs image"
     if: build.branch == "master" || build.env("MANUAL") == "true"
@@ -20,11 +19,10 @@ steps:
       - GHCR_TOKEN
     commands:
       - "set -euo pipefail"
-      - "GHCR_USERNAME=${GHCR_USERNAME:-lvpjsdev}"
-      - "GIT_SHA=$(echo \"$BUILDKITE_COMMIT\" | cut -c1-7)"
-      - "echo \"$GHCR_TOKEN\" | docker login ghcr.io -u \"$GHCR_USERNAME\" --password-stdin"
+      - "[ -n \"${GHCR_TOKEN:-}\" ] || (echo \"GHCR_TOKEN secret is empty\"; exit 1)"
+      - "echo \"$GHCR_TOKEN\" | docker login ghcr.io -u \"${GHCR_USERNAME:-lvpjsdev}\" --password-stdin"
       - "docker buildx create --use --name bk-builder || docker buildx use bk-builder"
-      - "docker buildx build --platform linux/amd64 -f deploy/docker/docs.Dockerfile -t ghcr.io/${GHCR_USERNAME}/dummy-products-docs:stage-${GIT_SHA} --push ."
+      - "docker buildx build --platform linux/amd64 -f deploy/docker/docs.Dockerfile -t ghcr.io/${GHCR_USERNAME:-lvpjsdev}/dummy-products-docs:stage-$(echo \"$BUILDKITE_COMMIT\" | cut -c1-7) --push ."
 
   - label: ":package: Publish burlaki"
     if: build.tag != null && build.tag =~ /^v.*/
@@ -32,6 +30,7 @@ steps:
       - NPM_TOKEN
     commands:
       - "set -euo pipefail"
+      - "[ -n \"${NPM_TOKEN:-}\" ] || (echo \"NPM_TOKEN secret is empty\"; exit 1)"
       - "TAG=\"${BUILDKITE_TAG:-}\""
       - "if [ -z \"$TAG\" ]; then echo \"Not a tag build; skipping publish.\"; exit 0; fi"
       - "VERSION=$(docker run --rm -v \"$PWD\":/work -w /work node:20.11 node -p \"require('./packages/burlaki/package.json').version\")"
