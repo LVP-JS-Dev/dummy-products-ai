@@ -5,6 +5,7 @@ This setup is designed for:
 - local image build
 - push to a container registry
 - Dokploy deploy from `image:` references (no server-side build)
+- CI builds on CircleCI (GHCR) with local fallback
 
 ## Files
 
@@ -14,6 +15,31 @@ This setup is designed for:
 - `deploy/docker-compose.prod.yml` - prod stack (image-only)
 - `deploy/.env.stage.example` - stage image variables
 - `deploy/.env.prod.example` - prod image variables
+
+## CI/CD (CircleCI + GHCR)
+
+Build and push images on:
+- `push` to `main`
+- manual pipeline run (CircleCI parameters)
+
+Publish npm package on:
+- git tag `vX.Y.Z` (with strict tag/version check)
+
+### Required secrets (CircleCI project settings)
+
+- `GHCR_USERNAME` / `GHCR_TOKEN` (PAT with `read:packages`, `write:packages`)
+  - `GHCR_USERNAME` should be the GHCR namespace (user or org)
+- `NPM_TOKEN` (npm publish token)
+
+### Image tags
+
+- `stage-<short_sha>` for readability
+- Dokploy uses digest (`@sha256:...`) for reproducible deploys
+
+### Manual trigger
+
+Run a manual pipeline with `manual=true` to rebuild/push images without new commits.
+In CircleCI UI: `Trigger Pipeline` -> set parameter `manual` to `true`.
 
 ## Build and push images
 
@@ -37,6 +63,13 @@ docker buildx build \
   --push .
 ```
 
+## Publish npm package (CI)
+
+Triggered by tag `vX.Y.Z`. CI validates:
+- `vX.Y.Z` equals `packages/burlaki/package.json` version
+
+If mismatch, publish fails.
+
 ## Promote stage -> prod
 
 Recommended: deploy by immutable digest in Dokploy variables.
@@ -53,6 +86,39 @@ Then set Dokploy env vars:
 
 Use the same digests in both stage and prod to guarantee identical artifacts.
 
+## Local fallback (when CI is unavailable)
+
+### Build and push images
+
+```bash
+docker login ghcr.io
+
+GIT_SHA=$(git rev-parse --short HEAD)
+
+docker buildx build \
+  --platform linux/amd64 \
+  -f deploy/docker/web.Dockerfile \
+  -t ghcr.io/your-org/dummy-products-web:stage-$GIT_SHA \
+  --push .
+
+docker buildx build \
+  --platform linux/amd64 \
+  -f deploy/docker/docs.Dockerfile \
+  -t ghcr.io/your-org/dummy-products-docs:stage-$GIT_SHA \
+  --push .
+```
+
+### Publish npm package
+
+```bash
+cd packages/burlaki
+pnpm install --frozen-lockfile
+pnpm -C . pkg get version
+pnpm publish --access public
+```
+
+Ensure the git tag matches `package.json` (e.g. `v1.2.3`).
+
 ## Dokploy wiring
 
 1. Create two Dokploy projects: `dummy-products-stage`, `dummy-products-prod`.
@@ -62,3 +128,10 @@ Use the same digests in both stage and prod to guarantee identical artifacts.
 5. Attach domains to:
    - service `web` on port `80`
    - service `docs` on port `3000`
+
+## Optional: Lefthook migration
+
+Husky is currently used for local hooks. If hook runtime becomes a bottleneck, consider Lefthook:
+- Faster hook execution via parallelism
+- Centralized hook config
+- Better fit for monorepos
