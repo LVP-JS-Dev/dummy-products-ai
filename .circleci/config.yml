@@ -9,8 +9,8 @@ workflows:
   build_and_publish_images:
     when:
       or:
-        - equal: [ true, << pipeline.parameters.manual >> ]
-        - equal: [ main, << pipeline.git.branch >> ]
+        - equal: [true, << pipeline.parameters.manual >>]
+        - equal: [main, << pipeline.git.branch >>]
     jobs:
       - build_and_push_web
       - build_and_push_docs

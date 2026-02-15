@@ -12,7 +12,7 @@
 
 Each item must be a checkbox with an area tag:
 
-```
+```md
 - [ ] [area:ci] CircleCI builds and GHCR publishing
 - [x] [area:docs] Document local fallback
 ```
@@ -22,7 +22,7 @@ Each item must be a checkbox with an area tag:
 - The generated view is `docs/ROADMAP.generated.md`.
 - Update it by running:
 
-```
+```bash
 pnpm roadmap:gen
 ```
 
