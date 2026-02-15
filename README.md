@@ -42,6 +42,11 @@ pnpm dev
 
 Подробности и локальный fallback: `deploy/README.md`.
 
+## Roadmap
+
+- Source: `docs/ROADMAP.md`
+- Generated view: `docs/ROADMAP.generated.md` (обновляется через `pnpm roadmap:gen`)
+
 ## Configuration management
 
 See `docs/configuration.md` for the configuration layout, decision rationale,
