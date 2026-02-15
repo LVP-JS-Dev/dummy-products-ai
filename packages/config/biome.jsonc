@@ -4,10 +4,14 @@
   "extends": ["ultracite/biome/core", "ultracite/biome/react"],
   "files": {
     "includes": [
+      "**/*",
       "!!**/*.gen.ts",
       "!!**/apps/web/src/routeTree.gen.ts",
       "!!**/packages/gen-api/generated",
-      "!!**/packages/ui-kit/src/generated"
+      "!!**/packages/ui-kit/src/generated",
+      "!!**/playwright-report",
+      "!!**/test-results",
+      "!!**/playwright-results.xml"
     ]
   },
   "css": {
