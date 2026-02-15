@@ -1,12 +1,12 @@
 export { Button } from "./components/Button";
 export {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
+	Card,
+	CardAction,
+	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
 } from "./components/Card";
 export { Checkbox } from "./components/Checkbox";
 export { Divider } from "./components/Divider";

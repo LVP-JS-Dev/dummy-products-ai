@@ -2,41 +2,41 @@ import type { CSSProperties, ReactNode } from "react";
 import { z } from "zod";
 
 export const checkboxContract = z.object({
-  checked: z.boolean(),
-  label: z.string().optional(),
-  size: z.enum(["sm", "md"]).optional(),
-  disabled: z.boolean().optional(),
-  name: z.string().optional(),
-  id: z.string().optional(),
-  required: z.boolean().optional(),
+	checked: z.boolean(),
+	label: z.string().optional(),
+	size: z.enum(["sm", "md"]).optional(),
+	disabled: z.boolean().optional(),
+	name: z.string().optional(),
+	id: z.string().optional(),
+	required: z.boolean().optional(),
 });
 
 export const checkboxEvents = {
-  checkedChange: z.object({
-    checked: z.boolean(),
-  }),
+	checkedChange: z.object({
+		checked: z.boolean(),
+	}),
 } as const;
 
 export type CheckboxSerializableProps = z.infer<typeof checkboxContract>;
 
 export type CheckboxEventPayloads = {
-  [EventName in keyof typeof checkboxEvents]: z.infer<
-    (typeof checkboxEvents)[EventName]
-  >;
+	[EventName in keyof typeof checkboxEvents]: z.infer<
+		(typeof checkboxEvents)[EventName]
+	>;
 };
 
 export type CheckboxHandlers = {
-  [EventName in keyof CheckboxEventPayloads as `on${Capitalize<EventName & string>}`]?: (
-    payload: CheckboxEventPayloads[EventName]
-  ) => void;
+	[EventName in keyof CheckboxEventPayloads as `on${Capitalize<EventName & string>}`]?: (
+		payload: CheckboxEventPayloads[EventName],
+	) => void;
 };
 
 export interface CheckboxRuntimeProps {
-  children?: ReactNode;
-  className?: string;
-  style?: CSSProperties;
+	children?: ReactNode;
+	className?: string;
+	style?: CSSProperties;
 }
 
 export type CheckboxProps = CheckboxSerializableProps &
-  CheckboxHandlers &
-  CheckboxRuntimeProps;
+	CheckboxHandlers &
+	CheckboxRuntimeProps;

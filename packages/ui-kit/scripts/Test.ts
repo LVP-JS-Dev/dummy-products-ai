@@ -3,563 +3,563 @@ import { resolve } from "node:path";
 import { isDeepStrictEqual } from "node:util";
 import { zodToJsonSchema } from "zod-to-json-schema";
 import {
-  buttonContract,
-  buttonEvents,
-  cardContract,
-  checkboxContract,
-  checkboxEvents,
-  dividerContract,
-  iconContract,
-  imageContract,
-  imageEvents,
-  inputContract,
-  inputEvents,
-  linkContract,
-  linkEvents,
-  logoContract,
-  modalContract,
-  modalEvents,
-  pageNumberContract,
-  pageNumberEvents,
-  paginationContract,
-  paginationEvents,
-  searchInputContract,
-  searchInputEvents,
-  sortIndicatorContract,
-  spinnerContract,
-  textContract,
-  toastContract,
-  toastEvents,
+	buttonContract,
+	buttonEvents,
+	cardContract,
+	checkboxContract,
+	checkboxEvents,
+	dividerContract,
+	iconContract,
+	imageContract,
+	imageEvents,
+	inputContract,
+	inputEvents,
+	linkContract,
+	linkEvents,
+	logoContract,
+	modalContract,
+	modalEvents,
+	pageNumberContract,
+	pageNumberEvents,
+	paginationContract,
+	paginationEvents,
+	searchInputContract,
+	searchInputEvents,
+	sortIndicatorContract,
+	spinnerContract,
+	textContract,
+	toastContract,
+	toastEvents,
 } from "../src/contracts";
 import { states } from "../src/states";
 
 const components = {
-  Button: {
-    props: buttonContract,
-    events: buttonEvents,
-    states: states.button,
-  },
-  Card: {
-    props: cardContract,
-    states: states.card,
-  },
-  SearchInput: {
-    props: searchInputContract,
-    events: searchInputEvents,
-    states: states.searchInput,
-  },
-  Checkbox: {
-    props: checkboxContract,
-    events: checkboxEvents,
-    states: states.checkbox,
-  },
-  Divider: {
-    props: dividerContract,
-    states: states.divider,
-  },
-  Input: {
-    props: inputContract,
-    events: inputEvents,
-    states: states.input,
-  },
-  Link: {
-    props: linkContract,
-    events: linkEvents,
-    states: states.link,
-  },
-  Spinner: {
-    props: spinnerContract,
-    states: states.spinner,
-  },
-  Text: {
-    props: textContract,
-    states: states.text,
-  },
-  Toast: {
-    props: toastContract,
-    events: toastEvents,
-    states: states.toast,
-  },
-  Pagination: {
-    props: paginationContract,
-    events: paginationEvents,
-    states: states.pagination,
-  },
-  PageNumber: {
-    props: pageNumberContract,
-    events: pageNumberEvents,
-    states: states.pageNumber,
-  },
-  Icon: { props: iconContract, states: states.icon },
-  Image: {
-    props: imageContract,
-    events: imageEvents,
-    states: states.image,
-  },
-  SortIndicator: { props: sortIndicatorContract, states: states.sortIndicator },
-  Logo: { props: logoContract, states: states.logo },
-  Modal: { props: modalContract, events: modalEvents, states: states.modal },
+	Button: {
+		props: buttonContract,
+		events: buttonEvents,
+		states: states.button,
+	},
+	Card: {
+		props: cardContract,
+		states: states.card,
+	},
+	SearchInput: {
+		props: searchInputContract,
+		events: searchInputEvents,
+		states: states.searchInput,
+	},
+	Checkbox: {
+		props: checkboxContract,
+		events: checkboxEvents,
+		states: states.checkbox,
+	},
+	Divider: {
+		props: dividerContract,
+		states: states.divider,
+	},
+	Input: {
+		props: inputContract,
+		events: inputEvents,
+		states: states.input,
+	},
+	Link: {
+		props: linkContract,
+		events: linkEvents,
+		states: states.link,
+	},
+	Spinner: {
+		props: spinnerContract,
+		states: states.spinner,
+	},
+	Text: {
+		props: textContract,
+		states: states.text,
+	},
+	Toast: {
+		props: toastContract,
+		events: toastEvents,
+		states: states.toast,
+	},
+	Pagination: {
+		props: paginationContract,
+		events: paginationEvents,
+		states: states.pagination,
+	},
+	PageNumber: {
+		props: pageNumberContract,
+		events: pageNumberEvents,
+		states: states.pageNumber,
+	},
+	Icon: { props: iconContract, states: states.icon },
+	Image: {
+		props: imageContract,
+		events: imageEvents,
+		states: states.image,
+	},
+	SortIndicator: { props: sortIndicatorContract, states: states.sortIndicator },
+	Logo: { props: logoContract, states: states.logo },
+	Modal: { props: modalContract, events: modalEvents, states: states.modal },
 } as const;
 
 interface Manifest {
-  components: Record<
-    string,
-    {
-      schema: string;
-      propsSchema: string;
-      events?: Record<string, { payloadSchema: string }>;
-    }
-  >;
+	components: Record<
+		string,
+		{
+			schema: string;
+			propsSchema: string;
+			events?: Record<string, { payloadSchema: string }>;
+		}
+	>;
 }
 
 type JsonRecord = Record<string, unknown>;
 
 interface JsonSchema {
-  type?: "object" | "string" | "boolean" | "integer";
-  anyOf?: JsonSchema[];
-  properties?: Record<string, JsonSchema>;
-  required?: string[];
-  additionalProperties?: boolean;
-  minLength?: number;
-  enum?: unknown[];
-  minimum?: number;
+	type?: "object" | "string" | "boolean" | "integer";
+	anyOf?: JsonSchema[];
+	properties?: Record<string, JsonSchema>;
+	required?: string[];
+	additionalProperties?: boolean;
+	minLength?: number;
+	enum?: unknown[];
+	minimum?: number;
 }
 
 function isRecord(value: unknown): value is JsonRecord {
-  return typeof value === "object" && value !== null && !Array.isArray(value);
+	return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 const fileNameMap: Record<keyof typeof components, string> = {
-  Button: "button",
-  Card: "card",
-  SearchInput: "search-input",
-  Checkbox: "checkbox",
-  Divider: "divider",
-  Input: "input",
-  Link: "link",
-  Spinner: "spinner",
-  Text: "text",
-  Toast: "toast",
-  Pagination: "pagination",
-  PageNumber: "page-number",
-  Icon: "icon",
-  Image: "image",
-  SortIndicator: "sort-indicator",
-  Logo: "logo",
-  Modal: "modal",
+	Button: "button",
+	Card: "card",
+	SearchInput: "search-input",
+	Checkbox: "checkbox",
+	Divider: "divider",
+	Input: "input",
+	Link: "link",
+	Spinner: "spinner",
+	Text: "text",
+	Toast: "toast",
+	Pagination: "pagination",
+	PageNumber: "page-number",
+	Icon: "icon",
+	Image: "image",
+	SortIndicator: "sort-indicator",
+	Logo: "logo",
+	Modal: "modal",
 };
 
 function toKebabCase(value: string) {
-  return value
-    .replaceAll("_", "-")
-    .replaceAll(/([a-z0-9])([A-Z])/g, "$1-$2")
-    .toLowerCase();
+	return value
+		.replaceAll("_", "-")
+		.replaceAll(/([a-z0-9])([A-Z])/g, "$1-$2")
+		.toLowerCase();
 }
 
 function buildExpectedManifest(): Manifest {
-  const manifest: Manifest = { components: {} };
+	const manifest: Manifest = { components: {} };
 
-  for (const [componentName, component] of Object.entries(components)) {
-    const fileBase = fileNameMap[componentName as keyof typeof components];
-    const propsFileName = `${fileBase}.schema.json`;
-    const schemaPath = `schemas/${propsFileName}`;
+	for (const [componentName, component] of Object.entries(components)) {
+		const fileBase = fileNameMap[componentName as keyof typeof components];
+		const propsFileName = `${fileBase}.schema.json`;
+		const schemaPath = `schemas/${propsFileName}`;
 
-    const declaredEvents = "events" in component ? component.events : undefined;
-    const eventsManifest: Record<string, { payloadSchema: string }> = {};
+		const declaredEvents = "events" in component ? component.events : undefined;
+		const eventsManifest: Record<string, { payloadSchema: string }> = {};
 
-    if (declaredEvents) {
-      for (const eventName of Object.keys(declaredEvents)) {
-        const payloadFileName = `${fileBase}.${toKebabCase(eventName)}.schema.json`;
-        eventsManifest[eventName] = {
-          payloadSchema: `schemas/${payloadFileName}`,
-        };
-      }
-    }
+		if (declaredEvents) {
+			for (const eventName of Object.keys(declaredEvents)) {
+				const payloadFileName = `${fileBase}.${toKebabCase(eventName)}.schema.json`;
+				eventsManifest[eventName] = {
+					payloadSchema: `schemas/${payloadFileName}`,
+				};
+			}
+		}
 
-    const hasEventSchemas = Object.keys(eventsManifest).length > 0;
+		const hasEventSchemas = Object.keys(eventsManifest).length > 0;
 
-    if (hasEventSchemas) {
-      manifest.components[componentName] = {
-        schema: schemaPath,
-        propsSchema: schemaPath,
-        events: eventsManifest,
-      };
-    } else {
-      manifest.components[componentName] = {
-        schema: schemaPath,
-        propsSchema: schemaPath,
-      };
-    }
-  }
+		if (hasEventSchemas) {
+			manifest.components[componentName] = {
+				schema: schemaPath,
+				propsSchema: schemaPath,
+				events: eventsManifest,
+			};
+		} else {
+			manifest.components[componentName] = {
+				schema: schemaPath,
+				propsSchema: schemaPath,
+			};
+		}
+	}
 
-  return manifest;
+	return manifest;
 }
 
 function asSchema(value: unknown): JsonSchema | undefined {
-  if (!isRecord(value)) {
-    return undefined;
-  }
-  return value as JsonSchema;
+	if (!isRecord(value)) {
+		return undefined;
+	}
+	return value as JsonSchema;
 }
 
 async function readJson(path: string) {
-  return JSON.parse(await readFile(path, "utf8")) as unknown;
+	return JSON.parse(await readFile(path, "utf8")) as unknown;
 }
 
 interface ValidationError {
-  path: string;
-  message: string;
+	path: string;
+	message: string;
 }
 
 class Reporter {
-  hasError = false;
+	hasError = false;
 
-  error(message: string) {
-    console.error(message);
-    this.hasError = true;
-  }
+	error(message: string) {
+		console.error(message);
+		this.hasError = true;
+	}
 }
 
 function validateAnyOf(
-  schema: JsonSchema,
-  value: unknown,
-  path: string,
-  errors: ValidationError[]
+	schema: JsonSchema,
+	value: unknown,
+	path: string,
+	errors: ValidationError[],
 ) {
-  const candidates = schema.anyOf;
-  if (!Array.isArray(candidates)) {
-    return;
-  }
+	const candidates = schema.anyOf;
+	if (!Array.isArray(candidates)) {
+		return;
+	}
 
-  const anyErrors: ValidationError[] = [];
-  for (const candidate of candidates) {
-    const candidateErrors: ValidationError[] = [];
-    validateValue(candidate, value, path, candidateErrors);
-    if (candidateErrors.length === 0) {
-      return;
-    }
-    anyErrors.push(...candidateErrors);
-  }
+	const anyErrors: ValidationError[] = [];
+	for (const candidate of candidates) {
+		const candidateErrors: ValidationError[] = [];
+		validateValue(candidate, value, path, candidateErrors);
+		if (candidateErrors.length === 0) {
+			return;
+		}
+		anyErrors.push(...candidateErrors);
+	}
 
-  errors.push({
-    path,
-    message: `must match at least one schema (anyOf), got: ${anyErrors[0]?.message ?? "invalid"}`,
-  });
+	errors.push({
+		path,
+		message: `must match at least one schema (anyOf), got: ${anyErrors[0]?.message ?? "invalid"}`,
+	});
 }
 
 function validateObject(
-  schema: JsonSchema,
-  value: unknown,
-  path: string,
-  errors: ValidationError[]
+	schema: JsonSchema,
+	value: unknown,
+	path: string,
+	errors: ValidationError[],
 ) {
-  if (!isRecord(value)) {
-    errors.push({ path, message: "must be an object" });
-    return;
-  }
+	if (!isRecord(value)) {
+		errors.push({ path, message: "must be an object" });
+		return;
+	}
 
-  const properties = schema.properties ?? {};
-  const required = Array.isArray(schema.required) ? schema.required : [];
+	const properties = schema.properties ?? {};
+	const required = Array.isArray(schema.required) ? schema.required : [];
 
-  for (const requiredKey of required) {
-    if (!(requiredKey in value)) {
-      errors.push({ path: `${path}.${requiredKey}`, message: "is required" });
-    }
-  }
+	for (const requiredKey of required) {
+		if (!(requiredKey in value)) {
+			errors.push({ path: `${path}.${requiredKey}`, message: "is required" });
+		}
+	}
 
-  if (schema.additionalProperties === false) {
-    for (const key of Object.keys(value)) {
-      if (!(key in properties)) {
-        errors.push({ path: `${path}.${key}`, message: "is not allowed" });
-      }
-    }
-  }
+	if (schema.additionalProperties === false) {
+		for (const key of Object.keys(value)) {
+			if (!(key in properties)) {
+				errors.push({ path: `${path}.${key}`, message: "is not allowed" });
+			}
+		}
+	}
 
-  for (const [key, propSchema] of Object.entries(properties)) {
-    if (key in value) {
-      validateValue(propSchema, value[key], `${path}.${key}`, errors);
-    }
-  }
+	for (const [key, propSchema] of Object.entries(properties)) {
+		if (key in value) {
+			validateValue(propSchema, value[key], `${path}.${key}`, errors);
+		}
+	}
 }
 
 function validateString(
-  schema: JsonSchema,
-  value: unknown,
-  path: string,
-  errors: ValidationError[]
+	schema: JsonSchema,
+	value: unknown,
+	path: string,
+	errors: ValidationError[],
 ) {
-  if (typeof value !== "string") {
-    errors.push({ path, message: "must be a string" });
-    return;
-  }
+	if (typeof value !== "string") {
+		errors.push({ path, message: "must be a string" });
+		return;
+	}
 
-  if (typeof schema.minLength === "number" && value.length < schema.minLength) {
-    errors.push({ path, message: `must have minLength ${schema.minLength}` });
-    return;
-  }
+	if (typeof schema.minLength === "number" && value.length < schema.minLength) {
+		errors.push({ path, message: `must have minLength ${schema.minLength}` });
+		return;
+	}
 
-  if (Array.isArray(schema.enum) && !schema.enum.includes(value)) {
-    errors.push({ path, message: "must be one of enum values" });
-  }
+	if (Array.isArray(schema.enum) && !schema.enum.includes(value)) {
+		errors.push({ path, message: "must be one of enum values" });
+	}
 }
 
 function validateBoolean(
-  value: unknown,
-  path: string,
-  errors: ValidationError[]
+	value: unknown,
+	path: string,
+	errors: ValidationError[],
 ) {
-  if (typeof value !== "boolean") {
-    errors.push({ path, message: "must be a boolean" });
-  }
+	if (typeof value !== "boolean") {
+		errors.push({ path, message: "must be a boolean" });
+	}
 }
 
 function validateInteger(
-  schema: JsonSchema,
-  value: unknown,
-  path: string,
-  errors: ValidationError[]
+	schema: JsonSchema,
+	value: unknown,
+	path: string,
+	errors: ValidationError[],
 ) {
-  if (typeof value !== "number" || !Number.isInteger(value)) {
-    errors.push({ path, message: "must be an integer" });
-    return;
-  }
+	if (typeof value !== "number" || !Number.isInteger(value)) {
+		errors.push({ path, message: "must be an integer" });
+		return;
+	}
 
-  if (typeof schema.minimum === "number" && value < schema.minimum) {
-    errors.push({ path, message: `must be >= ${schema.minimum}` });
-  }
+	if (typeof schema.minimum === "number" && value < schema.minimum) {
+		errors.push({ path, message: `must be >= ${schema.minimum}` });
+	}
 }
 
 function validateValue(
-  schema: JsonSchema,
-  value: unknown,
-  path: string,
-  errors: ValidationError[]
+	schema: JsonSchema,
+	value: unknown,
+	path: string,
+	errors: ValidationError[],
 ) {
-  if (Array.isArray(schema.anyOf)) {
-    validateAnyOf(schema, value, path, errors);
-    return;
-  }
+	if (Array.isArray(schema.anyOf)) {
+		validateAnyOf(schema, value, path, errors);
+		return;
+	}
 
-  if (schema.type === "object") {
-    validateObject(schema, value, path, errors);
-    return;
-  }
+	if (schema.type === "object") {
+		validateObject(schema, value, path, errors);
+		return;
+	}
 
-  if (schema.type === "string") {
-    validateString(schema, value, path, errors);
-    return;
-  }
+	if (schema.type === "string") {
+		validateString(schema, value, path, errors);
+		return;
+	}
 
-  if (schema.type === "boolean") {
-    validateBoolean(value, path, errors);
-    return;
-  }
+	if (schema.type === "boolean") {
+		validateBoolean(value, path, errors);
+		return;
+	}
 
-  if (schema.type === "integer") {
-    validateInteger(schema, value, path, errors);
-  }
+	if (schema.type === "integer") {
+		validateInteger(schema, value, path, errors);
+	}
 }
 
 function validateStateAgainstSchema(
-  schemaUnknown: unknown,
-  stateValue: unknown,
-  reporter: Reporter,
-  statePath: string
+	schemaUnknown: unknown,
+	stateValue: unknown,
+	reporter: Reporter,
+	statePath: string,
 ) {
-  const schema = asSchema(schemaUnknown);
-  if (!schema) {
-    reporter.error(`Schema for '${statePath}' is not a valid JSON object.`);
-    return;
-  }
+	const schema = asSchema(schemaUnknown);
+	if (!schema) {
+		reporter.error(`Schema for '${statePath}' is not a valid JSON object.`);
+		return;
+	}
 
-  const errors: ValidationError[] = [];
-  validateValue(schema, stateValue, "<root>", errors);
-  if (errors.length === 0) {
-    return;
-  }
+	const errors: ValidationError[] = [];
+	validateValue(schema, stateValue, "<root>", errors);
+	if (errors.length === 0) {
+		return;
+	}
 
-  reporter.error(`State '${statePath}' failed schema validation:`);
-  for (const error of errors.slice(0, 8)) {
-    reporter.error(`${error.path} ${error.message}`);
-  }
+	reporter.error(`State '${statePath}' failed schema validation:`);
+	for (const error of errors.slice(0, 8)) {
+		reporter.error(`${error.path} ${error.message}`);
+	}
 }
 
 function validateSchemasEqual(
-  reporter: Reporter,
-  label: string,
-  actual: unknown,
-  expected: unknown
+	reporter: Reporter,
+	label: string,
+	actual: unknown,
+	expected: unknown,
 ) {
-  if (!isDeepStrictEqual(actual, expected)) {
-    reporter.error(`${label} schema drift detected.`);
-  }
+	if (!isDeepStrictEqual(actual, expected)) {
+		reporter.error(`${label} schema drift detected.`);
+	}
 }
 
 async function validatePropsSchema(
-  reporter: Reporter,
-  componentName: string,
-  manifestEntry: Manifest["components"][string],
-  contract: unknown
+	reporter: Reporter,
+	componentName: string,
+	manifestEntry: Manifest["components"][string],
+	contract: unknown,
 ) {
-  const propsSchemaPath = resolve("src/generated", manifestEntry.propsSchema);
-  const propsSchemaFromDisk = await readJson(propsSchemaPath);
-  const propsSchemaExpected = zodToJsonSchema(contract, componentName);
+	const propsSchemaPath = resolve("src/generated", manifestEntry.propsSchema);
+	const propsSchemaFromDisk = await readJson(propsSchemaPath);
+	const propsSchemaExpected = zodToJsonSchema(contract, componentName);
 
-  validateSchemasEqual(
-    reporter,
-    `Props '${componentName}'`,
-    propsSchemaFromDisk,
-    propsSchemaExpected
-  );
+	validateSchemasEqual(
+		reporter,
+		`Props '${componentName}'`,
+		propsSchemaFromDisk,
+		propsSchemaExpected,
+	);
 
-  return propsSchemaFromDisk;
+	return propsSchemaFromDisk;
 }
 
 function validateStates(
-  reporter: Reporter,
-  componentName: string,
-  propsSchemaFromDisk: unknown,
-  componentStates: Record<string, unknown>
+	reporter: Reporter,
+	componentName: string,
+	propsSchemaFromDisk: unknown,
+	componentStates: Record<string, unknown>,
 ) {
-  const stateEntries = Object.entries(componentStates);
-  if (stateEntries.length < 3) {
-    reporter.error(`State set '${componentName}' must have at least 3 states.`);
-  }
+	const stateEntries = Object.entries(componentStates);
+	if (stateEntries.length < 3) {
+		reporter.error(`State set '${componentName}' must have at least 3 states.`);
+	}
 
-  for (const [stateName, value] of stateEntries) {
-    validateStateAgainstSchema(
-      propsSchemaFromDisk,
-      value,
-      reporter,
-      `${componentName}.${stateName}`
-    );
-  }
+	for (const [stateName, value] of stateEntries) {
+		validateStateAgainstSchema(
+			propsSchemaFromDisk,
+			value,
+			reporter,
+			`${componentName}.${stateName}`,
+		);
+	}
 }
 
 async function validateEventSchemas(
-  reporter: Reporter,
-  componentName: string,
-  declaredEvents: Record<string, unknown>,
-  manifestEvents: Record<string, { payloadSchema: string }>
+	reporter: Reporter,
+	componentName: string,
+	declaredEvents: Record<string, unknown>,
+	manifestEvents: Record<string, { payloadSchema: string }>,
 ) {
-  for (const [eventName, payloadContract] of Object.entries(declaredEvents)) {
-    const manifestEvent = manifestEvents[eventName];
-    if (!manifestEvent) {
-      reporter.error(
-        `Manifest '${componentName}' is missing event '${eventName}'.`
-      );
-      continue;
-    }
+	for (const [eventName, payloadContract] of Object.entries(declaredEvents)) {
+		const manifestEvent = manifestEvents[eventName];
+		if (!manifestEvent) {
+			reporter.error(
+				`Manifest '${componentName}' is missing event '${eventName}'.`,
+			);
+			continue;
+		}
 
-    const payloadSchemaPath = resolve(
-      "src/generated",
-      manifestEvent.payloadSchema
-    );
-    const payloadSchemaFromDisk = await readJson(payloadSchemaPath);
-    const payloadSchemaExpected = zodToJsonSchema(
-      payloadContract,
-      `${componentName}.${eventName}`
-    );
+		const payloadSchemaPath = resolve(
+			"src/generated",
+			manifestEvent.payloadSchema,
+		);
+		const payloadSchemaFromDisk = await readJson(payloadSchemaPath);
+		const payloadSchemaExpected = zodToJsonSchema(
+			payloadContract,
+			`${componentName}.${eventName}`,
+		);
 
-    validateSchemasEqual(
-      reporter,
-      `Event payload '${componentName}.${eventName}'`,
-      payloadSchemaFromDisk,
-      payloadSchemaExpected
-    );
-  }
+		validateSchemasEqual(
+			reporter,
+			`Event payload '${componentName}.${eventName}'`,
+			payloadSchemaFromDisk,
+			payloadSchemaExpected,
+		);
+	}
 
-  for (const eventName of Object.keys(manifestEvents)) {
-    if (!(eventName in declaredEvents)) {
-      reporter.error(
-        `Manifest '${componentName}' has unknown event '${eventName}'.`
-      );
-    }
-  }
+	for (const eventName of Object.keys(manifestEvents)) {
+		if (!(eventName in declaredEvents)) {
+			reporter.error(
+				`Manifest '${componentName}' has unknown event '${eventName}'.`,
+			);
+		}
+	}
 }
 
 async function validateComponent(
-  reporter: Reporter,
-  manifest: Manifest,
-  componentName: string,
-  component: (typeof components)[keyof typeof components]
+	reporter: Reporter,
+	manifest: Manifest,
+	componentName: string,
+	component: (typeof components)[keyof typeof components],
 ) {
-  const manifestEntry = manifest.components[componentName];
-  if (!manifestEntry) {
-    reporter.error(`Manifest is missing component '${componentName}'.`);
-    return;
-  }
+	const manifestEntry = manifest.components[componentName];
+	if (!manifestEntry) {
+		reporter.error(`Manifest is missing component '${componentName}'.`);
+		return;
+	}
 
-  if (manifestEntry.schema !== manifestEntry.propsSchema) {
-    reporter.error(
-      `Manifest '${componentName}' must have schema === propsSchema.`
-    );
-  }
+	if (manifestEntry.schema !== manifestEntry.propsSchema) {
+		reporter.error(
+			`Manifest '${componentName}' must have schema === propsSchema.`,
+		);
+	}
 
-  const propsSchemaFromDisk = await validatePropsSchema(
-    reporter,
-    componentName,
-    manifestEntry,
-    component.props
-  );
+	const propsSchemaFromDisk = await validatePropsSchema(
+		reporter,
+		componentName,
+		manifestEntry,
+		component.props,
+	);
 
-  validateStates(
-    reporter,
-    componentName,
-    propsSchemaFromDisk,
-    component.states
-  );
+	validateStates(
+		reporter,
+		componentName,
+		propsSchemaFromDisk,
+		component.states,
+	);
 
-  const declaredEvents = "events" in component ? component.events : undefined;
-  const manifestEvents = manifestEntry.events ?? {};
+	const declaredEvents = "events" in component ? component.events : undefined;
+	const manifestEvents = manifestEntry.events ?? {};
 
-  if (!declaredEvents && Object.keys(manifestEvents).length > 0) {
-    reporter.error(
-      `Manifest '${componentName}' has events but contract declares none.`
-    );
-    return;
-  }
+	if (!declaredEvents && Object.keys(manifestEvents).length > 0) {
+		reporter.error(
+			`Manifest '${componentName}' has events but contract declares none.`,
+		);
+		return;
+	}
 
-  if (declaredEvents) {
-    await validateEventSchemas(
-      reporter,
-      componentName,
-      declaredEvents as Record<string, unknown>,
-      manifestEvents
-    );
-  }
+	if (declaredEvents) {
+		await validateEventSchemas(
+			reporter,
+			componentName,
+			declaredEvents as Record<string, unknown>,
+			manifestEvents,
+		);
+	}
 }
 
 async function validateAll() {
-  const reporter = new Reporter();
-  const manifestPath = resolve("src/generated/manifest.json");
-  const manifestFromDisk = (await readJson(manifestPath)) as Manifest;
+	const reporter = new Reporter();
+	const manifestPath = resolve("src/generated/manifest.json");
+	const manifestFromDisk = (await readJson(manifestPath)) as Manifest;
 
-  const expectedManifest = buildExpectedManifest();
-  validateSchemasEqual(
-    reporter,
-    "Manifest",
-    manifestFromDisk,
-    expectedManifest
-  );
+	const expectedManifest = buildExpectedManifest();
+	validateSchemasEqual(
+		reporter,
+		"Manifest",
+		manifestFromDisk,
+		expectedManifest,
+	);
 
-  for (const [componentName, component] of Object.entries(components)) {
-    await validateComponent(
-      reporter,
-      manifestFromDisk,
-      componentName,
-      component
-    );
-  }
+	for (const [componentName, component] of Object.entries(components)) {
+		await validateComponent(
+			reporter,
+			manifestFromDisk,
+			componentName,
+			component,
+		);
+	}
 
-  if (reporter.hasError) {
-    process.exit(1);
-  }
+	if (reporter.hasError) {
+		process.exit(1);
+	}
 
-  console.log("All states and generated artifacts are valid.");
+	console.log("All states and generated artifacts are valid.");
 }
 
 validateAll().catch((error) => {
-  console.error(error);
-  process.exit(1);
+	console.error(error);
+	process.exit(1);
 });

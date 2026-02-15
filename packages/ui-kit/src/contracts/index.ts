@@ -11,8 +11,8 @@ export { modalContract, modalEvents } from "./ModalContract";
 export { pageNumberContract, pageNumberEvents } from "./PageNumberContract";
 export { paginationContract, paginationEvents } from "./PaginationContract";
 export {
-  searchInputContract,
-  searchInputEvents,
+	searchInputContract,
+	searchInputEvents,
 } from "./SearchInputContract";
 export { sortIndicatorContract } from "./SortIndicatorContract";
 export { spinnerContract } from "./SpinnerContract";

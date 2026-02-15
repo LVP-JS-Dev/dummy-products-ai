@@ -1,339 +1,339 @@
 {
-  "meta": {
-    "title": "Pencil-Derived Tailwind + CSS Vars Token System (Auth Form + Products)",
-    "type": "spec-only",
-    "created_at": "2026-02-14",
-    "owner": "product/ux",
-    "source_files": [
-      "packages/ui-kit/src/tokens.css",
-      "packages/ui-kit/src/tokens.docs.json"
-    ],
-    "updated_at": "2026-02-14"
-  },
-  "goal": "Define a Tailwind + CSS variables token system derived from Pencil for the Auth form and Products screens, including a new Effects group (gradients, shadows, strokes), with aliasing rules to reuse existing values.",
-  "users": [
-    "UI kit maintainers",
-    "Frontend engineers implementing Auth and Products screens",
-    "Docs consumers reading token references"
-  ],
-  "constraints": [
-    "Spec-only: do not implement code or modify files.",
-    "Tokens must be derived from Pencil for Auth form + Products screens.",
-    "Complex form gradients and outlines in Auth form must be represented as Effects tokens.",
-    "Allow aliases when a value already exists to avoid duplication.",
-    "Follow existing UI-kit token naming scheme where applicable (CSS vars under :root)."
-  ],
-  "scope": {
-    "in": [
-      "Token extraction from Pencil for Auth form + Products",
-      "Tailwind token mapping strategy (theme.extend + CSS vars)",
-      "Effects token group: gradients, shadows, strokes",
-      "Alias strategy for existing values",
-      "Diff against current UI-kit tokens",
-      "Compact coder task list"
-    ],
-    "out": [
-      "Implementing tokens or Tailwind config",
-      "Changing component contracts or states",
-      "Updating docs, generated files, or UI behavior"
-    ]
-  },
-  "assumptions": [
-    "Pencil source of truth exists for Auth form + Products UI.",
-    "Current UI-kit tokens are authoritative for existing usage.",
-    "Tailwind configuration consumes CSS vars instead of hardcoded values."
-  ],
-  "unknowns": [
-    "Exact Pencil token values for Auth form and Products (colors, gradients, shadows, strokes).",
-    "Whether Pencil exposes token names or only raw values.",
-    "Any existing Tailwind config conventions in this repo beyond UI-kit tokens."
-  ],
-  "requirements": [
-    {
-      "id": "REQ-001",
-      "text": "Derive a complete token list from Pencil for Auth form + Products, including colors, spacing, radii, typography, and effects.",
-      "priority": "must",
-      "rationale": "Ensures fidelity to design source of truth."
-    },
-    {
-      "id": "REQ-002",
-      "text": "Introduce an Effects token group with gradients, shadows, and strokes as first-class tokens.",
-      "priority": "must",
-      "rationale": "Auth form uses complex gradients and outlines that must be tokenized."
-    },
-    {
-      "id": "REQ-003",
-      "text": "Provide an aliasing rule: if a Pencil value matches an existing token, reference the existing token instead of duplicating.",
-      "priority": "must",
-      "rationale": "Prevents token drift and duplication."
-    },
-    {
-      "id": "REQ-004",
-      "text": "Define Tailwind mapping for all tokens using CSS variables (theme.extend or equivalent).",
-      "priority": "must",
-      "rationale": "Keeps runtime theming and CSS var parity."
-    },
-    {
-      "id": "REQ-005",
-      "text": "Produce a diff vs current UI-kit tokens, listing additions, modifications, and deprecations.",
-      "priority": "must",
-      "rationale": "Supports review and regression control."
-    }
-  ],
-  "acceptance_criteria": [
-    "Token spec lists all tokens required for Auth form + Products screens (including effects).",
-    "Effects tokens explicitly capture complex Auth form gradients and outlines.",
-    "Alias rules are documented with at least one example for colors and effects.",
-    "Diff vs current UI-kit tokens is included and categorized (add/modify/deprecate).",
-    "A compact, implementation-ready task list for coder is included."
-  ],
-  "current_ui_kit_tokens": {
-    "source": "packages/ui-kit/src/tokens.css",
-    "colors": [
-      "--ui-color-surface",
-      "--ui-color-surface-muted",
-      "--ui-color-border",
-      "--ui-color-border-subtle",
-      "--ui-color-border-secondary",
-      "--ui-color-primary",
-      "--ui-color-primary-border",
-      "--ui-color-accent",
-      "--ui-color-on-primary",
-      "--ui-color-focus-ring",
-      "--ui-color-text",
-      "--ui-color-text-muted",
-      "--ui-color-text-tertiary",
-      "--ui-color-text-placeholder",
-      "--ui-color-text-subtle",
-      "--ui-color-text-faint",
-      "--ui-color-border-faint",
-      "--ui-color-success",
-      "--ui-color-success-surface",
-      "--ui-color-info",
-      "--ui-color-warning",
-      "--ui-color-danger",
-      "--ui-color-danger-surface",
-      "--ui-color-link",
-      "--ui-color-overlay",
-      "--ui-color-card-surface",
-      "--ui-color-card-border",
-      "--ui-color-checkbox-checked"
-    ],
-    "space": [
-      "--ui-space-xs",
-      "--ui-space-sm",
-      "--ui-space-md",
-      "--ui-space-lg",
-      "--ui-space-xl",
-      "--ui-space-xxl"
-    ],
-    "radius": [
-      "--ui-radius-xs",
-      "--ui-radius-sm",
-      "--ui-radius-md",
-      "--ui-radius-lg",
-      "--ui-radius-xl",
-      "--ui-radius-pill"
-    ],
-    "font": [
-      "--ui-font-heading",
-      "--ui-font-ui",
-      "--ui-font-body",
-      "--ui-font-roboto"
-    ],
-    "deprecated_aliases": [
-      "--ui-color-white",
-      "--ui-color-blue-primary",
-      "--ui-color-blue-accent",
-      "--ui-color-green-soft",
-      "--ui-color-gray-200",
-      "--ui-color-gray-400",
-      "--ui-color-text-primary"
-    ]
-  },
-  "token_system_spec": {
-    "source_of_truth": "Pencil (Auth form + Products)",
-    "css_vars": {
-      "naming": "--ui-<group>-<name>",
-      "groups": [
-        "color",
-        "space",
-        "radius",
-        "font",
-        "shadow",
-        "gradient",
-        "stroke"
-      ]
-    },
-    "effects": {
-      "description": "Effects are top-level groups: shadow, gradient, stroke. Effects tokens should be stored in a new tokens file.",
-      "subgroups": [],
-      "examples": [
-        "--ui-effect-gradient-auth-hero",
-        "--ui-effect-shadow-auth-card",
-        "--ui-effect-stroke-auth-outline"
-      ]
-    },
-    "tailwind_mapping": {
-      "strategy": "Tailwind theme extends values pointing to CSS variables.",
-      "examples": {
-        "colors": "{ primary: 'var(--ui-color-primary)' }",
-        "boxShadow": "{ 'auth-card': 'var(--ui-effect-shadow-auth-card)' }",
-        "backgroundImage": "{ 'auth-hero': 'var(--ui-effect-gradient-auth-hero)' }",
-        "borderColor": "{ 'auth-outline': 'var(--ui-effect-stroke-auth-outline)' }"
-      }
-    },
-    "aliasing_rules": [
-      "If a Pencil color value matches an existing UI-kit color token, define the new token as an alias to the existing token.",
-      "If a Pencil gradient/shadow/stroke matches an existing effect token, alias instead of duplicating.",
-      "Document alias relationships in tokens.docs.json with 'aliasOf' metadata (if supported) or description text."
-    ],
-    "effects_token_file": "new",
-    "theme_support": "single"
-  },
-  "diff_vs_current": {
-    "add": [
-      "New Effects token group (gradients, shadows, strokes).",
-      "Auth form complex gradients and outlines as effects tokens.",
-      "Products screen-specific effects tokens (if present in Pencil).",
-      "Any missing semantic colors, spacing, radii, or typography required by Pencil."
-    ],
-    "modify": [
-      "Tailwind mapping to include effects tokens and any new Pencil-derived tokens.",
-      "tokens.docs.json to document effects tokens and aliasing."
-    ],
-    "deprecate": [
-      "Any new raw-value tokens that duplicate existing tokens must be replaced by aliases (no net-new values)."
-    ],
-    "notes": "Exact token names and values are to be extracted from Pencil. The above diff categories describe expected changes relative to current UI-kit tokens listed in this PRD."
-  },
-  "deliverables": [
-    "JSON PRD (this file)",
-    "Token list derived from Pencil for Auth form + Products (values + names)",
-    "Diff report vs current UI-kit tokens (add/modify/deprecate)",
-    "Compact implementation task list"
-  ],
-  "tasks": [
-    {
-      "id": "TASK-001",
-      "summary": "Extract Pencil tokens for Auth form + Products",
-      "steps": [
-        "Enumerate all colors, spacing, radii, typography, and effects used in Auth form and Products.",
-        "Tag tokens with intended semantic role and proposed token name."
-      ],
-      "acceptance": "Complete token list with values and semantic names sourced from Pencil."
-    },
-    {
-      "id": "TASK-002",
-      "summary": "Define Effects group tokens",
-      "steps": [
-        "Identify all gradients, shadows, and strokes in Auth form + Products.",
-        "Create effect token names and values, ensuring complex Auth gradients/outlines are captured."
-      ],
-      "acceptance": "Effects tokens cover all gradients/shadows/strokes, including Auth form outlines."
-    },
-    {
-      "id": "TASK-003",
-      "summary": "Alias analysis",
-      "steps": [
-        "Compare Pencil values to existing UI-kit tokens.",
-        "Mark exact matches as aliases (no new values)."
-      ],
-      "acceptance": "All matching values are aliased; no duplicate raw values introduced."
-    },
-    {
-      "id": "TASK-004",
-      "summary": "Tailwind mapping spec",
-      "steps": [
-        "Map all tokens to Tailwind theme extension keys (colors, shadow, backgroundImage, borderColor, etc.).",
-        "Document mapping in spec form."
-      ],
-      "acceptance": "Every token has a Tailwind mapping referencing CSS vars."
-    },
-    {
-      "id": "TASK-005",
-      "summary": "Diff report vs current UI-kit tokens",
-      "steps": [
-        "Classify each Pencil-derived token as add/modify/deprecate/alias relative to current tokens.",
-        "Summarize deltas in a compact list for review."
-      ],
-      "acceptance": "Diff report is complete and categorized."
-    }
-  ],
-  "risks": [
-    "Pencil may not encode gradients/strokes in a token-friendly structure, increasing manual interpretation.",
-    "Token aliasing could hide subtle differences if values are close but not identical.",
-    "Tailwind mapping for complex gradients may require custom utilities."
-  ],
-  "dependencies": [
-    "Access to Pencil source files for Auth form + Products.",
-    "Agreement on token naming conventions for new Effects group.",
-    "Confirmation of Tailwind configuration location and format."
-  ],
-  "open_questions": [
-    "Where is the Pencil file for Auth form + Products located in the repo or accessible externally?"
-  ],
-  "decisions": {
-    "effects_token_file": "new",
-    "effects_group_naming": "shadow/gradient/stroke top-level groups",
-    "theme_support": "single root theme only"
-  },
-  "stories": [
-    {
-      "id": "TASK-001",
-      "title": "Extract Pencil tokens for Auth form + Products",
-      "description": "Enumerate all colors, spacing, radii, typography, and effects used in Auth form and Products.\nTag tokens with intended semantic role and proposed token name.",
-      "acceptanceCriteria": [
-        "Complete token list with values and semantic names sourced from Pencil."
-      ],
-      "status": "done",
-      "startedAt": "2026-02-14T17:16:14.462746+00:00",
-      "completedAt": "2026-02-14T17:41:38.443733+00:00",
-      "updatedAt": "2026-02-14T17:41:38.443487+00:00"
-    },
-    {
-      "id": "TASK-002",
-      "title": "Define Effects group tokens",
-      "description": "Identify all gradients, shadows, and strokes in Auth form + Products.\nCreate effect token names and values, ensuring complex Auth gradients/outlines are captured.",
-      "acceptanceCriteria": [
-        "Effects tokens cover all gradients/shadows/strokes, including Auth form outlines."
-      ],
-      "status": "done",
-      "updatedAt": "2026-02-14T22:07:41.952810+00:00",
-      "completedAt": "2026-02-14T22:07:41.953054+00:00",
-      "startedAt": "2026-02-14T22:07:41.953057+00:00"
-    },
-    {
-      "id": "TASK-003",
-      "title": "Alias analysis",
-      "description": "Compare Pencil values to existing UI-kit tokens.\nMark exact matches as aliases (no new values).",
-      "acceptanceCriteria": [
-        "All matching values are aliased; no duplicate raw values introduced."
-      ],
-      "status": "in_progress",
-      "startedAt": "2026-02-14T22:11:30.117379+00:00",
-      "completedAt": null,
-      "updatedAt": "2026-02-14T22:11:30.117595+00:00"
-    },
-    {
-      "id": "TASK-004",
-      "title": "Tailwind mapping spec",
-      "description": "Map all tokens to Tailwind theme extension keys (colors, shadow, backgroundImage, borderColor, etc.).\nDocument mapping in spec form.",
-      "acceptanceCriteria": [
-        "Every token has a Tailwind mapping referencing CSS vars."
-      ],
-      "status": "done",
-      "startedAt": "2026-02-14T21:58:59.792707+00:00",
-      "completedAt": null,
-      "updatedAt": "2026-02-14T21:58:59.793038+00:00"
-    },
-    {
-      "id": "TASK-005",
-      "title": "Diff report vs current UI-kit tokens",
-      "description": "Classify each Pencil-derived token as add/modify/deprecate/alias relative to current tokens.\nSummarize deltas in a compact list for review.",
-      "acceptanceCriteria": ["Diff report is complete and categorized."],
-      "status": "done"
-    }
-  ],
-  "qualityGates": []
+	"meta": {
+		"title": "Pencil-Derived Tailwind + CSS Vars Token System (Auth Form + Products)",
+		"type": "spec-only",
+		"created_at": "2026-02-14",
+		"owner": "product/ux",
+		"source_files": [
+			"packages/ui-kit/src/tokens.css",
+			"packages/ui-kit/src/tokens.docs.json"
+		],
+		"updated_at": "2026-02-14"
+	},
+	"goal": "Define a Tailwind + CSS variables token system derived from Pencil for the Auth form and Products screens, including a new Effects group (gradients, shadows, strokes), with aliasing rules to reuse existing values.",
+	"users": [
+		"UI kit maintainers",
+		"Frontend engineers implementing Auth and Products screens",
+		"Docs consumers reading token references"
+	],
+	"constraints": [
+		"Spec-only: do not implement code or modify files.",
+		"Tokens must be derived from Pencil for Auth form + Products screens.",
+		"Complex form gradients and outlines in Auth form must be represented as Effects tokens.",
+		"Allow aliases when a value already exists to avoid duplication.",
+		"Follow existing UI-kit token naming scheme where applicable (CSS vars under :root)."
+	],
+	"scope": {
+		"in": [
+			"Token extraction from Pencil for Auth form + Products",
+			"Tailwind token mapping strategy (theme.extend + CSS vars)",
+			"Effects token group: gradients, shadows, strokes",
+			"Alias strategy for existing values",
+			"Diff against current UI-kit tokens",
+			"Compact coder task list"
+		],
+		"out": [
+			"Implementing tokens or Tailwind config",
+			"Changing component contracts or states",
+			"Updating docs, generated files, or UI behavior"
+		]
+	},
+	"assumptions": [
+		"Pencil source of truth exists for Auth form + Products UI.",
+		"Current UI-kit tokens are authoritative for existing usage.",
+		"Tailwind configuration consumes CSS vars instead of hardcoded values."
+	],
+	"unknowns": [
+		"Exact Pencil token values for Auth form and Products (colors, gradients, shadows, strokes).",
+		"Whether Pencil exposes token names or only raw values.",
+		"Any existing Tailwind config conventions in this repo beyond UI-kit tokens."
+	],
+	"requirements": [
+		{
+			"id": "REQ-001",
+			"text": "Derive a complete token list from Pencil for Auth form + Products, including colors, spacing, radii, typography, and effects.",
+			"priority": "must",
+			"rationale": "Ensures fidelity to design source of truth."
+		},
+		{
+			"id": "REQ-002",
+			"text": "Introduce an Effects token group with gradients, shadows, and strokes as first-class tokens.",
+			"priority": "must",
+			"rationale": "Auth form uses complex gradients and outlines that must be tokenized."
+		},
+		{
+			"id": "REQ-003",
+			"text": "Provide an aliasing rule: if a Pencil value matches an existing token, reference the existing token instead of duplicating.",
+			"priority": "must",
+			"rationale": "Prevents token drift and duplication."
+		},
+		{
+			"id": "REQ-004",
+			"text": "Define Tailwind mapping for all tokens using CSS variables (theme.extend or equivalent).",
+			"priority": "must",
+			"rationale": "Keeps runtime theming and CSS var parity."
+		},
+		{
+			"id": "REQ-005",
+			"text": "Produce a diff vs current UI-kit tokens, listing additions, modifications, and deprecations.",
+			"priority": "must",
+			"rationale": "Supports review and regression control."
+		}
+	],
+	"acceptance_criteria": [
+		"Token spec lists all tokens required for Auth form + Products screens (including effects).",
+		"Effects tokens explicitly capture complex Auth form gradients and outlines.",
+		"Alias rules are documented with at least one example for colors and effects.",
+		"Diff vs current UI-kit tokens is included and categorized (add/modify/deprecate).",
+		"A compact, implementation-ready task list for coder is included."
+	],
+	"current_ui_kit_tokens": {
+		"source": "packages/ui-kit/src/tokens.css",
+		"colors": [
+			"--ui-color-surface",
+			"--ui-color-surface-muted",
+			"--ui-color-border",
+			"--ui-color-border-subtle",
+			"--ui-color-border-secondary",
+			"--ui-color-primary",
+			"--ui-color-primary-border",
+			"--ui-color-accent",
+			"--ui-color-on-primary",
+			"--ui-color-focus-ring",
+			"--ui-color-text",
+			"--ui-color-text-muted",
+			"--ui-color-text-tertiary",
+			"--ui-color-text-placeholder",
+			"--ui-color-text-subtle",
+			"--ui-color-text-faint",
+			"--ui-color-border-faint",
+			"--ui-color-success",
+			"--ui-color-success-surface",
+			"--ui-color-info",
+			"--ui-color-warning",
+			"--ui-color-danger",
+			"--ui-color-danger-surface",
+			"--ui-color-link",
+			"--ui-color-overlay",
+			"--ui-color-card-surface",
+			"--ui-color-card-border",
+			"--ui-color-checkbox-checked"
+		],
+		"space": [
+			"--ui-space-xs",
+			"--ui-space-sm",
+			"--ui-space-md",
+			"--ui-space-lg",
+			"--ui-space-xl",
+			"--ui-space-xxl"
+		],
+		"radius": [
+			"--ui-radius-xs",
+			"--ui-radius-sm",
+			"--ui-radius-md",
+			"--ui-radius-lg",
+			"--ui-radius-xl",
+			"--ui-radius-pill"
+		],
+		"font": [
+			"--ui-font-heading",
+			"--ui-font-ui",
+			"--ui-font-body",
+			"--ui-font-roboto"
+		],
+		"deprecated_aliases": [
+			"--ui-color-white",
+			"--ui-color-blue-primary",
+			"--ui-color-blue-accent",
+			"--ui-color-green-soft",
+			"--ui-color-gray-200",
+			"--ui-color-gray-400",
+			"--ui-color-text-primary"
+		]
+	},
+	"token_system_spec": {
+		"source_of_truth": "Pencil (Auth form + Products)",
+		"css_vars": {
+			"naming": "--ui-<group>-<name>",
+			"groups": [
+				"color",
+				"space",
+				"radius",
+				"font",
+				"shadow",
+				"gradient",
+				"stroke"
+			]
+		},
+		"effects": {
+			"description": "Effects are top-level groups: shadow, gradient, stroke. Effects tokens should be stored in a new tokens file.",
+			"subgroups": [],
+			"examples": [
+				"--ui-effect-gradient-auth-hero",
+				"--ui-effect-shadow-auth-card",
+				"--ui-effect-stroke-auth-outline"
+			]
+		},
+		"tailwind_mapping": {
+			"strategy": "Tailwind theme extends values pointing to CSS variables.",
+			"examples": {
+				"colors": "{ primary: 'var(--ui-color-primary)' }",
+				"boxShadow": "{ 'auth-card': 'var(--ui-effect-shadow-auth-card)' }",
+				"backgroundImage": "{ 'auth-hero': 'var(--ui-effect-gradient-auth-hero)' }",
+				"borderColor": "{ 'auth-outline': 'var(--ui-effect-stroke-auth-outline)' }"
+			}
+		},
+		"aliasing_rules": [
+			"If a Pencil color value matches an existing UI-kit color token, define the new token as an alias to the existing token.",
+			"If a Pencil gradient/shadow/stroke matches an existing effect token, alias instead of duplicating.",
+			"Document alias relationships in tokens.docs.json with 'aliasOf' metadata (if supported) or description text."
+		],
+		"effects_token_file": "new",
+		"theme_support": "single"
+	},
+	"diff_vs_current": {
+		"add": [
+			"New Effects token group (gradients, shadows, strokes).",
+			"Auth form complex gradients and outlines as effects tokens.",
+			"Products screen-specific effects tokens (if present in Pencil).",
+			"Any missing semantic colors, spacing, radii, or typography required by Pencil."
+		],
+		"modify": [
+			"Tailwind mapping to include effects tokens and any new Pencil-derived tokens.",
+			"tokens.docs.json to document effects tokens and aliasing."
+		],
+		"deprecate": [
+			"Any new raw-value tokens that duplicate existing tokens must be replaced by aliases (no net-new values)."
+		],
+		"notes": "Exact token names and values are to be extracted from Pencil. The above diff categories describe expected changes relative to current UI-kit tokens listed in this PRD."
+	},
+	"deliverables": [
+		"JSON PRD (this file)",
+		"Token list derived from Pencil for Auth form + Products (values + names)",
+		"Diff report vs current UI-kit tokens (add/modify/deprecate)",
+		"Compact implementation task list"
+	],
+	"tasks": [
+		{
+			"id": "TASK-001",
+			"summary": "Extract Pencil tokens for Auth form + Products",
+			"steps": [
+				"Enumerate all colors, spacing, radii, typography, and effects used in Auth form and Products.",
+				"Tag tokens with intended semantic role and proposed token name."
+			],
+			"acceptance": "Complete token list with values and semantic names sourced from Pencil."
+		},
+		{
+			"id": "TASK-002",
+			"summary": "Define Effects group tokens",
+			"steps": [
+				"Identify all gradients, shadows, and strokes in Auth form + Products.",
+				"Create effect token names and values, ensuring complex Auth gradients/outlines are captured."
+			],
+			"acceptance": "Effects tokens cover all gradients/shadows/strokes, including Auth form outlines."
+		},
+		{
+			"id": "TASK-003",
+			"summary": "Alias analysis",
+			"steps": [
+				"Compare Pencil values to existing UI-kit tokens.",
+				"Mark exact matches as aliases (no new values)."
+			],
+			"acceptance": "All matching values are aliased; no duplicate raw values introduced."
+		},
+		{
+			"id": "TASK-004",
+			"summary": "Tailwind mapping spec",
+			"steps": [
+				"Map all tokens to Tailwind theme extension keys (colors, shadow, backgroundImage, borderColor, etc.).",
+				"Document mapping in spec form."
+			],
+			"acceptance": "Every token has a Tailwind mapping referencing CSS vars."
+		},
+		{
+			"id": "TASK-005",
+			"summary": "Diff report vs current UI-kit tokens",
+			"steps": [
+				"Classify each Pencil-derived token as add/modify/deprecate/alias relative to current tokens.",
+				"Summarize deltas in a compact list for review."
+			],
+			"acceptance": "Diff report is complete and categorized."
+		}
+	],
+	"risks": [
+		"Pencil may not encode gradients/strokes in a token-friendly structure, increasing manual interpretation.",
+		"Token aliasing could hide subtle differences if values are close but not identical.",
+		"Tailwind mapping for complex gradients may require custom utilities."
+	],
+	"dependencies": [
+		"Access to Pencil source files for Auth form + Products.",
+		"Agreement on token naming conventions for new Effects group.",
+		"Confirmation of Tailwind configuration location and format."
+	],
+	"open_questions": [
+		"Where is the Pencil file for Auth form + Products located in the repo or accessible externally?"
+	],
+	"decisions": {
+		"effects_token_file": "new",
+		"effects_group_naming": "shadow/gradient/stroke top-level groups",
+		"theme_support": "single root theme only"
+	},
+	"stories": [
+		{
+			"id": "TASK-001",
+			"title": "Extract Pencil tokens for Auth form + Products",
+			"description": "Enumerate all colors, spacing, radii, typography, and effects used in Auth form and Products.\nTag tokens with intended semantic role and proposed token name.",
+			"acceptanceCriteria": [
+				"Complete token list with values and semantic names sourced from Pencil."
+			],
+			"status": "done",
+			"startedAt": "2026-02-14T17:16:14.462746+00:00",
+			"completedAt": "2026-02-14T17:41:38.443733+00:00",
+			"updatedAt": "2026-02-14T17:41:38.443487+00:00"
+		},
+		{
+			"id": "TASK-002",
+			"title": "Define Effects group tokens",
+			"description": "Identify all gradients, shadows, and strokes in Auth form + Products.\nCreate effect token names and values, ensuring complex Auth gradients/outlines are captured.",
+			"acceptanceCriteria": [
+				"Effects tokens cover all gradients/shadows/strokes, including Auth form outlines."
+			],
+			"status": "done",
+			"updatedAt": "2026-02-14T22:07:41.952810+00:00",
+			"completedAt": "2026-02-14T22:07:41.953054+00:00",
+			"startedAt": "2026-02-14T22:07:41.953057+00:00"
+		},
+		{
+			"id": "TASK-003",
+			"title": "Alias analysis",
+			"description": "Compare Pencil values to existing UI-kit tokens.\nMark exact matches as aliases (no new values).",
+			"acceptanceCriteria": [
+				"All matching values are aliased; no duplicate raw values introduced."
+			],
+			"status": "in_progress",
+			"startedAt": "2026-02-14T22:11:30.117379+00:00",
+			"completedAt": null,
+			"updatedAt": "2026-02-14T22:11:30.117595+00:00"
+		},
+		{
+			"id": "TASK-004",
+			"title": "Tailwind mapping spec",
+			"description": "Map all tokens to Tailwind theme extension keys (colors, shadow, backgroundImage, borderColor, etc.).\nDocument mapping in spec form.",
+			"acceptanceCriteria": [
+				"Every token has a Tailwind mapping referencing CSS vars."
+			],
+			"status": "done",
+			"startedAt": "2026-02-14T21:58:59.792707+00:00",
+			"completedAt": null,
+			"updatedAt": "2026-02-14T21:58:59.793038+00:00"
+		},
+		{
+			"id": "TASK-005",
+			"title": "Diff report vs current UI-kit tokens",
+			"description": "Classify each Pencil-derived token as add/modify/deprecate/alias relative to current tokens.\nSummarize deltas in a compact list for review.",
+			"acceptanceCriteria": ["Diff report is complete and categorized."],
+			"status": "done"
+		}
+	],
+	"qualityGates": []
 }

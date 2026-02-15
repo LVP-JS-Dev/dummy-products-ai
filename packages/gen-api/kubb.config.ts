@@ -7,46 +7,46 @@ import { pluginTs } from "@kubb/plugin-ts";
 import { pluginZod } from "@kubb/plugin-zod";
 
 export default defineConfig({
-  root: ".",
-  input: {
-    path: "./dummyjson.openapi.yaml",
-  },
-  output: {
-    path: "./generated",
-    clean: true,
-    format: false,
-    lint: false,
-  },
-  plugins: [
-    pluginOas(),
-    pluginTs({
-      output: {
-        path: "models",
-      },
-    }),
-    pluginClient({
-      client: "fetch",
-      baseURL: "https://dummyjson.com",
-      bundle: true,
-      output: {
-        path: "clients",
-      },
-    }),
-    pluginReactQuery({
-      client: {
-        client: "fetch",
-        baseURL: "https://dummyjson.com",
-        bundle: true,
-      },
-      output: {
-        path: "hooks",
-      },
-    }),
-    pluginZod({
-      output: {
-        path: "zod",
-      },
-    }),
-    pluginRedoc(),
-  ],
+	root: ".",
+	input: {
+		path: "./dummyjson.openapi.yaml",
+	},
+	output: {
+		path: "./generated",
+		clean: true,
+		format: false,
+		lint: false,
+	},
+	plugins: [
+		pluginOas(),
+		pluginTs({
+			output: {
+				path: "models",
+			},
+		}),
+		pluginClient({
+			client: "fetch",
+			baseURL: "https://dummyjson.com",
+			bundle: true,
+			output: {
+				path: "clients",
+			},
+		}),
+		pluginReactQuery({
+			client: {
+				client: "fetch",
+				baseURL: "https://dummyjson.com",
+				bundle: true,
+			},
+			output: {
+				path: "hooks",
+			},
+		}),
+		pluginZod({
+			output: {
+				path: "zod",
+			},
+		}),
+		pluginRedoc(),
+	],
 });

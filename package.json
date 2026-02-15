@@ -1,53 +1,53 @@
 {
-  "name": "dummy-products",
-  "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
-  "type": "module",
-  "scripts": {
-    "dev": "turbo dev",
-    "build": "turbo build",
-    "check-types": "turbo check-types",
-    "dev:native": "node scripts/dev-native.mjs",
-    "dev:web": "turbo -F web dev",
-    "docs:generate-tokens": "node scripts/generate-token-docs.mjs",
-    "docs:check-tokens": "node scripts/generate-token-docs.mjs --check",
-    "gen:ui": "pnpm -C packages/ui-kit gen",
-    "gen:api": "pnpm -C packages/gen-api gen",
-    "agents:skills-gate": "node packages/burlaki/scripts/skills-gate.mjs",
-    "codex:prompts:install": "node packages/burlaki/scripts/install-prompts.mjs --tool codex --target .codex/prompts",
-    "gen": "pnpm gen:ui && pnpm gen:api",
-    "test": "pnpm -C packages/ui-kit test",
-    "e2e": "playwright test",
-    "e2e:ui": "playwright test --ui",
-    "e2e:report": "playwright show-report",
-    "lint:md": "node scripts/lint-markdown-headings.mjs",
-    "check": "ultracite check && pnpm lint:md && pnpm gen && pnpm test && pnpm docs:check-tokens && git diff --exit-code && test -z \"$(git ls-files --others --exclude-standard packages/ui-kit/src/generated)\" && test -z \"$(git ls-files --others --exclude-standard packages/gen-api/generated)\"",
-    "fix": "ultracite fix",
-    "prepare": "husky",
-    "ruler:apply": "pnpm dlx @intellectronica/ruler@latest apply --local-only --mcp --agents claude --config .ruler/ruler.toml"
-  },
-  "dependencies": {
-    "@dummy-products/env": "workspace:*",
-    "dotenv": "catalog:",
-    "zod": "catalog:"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "2.3.13",
-    "@dummy-products/config": "workspace:*",
-    "@playwright/test": "^1.58.2",
-    "husky": "latest",
-    "lint-staged": "latest",
-    "turbo": "^2.6.3",
-    "typescript": "catalog:",
-    "ultracite": "7.1.4"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,jsonc,css,scss,md,mdx}": [
-      "ultracite fix"
-    ]
-  },
-  "packageManager": "pnpm@10.27.0"
+	"name": "dummy-products",
+	"private": true,
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	],
+	"type": "module",
+	"scripts": {
+		"dev": "turbo dev",
+		"build": "turbo build",
+		"check-types": "turbo check-types",
+		"dev:native": "node scripts/dev-native.mjs",
+		"dev:web": "turbo -F web dev",
+		"docs:generate-tokens": "node scripts/generate-token-docs.mjs",
+		"docs:check-tokens": "node scripts/generate-token-docs.mjs --check",
+		"gen:ui": "pnpm -C packages/ui-kit gen",
+		"gen:api": "pnpm -C packages/gen-api gen",
+		"agents:skills-gate": "node packages/burlaki/scripts/skills-gate.mjs",
+		"codex:prompts:install": "node packages/burlaki/scripts/install-prompts.mjs --tool codex --target .codex/prompts",
+		"gen": "pnpm gen:ui && pnpm gen:api",
+		"test": "pnpm -C packages/ui-kit test",
+		"e2e": "playwright test",
+		"e2e:ui": "playwright test --ui",
+		"e2e:report": "playwright show-report",
+		"lint:md": "node scripts/lint-markdown-headings.mjs",
+		"check": "ultracite check && pnpm lint:md && pnpm gen && pnpm test && pnpm docs:check-tokens && git diff --exit-code && test -z \"$(git ls-files --others --exclude-standard packages/ui-kit/src/generated)\" && test -z \"$(git ls-files --others --exclude-standard packages/gen-api/generated)\"",
+		"fix": "ultracite fix",
+		"prepare": "husky",
+		"ruler:apply": "pnpm dlx @intellectronica/ruler@latest apply --local-only --mcp --agents claude --config .ruler/ruler.toml"
+	},
+	"dependencies": {
+		"@dummy-products/env": "workspace:*",
+		"dotenv": "catalog:",
+		"zod": "catalog:"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.3.13",
+		"@dummy-products/config": "workspace:*",
+		"@playwright/test": "^1.58.2",
+		"husky": "latest",
+		"lint-staged": "latest",
+		"turbo": "^2.6.3",
+		"typescript": "catalog:",
+		"ultracite": "7.1.4"
+	},
+	"lint-staged": {
+		"*.{js,jsx,ts,tsx,json,jsonc,css,scss,md,mdx}": [
+			"ultracite fix"
+		]
+	},
+	"packageManager": "pnpm@10.27.0"
 }
