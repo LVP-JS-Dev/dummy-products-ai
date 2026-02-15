@@ -2,6 +2,8 @@
 
 Monorepo с **UI Kit (contract-first)**, **main app (TanStack Router)** и **docs (Next.js + Fumadocs Story)**.
 
+[![Build status](https://badge.buildkite.com/0724c229cd4c390ac1e82491e989c9937fe84656647d46eaa7.svg)](https://buildkite.com/lvpjsdev/dummy-products-prod)
+
 Идея проекта: сделать UI не только визуальным набором компонентов, но и **формальной, машиночитаемой системой**:
 - контракты как источник истины
 - `states` как публичный API и валидные примеры
