@@ -18,8 +18,8 @@ Implement CI/CD to build and publish two Docker images (`web`, `docs`) to GHCR v
 # Non-Goals
 
 - No server-side builds on the Dokploy VPS.
-- No monolithic single image for both services.
-- No automated version bumping in CI.
+- Avoid a monolithic single image for both services.
+- Exclude automated version bumping from CI.
 
 # Architecture
 

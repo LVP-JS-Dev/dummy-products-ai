@@ -136,7 +136,7 @@ function render(items) {
   for (const section of SECTION_ORDER) {
     const sectionItems = items.filter((i) => i.status === section);
     for (const item of sectionItems) {
-      rows.push(`| ${item.area} | ${item.text} | ${STATUS_LABELS[section]} |`);
+      rows.push(`| ${item.area} | ${item.text} | ${section} |`);
     }
   }
 
