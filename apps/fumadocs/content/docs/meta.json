@@ -1,33 +1,28 @@
 {
-  "title": "Documentation",
-  "pages": [
-    "index",
-    "project-overview",
-    "repository-structure",
-    "architecture",
-    "getting-started",
-    "workflow",
-    "design-tokens",
-    {
-      "name": "Components",
-      "pages": [
-        "components/button",
-        "components/card",
-        "components/checkbox",
-        "components/divider",
-        "components/icon",
-        "components/image",
-        "components/input",
-        "components/link",
-        "components/logo",
-        "components/modal",
-        "components/page-number",
-        "components/pagination",
-        "components/search-input",
-        "components/spinner",
-        "components/text",
-        "components/toast"
-      ]
-    }
-  ]
+	"title": "Documentation",
+	"pages": [
+		"index",
+		"project-overview",
+		"repository-structure",
+		"architecture",
+		"getting-started",
+		"workflow",
+		"design-tokens",
+		"components/button",
+		"components/card",
+		"components/checkbox",
+		"components/divider",
+		"components/icon",
+		"components/image",
+		"components/input",
+		"components/link",
+		"components/logo",
+		"components/modal",
+		"components/page-number",
+		"components/pagination",
+		"components/search-input",
+		"components/spinner",
+		"components/text",
+		"components/toast"
+	]
 }
