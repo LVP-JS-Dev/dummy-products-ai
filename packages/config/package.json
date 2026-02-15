@@ -1,5 +1,8 @@
 {
   "name": "@dummy-products/config",
   "version": "0.0.0",
-  "private": true
+  "private": true,
+  "engines": {
+    "pnpm": "10.27.0"
+  }
 }

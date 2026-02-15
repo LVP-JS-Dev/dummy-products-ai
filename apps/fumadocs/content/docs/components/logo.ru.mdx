@@ -1,0 +1,35 @@
+---
+title: Логотип
+description: Брендовый знак для заголовков и экранов авторизации.
+---
+
+import { Logo, states } from "@dummy-products/ui-kit";
+import { WithControl } from "@/stories/logo.story";
+
+## Описание
+
+Детерминированный SVG-логотип с предсказуемыми размерами и опциями доступности.
+
+## API
+
+Props определены в контракте UI Kit. Ключевые props: `size`, `label`,
+`decorative`, `variant`.
+
+**Спецификация**
+- [`manifest.json`](../../../../../packages/ui-kit/src/generated/manifest.json)
+- [`logo.schema.json`](../../../../../packages/ui-kit/src/generated/schemas/logo.schema.json)
+
+## Примеры
+
+<div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+  {Object.entries(states.logo).map(([name, props]) => (
+    <div key={name} style={{ display: "grid", gap: 6, justifyItems: "center" }}>
+      <Logo {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Интерактив
+
+<WithControl />

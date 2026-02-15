@@ -1,0 +1,42 @@
+---
+title: Чекбокс
+description: Двоичный переключатель с опциональной подписью.
+---
+
+import { Checkbox, states } from "@dummy-products/ui-kit";
+import { WithControl } from "@/stories/checkbox.story";
+
+## Описание
+
+Двоичный контрол для выбора элементов в списках и таблицах.
+Когда использовать: для независимых включений и выключений в списке опций.
+Когда не использовать: если требуется выбрать только один вариант (используйте
+radio или select).
+Граница неотмеченного чекбокса использует `--ui-color-border-control` для
+согласованности с Figma-экранами авторизации и таблицами.
+Размер по умолчанию — `sm` (22px). Используйте `md` (24px) только при явном
+требовании.
+
+## API
+
+Props определены в контракте UI Kit. Ключевые props: `checked`, `label`,
+`children`, `disabled`, `size`.
+
+**Спецификация**
+- [`manifest.json`](../../../../../packages/ui-kit/src/generated/manifest.json)
+- [`checkbox.schema.json`](../../../../../packages/ui-kit/src/generated/schemas/checkbox.schema.json)
+
+## Примеры
+
+<div style={{ display: "grid", gap: 12 }}>
+  {Object.entries(states.checkbox).map(([name, props]) => (
+    <div key={name} style={{ display: "flex", alignItems: "center", gap: 12 }}>
+      <Checkbox {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Интерактив
+
+<WithControl />

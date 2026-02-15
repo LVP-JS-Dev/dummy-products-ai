@@ -1,0 +1,40 @@
+---
+title: Поле поиска
+description: Поле поиска с иконкой и состояниями.
+---
+
+import { SearchInput, states } from "@dummy-products/ui-kit";
+import { WithControl } from "@/stories/search-input.story";
+
+## Описание
+
+Поле ввода, оптимизированное для поиска, с состояниями inactive, active и
+disabled.
+Когда использовать: для текстового поиска по спискам, таблицам или контенту.
+Когда не использовать: для фильтров с заранее заданными опциями.
+Базовая геометрия соответствует Figma: высота `48px`, радиус `8px`, цвет
+placeholder и иконки берется из `--ui-color-text-placeholder`.
+
+## API
+
+Props определены в контракте UI Kit. Ключевые props:
+`placeholder`, `state`, `showIcon`, `value`.
+
+**Спецификация**
+- [`manifest.json`](../../../../../packages/ui-kit/src/generated/manifest.json)
+- [`search-input.schema.json`](../../../../../packages/ui-kit/src/generated/schemas/search-input.schema.json)
+
+## Примеры
+
+<div style={{ display: "grid", gap: 12 }}>
+  {Object.entries(states.searchInput).map(([name, props]) => (
+    <div key={name} style={{ display: "flex", alignItems: "center", gap: 12 }}>
+      <SearchInput {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Интерактив
+
+<WithControl />

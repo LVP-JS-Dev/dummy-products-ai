@@ -1,0 +1,54 @@
+---
+title: Project overview
+description: What the system delivers and who it is for
+---
+
+This page gives a concise overview of the system, what it delivers, and the
+roles each part plays.
+
+## Purpose
+
+The monorepo exists to present a contract-first UI system that is both
+human-readable and machine-readable. The UI Kit acts as the source of truth,
+while docs and apps consume it.
+
+The project is used as:
+
+- a portfolio-grade architecture example
+- a base for agent-first UI development
+- a product demo with real app flows
+
+## What makes it contract-first
+
+Each component has a formal contract that defines its props shape. Types and
+states are derived from these contracts and then exported as public API.
+
+This gives you:
+
+- a single source of truth for component API
+- serializable states for docs, tests, and tooling
+- generated schemas and a manifest for agents and tools
+
+## Who consumes what
+
+The UI Kit defines the API surface. Everything else consumes it through public
+exports:
+
+- `apps/web` renders product flows using the UI Kit
+- `apps/fumadocs` documents components and uses UI Kit states
+- `packages/gen-api` is independent and covers API client generation
+
+## Where requirements live
+
+Requirements are split by scope. Use these files as the source of truth:
+
+- `PRD.md` for system-wide invariants and goals
+- `packages/ui-kit/PRD.md` for contracts, states, and generation rules
+- `apps/fumadocs/PRD.md` for documentation rules
+- `apps/web/PRD.md` for product requirements
+
+## Next steps
+
+If you are new to the repository, start with the structure page:
+
+- [Repository structure](/docs/repository-structure)

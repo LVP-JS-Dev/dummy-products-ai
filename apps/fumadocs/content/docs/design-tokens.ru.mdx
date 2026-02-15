@@ -1,0 +1,155 @@
+---
+title: "Design tokens"
+description: "Справочник публичных CSS-переменных UI Kit"
+---
+
+> Эта страница сгенерирована. Не редактируйте ее вручную.
+
+import { WithControl } from "@/stories/design-tokens.story";
+
+## Импорт
+
+Подключите таблицу токенов один раз в глобальном CSS приложения:
+
+```css
+@import "@dummy-products/ui-kit/tokens.css";
+```
+
+## Цвета
+
+### Базовые
+
+| Токен | Значение | Описание |
+| --- | --- | --- |
+| `--ui-color-accent` | `#797fea` | Акцентный цвет для выделения (например, активная пагинация). |
+| `--ui-color-focus-ring` | `var(--ui-color-accent)` | Цвет кольца фокуса для интерактивных элементов. |
+| `--ui-color-link` | `var(--ui-color-primary)` | Семантический цвет ссылок. |
+| `--ui-color-on-primary` | `#ffffff` | Цвет текста и иконок на основном фоне. |
+| `--ui-color-overlay` | `rgb(17 24 39 / 45%)` | Цвет оверлея для затемнения фона. |
+| `--ui-color-primary` | `#242edb` | Основной брендовый цвет действий. |
+| `--ui-color-primary-border` | `#367aff` | Цвет обводки, связанный с основным заполнением. |
+
+### Устаревшие
+
+| Токен | Значение | Описание |
+| --- | --- | --- |
+| `--ui-color-blue-accent` | `var(--ui-color-focus-ring)` | Устарел. Используйте `--ui-color-focus-ring`. |
+| `--ui-color-blue-primary` | `var(--ui-color-primary)` | Устарел. Используйте `--ui-color-primary`. |
+| `--ui-color-gray-200` | `var(--ui-color-border)` | Устарел. Используйте `--ui-color-border` или `--ui-color-surface-muted`. |
+| `--ui-color-gray-400` | `var(--ui-color-text-muted)` | Устарел. Используйте `--ui-color-text-muted`. |
+| `--ui-color-green-soft` | `var(--ui-color-success-surface)` | Устарел. Используйте `--ui-color-success-surface`. |
+| `--ui-color-text-primary` | `var(--ui-color-text)` | Устарел. Используйте `--ui-color-text`. |
+| `--ui-color-white` | `var(--ui-color-surface)` | Устарел. Используйте `--ui-color-surface`. |
+
+### Состояния
+
+| Токен | Значение | Описание |
+| --- | --- | --- |
+| `--ui-color-checkbox-checked` | `#3c538e` | Цвет заливки и обводки для отмеченного чекбокса. |
+| `--ui-color-danger` | `#dc2626` | Семантический цвет ошибок и опасных состояний. |
+| `--ui-color-danger-surface` | `#fee2e2` | Мягкий фон для ошибок и деструктивных действий. |
+| `--ui-color-info` | `#2563eb` | Семантический информационный цвет. |
+| `--ui-color-success` | `#15803d` | Семантический цвет успеха. |
+| `--ui-color-success-surface` | `#dcfce7` | Мягкий фон подтверждения. |
+| `--ui-color-warning` | `#d97706` | Семантический предупреждающий цвет. |
+
+### Поверхности
+
+| Токен | Значение | Описание |
+| --- | --- | --- |
+| `--ui-color-border` | `#ededed` | Цвет границ и разделителей по умолчанию. |
+| `--ui-color-border-faint` | `#ebebeb` | Слабая граница для низкоконтрастных разделителей. |
+| `--ui-color-border-secondary` | `#ececeb` | Граница для вторичных контролов и нейтральных действий. |
+| `--ui-color-border-subtle` | `#ececeb` | Ненавязчивая граница для компактных контролов. |
+| `--ui-color-card-border` | `#ffffff` | Граница карточек для контрастных обводок. |
+| `--ui-color-card-surface` | `#232323` | Поверхность карточек для темных контейнеров. |
+| `--ui-color-surface` | `#ffffff` | Основной фон приложения. |
+| `--ui-color-surface-muted` | `#f3f3f3` | Приглушенный фон для мягких заливок. |
+
+### Текст
+
+| Токен | Значение | Описание |
+| --- | --- | --- |
+| `--ui-color-text` | `#232323` | Основной цвет текста интерфейса. |
+| `--ui-color-text-faint` | `#e0e0e0` | Очень слабый текст для декоративных подсказок. |
+| `--ui-color-text-muted` | `#9c9c9c` | Приглушенный текст для placeholders и helper text. |
+| `--ui-color-text-placeholder` | `#999999` | Цвет placeholder текста в полях. |
+| `--ui-color-text-subtle` | `#6c6c6c` | Промежуточный цвет между основным и muted. |
+| `--ui-color-text-tertiary` | `#b2b3b9` | Третичный цвет текста для слабых подписей. |
+
+### Пример
+
+```css
+/* Пример использования */
+.card {
+  background: var(--ui-color-surface);
+  border: 1px solid var(--ui-color-border);
+  color: var(--ui-color-text);
+}
+```
+
+## Типографика
+
+| Токен | Значение | Описание |
+| --- | --- | --- |
+| `--ui-font-body` | `"Open Sans", "Inter", system-ui, sans-serif` | Шрифт для основного текста и длинных описаний. |
+| `--ui-font-heading` | `"Cairo", "Inter", system-ui, sans-serif` | Шрифт заголовков и акцентных подписей. |
+| `--ui-font-roboto` | `"Roboto", "Inter", system-ui, sans-serif` | Токен для Roboto-ориентированных сценариев. |
+| `--ui-font-ui` | `"Inter", "Inter Variable", system-ui, sans-serif` | Шрифт для контролов и компактного UI текста. |
+
+### Пример
+
+```css
+/* Пример использования */
+h1, h2 {
+  font-family: var(--ui-font-heading);
+}
+p {
+  font-family: var(--ui-font-body);
+}
+```
+
+## Отступы
+
+| Токен | Значение | Описание |
+| --- | --- | --- |
+| `--ui-space-lg` | `16px` | Большой шаг отступов. |
+| `--ui-space-md` | `12px` | Средний шаг отступов. |
+| `--ui-space-sm` | `8px` | Малый шаг отступов. |
+| `--ui-space-xl` | `20px` | Очень большой шаг отступов. |
+| `--ui-space-xs` | `4px` | Очень маленький шаг отступов. |
+| `--ui-space-xxl` | `24px` | Двойной очень большой шаг отступов. |
+
+### Пример
+
+```css
+/* Пример использования */
+.stack {
+  display: grid;
+  gap: var(--ui-space-md);
+}
+```
+
+## Радиусы
+
+| Токен | Значение | Описание |
+| --- | --- | --- |
+| `--ui-radius-lg` | `12px` | Большой радиус скругления. |
+| `--ui-radius-md` | `8px` | Средний радиус скругления. |
+| `--ui-radius-pill` | `9999px` | Радиус для пилюль и бейджей. |
+| `--ui-radius-sm` | `6px` | Малый радиус скругления. |
+| `--ui-radius-xl` | `16px` | Очень большой радиус скругления. |
+| `--ui-radius-xs` | `4px` | Очень маленький радиус скругления. |
+
+### Пример
+
+```css
+/* Пример использования */
+.button {
+  border-radius: var(--ui-radius-md);
+}
+```
+
+## Интерактив
+
+<WithControl />

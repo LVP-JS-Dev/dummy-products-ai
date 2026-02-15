@@ -2,15 +2,19 @@ import { docs } from "fumadocs-mdx:collections/server";
 import { type InferPageType, loader } from "fumadocs-core/source";
 import { lucideIconsPlugin } from "fumadocs-core/source/lucide-icons";
 
+import { i18n } from "@/lib/I18n";
+
 // See https://fumadocs.dev/docs/headless/source-api for more info
 export const source = loader({
   baseUrl: "/docs",
+  i18n,
   source: docs.toFumadocsSource(),
   plugins: [lucideIconsPlugin()],
 });
 
 export function getPageImage(page: InferPageType<typeof source>) {
-  const segments = [...page.slugs, "image.png"];
+  const locale = page.locale ?? i18n.defaultLanguage;
+  const segments = [locale, ...page.slugs, "image.png"];
 
   return {
     segments,

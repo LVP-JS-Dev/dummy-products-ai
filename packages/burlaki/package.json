@@ -4,6 +4,9 @@
   "private": true,
   "description": "Burlaki - Agent workflow orchestration utilities for skills, prompts, and governance",
   "type": "module",
+  "engines": {
+    "pnpm": "10.27.0"
+  },
   "exports": {
     "./matrix": "./agent-skills-matrix.json",
     "./cli": "./scripts/skills-gate.mjs"

@@ -1,0 +1,35 @@
+---
+title: Ссылка
+description: Ссылка с безопасными параметрами по умолчанию.
+---
+
+import { Link, states } from "@dummy-products/ui-kit";
+import { WithControl } from "@/stories/link.story";
+
+## Описание
+
+Ссылка для навигации и действий с безопасными дефолтами для внешних переходов.
+
+## API
+
+Props определены в контракте UI Kit. Ключевые props: `href`, `target`, `rel`,
+`disabled`.
+
+**Спецификация**
+- [`manifest.json`](../../../../../packages/ui-kit/src/generated/manifest.json)
+- [`link.schema.json`](../../../../../packages/ui-kit/src/generated/schemas/link.schema.json)
+
+## Примеры
+
+<div style={{ display: "grid", gap: 12 }}>
+  {Object.entries(states.link).map(([name, props]) => (
+    <div key={name} style={{ display: "flex", alignItems: "center", gap: 12 }}>
+      <Link {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Интерактив
+
+<WithControl />

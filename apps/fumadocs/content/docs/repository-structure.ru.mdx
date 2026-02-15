@@ -1,0 +1,55 @@
+---
+title: Структура репозитория
+description: Где лежит код, спецификации и артефакты
+---
+
+Эта страница описывает структуру репозитория, чтобы вы быстро находили нужные
+файлы и не меняли слои системы в неправильном месте.
+
+## Верхний уровень
+
+Корень репозитория выглядит так:
+
+- `apps/` — приложения
+- `packages/` — библиотеки и переиспользуемые модули
+- `requirements/` — требования задания и Figma-материалы
+- `docs/` — внутренние планы и заметки
+- `openspec/` — OpenSpec артефакты и workflow файлы
+
+## Приложения
+
+Каждое приложение является потребителем UI Kit:
+
+- `apps/web` — продуктовый интерфейс на TanStack Router
+- `apps/fumadocs` — документация на Next.js + Fumadocs
+
+## Пакеты
+
+Каждый пакет имеет одну ответственность:
+
+- `packages/ui-kit` — contract-first UI система
+- `packages/gen-api` — генерация typed API клиента из OpenAPI
+- `packages/burlaki` — утилиты agent workflow
+
+## Внутренности UI Kit
+
+Эти пути используются при работе с UI Kit:
+
+- `packages/ui-kit/src/contracts/` — контракты компонентов
+- `packages/ui-kit/src/components/` — React-компоненты
+- `packages/ui-kit/src/states/` — сериализуемые states
+- `packages/ui-kit/src/generated/` — схемы и `manifest.json`
+
+## Внутренности Docs
+
+Эти пути используются при работе с документацией:
+
+- `apps/fumadocs/content/docs/` — MDX-страницы
+- `apps/fumadocs/src/stories/` — интерактивные Story
+- `apps/fumadocs/PRD.md` — правила и требования docs
+
+## Следующие шаги
+
+Перед изменениями прочитайте архитектурные правила:
+
+- [Архитектура и инварианты](/docs/architecture)

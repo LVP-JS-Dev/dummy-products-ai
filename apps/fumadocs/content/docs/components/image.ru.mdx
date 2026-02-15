@@ -1,0 +1,36 @@
+---
+title: Изображение
+description: Примитив изображения с доступностью и дефолтами загрузки.
+---
+
+import { Image, states } from "@dummy-products/ui-kit";
+import { WithControl } from "@/stories/image.story";
+
+## Описание
+
+Адаптивный компонент изображения с поддержкой `alt` и декоративного режима,
+настройками загрузки и fallback-источником.
+
+## API
+
+Props определены в контракте UI Kit. Ключевые props: `src`, `alt`,
+`decorative`, `width`, `height`, `fallbackSrc`, `loading`, `decoding`.
+
+**Спецификация**
+- [`manifest.json`](../../../../../packages/ui-kit/src/generated/manifest.json)
+- [`image.schema.json`](../../../../../packages/ui-kit/src/generated/schemas/image.schema.json)
+
+## Примеры
+
+<div style={{ display: "grid", gap: 12 }}>
+  {Object.entries(states.image).map(([name, props]) => (
+    <div key={name} style={{ display: "grid", gap: 6 }}>
+      <Image {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Интерактив
+
+<WithControl />

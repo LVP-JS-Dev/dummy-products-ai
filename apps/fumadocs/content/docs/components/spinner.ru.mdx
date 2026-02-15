@@ -1,0 +1,35 @@
+---
+title: Спиннер
+description: Индикатор загрузки с вариантами размера и тона.
+---
+
+import { Spinner, states } from "@dummy-products/ui-kit";
+import { WithControl } from "@/stories/spinner.story";
+
+## Описание
+
+Визуальный индикатор загрузки для асинхронных операций.
+
+## API
+
+Props определены в контракте UI Kit. Ключевые props: `size`, `tone`,
+`label`.
+
+**Спецификация**
+- [`manifest.json`](../../../../../packages/ui-kit/src/generated/manifest.json)
+- [`spinner.schema.json`](../../../../../packages/ui-kit/src/generated/schemas/spinner.schema.json)
+
+## Примеры
+
+<div style={{ display: "flex", gap: 24, alignItems: "center" }}>
+  {Object.entries(states.spinner).map(([name, props]) => (
+    <div key={name} style={{ display: "grid", justifyItems: "center", gap: 4 }}>
+      <Spinner {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Интерактив
+
+<WithControl />
