@@ -78,11 +78,7 @@ const OUT =
     : OUT_DEFAULT;
 
 const SECTION_ORDER = ["In Progress", "Planned", "Done"];
-const STATUS_LABELS = {
-  "In Progress": "In Progress",
-  Planned: "Planned",
-  Done: "Done",
-};
+const DEFAULT_AREA = "general";
 
 function parseRoadmap(md) {
   const lines = md.split(/\r?\n/);
@@ -99,14 +95,28 @@ function parseRoadmap(md) {
 
     if (!current) continue;
 
-    const item = line.match(/^- \[( |x)\]\s+\[area:([^\]]+)\]\s+(.*)$/);
-    if (!item) continue;
+    const withArea = line.match(/^- \[( |x)\]\s+\[area:([^\]]+)\]\s+(.*)$/);
+    const withoutArea = !withArea ? line.match(/^- \[( |x)\]\s+(.*)$/) : null;
+    if (!withArea && !withoutArea) continue;
 
-    items.push({
-      status: current,
-      area: item[2].trim(),
-      text: item[3].trim(),
-    });
+    const checked = (withArea ?? withoutArea)[1] === "x";
+    const area = withArea ? withArea[2].trim() : DEFAULT_AREA;
+    const text = withArea ? withArea[3].trim() : withoutArea[2].trim();
+
+    if (!withArea) {
+      console.warn(`Missing area tag, defaulting to \"${DEFAULT_AREA}\": \"${text}\"`);
+    }
+
+    let status = current;
+    if (!status) {
+      status = checked ? "Done" : "Planned";
+    } else if ((status === "Done") !== checked) {
+      console.warn(
+        `Section/checkbox mismatch for \"${text}\", using section \"${status}\".`
+      );
+    }
+
+    items.push({ status, area, text });
   }
 
   return items;
@@ -157,27 +167,44 @@ git commit -m "build: add roadmap generator"
 **Step 1: Add check script**
 
 ```js
+import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
-import { execFileSync } from "node:child_process";
 
 const ROOT = process.cwd();
 const GENERATED = path.join(ROOT, "docs", "ROADMAP.generated.md");
 const TMP = path.join(ROOT, "docs", ".ROADMAP.generated.tmp.md");
 
-execFileSync("node", ["scripts/roadmap/generate.mjs", "--out", TMP], {
-  stdio: "inherit",
-});
+let execError = null;
 
-const current = fs.readFileSync(GENERATED, "utf8");
-const regenerated = fs.readFileSync(TMP, "utf8");
+try {
+  try {
+    execFileSync("node", ["scripts/roadmap/generate.mjs", "--out", TMP], {
+      stdio: "inherit",
+    });
+  } catch (error) {
+    execError = error;
+  }
 
-if (current !== regenerated) {
-  console.error("Roadmap generated file is out of date. Run: pnpm roadmap:gen");
-  process.exit(1);
+  if (!fs.existsSync(GENERATED)) {
+    console.error("Roadmap generated file is missing. Run: pnpm roadmap:gen");
+    process.exitCode = 1;
+  } else {
+    const current = fs.readFileSync(GENERATED, "utf8");
+    const regenerated = fs.readFileSync(TMP, "utf8");
+
+    if (current !== regenerated) {
+      console.error("Roadmap generated file is out of date. Run: pnpm roadmap:gen");
+      process.exitCode = 1;
+    }
+  }
+
+  if (execError) {
+    process.exitCode = 1;
+  }
+} finally {
+  fs.rmSync(TMP, { force: true });
 }
-
-fs.unlinkSync(TMP);
 ```
 
 **Step 2: Wire scripts**
