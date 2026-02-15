@@ -3,12 +3,17 @@
   "root": false,
   "extends": ["ultracite/biome/core", "ultracite/biome/react"],
   "files": {
-    "experimentalScannerIgnores": [
-      "**/*.gen.ts",
-      "apps/web/src/routeTree.gen.ts",
-      "packages/gen-api/generated/**",
-      "packages/ui-kit/src/generated/**"
+    "includes": [
+      "!!**/*.gen.ts",
+      "!!**/apps/web/src/routeTree.gen.ts",
+      "!!**/packages/gen-api/generated",
+      "!!**/packages/ui-kit/src/generated"
     ]
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
   },
   "overrides": [
     {

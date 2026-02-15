@@ -2,6 +2,7 @@
   "name": "@dummy-products/config",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "exports": {
     "./biome": "./biome.jsonc",
     "./playwright": "./playwright.config.ts",
