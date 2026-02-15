@@ -34,6 +34,14 @@ pnpm dev
 - main app: `apps/web`
 - docs: `apps/fumadocs`
 
+## CI/CD и деплой
+
+- CircleCI собирает `web` и `docs` образы и пушит в GHCR по `push` в `main` (и через ручной триггер).
+- npm пакет `packages/burlaki` публикуется только по тегам `vX.Y.Z` с проверкой версии.
+- Докплой разворачивает по digest для воспроизводимости.
+
+Подробности и локальный fallback: `deploy/README.md`.
+
 ## Configuration management
 
 See `docs/configuration.md` for the configuration layout, decision rationale,
