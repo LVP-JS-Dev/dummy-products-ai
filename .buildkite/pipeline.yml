@@ -1,0 +1,36 @@
+steps:
+  - label: ":docker: Build and push web image"
+    if: build.branch == "master" || build.env("MANUAL") == "true"
+    secrets:
+      - GHCR_USERNAME
+      - GHCR_TOKEN
+    commands:
+      - "set -euo pipefail"
+      - "GIT_SHA=$(echo \"$BUILDKITE_COMMIT\" | cut -c1-7)"
+      - "echo \"$GHCR_TOKEN\" | docker login ghcr.io -u \"$GHCR_USERNAME\" --password-stdin"
+      - "docker buildx create --use --name bk-builder || docker buildx use bk-builder"
+      - "docker buildx build --platform linux/amd64 -f deploy/docker/web.Dockerfile -t ghcr.io/${GHCR_USERNAME}/dummy-products-web:stage-${GIT_SHA} --push ."
+
+  - label: ":docker: Build and push docs image"
+    if: build.branch == "master" || build.env("MANUAL") == "true"
+    secrets:
+      - GHCR_USERNAME
+      - GHCR_TOKEN
+    commands:
+      - "set -euo pipefail"
+      - "GIT_SHA=$(echo \"$BUILDKITE_COMMIT\" | cut -c1-7)"
+      - "echo \"$GHCR_TOKEN\" | docker login ghcr.io -u \"$GHCR_USERNAME\" --password-stdin"
+      - "docker buildx create --use --name bk-builder || docker buildx use bk-builder"
+      - "docker buildx build --platform linux/amd64 -f deploy/docker/docs.Dockerfile -t ghcr.io/${GHCR_USERNAME}/dummy-products-docs:stage-${GIT_SHA} --push ."
+
+  - label: ":package: Publish burlaki"
+    if: build.tag != null && build.tag =~ /^v.*/
+    secrets:
+      - NPM_TOKEN
+    commands:
+      - "set -euo pipefail"
+      - "TAG=\"${BUILDKITE_TAG:-}\""
+      - "if [ -z \"$TAG\" ]; then echo \"Not a tag build; skipping publish.\"; exit 0; fi"
+      - "VERSION=$(docker run --rm -v \"$PWD\":/work -w /work node:20.11 node -p \"require('./packages/burlaki/package.json').version\")"
+      - "if [ \"v${VERSION}\" != \"$TAG\" ]; then echo \"Tag ($TAG) does not match package.json version (v${VERSION}).\"; exit 1; fi"
+      - "docker run --rm -e NPM_TOKEN -v \"$PWD\":/work -w /work node:20.11 bash -lc 'set -euo pipefail; echo \"//registry.npmjs.org/:_authToken=${NPM_TOKEN}\" > ~/.npmrc; corepack enable; pnpm install --frozen-lockfile; pnpm -C packages/burlaki publish --access public'"
