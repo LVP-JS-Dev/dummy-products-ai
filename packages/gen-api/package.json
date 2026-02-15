@@ -42,6 +42,5 @@
     "@kubb/plugin-redoc": "4.22.1",
     "@kubb/plugin-ts": "4.22.1",
     "@kubb/plugin-zod": "4.22.1"
-  },
-  "packageManager": "pnpm@10.27.0"
+  }
 }
