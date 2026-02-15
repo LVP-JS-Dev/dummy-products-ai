@@ -35,6 +35,12 @@ Add a simple roadmap system where `docs/ROADMAP.md` is the human-edited source o
 - Sections: `## In Progress`, `## Planned`, `## Done`
 - Items: markdown checkboxes with area tags
   - `- [ ] [area:ci] CI for GHCR images`
+
+Rules:
+- Area tag format is `[area:NAME]`, and **only** the value after `:` is mapped to the `Area` column (e.g., `ci`).
+- If the area tag is missing, the generator should default `Area` to `general` and log a warning.
+- Sorting within a section preserves source order by default; allow an optional flag to sort by area or alphabetically.
+- Nested/indented checkboxes are **not supported** and should cause a parsing error.
   - `- [x] [area:docs] Document local fallback`
 
 # Generated View
@@ -44,6 +50,11 @@ Add a simple roadmap system where `docs/ROADMAP.md` is the human-edited source o
 - A header indicating it is generated
 - A table with columns `Area | Item | Status`
 - Grouped in the order: In Progress → Planned → Done
+- Parsing rules:
+  - `Area` comes from the `[area:NAME]` tag; if missing, `Area` is empty.
+  - `Item` is the text after the area tag.
+  - `Status` is defined by the section first; if no section is found, fallback to checkbox state (`[x]` = Done, `[ ]` = Planned).
+  - If section and checkbox conflict (e.g. `[ ]` inside `Done`), section wins, but log a warning.
 
 # CI / Check Integration
 
@@ -51,6 +62,11 @@ Add commands:
 
 - `pnpm roadmap:gen` to regenerate the view
 - `pnpm roadmap:check` to fail if `docs/ROADMAP.generated.md` is stale
+
+Error message spec for `pnpm roadmap:check` failures:
+- `Roadmap generated view is out of date.`
+- `Run: pnpm roadmap:gen`
+- `Expected output: docs/ROADMAP.generated.md`
 
 Include `pnpm roadmap:check` in existing `pnpm check` (no new pipeline).
 
@@ -62,3 +78,9 @@ Include `pnpm roadmap:check` in existing `pnpm check` (no new pipeline).
 # Testing
 
 - Validate by running `pnpm roadmap:check`
+- Scenarios to cover for the generator:
+  - Empty roadmap → generate header + empty table, no crash.
+  - Invalid area tag → fail with clear parsing error.
+  - Missing sections → treat as no entries for that section, no crash.
+  - Duplicate items → keep all entries, preserve order.
+- Add unit/integration coverage for these scenarios and run them in CI (either as part of `pnpm roadmap:check` or a separate test command).

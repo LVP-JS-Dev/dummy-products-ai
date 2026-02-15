@@ -77,4 +77,5 @@ function render(items) {
 const source = fs.readFileSync(SOURCE, "utf8");
 const items = parseRoadmap(source);
 const out = render(items);
+fs.mkdirSync(path.dirname(OUT), { recursive: true });
 fs.writeFileSync(OUT, out);

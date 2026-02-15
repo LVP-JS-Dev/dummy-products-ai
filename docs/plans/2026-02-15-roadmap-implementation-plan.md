@@ -10,7 +10,7 @@
 
 ---
 
-### Task 1: Add roadmap source and generated placeholders
+## Task 1: Add roadmap source and generated placeholders
 
 **Files:**
 - Create: `docs/ROADMAP.md`
@@ -56,7 +56,7 @@ git commit -m "docs: add roadmap source and generated view"
 
 ---
 
-### Task 2: Implement generator script
+## Task 2: Implement generator script
 
 **Files:**
 - Create: `scripts/roadmap/generate.mjs`
@@ -148,7 +148,7 @@ git commit -m "build: add roadmap generator"
 
 ---
 
-### Task 3: Add scripts and check integration
+## Task 3: Add scripts and check integration
 
 **Files:**
 - Modify: `package.json`
@@ -201,7 +201,7 @@ git commit -m "build: add roadmap check to existing gate"
 
 ---
 
-### Task 4: Add rules for agents and update README
+## Task 4: Add rules for agents and update README
 
 **Files:**
 - Create: `.ruler/roadmap.md`

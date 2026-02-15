@@ -10,7 +10,7 @@
 
 ---
 
-### Task 1: Add CircleCI pipeline skeleton
+## Task 1: Add CircleCI pipeline skeleton
 
 **Files:**
 - Create: `.circleci/config.yml`
@@ -124,7 +124,7 @@ git commit -m "ci: add CircleCI pipeline for GHCR images and npm publish"
 
 ---
 
-### Task 2: Add explicit tag-only guard for publish workflow
+## Task 2: Add explicit tag-only guard for publish workflow
 
 **Files:**
 - Modify: `.circleci/config.yml`
@@ -156,7 +156,7 @@ git commit -m "ci: publish npm package only on version tags"
 
 ---
 
-### Task 3: Document CI/CD and local fallback
+## Task 3: Document CI/CD and local fallback
 
 **Files:**
 - Modify: `deploy/README.md`
@@ -184,7 +184,7 @@ git commit -m "docs: document CircleCI pipeline and local fallback"
 
 ---
 
-### Task 4: Optional Lefthook note
+## Task 4: Optional Lefthook note
 
 **Files:**
 - Modify: `deploy/README.md`
@@ -199,4 +199,3 @@ Explain that Husky is current default, Lefthook is an optional future migration 
 git add deploy/README.md
 git commit -m "docs: mention optional lefthook migration"
 ```
-
