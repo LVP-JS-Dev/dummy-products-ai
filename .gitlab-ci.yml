@@ -1,0 +1,61 @@
+stages:
+  - build
+  - publish
+
+variables:
+  DOCKER_BUILDKIT: "1"
+  DOCKER_TLS_CERTDIR: ""
+  IMAGE_WEB: "$CI_REGISTRY_IMAGE/dummy-products-web"
+  IMAGE_DOCS: "$CI_REGISTRY_IMAGE/dummy-products-docs"
+
+default:
+  image: docker:24.0.5
+  services:
+    - docker:24.0.5-dind
+
+build_and_push_web:
+  stage: build
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+    - if: '$MANUAL == "true"'
+    - when: never
+  script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+    - docker buildx create --use
+    - docker buildx build \
+        --platform linux/amd64 \
+        -f deploy/docker/web.Dockerfile \
+        -t "$IMAGE_WEB:stage-$CI_COMMIT_SHORT_SHA" \
+        --push .
+
+build_and_push_docs:
+  stage: build
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+    - if: '$MANUAL == "true"'
+    - when: never
+  script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+    - docker buildx create --use
+    - docker buildx build \
+        --platform linux/amd64 \
+        -f deploy/docker/docs.Dockerfile \
+        -t "$IMAGE_DOCS:stage-$CI_COMMIT_SHORT_SHA" \
+        --push .
+
+publish_burlaki:
+  stage: publish
+  image: cimg/node:20.11
+  services: []
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /^v.*/'
+    - when: never
+  script:
+    - TAG="${CI_COMMIT_TAG:-}"
+    - if [ -z "$TAG" ]; then echo "Not a tag build; skipping publish."; exit 0; fi
+    - VERSION="$(node -p "require('./packages/burlaki/package.json').version")"
+    - if [ "v${VERSION}" != "$TAG" ]; then echo "Tag ($TAG) does not match package.json version (v${VERSION})."; exit 1; fi
+    - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+    - corepack enable
+    - pnpm install --frozen-lockfile
+    - pnpm -C packages/burlaki publish --access public
