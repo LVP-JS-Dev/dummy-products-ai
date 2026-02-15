@@ -18,7 +18,7 @@ Keep root-only files, such as `turbo.json`, in place.
 
 **Files:**
 - Create: `/Users/leonidpetrov/.codex/worktrees/565b/dummy-products/packages/config/biome.jsonc`
-- Create: `/Users/leonidpetrov/.codex/worktrees/565b/dummy-products/packages/config/playwright.config.ts`
+- Create: `/Users/leonidpetrov/.codex/worktrees/565b/dummy-products/packages/config/playwright.config.js`
 - Modify: `/Users/leonidpetrov/.codex/worktrees/565b/dummy-products/packages/config/package.json`
 
 **Step 1: Move the existing Biome config into the package**
@@ -32,7 +32,7 @@ with no content changes.
 Move
 `/Users/leonidpetrov/.codex/worktrees/565b/dummy-products/playwright.config.ts`
 to
-`/Users/leonidpetrov/.codex/worktrees/565b/dummy-products/packages/config/playwright.config.ts`
+`/Users/leonidpetrov/.codex/worktrees/565b/dummy-products/packages/config/playwright.config.js`
 with no content changes.
 
 **Step 3: Update the config package exports**
@@ -47,7 +47,7 @@ to expose the new configs:
   "private": true,
   "exports": {
     "./biome": "./biome.jsonc",
-    "./playwright": "./playwright.config.ts",
+    "./playwright": "./playwright.config.js",
     "./tsconfig.base.json": "./tsconfig.base.json"
   }
 }
@@ -58,7 +58,7 @@ to expose the new configs:
 ```bash
 git add \
   /Users/leonidpetrov/.codex/worktrees/565b/dummy-products/packages/config/biome.jsonc \
-  /Users/leonidpetrov/.codex/worktrees/565b/dummy-products/packages/config/playwright.config.ts \
+  /Users/leonidpetrov/.codex/worktrees/565b/dummy-products/packages/config/playwright.config.js \
   /Users/leonidpetrov/.codex/worktrees/565b/dummy-products/packages/config/package.json
 
 git commit -m "Move shared configs into packages/config"
@@ -151,12 +151,14 @@ remain only when a tool requires a repository-level entrypoint.
 
 Follow these steps when you add a new tool or update an existing config:
 
+<!-- markdownlint-disable MD029 -->
 1. Add the shared configuration file in `packages/config`.
 2. Export the config in `packages/config/package.json` if it needs a stable
    import path.
 3. Add a thin root wrapper only if the tool requires a root entrypoint.
 4. If a package needs a local entrypoint, create a minimal file that extends
    the shared profile.
+<!-- markdownlint-enable MD029 -->
 
 ## Root-only files
 
