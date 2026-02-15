@@ -189,7 +189,10 @@
               "options": {
                 "paths": {
                   "../Tokens": "UI kit components must use CSS tokens via @dummy-products/ui-kit/tokens.css.",
-                  "./Tokens": "UI kit components must use CSS tokens via @dummy-products/ui-kit/tokens.css."
+                  "./Tokens": "UI kit components must use CSS tokens via @dummy-products/ui-kit/tokens.css.",
+                  "@dummy-products/ui-kit": "UI kit components must use CSS tokens via @dummy-products/ui-kit/tokens.css.",
+                  "@dummy-products/ui-kit/Tokens": "UI kit components must use CSS tokens via @dummy-products/ui-kit/tokens.css.",
+                  "@dummy-products/ui-kit/src/Tokens": "UI kit components must use CSS tokens via @dummy-products/ui-kit/tokens.css."
                 }
               }
             }

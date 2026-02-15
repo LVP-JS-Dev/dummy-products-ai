@@ -126,6 +126,7 @@ git commit -m "Remove unused Better-T-Stack metadata"
 
 Create `/Users/leonidpetrov/.codex/worktrees/565b/dummy-products/docs/configuration.md`:
 
+<!-- markdownlint-disable MD029 -->
 ```markdown
 # Configuration management
 
@@ -163,6 +164,7 @@ Some files must stay in the repository root because the tool only reads them
 from the workspace root. Examples include `turbo.json`, `pnpm-workspace.yaml`,
 and `package.json`.
 ```
+<!-- markdownlint-enable MD029 -->
 
 **Step 2: Link the guide from the README**
 
