@@ -1,0 +1,41 @@
+---
+title: Иконка
+description: SVG-иконки с токенами цвета и размером 24x24.
+---
+
+import { Icon, states } from "@dummy-products/ui-kit";
+import { WithControl } from "@/stories/icon.story";
+
+## Описание
+
+Компонент иконки, который рендерит SVG-глифы из общего набора.
+Когда использовать: чтобы подчеркнуть смысл или ускорить сканирование рядом с
+лейблами.
+Когда не использовать: как единственный индикатор критического действия без
+текста или aria-label.
+
+## API
+
+Props определены в контракте UI Kit. Ключевые props: `name`, `size`, `color`,
+`title`.
+Используйте токены для `color` (например, `var(--ui-color-text-muted)`), чтобы
+соблюдать дизайн-системные правила.
+
+**Спецификация**
+- [`manifest.json`](../../../../../packages/ui-kit/src/generated/manifest.json)
+- [`icon.schema.json`](../../../../../packages/ui-kit/src/generated/schemas/icon.schema.json)
+
+## Примеры
+
+<div style={{ display: "grid", gap: 12 }}>
+  {Object.entries(states.icon).map(([name, props]) => (
+    <div key={name} style={{ display: "flex", alignItems: "center", gap: 12 }}>
+      <Icon {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Интерактив
+
+<WithControl />

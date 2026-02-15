@@ -1,0 +1,37 @@
+---
+title: Пагинация
+description: Контрол пагинации с кнопками назад, вперед и номерами.
+---
+
+import { Pagination, states } from "@dummy-products/ui-kit";
+import { WithControl } from "@/stories/pagination.story";
+
+## Описание
+
+Навигационный компонент для постраничного контента с действиями назад и вперед и
+номерами страниц. Пилюли имеют размер `30x30` с активной акцентной заливкой и
+компактным интервалом `6px` для паритета с футером таблицы.
+
+## API
+
+Props определены в контракте UI Kit. Ключевые props: `currentPage`,
+`totalPages`, `maxVisiblePages`, `disabled`.
+
+**Спецификация**
+- [`manifest.json`](https://raw.githubusercontent.com/lvpjsdev/dummy-products/main/packages/ui-kit/src/generated/manifest.json)
+- [`pagination.schema.json`](https://raw.githubusercontent.com/lvpjsdev/dummy-products/main/packages/ui-kit/src/generated/schemas/pagination.schema.json)
+
+## Примеры
+
+<div style={{ display: "grid", gap: 12 }}>
+  {Object.entries(states.pagination).map(([name, props]) => (
+    <div key={name} style={{ display: "flex", alignItems: "center", gap: 12 }}>
+      <Pagination {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Интерактив
+
+<WithControl />

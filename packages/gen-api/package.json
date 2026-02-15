@@ -1,44 +1,46 @@
 {
-	"name": "@dummy-products/gen-api",
-	"version": "0.0.0",
-	"private": true,
-	"type": "module",
-	"exports": {
-		".": "./src/index.ts",
-		"./client": "./src/Client.ts",
-		"./react-query": "./src/ReactQuery.ts",
-		"./zod": "./src/Zod.ts",
-		"./openapi": "./dummyjson.openapi.yaml"
-	},
-	"scripts": {
-		"gen": "kubb generate && node scripts/patch-fetch-client.mjs",
-		"format": "pnpm -w exec biome format --write packages/gen-api/src packages/gen-api/kubb.config.ts",
-		"lint:openapi": "pnpm --package=@redocly/cli dlx redocly lint dummyjson.openapi.yaml"
-	},
-	"dependencies": {
-		"zod": "catalog:"
-	},
-	"peerDependencies": {
-		"@tanstack/react-query": "^5.0.0",
-		"react": "^19.0.0"
-	},
-	"peerDependenciesMeta": {
-		"@tanstack/react-query": {
-			"optional": true
-		},
-		"react": {
-			"optional": true
-		}
-	},
-	"devDependencies": {
-		"@kubb/cli": "4.22.1",
-		"@kubb/core": "4.22.1",
-		"@kubb/plugin-client": "4.22.1",
-		"@kubb/plugin-oas": "4.22.1",
-		"@kubb/plugin-react-query": "4.22.1",
-		"@kubb/plugin-redoc": "4.22.1",
-		"@kubb/plugin-ts": "4.22.1",
-		"@kubb/plugin-zod": "4.22.1"
-	},
-	"packageManager": "pnpm@10.27.0"
+  "name": "@dummy-products/gen-api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "pnpm": "10.27.0"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./client": "./src/Client.ts",
+    "./react-query": "./src/ReactQuery.ts",
+    "./zod": "./src/Zod.ts",
+    "./openapi": "./dummyjson.openapi.yaml"
+  },
+  "scripts": {
+    "gen": "kubb generate && node scripts/patch-fetch-client.mjs",
+    "format": "pnpm -w exec biome format --write packages/gen-api/src packages/gen-api/kubb.config.ts",
+    "lint:openapi": "pnpm --package=@redocly/cli dlx redocly lint dummyjson.openapi.yaml"
+  },
+  "dependencies": {
+    "zod": "catalog:"
+  },
+  "peerDependencies": {
+    "@tanstack/react-query": "^5.0.0",
+    "react": "^19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@tanstack/react-query": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@kubb/cli": "4.22.1",
+    "@kubb/core": "4.22.1",
+    "@kubb/plugin-client": "4.22.1",
+    "@kubb/plugin-oas": "4.22.1",
+    "@kubb/plugin-react-query": "4.22.1",
+    "@kubb/plugin-redoc": "4.22.1",
+    "@kubb/plugin-ts": "4.22.1",
+    "@kubb/plugin-zod": "4.22.1"
+  }
 }

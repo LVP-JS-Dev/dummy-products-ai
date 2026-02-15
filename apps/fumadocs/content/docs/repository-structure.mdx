@@ -1,0 +1,55 @@
+---
+title: Repository structure
+description: Where to find code, specs, and artifacts
+---
+
+This page maps the repository so you can navigate it quickly and avoid editing
+files in the wrong layer.
+
+## Top-level layout
+
+The root of the repo looks like this:
+
+- `apps/` contains runnable applications
+- `packages/` contains reusable libraries
+- `requirements/` holds the original task requirements and Figma assets
+- `docs/` contains internal plans and notes
+- `openspec/` contains OpenSpec artifacts and workflow files
+
+## Applications
+
+Each application is a consumer of the UI Kit:
+
+- `apps/web` is the product app using TanStack Router
+- `apps/fumadocs` is the documentation site on Next.js + Fumadocs
+
+## Packages
+
+Each package has a single, explicit responsibility:
+
+- `packages/ui-kit` is the contract-first UI system
+- `packages/gen-api` generates a typed API client from OpenAPI
+- `packages/burlaki` provides agent workflow utilities
+
+## UI Kit internals
+
+Use these paths when working on UI Kit:
+
+- `packages/ui-kit/src/contracts/` for contract definitions
+- `packages/ui-kit/src/components/` for React components
+- `packages/ui-kit/src/states/` for serializable states
+- `packages/ui-kit/src/generated/` for schemas and `manifest.json`
+
+## Docs internals
+
+Use these paths when working on documentation:
+
+- `apps/fumadocs/content/docs/` for MDX content
+- `apps/fumadocs/src/stories/` for interactive stories
+- `apps/fumadocs/PRD.md` for docs rules and requirements
+
+## Next steps
+
+Read the architecture rules before making changes:
+
+- [Architecture and invariants](/docs/architecture)

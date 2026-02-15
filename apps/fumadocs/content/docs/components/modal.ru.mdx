@@ -1,0 +1,49 @@
+---
+title: Модальное окно
+description: >-
+  Доступное модальное окно с управлением закрытием. Доступный оверлей-диалог с
+  детерминированными событиями и контролем закрытия.
+---
+
+import { Modal, states } from "@dummy-products/ui-kit";
+import { WithControl } from "@/stories/modal.story";
+
+## Описание
+
+Оверлей-диалог с управлением фокусом, закрытием по Escape или клику по фону
+(если разрешено) и контрактом события закрытия.
+
+## API
+
+Props определены в контракте UI Kit. Ключевые props: `open`, `title`,
+`description`, `size`, `dismissible`, `closeAriaLabel`.
+
+**Спецификация**
+- [`manifest.json`](../../../../../packages/ui-kit/src/generated/manifest.json)
+- [`modal.schema.json`](../../../../../packages/ui-kit/src/generated/schemas/modal.schema.json)
+
+## Примеры
+
+<div style={{ display: "grid", gap: 12 }}>
+  {Object.entries(states.modal).map(([name, props]) => (
+    <div key={name} style={{ display: "grid", gap: 6 }}>
+      <div
+        style={{
+          fontFamily: "var(--ui-font-body)",
+          color: "var(--ui-color-text-muted)",
+        }}
+      >
+        {name}
+      </div>
+      <Modal {...props}>
+        <div style={{ fontFamily: "var(--ui-font-body)", fontSize: 14 }}>
+          Пример контента внутри модального окна.
+        </div>
+      </Modal>
+    </div>
+  ))}
+</div>
+
+## Интерактив
+
+<WithControl />

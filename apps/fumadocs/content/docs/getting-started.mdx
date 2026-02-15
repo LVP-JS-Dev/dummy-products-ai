@@ -1,0 +1,65 @@
+---
+title: Getting started
+description: Install, run, and verify the repo
+---
+
+This page shows the minimum commands you need to install dependencies, run the
+apps, and verify the repository is consistent.
+
+## Install dependencies
+
+Run this from the repository root:
+
+```bash
+pnpm i
+```
+
+## Start development
+
+Start both the web app and docs site:
+
+```bash
+pnpm dev
+```
+
+This starts:
+
+- `apps/web`
+- `apps/fumadocs`
+
+## Generate artifacts
+
+When you update contracts or API definitions, regenerate outputs:
+
+```bash
+pnpm gen
+```
+
+This runs:
+
+- `pnpm gen:ui` for UI Kit schemas and manifest
+- `pnpm gen:api` for the typed API client
+
+## Run tests
+
+Contract tests validate UI Kit states against schemas:
+
+```bash
+pnpm test
+```
+
+## Run the full gate
+
+Use the full check before you open a PR:
+
+```bash
+pnpm check
+```
+
+This runs generation, tests, and no-drift checks.
+
+## Next steps
+
+If you are adding or changing documentation, read the docs rules:
+
+- [Workflow and rules](/docs/workflow)

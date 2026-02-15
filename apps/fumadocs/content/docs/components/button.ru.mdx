@@ -1,0 +1,42 @@
+---
+title: Кнопка
+description: Кнопка действия с вариантами, иконкой и композицией.
+---
+
+import { Button, states } from "@dummy-products/ui-kit";
+import { WithControl } from "@/stories/button.story";
+
+## Описание
+
+Основной триггер действия для создания или подтверждения операций.
+Когда использовать: для первичных или уверенных действий, которые должны
+выделяться.
+Когда не использовать: для пассивной навигации или деструктивных действий без
+подтверждения.
+
+## API
+
+Props определены в контракте UI Kit. Ключевые props: `text`, `children`,
+`showIcon`, `iconName`, `badgeLabel`, `badgeCount`, `size`, `variant`.
+Поддерживаемые варианты включают `blue` (основная градиентная заливка с
+обводкой `--ui-color-primary-border`), `secondary` (белая заливка с тонкой
+границей) и `icon` (прозрачная иконка без текста).
+
+**Спецификация**
+- [`manifest.json`](https://raw.githubusercontent.com/lvpjsdev/dummy-products/main/packages/ui-kit/src/generated/manifest.json)
+- [`button.schema.json`](https://raw.githubusercontent.com/lvpjsdev/dummy-products/main/packages/ui-kit/src/generated/schemas/button.schema.json)
+
+## Примеры
+
+<div style={{ display: "grid", gap: 12 }}>
+  {Object.entries(states.button).map(([name, props]) => (
+    <div key={name} style={{ display: "flex", alignItems: "center", gap: 12 }}>
+      <Button {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Интерактив
+
+<WithControl />

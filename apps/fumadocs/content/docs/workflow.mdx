@@ -1,0 +1,53 @@
+---
+title: Workflow and rules
+description: How to change the system without breaking invariants
+---
+
+This page summarizes the change workflow and the rules you must follow when
+editing code or documentation.
+
+## Read the right PRD first
+
+Before you change anything, confirm the change fits an existing PRD. If it does
+not, update the PRD before writing code.
+
+Use these files:
+
+- `PRD.md` for system-wide rules
+- `packages/ui-kit/PRD.md` for UI Kit changes
+- `apps/fumadocs/PRD.md` for documentation changes
+- `apps/web/PRD.md` for application changes
+
+## Follow the contract-first order
+
+When changing a component, follow this order:
+
+1. Update the contract in `packages/ui-kit/src/contracts/`.
+2. Update the component in `packages/ui-kit/src/components/`.
+3. Update states in `packages/ui-kit/src/states/`.
+4. Regenerate schemas and manifest with `pnpm gen`.
+5. Update docs in `apps/fumadocs` if the API changed.
+
+## Respect boundaries
+
+Do not:
+
+- define props or states in docs or apps
+- import internal UI Kit files from apps
+- modify generated files by hand
+
+## Required commands before PR
+
+Run these from the repository root:
+
+```bash
+pnpm gen
+pnpm test
+pnpm check
+```
+
+## Next steps
+
+If you want to understand the system design in more detail, read:
+
+- [Architecture and invariants](/docs/architecture)

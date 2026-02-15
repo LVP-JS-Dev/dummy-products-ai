@@ -1,13 +1,95 @@
 ---
-title: Hello World
-description: Your first document
+title: Project documentation
+description: Purpose, structure, and how to run the monorepo
 ---
 
-Welcome to the docs! You can start writing documents in `/content/docs`.
+This documentation explains what the project is, how the monorepo is organized,
+and how you run and change it without breaking contract-first rules.
 
-## UI Kit Tokens
+## What this project is for
 
-UI Kit components rely on CSS tokens. Import the token stylesheet once in your app's global CSS:
+This repository exists to demonstrate a contract-first UI system where the UI
+Kit is a formal, machine-readable source of truth. The docs and apps consume
+that system rather than defining component APIs themselves.
+
+Key goals:
+
+- show a contract-first UI architecture in practice
+- provide machine-readable UI specs (contracts, states, schemas, manifest)
+- demonstrate product usage in a real app
+- ship documentation and interactive examples without duplicating APIs
+
+## What is inside the monorepo
+
+The project is split into apps and packages. Each part has a clear role.
+
+Core areas:
+
+- `packages/ui-kit` is the system core with contracts, states, and generated
+  specs.
+- `packages/gen-api` generates a typed API client from OpenAPI using Kubb.
+- `packages/burlaki` provides agent workflow utilities such as skill gates.
+- `apps/web` is the product-facing app that consumes the UI Kit.
+- `apps/fumadocs` is the documentation site built with Fumadocs.
+
+## Where things live
+
+Use these paths when you are looking for specific content:
+
+- `apps/` for applications
+- `packages/` for reusable libraries
+- `requirements/` for input requirements and Figma artifacts
+- `docs/` for internal planning notes
+
+In `packages/ui-kit`, the key folders are:
+
+- `packages/ui-kit/src/contracts/` for React-free contracts
+- `packages/ui-kit/src/components/` for React components
+- `packages/ui-kit/src/states/` for validated component states
+- `packages/ui-kit/src/generated/` for schemas and `manifest.json`
+
+In `apps/fumadocs`, the key folders are:
+
+- `apps/fumadocs/content/docs/` for MDX pages
+- `apps/fumadocs/src/stories/` for interactive stories
+
+## How to run the project
+
+Run the following commands from the repository root:
+
+```bash
+pnpm i
+pnpm dev
+```
+
+This starts:
+
+- `apps/web`
+- `apps/fumadocs`
+
+## How the rules work
+
+The project enforces a one-way flow of truth:
+
+- contracts produce types
+- types produce states
+- states feed docs and apps
+
+You must not define props or states inside docs or apps. If you need to change
+behavior, update the relevant PRD first.
+
+Key references:
+
+- System requirements: `PRD.md`
+- UI Kit: `packages/ui-kit/PRD.md`
+- Docs: `apps/fumadocs/PRD.md`
+- App: `apps/web/PRD.md`
+- Process rules: `.ruler/agent.md`
+
+## Design tokens
+
+UI Kit components rely on CSS tokens. Import the token stylesheet once in your
+app's global CSS:
 
 ```css
 @import "@dummy-products/ui-kit/tokens.css";
@@ -15,11 +97,14 @@ UI Kit components rely on CSS tokens. Import the token stylesheet once in your a
 
 Browse the full token reference:
 
-- [Design Tokens](/docs/design-tokens)
+- [Design tokens](/docs/design-tokens)
 
-## What is Next?
+## Next steps
 
-<Cards>
-  <Card title="Learn more about Next.js" href="https://nextjs.org/docs" />
-  <Card title="Learn more about Fumadocs" href="https://fumadocs.dev" />
-</Cards>
+Pick a topic to dive deeper:
+
+- [Project overview](/docs/project-overview)
+- [Repository structure](/docs/repository-structure)
+- [Architecture and invariants](/docs/architecture)
+- [Getting started](/docs/getting-started)
+- [Workflow and rules](/docs/workflow)

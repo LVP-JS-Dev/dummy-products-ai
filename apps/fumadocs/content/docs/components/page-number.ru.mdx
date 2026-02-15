@@ -1,0 +1,37 @@
+---
+title: Номер страницы
+description: Пилюля пагинации для навигации по страницам.
+---
+
+import { PageNumber, states } from "@dummy-products/ui-kit";
+import { WithControl } from "@/stories/page-number.story";
+
+## Описание
+
+Компактный элемент пагинации, используемый в навигационных контролах.
+Когда использовать: для постраничной навигации с видимыми индексами страниц.
+Когда не использовать: для бесконечной прокрутки или скрытых номеров.
+
+## API
+
+Props определены в контракте UI Kit. Ключевые props: `value`, `selected`,
+`disabled`.
+
+**Спецификация**
+- [`manifest.json`](../../../../../packages/ui-kit/src/generated/manifest.json)
+- [`page-number.schema.json`](../../../../../packages/ui-kit/src/generated/schemas/page-number.schema.json)
+
+## Примеры
+
+<div style={{ display: "grid", gap: 12 }}>
+  {Object.entries(states.pageNumber).map(([name, props]) => (
+    <div key={name} style={{ display: "flex", alignItems: "center", gap: 12 }}>
+      <PageNumber {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Интерактив
+
+<WithControl />
