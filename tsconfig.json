@@ -1,6 +1,6 @@
 {
-  "extends": "@dummy-products/config/tsconfig.base.json",
-  "compilerOptions": {
-    "strictNullChecks": true
-  }
+	"extends": "@dummy-products/config/tsconfig.base.json",
+	"compilerOptions": {
+		"strictNullChecks": true
+	}
 }

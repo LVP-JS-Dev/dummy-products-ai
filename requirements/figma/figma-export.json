@@ -1,110 +1,110 @@
 {
-  "source": {
-    "channel": "q7ox9jhh",
-    "file": "0X0Ez6ixeONpSKwr3njSLd",
-    "sectionNodeId": "1:299",
-    "productsNodeId": "1:368",
-    "authNodeId": "1046:50"
-  },
-  "extractedAtUtc": "2026-02-13T21:30:00Z",
-  "frames": {
-    "productsDesktop": {
-      "name": "Товары (Desktop)",
-      "dimensions": {
-        "width": 1920,
-        "height": 824
-      },
-      "colors": {
-        "surfaceApp": "#f6f6f6",
-        "surface": "#ffffff",
-        "surfaceMuted": "#f3f3f3",
-        "border": "#ededed",
-        "borderSubtle": "#ececeb",
-        "borderStrong": "#e2e2e2",
-        "primary": "#242edb",
-        "primaryBorder": "#367aff",
-        "accent": "#797fea",
-        "textPrimary": "#232323",
-        "textSecondary": "#333333",
-        "textTertiary": "#b2b3b9",
-        "textPlaceholder": "#999999",
-        "textProductName": "#161919",
-        "textPrice": "#222222",
-        "checkboxChecked": "#3c538e"
-      },
-      "typography": {
-        "heading": {
-          "family": "Cairo",
-          "weight": 700
-        },
-        "body": {
-          "family": "Open Sans",
-          "weight": [400, 700]
-        },
-        "ui": {
-          "family": "Inter",
-          "weight": [400, 500, 600]
-        },
-        "roboto": {
-          "family": "Roboto",
-          "weight": 400
-        },
-        "mono": {
-          "family": "Roboto Mono",
-          "weight": 400
-        }
-      },
-      "radius": {
-        "nav": 10,
-        "card": 12,
-        "control": 8,
-        "tableAction": 23,
-        "pagination": 4
-      }
-    },
-    "authDesktop": {
-      "name": "Авторизация (Desktop)",
-      "dimensions": {
-        "width": 1920,
-        "height": 1080
-      },
-      "colors": {
-        "surfaceAuth": "#f9f9f9",
-        "surface": "#ffffff",
-        "textPrimary": "#232323",
-        "textMuted": "#9c9c9c",
-        "textFaint": "#e0e0e0",
-        "textSubtle": "#6c6c6c",
-        "border": "#ededed",
-        "borderFaint": "#ebebeb",
-        "primary": "#242edb",
-        "primaryBorder": "#367aff"
-      },
-      "typography": {
-        "title": {
-          "family": "Inter",
-          "size": 40,
-          "weight": 600,
-          "lineHeight": 44,
-          "letterSpacing": -0.6
-        },
-        "label": {
-          "family": "Inter",
-          "size": 18,
-          "weight": 500,
-          "lineHeight": 27
-        }
-      },
-      "radius": {
-        "cardOuter": 40,
-        "cardInner": 34,
-        "input": 12,
-        "button": 12
-      }
-    }
-  },
-  "notes": [
-    "TalkToFigma full-tree scan endpoints timed out for this file, so export was assembled from available node snapshots.",
-    "Token sync in UI-kit was derived from this export and verified against nodes 1:368 and 1046:50."
-  ]
+	"source": {
+		"channel": "q7ox9jhh",
+		"file": "0X0Ez6ixeONpSKwr3njSLd",
+		"sectionNodeId": "1:299",
+		"productsNodeId": "1:368",
+		"authNodeId": "1046:50"
+	},
+	"extractedAtUtc": "2026-02-13T21:30:00Z",
+	"frames": {
+		"productsDesktop": {
+			"name": "Товары (Desktop)",
+			"dimensions": {
+				"width": 1920,
+				"height": 824
+			},
+			"colors": {
+				"surfaceApp": "#f6f6f6",
+				"surface": "#ffffff",
+				"surfaceMuted": "#f3f3f3",
+				"border": "#ededed",
+				"borderSubtle": "#ececeb",
+				"borderStrong": "#e2e2e2",
+				"primary": "#242edb",
+				"primaryBorder": "#367aff",
+				"accent": "#797fea",
+				"textPrimary": "#232323",
+				"textSecondary": "#333333",
+				"textTertiary": "#b2b3b9",
+				"textPlaceholder": "#999999",
+				"textProductName": "#161919",
+				"textPrice": "#222222",
+				"checkboxChecked": "#3c538e"
+			},
+			"typography": {
+				"heading": {
+					"family": "Cairo",
+					"weight": 700
+				},
+				"body": {
+					"family": "Open Sans",
+					"weight": [400, 700]
+				},
+				"ui": {
+					"family": "Inter",
+					"weight": [400, 500, 600]
+				},
+				"roboto": {
+					"family": "Roboto",
+					"weight": 400
+				},
+				"mono": {
+					"family": "Roboto Mono",
+					"weight": 400
+				}
+			},
+			"radius": {
+				"nav": 10,
+				"card": 12,
+				"control": 8,
+				"tableAction": 23,
+				"pagination": 4
+			}
+		},
+		"authDesktop": {
+			"name": "Авторизация (Desktop)",
+			"dimensions": {
+				"width": 1920,
+				"height": 1080
+			},
+			"colors": {
+				"surfaceAuth": "#f9f9f9",
+				"surface": "#ffffff",
+				"textPrimary": "#232323",
+				"textMuted": "#9c9c9c",
+				"textFaint": "#e0e0e0",
+				"textSubtle": "#6c6c6c",
+				"border": "#ededed",
+				"borderFaint": "#ebebeb",
+				"primary": "#242edb",
+				"primaryBorder": "#367aff"
+			},
+			"typography": {
+				"title": {
+					"family": "Inter",
+					"size": 40,
+					"weight": 600,
+					"lineHeight": 44,
+					"letterSpacing": -0.6
+				},
+				"label": {
+					"family": "Inter",
+					"size": 18,
+					"weight": 500,
+					"lineHeight": 27
+				}
+			},
+			"radius": {
+				"cardOuter": 40,
+				"cardInner": 34,
+				"input": 12,
+				"button": 12
+			}
+		}
+	},
+	"notes": [
+		"TalkToFigma full-tree scan endpoints timed out for this file, so export was assembled from available node snapshots.",
+		"Token sync in UI-kit was derived from this export and verified against nodes 1:368 and 1046:50."
+	]
 }

@@ -2,7 +2,9 @@
   "name": "@dummy-products/config",
   "version": "0.0.0",
   "private": true,
-  "engines": {
-    "pnpm": "10.27.0"
+  "type": "module",
+  "exports": {
+    "./biome": "./biome.jsonc",
+    "./tsconfig.base.json": "./tsconfig.base.json"
   }
 }

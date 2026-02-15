@@ -1,222 +1,222 @@
 {
-  "--ui-color-surface": {
-    "description": "Default app surface/background color.",
-    "subgroup": "Surface"
-  },
-  "--ui-color-surface-muted": {
-    "description": "Muted surface/background for subtle fills (e.g., progress tracks).",
-    "subgroup": "Surface"
-  },
-  "--ui-color-surface-app": {
-    "description": "Products page app-level background surface from Figma.",
-    "subgroup": "Surface"
-  },
-  "--ui-color-surface-auth": {
-    "description": "Auth page app-level background surface from Figma.",
-    "subgroup": "Surface"
-  },
-  "--ui-color-border": {
-    "description": "Default border/divider color.",
-    "subgroup": "Surface"
-  },
-  "--ui-color-border-control": {
-    "description": "Control border color for auth fields and lightweight checkboxes.",
-    "subgroup": "Surface"
-  },
-  "--ui-color-border-strong": {
-    "description": "Stronger divider color used for table row separators.",
-    "subgroup": "Surface"
-  },
-  "--ui-color-border-subtle": {
-    "description": "Subtle border color for compact controls (e.g., pagination).",
-    "subgroup": "Surface"
-  },
-  "--ui-color-border-secondary": {
-    "description": "Border color for secondary controls and neutral outlined actions.",
-    "subgroup": "Surface"
-  },
-  "--ui-color-primary": {
-    "description": "Primary action/brand color.",
-    "subgroup": "Core"
-  },
-  "--ui-color-primary-border": {
-    "description": "Border/stroke color paired with the primary brand fill.",
-    "subgroup": "Core"
-  },
-  "--ui-color-accent": {
-    "description": "Accent color for selection highlights (e.g., active pagination).",
-    "subgroup": "Core"
-  },
-  "--ui-color-on-primary": {
-    "description": "Text/icon color on top of primary backgrounds.",
-    "subgroup": "Core"
-  },
-  "--ui-color-focus-ring": {
-    "description": "Focus ring/outline color for interactive elements.",
-    "subgroup": "Core"
-  },
-  "--ui-color-link": {
-    "description": "Semantic link text color.",
-    "subgroup": "Core"
-  },
-  "--ui-color-overlay": {
-    "description": "Overlay color for dimmed backdrops.",
-    "subgroup": "Core"
-  },
-  "--ui-color-card-surface": {
-    "description": "Card surface color for emphasized dark containers.",
-    "subgroup": "Surface"
-  },
-  "--ui-color-card-border": {
-    "description": "Card border color used for high-contrast outlined card shells.",
-    "subgroup": "Surface"
-  },
-  "--ui-color-checkbox-checked": {
-    "description": "Fill and border color for checked checkbox state.",
-    "subgroup": "State"
-  },
-  "--ui-color-text": {
-    "description": "Primary text color for most UI text.",
-    "subgroup": "Text"
-  },
-  "--ui-color-text-secondary": {
-    "description": "Secondary strong text color used for table/card headings.",
-    "subgroup": "Text"
-  },
-  "--ui-color-text-muted": {
-    "description": "Muted/secondary text color (e.g., placeholders, helper text).",
-    "subgroup": "Text"
-  },
-  "--ui-color-text-tertiary": {
-    "description": "Tertiary text color used for low-emphasis UI labels.",
-    "subgroup": "Text"
-  },
-  "--ui-color-text-placeholder": {
-    "description": "Placeholder text color for inputs.",
-    "subgroup": "Text"
-  },
-  "--ui-color-text-subtle": {
-    "description": "Subtle UI text color between primary and muted text (e.g., secondary captions in marketing-like layouts).",
-    "subgroup": "Text"
-  },
-  "--ui-color-text-faint": {
-    "description": "Very low-emphasis text color for decorative subtitles and background hints.",
-    "subgroup": "Text"
-  },
-  "--ui-color-border-faint": {
-    "description": "Faint divider/border color used for low-contrast separators (e.g., auth dividers).",
-    "subgroup": "Surface"
-  },
-  "--ui-color-success": {
-    "description": "Semantic success foreground color.",
-    "subgroup": "State"
-  },
-  "--ui-color-success-surface": {
-    "description": "Soft positive/confirmation background.",
-    "subgroup": "State"
-  },
-  "--ui-color-info": {
-    "description": "Semantic informational color.",
-    "subgroup": "State"
-  },
-  "--ui-color-warning": {
-    "description": "Semantic warning color.",
-    "subgroup": "State"
-  },
-  "--ui-color-danger": {
-    "description": "Semantic error/danger foreground color.",
-    "subgroup": "State"
-  },
-  "--ui-color-danger-surface": {
-    "description": "Soft background for destructive or error emphasis.",
-    "subgroup": "State"
-  },
+	"--ui-color-surface": {
+		"description": "Default app surface/background color.",
+		"subgroup": "Surface"
+	},
+	"--ui-color-surface-muted": {
+		"description": "Muted surface/background for subtle fills (e.g., progress tracks).",
+		"subgroup": "Surface"
+	},
+	"--ui-color-surface-app": {
+		"description": "Products page app-level background surface from Figma.",
+		"subgroup": "Surface"
+	},
+	"--ui-color-surface-auth": {
+		"description": "Auth page app-level background surface from Figma.",
+		"subgroup": "Surface"
+	},
+	"--ui-color-border": {
+		"description": "Default border/divider color.",
+		"subgroup": "Surface"
+	},
+	"--ui-color-border-control": {
+		"description": "Control border color for auth fields and lightweight checkboxes.",
+		"subgroup": "Surface"
+	},
+	"--ui-color-border-strong": {
+		"description": "Stronger divider color used for table row separators.",
+		"subgroup": "Surface"
+	},
+	"--ui-color-border-subtle": {
+		"description": "Subtle border color for compact controls (e.g., pagination).",
+		"subgroup": "Surface"
+	},
+	"--ui-color-border-secondary": {
+		"description": "Border color for secondary controls and neutral outlined actions.",
+		"subgroup": "Surface"
+	},
+	"--ui-color-primary": {
+		"description": "Primary action/brand color.",
+		"subgroup": "Core"
+	},
+	"--ui-color-primary-border": {
+		"description": "Border/stroke color paired with the primary brand fill.",
+		"subgroup": "Core"
+	},
+	"--ui-color-accent": {
+		"description": "Accent color for selection highlights (e.g., active pagination).",
+		"subgroup": "Core"
+	},
+	"--ui-color-on-primary": {
+		"description": "Text/icon color on top of primary backgrounds.",
+		"subgroup": "Core"
+	},
+	"--ui-color-focus-ring": {
+		"description": "Focus ring/outline color for interactive elements.",
+		"subgroup": "Core"
+	},
+	"--ui-color-link": {
+		"description": "Semantic link text color.",
+		"subgroup": "Core"
+	},
+	"--ui-color-overlay": {
+		"description": "Overlay color for dimmed backdrops.",
+		"subgroup": "Core"
+	},
+	"--ui-color-card-surface": {
+		"description": "Card surface color for emphasized dark containers.",
+		"subgroup": "Surface"
+	},
+	"--ui-color-card-border": {
+		"description": "Card border color used for high-contrast outlined card shells.",
+		"subgroup": "Surface"
+	},
+	"--ui-color-checkbox-checked": {
+		"description": "Fill and border color for checked checkbox state.",
+		"subgroup": "State"
+	},
+	"--ui-color-text": {
+		"description": "Primary text color for most UI text.",
+		"subgroup": "Text"
+	},
+	"--ui-color-text-secondary": {
+		"description": "Secondary strong text color used for table/card headings.",
+		"subgroup": "Text"
+	},
+	"--ui-color-text-muted": {
+		"description": "Muted/secondary text color (e.g., placeholders, helper text).",
+		"subgroup": "Text"
+	},
+	"--ui-color-text-tertiary": {
+		"description": "Tertiary text color used for low-emphasis UI labels.",
+		"subgroup": "Text"
+	},
+	"--ui-color-text-placeholder": {
+		"description": "Placeholder text color for inputs.",
+		"subgroup": "Text"
+	},
+	"--ui-color-text-subtle": {
+		"description": "Subtle UI text color between primary and muted text (e.g., secondary captions in marketing-like layouts).",
+		"subgroup": "Text"
+	},
+	"--ui-color-text-faint": {
+		"description": "Very low-emphasis text color for decorative subtitles and background hints.",
+		"subgroup": "Text"
+	},
+	"--ui-color-border-faint": {
+		"description": "Faint divider/border color used for low-contrast separators (e.g., auth dividers).",
+		"subgroup": "Surface"
+	},
+	"--ui-color-success": {
+		"description": "Semantic success foreground color.",
+		"subgroup": "State"
+	},
+	"--ui-color-success-surface": {
+		"description": "Soft positive/confirmation background.",
+		"subgroup": "State"
+	},
+	"--ui-color-info": {
+		"description": "Semantic informational color.",
+		"subgroup": "State"
+	},
+	"--ui-color-warning": {
+		"description": "Semantic warning color.",
+		"subgroup": "State"
+	},
+	"--ui-color-danger": {
+		"description": "Semantic error/danger foreground color.",
+		"subgroup": "State"
+	},
+	"--ui-color-danger-surface": {
+		"description": "Soft background for destructive or error emphasis.",
+		"subgroup": "State"
+	},
 
-  "--ui-color-white": {
-    "description": "Deprecated. Use `--ui-color-surface`.",
-    "subgroup": "Deprecated",
-    "deprecated": true
-  },
-  "--ui-color-blue-primary": {
-    "description": "Deprecated. Use `--ui-color-primary`.",
-    "subgroup": "Deprecated",
-    "deprecated": true
-  },
-  "--ui-color-blue-accent": {
-    "description": "Deprecated. Use `--ui-color-focus-ring`.",
-    "subgroup": "Deprecated",
-    "deprecated": true
-  },
-  "--ui-color-green-soft": {
-    "description": "Deprecated. Use `--ui-color-success-surface`.",
-    "subgroup": "Deprecated",
-    "deprecated": true
-  },
-  "--ui-color-gray-200": {
-    "description": "Deprecated. Use `--ui-color-border` (or `--ui-color-surface-muted` for fills).",
-    "subgroup": "Deprecated",
-    "deprecated": true
-  },
-  "--ui-color-gray-400": {
-    "description": "Deprecated. Use `--ui-color-text-muted`.",
-    "subgroup": "Deprecated",
-    "deprecated": true
-  },
-  "--ui-color-text-primary": {
-    "description": "Deprecated. Use `--ui-color-text`.",
-    "subgroup": "Deprecated",
-    "deprecated": true
-  },
+	"--ui-color-white": {
+		"description": "Deprecated. Use `--ui-color-surface`.",
+		"subgroup": "Deprecated",
+		"deprecated": true
+	},
+	"--ui-color-blue-primary": {
+		"description": "Deprecated. Use `--ui-color-primary`.",
+		"subgroup": "Deprecated",
+		"deprecated": true
+	},
+	"--ui-color-blue-accent": {
+		"description": "Deprecated. Use `--ui-color-focus-ring`.",
+		"subgroup": "Deprecated",
+		"deprecated": true
+	},
+	"--ui-color-green-soft": {
+		"description": "Deprecated. Use `--ui-color-success-surface`.",
+		"subgroup": "Deprecated",
+		"deprecated": true
+	},
+	"--ui-color-gray-200": {
+		"description": "Deprecated. Use `--ui-color-border` (or `--ui-color-surface-muted` for fills).",
+		"subgroup": "Deprecated",
+		"deprecated": true
+	},
+	"--ui-color-gray-400": {
+		"description": "Deprecated. Use `--ui-color-text-muted`.",
+		"subgroup": "Deprecated",
+		"deprecated": true
+	},
+	"--ui-color-text-primary": {
+		"description": "Deprecated. Use `--ui-color-text`.",
+		"subgroup": "Deprecated",
+		"deprecated": true
+	},
 
-  "--ui-space-xs": {
-    "description": "Extra-small spacing unit."
-  },
-  "--ui-space-sm": {
-    "description": "Small spacing unit."
-  },
-  "--ui-space-md": {
-    "description": "Medium spacing unit."
-  },
-  "--ui-space-lg": {
-    "description": "Large spacing unit."
-  },
-  "--ui-space-xl": {
-    "description": "Extra-large spacing unit."
-  },
-  "--ui-space-xxl": {
-    "description": "Double extra-large spacing unit."
-  },
-  "--ui-radius-xs": {
-    "description": "Extra-small corner radius."
-  },
-  "--ui-radius-sm": {
-    "description": "Small corner radius."
-  },
-  "--ui-radius-md": {
-    "description": "Medium corner radius."
-  },
-  "--ui-radius-lg": {
-    "description": "Large corner radius."
-  },
-  "--ui-radius-xl": {
-    "description": "Extra-large corner radius."
-  },
-  "--ui-radius-pill": {
-    "description": "Pill radius for rounded badges and chips."
-  },
-  "--ui-font-heading": {
-    "description": "Font family for headings and prominent labels."
-  },
-  "--ui-font-ui": {
-    "description": "Font family for controls and compact UI text."
-  },
-  "--ui-font-body": {
-    "description": "Font family for body text and long-form content."
-  },
-  "--ui-font-roboto": {
-    "description": "Font family token for Roboto-driven UI text styles."
-  },
-  "--ui-font-mono": {
-    "description": "Font family token for monospaced numeric values (e.g., prices)."
-  }
+	"--ui-space-xs": {
+		"description": "Extra-small spacing unit."
+	},
+	"--ui-space-sm": {
+		"description": "Small spacing unit."
+	},
+	"--ui-space-md": {
+		"description": "Medium spacing unit."
+	},
+	"--ui-space-lg": {
+		"description": "Large spacing unit."
+	},
+	"--ui-space-xl": {
+		"description": "Extra-large spacing unit."
+	},
+	"--ui-space-xxl": {
+		"description": "Double extra-large spacing unit."
+	},
+	"--ui-radius-xs": {
+		"description": "Extra-small corner radius."
+	},
+	"--ui-radius-sm": {
+		"description": "Small corner radius."
+	},
+	"--ui-radius-md": {
+		"description": "Medium corner radius."
+	},
+	"--ui-radius-lg": {
+		"description": "Large corner radius."
+	},
+	"--ui-radius-xl": {
+		"description": "Extra-large corner radius."
+	},
+	"--ui-radius-pill": {
+		"description": "Pill radius for rounded badges and chips."
+	},
+	"--ui-font-heading": {
+		"description": "Font family for headings and prominent labels."
+	},
+	"--ui-font-ui": {
+		"description": "Font family for controls and compact UI text."
+	},
+	"--ui-font-body": {
+		"description": "Font family for body text and long-form content."
+	},
+	"--ui-font-roboto": {
+		"description": "Font family token for Roboto-driven UI text styles."
+	},
+	"--ui-font-mono": {
+		"description": "Font family token for monospaced numeric values (e.g., prices)."
+	}
 }

@@ -12,56 +12,56 @@ const PRODUCT_SELECT_RENDER_DELAY = 300;
 const outDir = `openspec/changes/ui-kit-figma-playwright-parity/artifacts/screenshots/${round}/web-requirements`;
 
 const figmaProducts = [
-  {
-    id: 1,
-    title: "USB Флэшкарта 16GB",
-    category: "Аксессуары",
-    brand: "Samsung",
-    sku: "RCH45Q1A",
-    rating: 4.3,
-    price: 48_652,
-    thumbnail: null,
-  },
-  {
-    id: 2,
-    title: "Игровая консоль PlaySta...",
-    category: "Игровые приставки",
-    brand: "Sony",
-    sku: "HT45Q21",
-    rating: 4.1,
-    price: 56_236,
-    thumbnail: null,
-  },
-  {
-    id: 3,
-    title: "Смартфон Apple iPhone 17",
-    category: "Телефоны",
-    brand: "Apple",
-    sku: "GUYHD2-X4",
-    rating: 4.7,
-    price: 88_652,
-    thumbnail: null,
-  },
-  {
-    id: 4,
-    title: "Утюг Braun TexStyle 9",
-    category: "Бытовая техника",
-    brand: "TexStyle",
-    sku: "DFCHQ1A",
-    rating: 4.9,
-    price: 4233,
-    thumbnail: null,
-  },
-  {
-    id: 5,
-    title: "Фен Dyson Supersonic Nural",
-    category: "Электроника",
-    brand: "Dyson",
-    sku: "FJHHGF-CR4",
-    rating: 3.3,
-    price: 48_652,
-    thumbnail: null,
-  },
+	{
+		id: 1,
+		title: "USB Флэшкарта 16GB",
+		category: "Аксессуары",
+		brand: "Samsung",
+		sku: "RCH45Q1A",
+		rating: 4.3,
+		price: 48_652,
+		thumbnail: null,
+	},
+	{
+		id: 2,
+		title: "Игровая консоль PlaySta...",
+		category: "Игровые приставки",
+		brand: "Sony",
+		sku: "HT45Q21",
+		rating: 4.1,
+		price: 56_236,
+		thumbnail: null,
+	},
+	{
+		id: 3,
+		title: "Смартфон Apple iPhone 17",
+		category: "Телефоны",
+		brand: "Apple",
+		sku: "GUYHD2-X4",
+		rating: 4.7,
+		price: 88_652,
+		thumbnail: null,
+	},
+	{
+		id: 4,
+		title: "Утюг Braun TexStyle 9",
+		category: "Бытовая техника",
+		brand: "TexStyle",
+		sku: "DFCHQ1A",
+		rating: 4.9,
+		price: 4233,
+		thumbnail: null,
+	},
+	{
+		id: 5,
+		title: "Фен Dyson Supersonic Nural",
+		category: "Электроника",
+		brand: "Dyson",
+		sku: "FJHHGF-CR4",
+		rating: 3.3,
+		price: 48_652,
+		thumbnail: null,
+	},
 ];
 
 await fs.mkdir(outDir, { recursive: true });
@@ -69,7 +69,7 @@ await fs.mkdir(outDir, { recursive: true });
 const browser = await chromium.launch();
 
 const loginCtx = await browser.newContext({
-  viewport: { width: 1920, height: 1080 },
+	viewport: { width: 1920, height: 1080 },
 });
 const loginPage = await loginCtx.newPage();
 await loginPage.goto(`${baseUrl}/login`, { waitUntil: "networkidle" });
@@ -82,43 +82,43 @@ await loginPage.screenshot({ path: `${outDir}/login.png` });
 await loginCtx.close();
 
 const productsCtx = await browser.newContext({
-  viewport: { width: 1920, height: 824 },
+	viewport: { width: 1920, height: 824 },
 });
 await productsCtx.addInitScript(() => {
-  sessionStorage.setItem(
-    "dummy-products.auth",
-    JSON.stringify({ token: "parity-token", username: "parity-user" })
-  );
+	sessionStorage.setItem(
+		"dummy-products.auth",
+		JSON.stringify({ token: "parity-token", username: "parity-user" }),
+	);
 });
 const productsPage = await productsCtx.newPage();
 await productsPage.route("**/products?*", async (route) => {
-  const url = route.request().url();
-  const parsed = new URL(url);
-  const limit = Number(parsed.searchParams.get("limit") || "20");
-  const skip = Number(parsed.searchParams.get("skip") || "0");
-  const products = figmaProducts.slice(0, limit);
-  await route.fulfill({
-    status: 200,
-    contentType: "application/json",
-    body: JSON.stringify({
-      products,
-      total: 120,
-      skip,
-      limit,
-    }),
-  });
+	const url = route.request().url();
+	const parsed = new URL(url);
+	const limit = Number(parsed.searchParams.get("limit") || "20");
+	const skip = Number(parsed.searchParams.get("skip") || "0");
+	const products = figmaProducts.slice(0, limit);
+	await route.fulfill({
+		status: 200,
+		contentType: "application/json",
+		body: JSON.stringify({
+			products,
+			total: 120,
+			skip,
+			limit,
+		}),
+	});
 });
 await productsPage.route("**/products/search?*", async (route) => {
-  await route.fulfill({
-    status: 200,
-    contentType: "application/json",
-    body: JSON.stringify({
-      products: figmaProducts,
-      total: 5,
-      skip: 0,
-      limit: 5,
-    }),
-  });
+	await route.fulfill({
+		status: 200,
+		contentType: "application/json",
+		body: JSON.stringify({
+			products: figmaProducts,
+			total: 5,
+			skip: 0,
+			limit: 5,
+		}),
+	});
 });
 
 await productsPage.goto(`${baseUrl}/products`, { waitUntil: "networkidle" });
