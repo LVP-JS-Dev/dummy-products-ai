@@ -1,0 +1,35 @@
+---
+title: Текст
+description: Типографический компонент с токенами и полиморфным тегом.
+---
+
+import { Text, states } from "@dummy-products/ui-kit";
+import { WithControl } from "@/stories/text.story";
+
+## Описание
+
+Единый типографический примитив с поддержкой `as` для семантических тегов.
+
+## API
+
+Props определены в контракте UI Kit. Ключевые props: `variant`, `as`,
+`weight`, `align`.
+
+**Спецификация**
+- [`manifest.json`](../../../../../packages/ui-kit/src/generated/manifest.json)
+- [`text.schema.json`](../../../../../packages/ui-kit/src/generated/schemas/text.schema.json)
+
+## Примеры
+
+<div style={{ display: "grid", gap: 12 }}>
+  {Object.entries(states.text).map(([name, props]) => (
+    <div key={name} style={{ display: "grid", gap: 4 }}>
+      <Text {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Интерактив
+
+<WithControl />

@@ -1,0 +1,35 @@
+---
+title: Разделитель
+description: Горизонтальный разделитель с опциональным текстом.
+---
+
+import { Divider, states } from "@dummy-products/ui-kit";
+import { WithControl } from "@/stories/divider.story";
+
+## Описание
+
+Используйте для визуального разделения секций в формах и карточках.
+
+## API
+
+Props определены в контракте UI Kit. Ключевые props: `text`, `tone`,
+`thickness`.
+
+**Спецификация**
+- [`manifest.json`](../../../../../packages/ui-kit/src/generated/manifest.json)
+- [`divider.schema.json`](../../../../../packages/ui-kit/src/generated/schemas/divider.schema.json)
+
+## Примеры
+
+<div style={{ display: "grid", gap: 12 }}>
+  {Object.entries(states.divider).map(([name, props]) => (
+    <div key={name} style={{ display: "grid", gap: 6 }}>
+      <Divider {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Интерактив
+
+<WithControl />

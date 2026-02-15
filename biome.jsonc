@@ -17,6 +17,7 @@
         "!**/index.{ts,tsx}",
         "!**/*.config.{ts,tsx}",
         "!apps/fumadocs/.source/**/*.ts",
+        "!apps/fumadocs/src/middleware.ts",
         "!apps/fumadocs/src/app/**/*.{ts,tsx}",
         "!apps/web/src/routes/**/*.{ts,tsx}"
       ],

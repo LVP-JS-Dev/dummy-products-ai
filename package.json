@@ -6,6 +6,9 @@
     "packages/*"
   ],
   "type": "module",
+  "engines": {
+    "pnpm": "10.27.0"
+  },
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",

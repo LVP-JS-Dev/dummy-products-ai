@@ -8,7 +8,7 @@
       "forbiddenSkills": ["coding-agent", "yeet"]
     },
     "coder": {
-      "label": "Coder (Claude Code only)",
+      "label": "Coder",
       "requiredSkills": [
         "coding-agent",
         "react-best-practices",
@@ -17,7 +17,7 @@
       "optionalSkills": ["ui-skills", "design-system-patterns", "openai-docs"],
       "forbiddenSkills": ["yeet", "security-best-practices"],
       "agentConstraints": {
-        "allowedAgents": ["claude"]
+        "allowedAgents": ["claude", "codex"]
       }
     },
     "tester": {

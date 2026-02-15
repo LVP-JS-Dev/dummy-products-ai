@@ -1,0 +1,59 @@
+---
+title: Architecture and invariants
+description: Contract-first rules and boundaries
+---
+
+This page summarizes the architectural rules that keep the system coherent.
+
+## Contract-first flow
+
+The project enforces a one-way flow of truth:
+
+- contracts define the component API
+- types are derived from contracts
+- states are derived from contracts
+- docs and apps consume states
+
+Docs and apps must not define props or states. If you need to change component
+API, update the relevant contract and PRD first.
+
+## Source of truth
+
+The UI Kit is the only source of truth for component API:
+
+- `packages/ui-kit` defines contracts, components, and states
+- `apps/fumadocs` documents and visualizes components
+- `apps/web` consumes components in product flows
+
+Any change that alters component API must be made in the UI Kit first.
+
+## States are public API
+
+States are not demo data. They are part of the public API and are used for:
+
+- documentation examples
+- contract tests
+- agent and tooling input
+
+States must stay serializable and validated by contracts.
+
+## Generated artifacts must be current
+
+Generated schemas and manifests are committed artifacts. The repo enforces a
+no-drift rule, so regeneration must not change committed output.
+
+Key generated paths:
+
+- `packages/ui-kit/src/generated/`
+- `packages/gen-api/generated/`
+
+## Pagination invariant
+
+Product pagination must use the `Pagination` component from the UI Kit. The
+apps must not introduce custom pagination controls that change its API.
+
+## Next steps
+
+If you plan to change components, read the workflow rules first:
+
+- [Workflow and rules](/docs/workflow)

@@ -1,0 +1,37 @@
+---
+title: Поле ввода
+description: Поле ввода с адорнами, лейблом и состоянием ошибки.
+---
+
+import { Input, states } from "@dummy-products/ui-kit";
+import { WithControl } from "@/stories/input.story";
+
+## Описание
+
+Композиционное поле для авторизации и форм с опциональным лейблом, ошибкой и паролем.
+Базовые метрики соответствуют Figma: высота `55px`, радиус `12px` и граница
+`--ui-color-border-control`.
+
+## API
+
+Props определены в контракте UI Kit. Ключевые props:
+`label`, `value`, `type`, `error`, `startAdornment`, `endAdornment`.
+
+**Спецификация**
+- [`manifest.json`](../../../../../packages/ui-kit/src/generated/manifest.json)
+- [`input.schema.json`](../../../../../packages/ui-kit/src/generated/schemas/input.schema.json)
+
+## Примеры
+
+<div style={{ display: "grid", gap: 12, maxWidth: 420 }}>
+  {Object.entries(states.input).map(([name, props]) => (
+    <div key={name} style={{ display: "grid", gap: 8 }}>
+      <Input {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Интерактив
+
+<WithControl />

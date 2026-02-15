@@ -1,0 +1,37 @@
+---
+title: Карточка
+description: Контейнер карточки и слоты композиции.
+---
+
+import { Card, states } from "@dummy-products/ui-kit";
+import { WithControl } from "@/stories/card.story";
+
+## Описание
+
+Базовая обертка для структурированных блоков, например форм входа, сводок и
+контента модальных окон. Стиль с обводкой настроен под экран авторизации и использует
+двойную градиентную оболочку с радиусами `40/34`.
+
+## API
+
+Props определены в контракте UI Kit. Ключевые props: `size`, `outlined`,
+`elevated`, `title`, `description`.
+
+**Спецификация**
+- [`manifest.json`](../../../../../packages/ui-kit/src/generated/manifest.json)
+- [`card.schema.json`](../../../../../packages/ui-kit/src/generated/schemas/card.schema.json)
+
+## Примеры
+
+<div style={{ display: "grid", gap: 12, maxWidth: 420 }}>
+  {Object.entries(states.card).map(([name, props]) => (
+    <div key={name} style={{ display: "grid", gap: 6 }}>
+      <Card {...props} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Интерактив
+
+<WithControl />
