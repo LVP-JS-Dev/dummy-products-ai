@@ -68,6 +68,16 @@
       }
     },
     {
+      "includes": ["apps/fumadocs/src/middleware.ts"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useFilenamingConvention": "off"
+          }
+        }
+      }
+    },
+    {
       "includes": [
         "packages/ui-kit/src/contracts/*.ts",
         "!packages/ui-kit/src/contracts/index.ts"
