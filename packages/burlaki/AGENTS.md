@@ -25,12 +25,40 @@ pnpm prompts:install -- --force
 ### Skills Gate CLI Usage
 
 ```bash
+# Alternative binary name (installed via package bin)
+burlaki-skills-gate --matrix ./agent-skills-matrix.json --stage coder --agent claude
+
 node scripts/skills-gate.mjs \
   --matrix <path> \
   --stage <stage-name> \
   [--agent <agent-name>] \
   [--log <log-path>] \
   [--policies <csv>]
+```
+
+### Prompt install variants
+
+Use these commands when you need per-tool installs, global installs, or
+overwrite behavior.
+
+```bash
+# Per tool (local)
+pnpm prompts:install:codex
+pnpm prompts:install:opencode
+pnpm prompts:install:claude
+
+# Per tool (global)
+pnpm prompts:install:codex:global
+pnpm prompts:install:opencode:global
+pnpm prompts:install:claude:global
+
+# Overwrite existing prompts
+pnpm prompts:install:codex -- --force
+pnpm prompts:install:opencode -- --force
+pnpm prompts:install:claude -- --force
+pnpm prompts:install:codex:global -- --force
+pnpm prompts:install:opencode:global -- --force
+pnpm prompts:install:claude:global -- --force
 ```
 
 ### Testing
@@ -179,6 +207,18 @@ Each feature branch must use a dedicated worktree:
 
 ```bash
 git worktree add .codex/worktrees/<story-id> -b feature/<story-id>-<slug> develop
+```
+
+### Checkpoint recovery
+
+Use the checkpoint prefix to locate and restore recovery points.
+
+```bash
+# Find checkpoints
+git log --grep='[burlaki-checkpoint]'
+
+# Restore
+git reset --hard <checkpoint-sha>
 ```
 
 ## Workflow Stages

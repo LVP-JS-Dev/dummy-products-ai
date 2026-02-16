@@ -1,21 +1,21 @@
 {
-  "name": "@dummy-products/env",
-  "version": "0.0.0",
-  "private": true,
-  "type": "module",
-  "engines": {
-    "pnpm": "10.27.0"
-  },
-  "exports": {
-    "./web": "./src/Web.ts"
-  },
-  "dependencies": {
-    "@t3-oss/env-core": "^0.13.1",
-    "dotenv": "catalog:",
-    "zod": "catalog:"
-  },
-  "devDependencies": {
-    "@dummy-products/config": "workspace:*",
-    "typescript": "catalog:"
-  }
+	"name": "@dummy-products/env",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"engines": {
+		"pnpm": "10.27.0"
+	},
+	"exports": {
+		"./web": "./src/Web.ts"
+	},
+	"dependencies": {
+		"@t3-oss/env-core": "^0.13.1",
+		"dotenv": "catalog:",
+		"zod": "catalog:"
+	},
+	"devDependencies": {
+		"@dummy-products/config": "workspace:*",
+		"typescript": "catalog:"
+	}
 }
