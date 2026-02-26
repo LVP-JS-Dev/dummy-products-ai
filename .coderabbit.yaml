@@ -1,5 +1,6 @@
 # CodeRabbit Configuration
-# Docs: https://docs.coderabbit.ai/configure/coderabbit-yaml
+# Schema: https://coderabbit.ai/integrations/schema.v2.json
+# Docs: https://docs.coderabbit.ai/guides/configure/coderabbit
 
 language: ru
 
@@ -14,7 +15,7 @@ reviews:
   high_level_summary: true
   high_level_summary_placeholder: "@coderabbitai summary"
   
-  # Генерировать poem (можно отключить)
+  # Отключить poem
   poem: false
   
   # Статус ревью в checks
@@ -23,8 +24,10 @@ reviews:
   # Статистика изменений
   collapse_walkthrough: false
   
-  # Auto-review триггеры
+  # Sequence diagrams
   sequence_diagrams: true
+  
+  # Анализ linked issues
   assess_linked_issues: true
   
   # Пути для игнорирования
@@ -41,35 +44,8 @@ reviews:
 chat:
   auto_reply: true
 
-# Автоматические actions
-auto_review:
-  # Авто-ревью при открытии PR
-  enabled: true
-  
-  # Игнорировать draft PR
-  drafts: false
-  
-  # Игнорировать WIP в заголовке
-  ignore_title_keywords:
-    - "WIP"
-    - "DO NOT REVIEW"
-    - "[WIP]"
-
-# Инструменты анализа
-tools:
-  # Статический анализ
-  ast-grep:
-    essential_rules: true
-  
-  # Security checks
-  gitleaks:
-    enabled: true
-
 # Knowledge base для контекста проекта
 knowledge_base:
-  # Использовать кодовую базу для контекста
   opt_out: false
-  
-  # Дополнительные инструкции
   learnings:
-    scope: "local"  # только для этого репо
+    scope: "local"
