@@ -398,7 +398,9 @@ export function ProductsPage() {
 															className={cellClassName}
 															key={cell.id}
 															style={{
-																color: isLowRating ? "#dc2626" : "inherit",
+																color: isLowRating
+																	? "var(--ui-color-danger)"
+																	: "inherit",
 															}}
 														>
 															{flexRender(
@@ -613,7 +615,7 @@ function Field(props: {
 				<div
 					id={errorId}
 					style={{
-						color: "#dc2626",
+						color: "var(--ui-color-danger)",
 						fontFamily: "var(--ui-font-body)",
 						fontSize: 12,
 					}}
