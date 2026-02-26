@@ -1,0 +1,34 @@
+---
+title: Sort Indicator
+description: Visual indicator for column sort direction in data tables.
+---
+
+import { SortIndicator, states } from "@dummy-products/ui-kit";
+import { WithControl } from "@/stories/sort-indicator.story";
+
+## Description
+
+Visual indicator showing the current sort direction (ascending or descending) in table headers. Supports three states: no sort, ascending, and descending.
+
+## API
+
+Props are defined in the UI Kit contract. Key props: `direction`, `size`.
+
+**Specification**
+- [`manifest.json`](../../../../../packages/ui-kit/src/generated/manifest.json)
+- [`sort-indicator.schema.json`](../../../../../packages/ui-kit/src/generated/schemas/sort-indicator.schema.json)
+
+## Examples
+
+<div style={{ display: "flex", gap: 24, alignItems: "center" }}>
+  {Object.entries(states.sortIndicator).map(([name, props]) => (
+    <div key={name} style={{ display: "grid", justifyItems: "center", gap: 4 }}>
+      <SortIndicator {...props} size={14} />
+      <span>{name}</span>
+    </div>
+  ))}
+</div>
+
+## Interactive
+
+<WithControl />

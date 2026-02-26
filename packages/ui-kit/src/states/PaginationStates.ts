@@ -12,4 +12,9 @@ export const paginationStates = {
 		totalPages: 10,
 		disabled: true,
 	},
+	Loading: {
+		currentPage: 3,
+		totalPages: 10,
+		disabled: true,
+	},
 } as const;
