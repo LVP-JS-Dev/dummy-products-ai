@@ -1,73 +1,134 @@
-name: CI
+name: CI/CD
 
 on:
   push:
     branches:
       - master
+      - develop
     tags:
       - "v*"
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'stage'
+        type: choice
+        options:
+          - stage
+          - prod
+
+env:
+  DOCKER_IMAGE_PREFIX: ${{ secrets.DOCKER_USERNAME }}/dummy-products
 
 jobs:
   build_web:
     name: Build and push web image
-    if: github.ref == 'refs/heads/master' || github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    env:
-      GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
-      GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+    outputs:
+      image_tag: ${{ steps.meta.outputs.tag }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
+
       - name: Set up Buildx
         uses: docker/setup-buildx-action@v3
-      - name: Login to GHCR
+
+      - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
-          registry: ghcr.io
-          username: ${{ env.GHCR_USERNAME }}
-          password: ${{ env.GHCR_TOKEN }}
-      - name: Build and push web image
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Generate image tag
+        id: meta
         run: |
           set -euo pipefail
           GIT_SHA="$(echo "${GITHUB_SHA}" | cut -c1-7)"
-          docker buildx build \
-            --platform linux/amd64 \
-            -f deploy/docker/web.Dockerfile \
-            -t ghcr.io/${GHCR_USERNAME}/dummy-products-web:stage-${GIT_SHA} \
-            --push .
+          
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            # Production release
+            VERSION="${GITHUB_REF#refs/tags/}"
+            echo "tag=${{ env.DOCKER_IMAGE_PREFIX }}-web:${VERSION}" >> $GITHUB_OUTPUT
+            echo "tag_latest=${{ env.DOCKER_IMAGE_PREFIX }}-web:latest" >> $GITHUB_OUTPUT
+          elif [[ "${GITHUB_REF}" == "refs/heads/master" ]]; then
+            echo "tag=${{ env.DOCKER_IMAGE_PREFIX }}-web:prod-${GIT_SHA}" >> $GITHUB_OUTPUT
+            echo "tag_latest=${{ env.DOCKER_IMAGE_PREFIX }}-web:prod" >> $GITHUB_OUTPUT
+          else
+            # develop or other branches
+            echo "tag=${{ env.DOCKER_IMAGE_PREFIX }}-web:stage-${GIT_SHA}" >> $GITHUB_OUTPUT
+            echo "tag_latest=${{ env.DOCKER_IMAGE_PREFIX }}-web:stage" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Build and push web image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: deploy/docker/web.Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: |
+            ${{ steps.meta.outputs.tag }}
+            ${{ steps.meta.outputs.tag_latest }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build_docs:
     name: Build and push docs image
-    if: github.ref == 'refs/heads/master' || github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    env:
-      GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
-      GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+    outputs:
+      image_tag: ${{ steps.meta.outputs.tag }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
+
       - name: Set up Buildx
         uses: docker/setup-buildx-action@v3
-      - name: Login to GHCR
+
+      - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
-          registry: ghcr.io
-          username: ${{ env.GHCR_USERNAME }}
-          password: ${{ env.GHCR_TOKEN }}
-      - name: Build and push docs image
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Generate image tag
+        id: meta
         run: |
           set -euo pipefail
           GIT_SHA="$(echo "${GITHUB_SHA}" | cut -c1-7)"
-          docker buildx build \
-            --platform linux/amd64 \
-            -f deploy/docker/docs.Dockerfile \
-            -t ghcr.io/${GHCR_USERNAME}/dummy-products-docs:stage-${GIT_SHA} \
-            --push .
+          
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            VERSION="${GITHUB_REF#refs/tags/}"
+            echo "tag=${{ env.DOCKER_IMAGE_PREFIX }}-docs:${VERSION}" >> $GITHUB_OUTPUT
+            echo "tag_latest=${{ env.DOCKER_IMAGE_PREFIX }}-docs:latest" >> $GITHUB_OUTPUT
+          elif [[ "${GITHUB_REF}" == "refs/heads/master" ]]; then
+            echo "tag=${{ env.DOCKER_IMAGE_PREFIX }}-docs:prod-${GIT_SHA}" >> $GITHUB_OUTPUT
+            echo "tag_latest=${{ env.DOCKER_IMAGE_PREFIX }}-docs:prod" >> $GITHUB_OUTPUT
+          else
+            echo "tag=${{ env.DOCKER_IMAGE_PREFIX }}-docs:stage-${GIT_SHA}" >> $GITHUB_OUTPUT
+            echo "tag_latest=${{ env.DOCKER_IMAGE_PREFIX }}-docs:stage" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Build and push docs image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: deploy/docker/docs.Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: |
+            ${{ steps.meta.outputs.tag }}
+            ${{ steps.meta.outputs.tag_latest }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   publish_burlaki:
     name: Publish burlaki
@@ -76,10 +137,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: "20.11"
+
       - name: Verify tag matches package version
         run: |
           set -euo pipefail
@@ -89,6 +152,7 @@ jobs:
             echo "Tag ($TAG) does not match package.json version (v${VERSION})."
             exit 1
           fi
+
       - name: Publish package
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

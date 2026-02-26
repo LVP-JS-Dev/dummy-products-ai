@@ -2,10 +2,9 @@
 
 This setup is designed for:
 
-- local image build
-- push to a container registry
-- Dokploy deploy from `image:` references (no server-side build)
-- CI builds on CircleCI (GHCR) with local fallback
+- CI builds in GitHub Actions
+- Push images to Docker Hub
+- Deploy to VPS via Dokploy with docker-compose
 
 ## Files
 
@@ -16,51 +15,137 @@ This setup is designed for:
 - `deploy/.env.stage.example` - stage image variables
 - `deploy/.env.prod.example` - prod image variables
 
-## CI/CD (CircleCI + GHCR)
+## CI/CD (GitHub Actions + Docker Hub)
 
-Build and push images on:
-- `push` to `main`
-- manual pipeline run (CircleCI parameters)
+### Triggers
 
-Publish npm package on:
-- git tag `vX.Y.Z` (with strict tag/version check)
+- **Push to `develop`** → builds and pushes `:stage-*` and `:stage` tags
+- **Push to `master`** → builds and pushes `:prod-*` and `:prod` tags
+- **Tag `vX.Y.Z`** → builds and pushes `:vX.Y.Z` and `:latest` tags, publishes npm package
 
-### Required secrets (CircleCI project settings)
+### Required GitHub Secrets
 
-- `GHCR_USERNAME` / `GHCR_TOKEN` (PAT with `read:packages`, `write:packages`)
-  - `GHCR_USERNAME` should be the GHCR namespace (user or org)
-- `NPM_TOKEN` (npm publish token)
+| Secret | Description |
+|--------|-------------|
+| `DOCKER_USERNAME` | Docker Hub username |
+| `DOCKER_TOKEN` | Docker Hub access token (with read/write permissions) |
+| `NPM_TOKEN` | npm publish token (for burlaki package) |
 
-### Image tags
+### Image Tags
 
-- `stage-<short_sha>` for readability
-- Dokploy uses digest (`@sha256:...`) for reproducible deploys
+Images are published to Docker Hub as:
+- `your-username/dummy-products-web:<tag>`
+- `your-username/dummy-products-docs:<tag>`
 
-### Manual trigger
+Tag strategy:
 
-Run a manual pipeline with `manual=true` to rebuild/push images without new commits.
-In CircleCI UI: `Trigger Pipeline` -> set parameter `manual` to `true`.
+| Branch/Tag | Image Tag | Latest Alias |
+|------------|-----------|--------------|
+| `develop` | `stage-<sha>` | `stage` |
+| `master` | `prod-<sha>` | `prod` |
+| `v1.2.3` | `v1.2.3` | `latest` |
 
-## Build and push images
+### Manual Trigger
 
-Example for GHCR (`linux/amd64` for typical VPS):
+Run workflow manually with `workflow_dispatch` to rebuild images without new commits.
+
+## Build and push images (local fallback)
+
+When CI is unavailable, build and push manually:
 
 ```bash
-docker login ghcr.io
+# Login to Docker Hub
+docker login
 
 GIT_SHA=$(git rev-parse --short HEAD)
 
+# Build and push web
 docker buildx build \
   --platform linux/amd64 \
   -f deploy/docker/web.Dockerfile \
-  -t ghcr.io/your-org/dummy-products-web:stage-$GIT_SHA \
+  -t your-username/dummy-products-web:stage-$GIT_SHA \
+  -t your-username/dummy-products-web:stage \
   --push .
 
+# Build and push docs
 docker buildx build \
   --platform linux/amd64 \
   -f deploy/docker/docs.Dockerfile \
-  -t ghcr.io/your-org/dummy-products-docs:stage-$GIT_SHA \
+  -t your-username/dummy-products-docs:stage-$GIT_SHA \
+  -t your-username/dummy-products-docs:stage \
   --push .
+```
+
+## Dokploy Setup
+
+### 1. Add Docker Hub Registry
+
+In Dokploy → Settings → Registries → Add Docker Hub:
+- Username: your Docker Hub username
+- Password: your Docker Hub access token
+
+### 2. Create Projects
+
+Create two Dokploy projects:
+- `dummy-products-stage` - for staging
+- `dummy-products-prod` - for production
+
+### 3. Configure Compose
+
+For each project:
+1. Select "Docker Compose" as deployment type
+2. Use the appropriate compose file:
+   - Stage: `deploy/docker-compose.stage.yml`
+   - Prod: `deploy/docker-compose.prod.yml`
+
+### 4. Set Environment Variables
+
+In each project's environment settings:
+
+**Stage (`dummy-products-stage`):**
+```env
+WEB_IMAGE=your-username/dummy-products-web:stage
+DOCS_IMAGE=your-username/dummy-products-docs:stage
+```
+
+**Production (`dummy-products-prod`):**
+```env
+WEB_IMAGE=your-username/dummy-products-web:prod
+DOCS_IMAGE=your-username/dummy-products-docs:prod
+```
+
+Or use specific tags for reproducible deploys:
+```env
+WEB_IMAGE=your-username/dummy-products-web:stage-abc1234
+DOCS_IMAGE=your-username/dummy-products-docs:stage-abc1234
+```
+
+### 5. Attach Domains
+
+In Dokploy project settings:
+- Attach domain to `web` service on port `80`
+- Attach domain to `docs` service on port `3000`
+
+### 6. Deploy
+
+- **Automatic**: Dokploy can watch for new image tags and auto-deploy
+- **Manual**: Click "Deploy" in Dokploy UI after CI completes
+
+## Promote stage -> prod
+
+Option 1: Merge `develop` to `master` (triggers prod build)
+
+Option 2: Use specific image digest for immutable deploys:
+
+```bash
+docker buildx imagetools inspect your-username/dummy-products-web:stage-abc1234
+docker buildx imagetools inspect your-username/dummy-products-docs:stage-abc1234
+```
+
+Then set Dokploy env vars with digest:
+```env
+WEB_IMAGE=your-username/dummy-products-web@sha256:...
+DOCS_IMAGE=your-username/dummy-products-docs@sha256:...
 ```
 
 ## Publish npm package (CI)
@@ -70,68 +155,37 @@ Triggered by tag `vX.Y.Z`. CI validates:
 
 If mismatch, publish fails.
 
-## Promote stage -> prod
-
-Recommended: deploy by immutable digest in Dokploy variables.
-
-```bash
-docker buildx imagetools inspect ghcr.io/your-org/dummy-products-web:stage-$GIT_SHA
-docker buildx imagetools inspect ghcr.io/your-org/dummy-products-docs:stage-$GIT_SHA
-```
-
-Then set Dokploy env vars:
-
-- `WEB_IMAGE=ghcr.io/your-org/dummy-products-web@sha256:...`
-- `DOCS_IMAGE=ghcr.io/your-org/dummy-products-docs@sha256:...`
-
-Use the same digests in both stage and prod to guarantee identical artifacts.
-
-## Local fallback (when CI is unavailable)
-
-### Build and push images
-
-```bash
-docker login ghcr.io
-
-GIT_SHA=$(git rev-parse --short HEAD)
-
-docker buildx build \
-  --platform linux/amd64 \
-  -f deploy/docker/web.Dockerfile \
-  -t ghcr.io/your-org/dummy-products-web:stage-$GIT_SHA \
-  --push .
-
-docker buildx build \
-  --platform linux/amd64 \
-  -f deploy/docker/docs.Dockerfile \
-  -t ghcr.io/your-org/dummy-products-docs:stage-$GIT_SHA \
-  --push .
-```
-
-### Publish npm package
+### Manual publish
 
 ```bash
 cd packages/burlaki
 pnpm install --frozen-lockfile
-pnpm -C . pkg get version
 pnpm publish --access public
 ```
 
 Ensure the git tag matches `package.json` (e.g. `v1.2.3`).
 
-## Dokploy wiring
+## Architecture
 
-1. Create two Dokploy projects: `dummy-products-stage`, `dummy-products-prod`.
-2. Add registry credentials (GHCR/Docker Hub/etc.) in Dokploy.
-3. For stage use `deploy/docker-compose.stage.yml`, for prod use `deploy/docker-compose.prod.yml`.
-4. Define `WEB_IMAGE` and `DOCS_IMAGE` in each project env.
-5. Attach domains to:
-   - service `web` on port `80`
-   - service `docs` on port `3000`
-
-## Optional: Lefthook migration
-
-Husky is currently used for local hooks. If hook runtime becomes a bottleneck, consider Lefthook:
-- Faster hook execution via parallelism
-- Centralized hook config
-- Better fit for monorepos
+```
+┌─────────────────┐     ┌─────────────┐     ┌─────────────────┐
+│   GitHub Push   │────▶│ GitHub      │────▶│   Docker Hub    │
+│   (develop/     │     │ Actions     │     │   Registry      │
+│    master/tag)  │     │ (build)     │     │                 │
+└─────────────────┘     └─────────────┘     └────────┬────────┘
+                                                     │
+                                                     ▼
+                                            ┌─────────────────┐
+                                            │    Dokploy      │
+                                            │    (VPS)        │
+                                            │                 │
+                                            │  ┌───────────┐  │
+                                            │  │   web     │  │
+                                            │  │  (nginx)  │  │
+                                            │  └───────────┘  │
+                                            │  ┌───────────┐  │
+                                            │  │   docs    │  │
+                                            │  │ (Next.js) │  │
+                                            │  └───────────┘  │
+                                            └─────────────────┘
+```
