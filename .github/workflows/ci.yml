@@ -18,8 +18,12 @@ on:
           - stage
           - prod
 
+# Secrets (required): DOCKER_USERNAME, DOCKER_TOKEN, NPM_TOKEN
+# Variables (optional fallback): DOCKER_USERNAME
+# See .github/.env.example for setup instructions
+
 env:
-  DOCKER_IMAGE_PREFIX: ${{ secrets.DOCKER_USERNAME }}/dummy-products
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME || vars.DOCKER_USERNAME }}
 
 jobs:
   build_web:
@@ -32,6 +36,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Validate credentials
+        run: |
+          if [ -z "${{ secrets.DOCKER_USERNAME }}" ] && [ -z "${{ vars.DOCKER_USERNAME }}" ]; then
+            echo "::error::DOCKER_USERNAME not set. Add as secret or variable in repository settings."
+            exit 1
+          fi
+          if [ -z "${{ secrets.DOCKER_TOKEN }}" ]; then
+            echo "::error::DOCKER_TOKEN not set. Add as secret in repository settings."
+            exit 1
+          fi
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -41,7 +56,7 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
+          username: ${{ secrets.DOCKER_USERNAME || vars.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Generate image tag
@@ -49,19 +64,20 @@ jobs:
         run: |
           set -euo pipefail
           GIT_SHA="$(echo "${GITHUB_SHA}" | cut -c1-7)"
+          DOCKER_USER="${{ secrets.DOCKER_USERNAME || vars.DOCKER_USERNAME }}"
           
           if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
             # Production release
             VERSION="${GITHUB_REF#refs/tags/}"
-            echo "tag=${{ env.DOCKER_IMAGE_PREFIX }}-web:${VERSION}" >> $GITHUB_OUTPUT
-            echo "tag_latest=${{ env.DOCKER_IMAGE_PREFIX }}-web:latest" >> $GITHUB_OUTPUT
+            echo "tag=${DOCKER_USER}/dummy-products-web:${VERSION}" >> $GITHUB_OUTPUT
+            echo "tag_latest=${DOCKER_USER}/dummy-products-web:latest" >> $GITHUB_OUTPUT
           elif [[ "${GITHUB_REF}" == "refs/heads/master" ]]; then
-            echo "tag=${{ env.DOCKER_IMAGE_PREFIX }}-web:prod-${GIT_SHA}" >> $GITHUB_OUTPUT
-            echo "tag_latest=${{ env.DOCKER_IMAGE_PREFIX }}-web:prod" >> $GITHUB_OUTPUT
+            echo "tag=${DOCKER_USER}/dummy-products-web:prod-${GIT_SHA}" >> $GITHUB_OUTPUT
+            echo "tag_latest=${DOCKER_USER}/dummy-products-web:prod" >> $GITHUB_OUTPUT
           else
             # develop or other branches
-            echo "tag=${{ env.DOCKER_IMAGE_PREFIX }}-web:stage-${GIT_SHA}" >> $GITHUB_OUTPUT
-            echo "tag_latest=${{ env.DOCKER_IMAGE_PREFIX }}-web:stage" >> $GITHUB_OUTPUT
+            echo "tag=${DOCKER_USER}/dummy-products-web:stage-${GIT_SHA}" >> $GITHUB_OUTPUT
+            echo "tag_latest=${DOCKER_USER}/dummy-products-web:stage" >> $GITHUB_OUTPUT
           fi
 
       - name: Build and push web image
@@ -87,6 +103,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Validate credentials
+        run: |
+          if [ -z "${{ secrets.DOCKER_USERNAME }}" ] && [ -z "${{ vars.DOCKER_USERNAME }}" ]; then
+            echo "::error::DOCKER_USERNAME not set. Add as secret or variable in repository settings."
+            exit 1
+          fi
+          if [ -z "${{ secrets.DOCKER_TOKEN }}" ]; then
+            echo "::error::DOCKER_TOKEN not set. Add as secret in repository settings."
+            exit 1
+          fi
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -96,7 +123,7 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
+          username: ${{ secrets.DOCKER_USERNAME || vars.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Generate image tag
@@ -104,17 +131,18 @@ jobs:
         run: |
           set -euo pipefail
           GIT_SHA="$(echo "${GITHUB_SHA}" | cut -c1-7)"
+          DOCKER_USER="${{ secrets.DOCKER_USERNAME || vars.DOCKER_USERNAME }}"
           
           if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
             VERSION="${GITHUB_REF#refs/tags/}"
-            echo "tag=${{ env.DOCKER_IMAGE_PREFIX }}-docs:${VERSION}" >> $GITHUB_OUTPUT
-            echo "tag_latest=${{ env.DOCKER_IMAGE_PREFIX }}-docs:latest" >> $GITHUB_OUTPUT
+            echo "tag=${DOCKER_USER}/dummy-products-docs:${VERSION}" >> $GITHUB_OUTPUT
+            echo "tag_latest=${DOCKER_USER}/dummy-products-docs:latest" >> $GITHUB_OUTPUT
           elif [[ "${GITHUB_REF}" == "refs/heads/master" ]]; then
-            echo "tag=${{ env.DOCKER_IMAGE_PREFIX }}-docs:prod-${GIT_SHA}" >> $GITHUB_OUTPUT
-            echo "tag_latest=${{ env.DOCKER_IMAGE_PREFIX }}-docs:prod" >> $GITHUB_OUTPUT
+            echo "tag=${DOCKER_USER}/dummy-products-docs:prod-${GIT_SHA}" >> $GITHUB_OUTPUT
+            echo "tag_latest=${DOCKER_USER}/dummy-products-docs:prod" >> $GITHUB_OUTPUT
           else
-            echo "tag=${{ env.DOCKER_IMAGE_PREFIX }}-docs:stage-${GIT_SHA}" >> $GITHUB_OUTPUT
-            echo "tag_latest=${{ env.DOCKER_IMAGE_PREFIX }}-docs:stage" >> $GITHUB_OUTPUT
+            echo "tag=${DOCKER_USER}/dummy-products-docs:stage-${GIT_SHA}" >> $GITHUB_OUTPUT
+            echo "tag_latest=${DOCKER_USER}/dummy-products-docs:stage" >> $GITHUB_OUTPUT
           fi
 
       - name: Build and push docs image
@@ -158,6 +186,10 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           set -euo pipefail
+          if [ -z "${NPM_TOKEN}" ]; then
+            echo "::error::NPM_TOKEN not set. Add as secret in repository settings."
+            exit 1
+          fi
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           corepack enable
           pnpm install --frozen-lockfile
