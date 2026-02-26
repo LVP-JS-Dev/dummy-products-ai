@@ -72,9 +72,9 @@ export function Checkbox({
 					width: boxSize,
 					height: boxSize,
 					borderRadius: "var(--ui-radius-xs)",
-					border: `1px solid ${checked ? "var(--ui-color-checkbox-checked)" : "var(--ui-color-border-control)"}`,
+					border: `1px solid ${checked ? "var(--ui-color-checkbox-selected)" : "var(--ui-color-icon-muted)"}`,
 					background: checked
-						? "var(--ui-color-checkbox-checked)"
+						? "var(--ui-color-checkbox-selected)"
 						: "var(--ui-color-surface)",
 					flexShrink: 0,
 				}}

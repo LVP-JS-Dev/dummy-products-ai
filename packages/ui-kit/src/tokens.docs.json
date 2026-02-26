@@ -7,32 +7,12 @@
 		"description": "Muted surface/background for subtle fills (e.g., progress tracks).",
 		"subgroup": "Surface"
 	},
-	"--ui-color-surface-app": {
-		"description": "Products page app-level background surface from Figma.",
-		"subgroup": "Surface"
-	},
-	"--ui-color-surface-auth": {
-		"description": "Auth page app-level background surface from Figma.",
-		"subgroup": "Surface"
-	},
 	"--ui-color-border": {
 		"description": "Default border/divider color.",
 		"subgroup": "Surface"
 	},
-	"--ui-color-border-control": {
-		"description": "Control border color for auth fields and lightweight checkboxes.",
-		"subgroup": "Surface"
-	},
-	"--ui-color-border-strong": {
-		"description": "Stronger divider color used for table row separators.",
-		"subgroup": "Surface"
-	},
 	"--ui-color-border-subtle": {
 		"description": "Subtle border color for compact controls (e.g., pagination).",
-		"subgroup": "Surface"
-	},
-	"--ui-color-border-secondary": {
-		"description": "Border color for secondary controls and neutral outlined actions.",
 		"subgroup": "Surface"
 	},
 	"--ui-color-primary": {
@@ -51,14 +31,6 @@
 		"description": "Text/icon color on top of primary backgrounds.",
 		"subgroup": "Core"
 	},
-	"--ui-color-focus-ring": {
-		"description": "Focus ring/outline color for interactive elements.",
-		"subgroup": "Core"
-	},
-	"--ui-color-link": {
-		"description": "Semantic link text color.",
-		"subgroup": "Core"
-	},
 	"--ui-color-overlay": {
 		"description": "Overlay color for dimmed backdrops.",
 		"subgroup": "Core"
@@ -67,20 +39,8 @@
 		"description": "Card surface color for emphasized dark containers.",
 		"subgroup": "Surface"
 	},
-	"--ui-color-card-border": {
-		"description": "Card border color used for high-contrast outlined card shells.",
-		"subgroup": "Surface"
-	},
-	"--ui-color-checkbox-checked": {
-		"description": "Fill and border color for checked checkbox state.",
-		"subgroup": "State"
-	},
 	"--ui-color-text": {
 		"description": "Primary text color for most UI text.",
-		"subgroup": "Text"
-	},
-	"--ui-color-text-secondary": {
-		"description": "Secondary strong text color used for table/card headings.",
 		"subgroup": "Text"
 	},
 	"--ui-color-text-muted": {
@@ -102,10 +62,6 @@
 	"--ui-color-text-faint": {
 		"description": "Very low-emphasis text color for decorative subtitles and background hints.",
 		"subgroup": "Text"
-	},
-	"--ui-color-border-faint": {
-		"description": "Faint divider/border color used for low-contrast separators (e.g., auth dividers).",
-		"subgroup": "Surface"
 	},
 	"--ui-color-success": {
 		"description": "Semantic success foreground color.",
@@ -131,43 +87,58 @@
 		"description": "Soft background for destructive or error emphasis.",
 		"subgroup": "State"
 	},
-
-	"--ui-color-white": {
-		"description": "Deprecated. Use `--ui-color-surface`.",
-		"subgroup": "Deprecated",
-		"deprecated": true
+	"--ui-color-page-background": {
+		"description": "Page background color for products listing.",
+		"subgroup": "Surface"
 	},
-	"--ui-color-blue-primary": {
-		"description": "Deprecated. Use `--ui-color-primary`.",
-		"subgroup": "Deprecated",
-		"deprecated": true
+	"--ui-color-auth-background": {
+		"description": "Auth page background color.",
+		"subgroup": "Surface"
 	},
-	"--ui-color-blue-accent": {
-		"description": "Deprecated. Use `--ui-color-focus-ring`.",
-		"subgroup": "Deprecated",
-		"deprecated": true
+	"--ui-color-text-dark": {
+		"description": "Dark text color for high contrast.",
+		"subgroup": "Text"
 	},
-	"--ui-color-green-soft": {
-		"description": "Deprecated. Use `--ui-color-success-surface`.",
-		"subgroup": "Deprecated",
-		"deprecated": true
+	"--ui-color-text-darker": {
+		"description": "Darker text color for maximum contrast.",
+		"subgroup": "Text"
 	},
-	"--ui-color-gray-200": {
-		"description": "Deprecated. Use `--ui-color-border` (or `--ui-color-surface-muted` for fills).",
-		"subgroup": "Deprecated",
-		"deprecated": true
+	"--ui-color-text-body": {
+		"description": "Body text color for long-form content.",
+		"subgroup": "Text"
 	},
-	"--ui-color-gray-400": {
-		"description": "Deprecated. Use `--ui-color-text-muted`.",
-		"subgroup": "Deprecated",
-		"deprecated": true
+	"--ui-color-text-black": {
+		"description": "Pure black text color.",
+		"subgroup": "Text"
 	},
-	"--ui-color-text-primary": {
-		"description": "Deprecated. Use `--ui-color-text`.",
-		"subgroup": "Deprecated",
-		"deprecated": true
+	"--ui-color-border-row": {
+		"description": "Table row border color.",
+		"subgroup": "Surface"
 	},
-
+	"--ui-color-icon-muted": {
+		"description": "Muted icon color for inactive states.",
+		"subgroup": "Core"
+	},
+	"--ui-color-icon-light": {
+		"description": "Light icon color for subtle icons.",
+		"subgroup": "Core"
+	},
+	"--ui-color-icon-lock": {
+		"description": "Lock icon color for security indicators.",
+		"subgroup": "Core"
+	},
+	"--ui-color-selection-stripe": {
+		"description": "Selection stripe accent color.",
+		"subgroup": "Core"
+	},
+	"--ui-color-checkbox-selected": {
+		"description": "Selected checkbox fill color.",
+		"subgroup": "State"
+	},
+	"--ui-color-photo-placeholder": {
+		"description": "Photo placeholder background color.",
+		"subgroup": "Surface"
+	},
 	"--ui-space-xs": {
 		"description": "Extra-small spacing unit."
 	},
@@ -183,8 +154,38 @@
 	"--ui-space-xl": {
 		"description": "Extra-large spacing unit."
 	},
-	"--ui-space-xxl": {
-		"description": "Double extra-large spacing unit."
+	"--ui-space-10xl": {
+		"description": "10x large spacing unit (24px)."
+	},
+	"--ui-space-3xs": {
+		"description": "Triple extra-small spacing unit (2px)."
+	},
+	"--ui-space-2xs": {
+		"description": "Double extra-small spacing unit (3px)."
+	},
+	"--ui-space-2xl": {
+		"description": "Double extra-large spacing unit (14px)."
+	},
+	"--ui-space-3xl": {
+		"description": "Triple extra-large spacing unit (16px)."
+	},
+	"--ui-space-4xl": {
+		"description": "Quadruple extra-large spacing unit (18px)."
+	},
+	"--ui-space-5xl": {
+		"description": "Quintuple extra-large spacing unit (20px)."
+	},
+	"--ui-space-6xl": {
+		"description": "Sextuple extra-large spacing unit (30px)."
+	},
+	"--ui-space-7xl": {
+		"description": "Septuple extra-large spacing unit (32px)."
+	},
+	"--ui-space-8xl": {
+		"description": "Octuple extra-large spacing unit (40px)."
+	},
+	"--ui-space-9xl": {
+		"description": "Nonuple extra-large spacing unit (48px)."
 	},
 	"--ui-radius-xs": {
 		"description": "Extra-small corner radius."
@@ -204,6 +205,12 @@
 	"--ui-radius-pill": {
 		"description": "Pill radius for rounded badges and chips."
 	},
+	"--ui-radius-2xl": {
+		"description": "Double extra-large corner radius (34px)."
+	},
+	"--ui-radius-3xl": {
+		"description": "Triple extra-large corner radius (40px)."
+	},
 	"--ui-font-heading": {
 		"description": "Font family for headings and prominent labels."
 	},
@@ -218,5 +225,113 @@
 	},
 	"--ui-font-mono": {
 		"description": "Font family token for monospaced numeric values (e.g., prices)."
+	},
+	"--ui-font-size-xs": {
+		"description": "Extra-small font size (12px)."
+	},
+	"--ui-font-size-sm": {
+		"description": "Small font size (14px)."
+	},
+	"--ui-font-size-md": {
+		"description": "Medium font size (16px)."
+	},
+	"--ui-font-size-lg": {
+		"description": "Large font size (18px)."
+	},
+	"--ui-font-size-xl": {
+		"description": "Extra-large font size (20px)."
+	},
+	"--ui-font-size-2xl": {
+		"description": "Double extra-large font size (24px)."
+	},
+	"--ui-font-size-3xl": {
+		"description": "Triple extra-large font size (40px)."
+	},
+	"--ui-font-weight-normal": {
+		"description": "Normal font weight."
+	},
+	"--ui-font-weight-medium": {
+		"description": "Medium font weight (500)."
+	},
+	"--ui-font-weight-semibold": {
+		"description": "Semibold font weight (600)."
+	},
+	"--ui-font-weight-bold": {
+		"description": "Bold font weight (700)."
+	},
+	"--ui-line-height-tight": {
+		"description": "Tight line height (1.0)."
+	},
+	"--ui-line-height-normal": {
+		"description": "Normal line height (1.1)."
+	},
+	"--ui-line-height-relaxed": {
+		"description": "Relaxed line height (1.2)."
+	},
+	"--ui-line-height-loose": {
+		"description": "Loose line height (1.5)."
+	},
+	"--ui-letter-spacing-tight": {
+		"description": "Tight letter spacing (-0.6px)."
+	},
+	"--ui-letter-spacing-normal-tight": {
+		"description": "Slightly tight letter spacing (-0.27px)."
+	},
+	"--ui-letter-spacing-button": {
+		"description": "Button text letter spacing (-0.18px)."
+	},
+	"--ui-effect-gradient-auth-inner-bg": {
+		"description": "Gradient fill for auth card inner background."
+	},
+	"--ui-effect-gradient-auth-inner-stroke": {
+		"description": "Gradient stroke for auth card inner border."
+	},
+	"--ui-effect-gradient-auth-outer-stroke": {
+		"description": "Gradient stroke for auth card outer border."
+	},
+	"--ui-effect-gradient-logo": {
+		"description": "Subtle gradient shadow beneath logo."
+	},
+	"--ui-effect-gradient-button": {
+		"description": "Highlight gradient overlay for buttons."
+	},
+	"--ui-effect-shadow-page": {
+		"description": "Page container shadow."
+	},
+	"--ui-effect-shadow-card": {
+		"description": "Card component shadow."
+	},
+	"--ui-effect-shadow-button": {
+		"description": "Button shadow for elevated state."
+	},
+	"--ui-effect-shadow-logo-1": {
+		"description": "Primary logo shadow."
+	},
+	"--ui-effect-shadow-logo-2": {
+		"description": "Secondary logo shadow (outline)."
+	},
+	"--ui-effect-shadow-pagination": {
+		"description": "Pagination component shadow."
+	},
+	"--ui-effect-shadow-modal": {
+		"description": "Modal dialog shadow."
+	},
+	"--ui-stroke-input": {
+		"description": "Input field border stroke."
+	},
+	"--ui-stroke-table-row": {
+		"description": "Table row border stroke."
+	},
+	"--ui-stroke-checkbox": {
+		"description": "Checkbox border stroke."
+	},
+	"--ui-stroke-photo": {
+		"description": "Photo container border stroke."
+	},
+	"--ui-stroke-button": {
+		"description": "Button border stroke."
+	},
+	"--ui-stroke-icon-muted": {
+		"description": "Muted icon border stroke."
 	}
 }

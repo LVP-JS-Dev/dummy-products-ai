@@ -24,7 +24,7 @@
 	--destructive: oklch(0.58 0.22 27);
 	--border: var(--ui-color-border);
 	--input: var(--ui-color-border);
-	--ring: var(--ui-color-focus-ring);
+	--ring: var(--ui-color-accent);
 	--chart-1: oklch(0.809 0.105 251.813);
 	--chart-2: oklch(0.623 0.214 259.815);
 	--chart-3: oklch(0.546 0.245 262.881);
@@ -151,7 +151,7 @@
 	align-items: center;
 	justify-content: center;
 	padding: 24px 16px;
-	background: var(--ui-color-surface-auth);
+	background: var(--ui-color-auth-background);
 }
 
 .login-main {
@@ -202,7 +202,7 @@
 
 .products-shell {
 	width: 100%;
-	background: var(--ui-color-surface-app);
+	background: var(--ui-color-page-background);
 	min-height: 100svh;
 	padding: 20px 30px;
 	box-sizing: border-box;

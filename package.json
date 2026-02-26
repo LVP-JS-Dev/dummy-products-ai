@@ -17,6 +17,7 @@
 		"dev:web": "turbo -F web dev",
 		"docs:generate-tokens": "node scripts/generate-token-docs.mjs",
 		"docs:check-tokens": "node scripts/generate-token-docs.mjs --check",
+		"tokens:validate": "node scripts/validate-tokens.mjs",
 		"roadmap:gen": "node scripts/roadmap/generate.mjs",
 		"roadmap:check": "node scripts/roadmap/check.mjs",
 		"gen:ui": "pnpm -C packages/ui-kit gen",
@@ -30,7 +31,7 @@
 		"e2e:report": "playwright show-report",
 		"lint:md": "node scripts/lint-markdown-headings.mjs",
 		"format": "pnpm fix",
-		"check": "ultracite check && pnpm lint:md && pnpm gen && pnpm test && pnpm docs:check-tokens && pnpm roadmap:check && git diff --exit-code && test -z \"$(git ls-files --others --exclude-standard packages/ui-kit/src/generated)\" && test -z \"$(git ls-files --others --exclude-standard packages/gen-api/generated)\"",
+		"check": "ultracite check && pnpm lint:md && pnpm gen && pnpm test && pnpm tokens:validate && pnpm docs:check-tokens && pnpm roadmap:check && git diff --exit-code && test -z \"$(git ls-files --others --exclude-standard packages/ui-kit/src/generated)\" && test -z \"$(git ls-files --others --exclude-standard packages/gen-api/generated)\"",
 		"fix": "ultracite fix",
 		"prepare": "husky",
 		"ruler:apply": "pnpm dlx @intellectronica/ruler@latest apply --local-only --mcp --agents claude --config .ruler/ruler.toml"

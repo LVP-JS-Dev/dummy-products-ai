@@ -13,12 +13,10 @@ export function Divider({
 	const content = children ?? text;
 	const lineColor =
 		tone === "muted"
-			? "var(--ui-color-border-faint)"
+			? "var(--ui-color-border)"
 			: "var(--ui-color-border-subtle)";
 	const labelColor =
-		tone === "muted"
-			? "var(--ui-color-border-faint)"
-			: "var(--ui-color-text-muted)";
+		tone === "muted" ? "var(--ui-color-border)" : "var(--ui-color-text-muted)";
 
 	const lineStyle = {
 		border: 0,

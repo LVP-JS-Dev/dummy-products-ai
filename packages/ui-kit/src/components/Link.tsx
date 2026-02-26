@@ -49,7 +49,7 @@ export function Link({
 			onClick={handleClick}
 			rel={secureRel}
 			style={{
-				color: "var(--ui-color-link)",
+				color: "var(--ui-color-primary)",
 				textDecoration: underline ? "underline" : "none",
 				fontFamily: "inherit",
 				fontSize: "inherit",
