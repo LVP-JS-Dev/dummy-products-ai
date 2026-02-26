@@ -118,6 +118,7 @@ pnpm -C packages/agent-orchestrator skills:gate -- \
 | Работа с компонентами  | packages/ui-kit/PRD.md |
 | Работа с документацией | apps/fumadocs/PRD.md   |
 | Работа с приложением   | apps/web/PRD.md        |
+| CI/CD и деплой         | .ruler/cicd.md         |
 | Процесс и шаги         | AGENT.md (этот файл)   |
 
 ---
@@ -512,13 +513,56 @@ font-family: var(--ui-font-roboto);   /* для Roboto-specific UI */
 
 ---
 
-## 18. Package Manager
+## 18. CI/CD Pipeline
+
+Проект использует автоматический CI/CD для сборки и деплоя.
+
+### Ключевые файлы
+
+| File | Purpose |
+|------|---------|
+| `.github/workflows/ci.yml` | CI/CD pipeline (build + push) |
+| `.github/.env.example` | Secrets/variables template |
+| `deploy/README.md` | Полная документация |
+
+### Workflow
+
+```
+Git Push → GitHub Actions → Docker Hub → Dokploy (VPS)
+```
+
+- **Push `develop`** → `:stage` теги → staging
+- **Push `master`** → `:prod` теги → production
+- **Tag `vX.Y.Z`** → `:latest` + npm publish
+
+### GitHub Secrets (обязательно)
+
+| Secret | Required | Description |
+|--------|----------|-------------|
+| `DOCKER_USERNAME` | ✅ | Docker Hub username |
+| `DOCKER_TOKEN` | ✅ | Docker Hub access token |
+| `NPM_TOKEN` | ⚪ | npm token (только для релизов) |
+
+> `DOCKER_USERNAME` можно указать как Variable (fallback).
+
+### Для новых разработчиков
+
+1. Создаёте PR в `develop`
+2. После merge — CI автоматически собирает образы
+3. Образы пушатся в Docker Hub
+4. Dokploy деплоит на VPS
+
+**Полная документация:** `.ruler/cicd.md` и `deploy/README.md`
+
+---
+
+## 19. Package Manager
 
 Проект использует **pnpm v10**. Всегда использовать `pnpm` команды.
 
 ---
 
-## 19. Мини-чеклист перед коммитом
+## 20. Мини-чеклист перед коммитом
 
 - [ ] Контракт есть
 - [ ] States валидны
