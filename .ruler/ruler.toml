@@ -1,28 +1,25 @@
-default_agents = ['claude']
+default_agents = [ 'claude' ]
 
 [agents.claude]
 enabled = true
 output_path = 'CLAUDE.md'
 
-[agents.claude.mcp]
-enabled = true
-merge_strategy = 'merge'
+    [agents.claude.mcp]
+    enabled = true
+    merge_strategy = 'merge'
 
 [agents.codex]
 enabled = true
 output_path = 'AGENTS.md'
 output_path_config = '.codex/config.toml'
 
-[agents.codex.mcp]
-enabled = true
-merge_strategy = 'merge'
+    [agents.codex.mcp]
+    enabled = true
+    merge_strategy = 'merge'
 
 [agents.gemini-cli]
 enabled = true
 output_path = 'GEMINI.md'
-
-[skills]
-enabled = true
 
 [gitignore]
 enabled = true
@@ -32,13 +29,12 @@ enabled = true
 merge_strategy = 'merge'
 
 [mcp_servers.context7]
-args = ['-y', '@upstash/context7-mcp']
+args = [ '-y', '@upstash/context7-mcp' ]
 command = 'npx'
 
 [mcp_servers.figma-bridge]
+args = [ '-y', '@gethopp/figma-mcp-bridge@0.0.5' ]
 command = 'npx'
-args = ['-y', '@gethopp/figma-mcp-bridge@0.0.5']
 
-[mcp_servers.Framelink_Figma_MCP]
-command = 'npx'
-args = ["-y", "figma-developer-mcp@0.6.4", "--allow-net", "--env=.env.mcp", "--stdio"]
+[skills]
+enabled = true
