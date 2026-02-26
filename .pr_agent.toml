@@ -1,0 +1,55 @@
+# Qodo PR-Agent Configuration
+# Docs: https://codium-ai.github.io/docs/pragent/
+
+[config]
+# Язык ответов
+language = "ru"
+
+[pr_reviewer]
+# Включить оценку PR (1-10)
+require_score_review = true
+# Проверять тесты
+require_tests_review = true
+# Security обзор
+require_security_review = true
+# Количество suggestions
+num_code_suggestions = 5
+
+# Путь к дополнительным инструкциям
+extra_instructions = """
+Это monorepo с contract-first подходом. Особое внимание:
+- Generated-код не ревьювить (packages/ui-kit/src/generated/**, **/*.gen.ts)
+- Контракты должны быть в packages/ui-kit/src/contracts/
+- React hooks dependencies и memory leaks в useEffect
+- TypeScript strict mode violations
+- Accessibility issues (a11y)
+- Дизайн-токены должны быть синхронизированы (tokens.spec.json ↔ tokens.css)
+"""
+
+# Игнорировать пути
+exclude_paths = [
+    "packages/ui-kit/src/generated/**",
+    "packages/gen-api/generated/**",
+    "apps/web/src/routeTree.gen.ts",
+    "**/*.gen.ts",
+    "**/node_modules/**",
+    "pnpm-lock.yaml"
+]
+
+[pr_description]
+# Генерировать заголовок PR
+generate_ai_title = false
+# Добавлять labels
+publish_labels = true
+# Организовывать changes по категориям
+final_update_message = true
+
+[pr_code_suggestions]
+# Только committable suggestions
+committable_suggestions = true
+# Количество suggestions
+num_code_suggestions_per_chunk = 3
+
+[handle_issues]
+# Автоматически закрывать issues по ключевым словам
+handle_issues = false
