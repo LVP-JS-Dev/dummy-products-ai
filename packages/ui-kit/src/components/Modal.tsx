@@ -196,7 +196,7 @@ export function Modal({
 					border: "1px solid var(--ui-color-border)",
 					boxShadow:
 						"0 18px 40px color-mix(in srgb, var(--ui-color-text) 20%, transparent)",
-					padding: "var(--ui-space-xxl)",
+					padding: "var(--ui-space-10xl)",
 					color: "var(--ui-color-text)",
 					outline: "none",
 					...style,

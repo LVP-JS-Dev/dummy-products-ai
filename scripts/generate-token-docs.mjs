@@ -140,6 +140,26 @@ p {
 }
 `,
 	},
+	{
+		key: "effect",
+		title: "Effects",
+		usageExample: null,
+	},
+	{
+		key: "letter",
+		title: "Letter Spacing",
+		usageExample: null,
+	},
+	{
+		key: "line",
+		title: "Line Height",
+		usageExample: null,
+	},
+	{
+		key: "stroke",
+		title: "Strokes",
+		usageExample: null,
+	},
 ];
 
 function groupTitle(groupKey) {

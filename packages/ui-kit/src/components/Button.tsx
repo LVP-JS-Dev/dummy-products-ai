@@ -30,7 +30,7 @@ const variantStyle: Record<
 	secondary: {
 		background: "var(--ui-color-surface)",
 		color: "var(--ui-color-text)",
-		border: "1px solid var(--ui-color-border-secondary)",
+		border: "1px solid var(--ui-color-border-subtle)",
 	},
 	icon: {
 		background: "transparent",

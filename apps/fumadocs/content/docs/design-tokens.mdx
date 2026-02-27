@@ -22,30 +22,20 @@ Import the token stylesheet once in your app’s global CSS:
 | Token | Value | Description |
 | --- | --- | --- |
 | `--ui-color-accent` | `#797fea` | Accent color for selection highlights (e.g., active pagination). |
-| `--ui-color-focus-ring` | `var(--ui-color-accent)` | Focus ring/outline color for interactive elements. |
-| `--ui-color-link` | `var(--ui-color-primary)` | Semantic link text color. |
+| `--ui-color-icon-light` | `#cacaca` | Light icon color for subtle icons. |
+| `--ui-color-icon-lock` | `#cfcfcf` | Lock icon color for security indicators. |
+| `--ui-color-icon-muted` | `#c9c9c9` | Muted icon color for inactive states. |
 | `--ui-color-on-primary` | `#ffffff` | Text/icon color on top of primary backgrounds. |
 | `--ui-color-overlay` | `rgb(17 24 39 / 45%)` | Overlay color for dimmed backdrops. |
 | `--ui-color-primary` | `#242edb` | Primary action/brand color. |
 | `--ui-color-primary-border` | `#367aff` | Border/stroke color paired with the primary brand fill. |
-
-### Deprecated
-
-| Token | Value | Description |
-| --- | --- | --- |
-| `--ui-color-blue-accent` | `var(--ui-color-focus-ring)` | Deprecated. Use `--ui-color-focus-ring`. |
-| `--ui-color-blue-primary` | `var(--ui-color-primary)` | Deprecated. Use `--ui-color-primary`. |
-| `--ui-color-gray-200` | `var(--ui-color-border)` | Deprecated. Use `--ui-color-border` (or `--ui-color-surface-muted` for fills). |
-| `--ui-color-gray-400` | `var(--ui-color-text-muted)` | Deprecated. Use `--ui-color-text-muted`. |
-| `--ui-color-green-soft` | `var(--ui-color-success-surface)` | Deprecated. Use `--ui-color-success-surface`. |
-| `--ui-color-text-primary` | `var(--ui-color-text)` | Deprecated. Use `--ui-color-text`. |
-| `--ui-color-white` | `var(--ui-color-surface)` | Deprecated. Use `--ui-color-surface`. |
+| `--ui-color-selection-stripe` | `#3c538e` | Selection stripe accent color. |
 
 ### State
 
 | Token | Value | Description |
 | --- | --- | --- |
-| `--ui-color-checkbox-checked` | `#3c538e` | Fill and border color for checked checkbox state. |
+| `--ui-color-checkbox-selected` | `#3c538e` | Selected checkbox fill color. |
 | `--ui-color-danger` | `#dc2626` | Semantic error/danger foreground color. |
 | `--ui-color-danger-surface` | `#fee2e2` | Soft background for destructive or error emphasis. |
 | `--ui-color-info` | `#2563eb` | Semantic informational color. |
@@ -57,17 +47,14 @@ Import the token stylesheet once in your app’s global CSS:
 
 | Token | Value | Description |
 | --- | --- | --- |
+| `--ui-color-auth-background` | `#f9f9f9` | Auth page background color. |
 | `--ui-color-border` | `#ededed` | Default border/divider color. |
-| `--ui-color-border-control` | `#c9c9c9` | Control border color for auth fields and lightweight checkboxes. |
-| `--ui-color-border-faint` | `#ebebeb` | Faint divider/border color used for low-contrast separators (e.g., auth dividers). |
-| `--ui-color-border-secondary` | `#ececeb` | Border color for secondary controls and neutral outlined actions. |
-| `--ui-color-border-strong` | `#e2e2e2` | Stronger divider color used for table row separators. |
+| `--ui-color-border-row` | `#e2e2e2` | Table row border color. |
 | `--ui-color-border-subtle` | `#ececeb` | Subtle border color for compact controls (e.g., pagination). |
-| `--ui-color-card-border` | `#ffffff` | Card border color used for high-contrast outlined card shells. |
 | `--ui-color-card-surface` | `#232323` | Card surface color for emphasized dark containers. |
+| `--ui-color-page-background` | `#f6f6f6` | Page background color for products listing. |
+| `--ui-color-photo-placeholder` | `#c4c4c4` | Photo placeholder background color. |
 | `--ui-color-surface` | `#ffffff` | Default app surface/background color. |
-| `--ui-color-surface-app` | `#f6f6f6` | Products page app-level background surface from Figma. |
-| `--ui-color-surface-auth` | `#f9f9f9` | Auth page app-level background surface from Figma. |
 | `--ui-color-surface-muted` | `#f3f3f3` | Muted surface/background for subtle fills (e.g., progress tracks). |
 
 ### Text
@@ -75,10 +62,13 @@ Import the token stylesheet once in your app’s global CSS:
 | Token | Value | Description |
 | --- | --- | --- |
 | `--ui-color-text` | `#232323` | Primary text color for most UI text. |
+| `--ui-color-text-black` | `#000000` | Pure black text color. |
+| `--ui-color-text-body` | `#333333` | Body text color for long-form content. |
+| `--ui-color-text-dark` | `#202020` | Dark text color for high contrast. |
+| `--ui-color-text-darker` | `#161919` | Darker text color for maximum contrast. |
 | `--ui-color-text-faint` | `#e0e0e0` | Very low-emphasis text color for decorative subtitles and background hints. |
 | `--ui-color-text-muted` | `#9c9c9c` | Muted/secondary text color (e.g., placeholders, helper text). |
 | `--ui-color-text-placeholder` | `#999999` | Placeholder text color for inputs. |
-| `--ui-color-text-secondary` | `#333333` | Secondary strong text color used for table/card headings. |
 | `--ui-color-text-subtle` | `#6c6c6c` | Subtle UI text color between primary and muted text (e.g., secondary captions in marketing-like layouts). |
 | `--ui-color-text-tertiary` | `#b2b3b9` | Tertiary text color used for low-emphasis UI labels. |
 
@@ -101,7 +91,18 @@ Import the token stylesheet once in your app’s global CSS:
 | `--ui-font-heading` | `"Cairo", "Inter", system-ui, sans-serif` | Font family for headings and prominent labels. |
 | `--ui-font-mono` | `"Roboto Mono", "Roboto", "Inter", system-ui, sans-serif` | Font family token for monospaced numeric values (e.g., prices). |
 | `--ui-font-roboto` | `"Roboto", "Inter", system-ui, sans-serif` | Font family token for Roboto-driven UI text styles. |
+| `--ui-font-size-2xl` | `24px` | Double extra-large font size (24px). |
+| `--ui-font-size-3xl` | `40px` | Triple extra-large font size (40px). |
+| `--ui-font-size-lg` | `18px` | Large font size (18px). |
+| `--ui-font-size-md` | `16px` | Medium font size (16px). |
+| `--ui-font-size-sm` | `14px` | Small font size (14px). |
+| `--ui-font-size-xl` | `20px` | Extra-large font size (20px). |
+| `--ui-font-size-xs` | `12px` | Extra-small font size (12px). |
 | `--ui-font-ui` | `"Inter", "Inter Variable", system-ui, sans-serif` | Font family for controls and compact UI text. |
+| `--ui-font-weight-bold` | `700` | Bold font weight (700). |
+| `--ui-font-weight-medium` | `500` | Medium font weight (500). |
+| `--ui-font-weight-normal` | `normal` | Normal font weight. |
+| `--ui-font-weight-semibold` | `600` | Semibold font weight (600). |
 
 ### Example
 
@@ -119,12 +120,22 @@ p {
 
 | Token | Value | Description |
 | --- | --- | --- |
+| `--ui-space-10xl` | `24px` | 10x large spacing unit (24px). |
+| `--ui-space-2xl` | `14px` | Double extra-large spacing unit (14px). |
+| `--ui-space-2xs` | `3px` | Double extra-small spacing unit (3px). |
+| `--ui-space-3xl` | `16px` | Triple extra-large spacing unit (16px). |
+| `--ui-space-3xs` | `2px` | Triple extra-small spacing unit (2px). |
+| `--ui-space-4xl` | `18px` | Quadruple extra-large spacing unit (18px). |
+| `--ui-space-5xl` | `20px` | Quintuple extra-large spacing unit (20px). |
+| `--ui-space-6xl` | `30px` | Sextuple extra-large spacing unit (30px). |
+| `--ui-space-7xl` | `32px` | Septuple extra-large spacing unit (32px). |
+| `--ui-space-8xl` | `40px` | Octuple extra-large spacing unit (40px). |
+| `--ui-space-9xl` | `48px` | Nonuple extra-large spacing unit (48px). |
 | `--ui-space-lg` | `16px` | Large spacing unit. |
 | `--ui-space-md` | `12px` | Medium spacing unit. |
 | `--ui-space-sm` | `8px` | Small spacing unit. |
 | `--ui-space-xl` | `20px` | Extra-large spacing unit. |
 | `--ui-space-xs` | `4px` | Extra-small spacing unit. |
-| `--ui-space-xxl` | `24px` | Double extra-large spacing unit. |
 
 ### Example
 
@@ -140,6 +151,8 @@ p {
 
 | Token | Value | Description |
 | --- | --- | --- |
+| `--ui-radius-2xl` | `34px` | Double extra-large corner radius (34px). |
+| `--ui-radius-3xl` | `40px` | Triple extra-large corner radius (40px). |
 | `--ui-radius-lg` | `12px` | Large corner radius. |
 | `--ui-radius-md` | `8px` | Medium corner radius. |
 | `--ui-radius-pill` | `9999px` | Pill radius for rounded badges and chips. |
@@ -155,6 +168,72 @@ p {
   border-radius: var(--ui-radius-md);
 }
 ```
+
+## Effects
+
+| Token | Value | Description |
+| --- | --- | --- |
+| `--ui-effect-gradient-auth-inner-bg` | `linear-gradient(
+		180deg,
+		rgba(35, 35, 35, 0.03) 0%,
+		transparent 50%
+	)` | Gradient fill for auth card inner background. |
+| `--ui-effect-gradient-auth-inner-stroke` | `linear-gradient(
+		180deg,
+		rgba(237, 237, 237, 0.7) 0%,
+		transparent 70%
+	)` | Gradient stroke for auth card inner border. |
+| `--ui-effect-gradient-auth-outer-stroke` | `linear-gradient(
+		180deg,
+		#ededed 20%,
+		transparent 100%
+	)` | Gradient stroke for auth card outer border. |
+| `--ui-effect-gradient-button` | `linear-gradient(
+		180deg,
+		rgba(255, 255, 255, 0) 0%,
+		rgba(255, 255, 255, 0.12) 100%
+	)` | Highlight gradient overlay for buttons. |
+| `--ui-effect-gradient-logo` | `linear-gradient(
+		180deg,
+		rgba(35, 35, 35, 0) 50%,
+		rgba(35, 35, 35, 0.06) 100%
+	)` | Subtle gradient shadow beneath logo. |
+| `--ui-effect-shadow-button` | `0 8px 7px rgba(54, 122, 255, 0.03)` | Button shadow for elevated state. |
+| `--ui-effect-shadow-card` | `0 24px 32px 0px rgba(0, 0, 0, 0.04)` | Card component shadow. |
+| `--ui-effect-shadow-logo-1` | `0 12px 8px rgba(0, 0, 0, 0.03)` | Primary logo shadow. |
+| `--ui-effect-shadow-logo-2` | `0 0 0 2px #ffffff` | Secondary logo shadow (outline). |
+| `--ui-effect-shadow-modal` | `0 18px 40px
+		color-mix(in srgb, var(--ui-color-text) 20%, transparent)` | Modal dialog shadow. |
+| `--ui-effect-shadow-page` | `0 4px 4px rgba(0, 0, 0, 0.25)` | Page container shadow. |
+| `--ui-effect-shadow-pagination` | `0 20px 43.75px rgba(0, 0, 0, 0.12)` | Pagination component shadow. |
+
+## Letter Spacing
+
+| Token | Value | Description |
+| --- | --- | --- |
+| `--ui-letter-spacing-button` | `-0.18px` | Button text letter spacing (-0.18px). |
+| `--ui-letter-spacing-normal-tight` | `-0.27px` | Slightly tight letter spacing (-0.27px). |
+| `--ui-letter-spacing-tight` | `-0.6px` | Tight letter spacing (-0.6px). |
+
+## Line Height
+
+| Token | Value | Description |
+| --- | --- | --- |
+| `--ui-line-height-loose` | `1.5` | Loose line height (1.5). |
+| `--ui-line-height-normal` | `1.1` | Normal line height (1.1). |
+| `--ui-line-height-relaxed` | `1.2` | Relaxed line height (1.2). |
+| `--ui-line-height-tight` | `1` | Tight line height (1.0). |
+
+## Strokes
+
+| Token | Value | Description |
+| --- | --- | --- |
+| `--ui-stroke-button` | `1px solid var(--ui-color-primary-border)` | Button border stroke. |
+| `--ui-stroke-checkbox` | `1px solid var(--ui-color-text-tertiary)` | Checkbox border stroke. |
+| `--ui-stroke-icon-muted` | `2px solid var(--ui-color-border)` | Muted icon border stroke. |
+| `--ui-stroke-input` | `1.5px solid var(--ui-color-border)` | Input field border stroke. |
+| `--ui-stroke-photo` | `1px solid var(--ui-color-border-subtle)` | Photo container border stroke. |
+| `--ui-stroke-table-row` | `1px solid var(--ui-color-border-row)` | Table row border stroke. |
 
 ## Interactive
 

@@ -9,28 +9,20 @@
 	/* Semantic colors (preferred) */
 	--ui-color-surface: #ffffff;
 	--ui-color-surface-muted: #f3f3f3;
-	--ui-color-surface-app: #f6f6f6;
-	--ui-color-surface-auth: #f9f9f9;
 	--ui-color-border: #ededed;
-	--ui-color-border-control: #c9c9c9;
-	--ui-color-border-strong: #e2e2e2;
 	--ui-color-border-subtle: #ececeb;
-	--ui-color-border-secondary: #ececeb;
 
 	--ui-color-primary: #242edb;
 	--ui-color-primary-border: #367aff;
 	--ui-color-accent: #797fea;
 	--ui-color-on-primary: #ffffff;
-	--ui-color-focus-ring: var(--ui-color-accent);
 
 	--ui-color-text: #232323;
-	--ui-color-text-secondary: #333333;
 	--ui-color-text-muted: #9c9c9c;
 	--ui-color-text-tertiary: #b2b3b9;
 	--ui-color-text-placeholder: #999999;
 	--ui-color-text-subtle: #6c6c6c;
 	--ui-color-text-faint: #e0e0e0;
-	--ui-color-border-faint: #ebebeb;
 
 	--ui-color-success: #15803d;
 	--ui-color-success-surface: #dcfce7;
@@ -38,27 +30,40 @@
 	--ui-color-warning: #d97706;
 	--ui-color-danger: #dc2626;
 	--ui-color-danger-surface: #fee2e2;
-	--ui-color-link: var(--ui-color-primary);
 	--ui-color-overlay: rgb(17 24 39 / 45%);
 	--ui-color-card-surface: #232323;
-	--ui-color-card-border: #ffffff;
-	--ui-color-checkbox-checked: #3c538e;
 
-	/* Deprecated palette-based aliases (kept for backward compatibility) */
-	--ui-color-white: var(--ui-color-surface);
-	--ui-color-blue-primary: var(--ui-color-primary);
-	--ui-color-blue-accent: var(--ui-color-focus-ring);
-	--ui-color-green-soft: var(--ui-color-success-surface);
-	--ui-color-gray-200: var(--ui-color-border);
-	--ui-color-gray-400: var(--ui-color-text-muted);
-	--ui-color-text-primary: var(--ui-color-text);
+	/* Additional colors from spec */
+	--ui-color-page-background: #f6f6f6;
+	--ui-color-auth-background: #f9f9f9;
+	--ui-color-text-dark: #202020;
+	--ui-color-text-darker: #161919;
+	--ui-color-text-body: #333333;
+	--ui-color-text-black: #000000;
+	--ui-color-border-row: #e2e2e2;
+	--ui-color-icon-muted: #c9c9c9;
+	--ui-color-icon-light: #cacaca;
+	--ui-color-icon-lock: #cfcfcf;
+	--ui-color-selection-stripe: #3c538e;
+	--ui-color-checkbox-selected: #3c538e;
+	--ui-color-photo-placeholder: #c4c4c4;
 
 	--ui-space-xs: 4px;
 	--ui-space-sm: 8px;
 	--ui-space-md: 12px;
 	--ui-space-lg: 16px;
 	--ui-space-xl: 20px;
-	--ui-space-xxl: 24px;
+	--ui-space-10xl: 24px;
+	--ui-space-3xs: 2px;
+	--ui-space-2xs: 3px;
+	--ui-space-2xl: 14px;
+	--ui-space-3xl: 16px;
+	--ui-space-4xl: 18px;
+	--ui-space-5xl: 20px;
+	--ui-space-6xl: 30px;
+	--ui-space-7xl: 32px;
+	--ui-space-8xl: 40px;
+	--ui-space-9xl: 48px;
 
 	--ui-radius-xs: 4px;
 	--ui-radius-sm: 6px;
@@ -66,12 +71,85 @@
 	--ui-radius-lg: 12px;
 	--ui-radius-xl: 16px;
 	--ui-radius-pill: 9999px;
+	--ui-radius-2xl: 34px;
+	--ui-radius-3xl: 40px;
 
 	--ui-font-heading: "Cairo", "Inter", system-ui, sans-serif;
 	--ui-font-ui: "Inter", "Inter Variable", system-ui, sans-serif;
 	--ui-font-body: "Open Sans", "Inter", system-ui, sans-serif;
 	--ui-font-roboto: "Roboto", "Inter", system-ui, sans-serif;
 	--ui-font-mono: "Roboto Mono", "Roboto", "Inter", system-ui, sans-serif;
+
+	/* Font Sizes */
+	--ui-font-size-xs: 12px;
+	--ui-font-size-sm: 14px;
+	--ui-font-size-md: 16px;
+	--ui-font-size-lg: 18px;
+	--ui-font-size-xl: 20px;
+	--ui-font-size-2xl: 24px;
+	--ui-font-size-3xl: 40px;
+
+	/* Font Weights */
+	--ui-font-weight-normal: normal;
+	--ui-font-weight-medium: 500;
+	--ui-font-weight-semibold: 600;
+	--ui-font-weight-bold: 700;
+
+	/* Line Heights */
+	--ui-line-height-tight: 1;
+	--ui-line-height-normal: 1.1;
+	--ui-line-height-relaxed: 1.2;
+	--ui-line-height-loose: 1.5;
+
+	/* Letter Spacing */
+	--ui-letter-spacing-tight: -0.6px;
+	--ui-letter-spacing-normal-tight: -0.27px;
+	--ui-letter-spacing-button: -0.18px;
+
+	/* Effects: Gradients */
+	--ui-effect-gradient-auth-inner-bg: linear-gradient(
+		180deg,
+		rgba(35, 35, 35, 0.03) 0%,
+		transparent 50%
+	);
+	--ui-effect-gradient-auth-inner-stroke: linear-gradient(
+		180deg,
+		rgba(237, 237, 237, 0.7) 0%,
+		transparent 70%
+	);
+	--ui-effect-gradient-auth-outer-stroke: linear-gradient(
+		180deg,
+		#ededed 20%,
+		transparent 100%
+	);
+	--ui-effect-gradient-logo: linear-gradient(
+		180deg,
+		rgba(35, 35, 35, 0) 50%,
+		rgba(35, 35, 35, 0.06) 100%
+	);
+	--ui-effect-gradient-button: linear-gradient(
+		180deg,
+		rgba(255, 255, 255, 0) 0%,
+		rgba(255, 255, 255, 0.12) 100%
+	);
+
+	/* Shadows */
+	--ui-effect-shadow-page: 0 4px 4px rgba(0, 0, 0, 0.25);
+	--ui-effect-shadow-card: 0 24px 32px 0px rgba(0, 0, 0, 0.04);
+	--ui-effect-shadow-button: 0 8px 7px rgba(54, 122, 255, 0.03);
+	--ui-effect-shadow-logo-1: 0 12px 8px rgba(0, 0, 0, 0.03);
+	--ui-effect-shadow-logo-2: 0 0 0 2px #ffffff;
+	--ui-effect-shadow-pagination: 0 20px 43.75px rgba(0, 0, 0, 0.12);
+	--ui-effect-shadow-modal: 0 18px 40px
+		color-mix(in srgb, var(--ui-color-text) 20%, transparent);
+
+	/* Strokes */
+	--ui-stroke-input: 1.5px solid var(--ui-color-border);
+	--ui-stroke-table-row: 1px solid var(--ui-color-border-row);
+	--ui-stroke-checkbox: 1px solid var(--ui-color-text-tertiary);
+	--ui-stroke-photo: 1px solid var(--ui-color-border-subtle);
+	--ui-stroke-button: 1px solid var(--ui-color-primary-border);
+	--ui-stroke-icon-muted: 2px solid var(--ui-color-border);
 }
 
 /* Minimal base styles for component internals that cannot be expressed via inline style (e.g. ::placeholder, :focus-within). */
@@ -82,7 +160,7 @@
 
 .ui-inputRoot:focus-within,
 .ui-searchInputRoot:focus-within {
-	border-color: var(--ui-color-focus-ring);
+	border-color: var(--ui-color-accent);
 	box-shadow: 0 0 0 3px
-		color-mix(in srgb, var(--ui-color-focus-ring) 25%, transparent);
+		color-mix(in srgb, var(--ui-color-accent) 25%, transparent);
 }

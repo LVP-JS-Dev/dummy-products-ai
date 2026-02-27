@@ -342,7 +342,7 @@ export function ProductsPage() {
 							className="overflow-hidden"
 							data-testid="products-table"
 							style={{
-								border: "1px solid var(--ui-color-border-strong)",
+								border: "1px solid var(--ui-color-border-row)",
 								borderRadius: "var(--ui-radius-md)",
 								background: "var(--ui-color-surface)",
 							}}
@@ -375,9 +375,9 @@ export function ProductsPage() {
 												className="border-t"
 												key={r.id}
 												style={{
-													borderColor: "var(--ui-color-border-strong)",
+													borderColor: "var(--ui-color-border-row)",
 													boxShadow: r.getIsSelected()
-														? "inset 3px 0 0 var(--ui-color-checkbox-checked)"
+														? "inset 3px 0 0 var(--ui-color-checkbox-selected)"
 														: undefined,
 												}}
 											>
@@ -398,7 +398,9 @@ export function ProductsPage() {
 															className={cellClassName}
 															key={cell.id}
 															style={{
-																color: isLowRating ? "#dc2626" : "inherit",
+																color: isLowRating
+																	? "var(--ui-color-danger)"
+																	: "inherit",
 															}}
 														>
 															{flexRender(
@@ -420,7 +422,7 @@ export function ProductsPage() {
 						<div
 							style={{
 								fontFamily: "var(--ui-font-roboto)",
-								color: "var(--ui-color-text-secondary)",
+								color: "var(--ui-color-text-body)",
 								fontSize: 18,
 								lineHeight: "21.094px",
 							}}
@@ -594,7 +596,7 @@ function Field(props: {
 			<input
 				aria-describedby={props.error ? errorId : undefined}
 				aria-invalid={Boolean(props.error)}
-				className="focus-visible:outline-2 focus-visible:outline-[var(--ui-color-focus-ring)] focus-visible:outline-offset-2"
+				className="focus-visible:outline-2 focus-visible:outline-[var(--ui-color-accent)] focus-visible:outline-offset-2"
 				id={props.id}
 				inputMode={props.inputMode}
 				onChange={(e) => props.onChange(e.target.value)}
@@ -613,7 +615,7 @@ function Field(props: {
 				<div
 					id={errorId}
 					style={{
-						color: "#dc2626",
+						color: "var(--ui-color-danger)",
 						fontFamily: "var(--ui-font-body)",
 						fontSize: 12,
 					}}

@@ -21,9 +21,7 @@ import { WithControl } from "@/stories/design-tokens.story";
 
 | Токен | Значение | Описание |
 | --- | --- | --- |
-| `--ui-color-accent` | `#797fea` | Акцентный цвет для выделения (например, активная пагинация). |
-| `--ui-color-focus-ring` | `var(--ui-color-accent)` | Цвет кольца фокуса для интерактивных элементов. |
-| `--ui-color-link` | `var(--ui-color-primary)` | Семантический цвет ссылок. |
+| `--ui-color-accent` | `#797fea` | Акцентный цвет для выделения и фокуса (например, активная пагинация). |
 | `--ui-color-on-primary` | `#ffffff` | Цвет текста и иконок на основном фоне. |
 | `--ui-color-overlay` | `rgb(17 24 39 / 45%)` | Цвет оверлея для затемнения фона. |
 | `--ui-color-primary` | `#242edb` | Основной брендовый цвет действий. |
@@ -33,7 +31,7 @@ import { WithControl } from "@/stories/design-tokens.story";
 
 | Токен | Значение | Описание |
 | --- | --- | --- |
-| `--ui-color-blue-accent` | `var(--ui-color-focus-ring)` | Устарел. Используйте `--ui-color-focus-ring`. |
+| `--ui-color-blue-accent` | `var(--ui-color-accent)` | Устарел. Используйте `--ui-color-accent`. |
 | `--ui-color-blue-primary` | `var(--ui-color-primary)` | Устарел. Используйте `--ui-color-primary`. |
 | `--ui-color-gray-200` | `var(--ui-color-border)` | Устарел. Используйте `--ui-color-border` или `--ui-color-surface-muted`. |
 | `--ui-color-gray-400` | `var(--ui-color-text-muted)` | Устарел. Используйте `--ui-color-text-muted`. |
@@ -45,7 +43,7 @@ import { WithControl } from "@/stories/design-tokens.story";
 
 | Токен | Значение | Описание |
 | --- | --- | --- |
-| `--ui-color-checkbox-checked` | `#3c538e` | Цвет заливки и обводки для отмеченного чекбокса. |
+| `--ui-color-checkbox-selected` | `#3c538e` | Цвет заливки и обводки для отмеченного чекбокса. |
 | `--ui-color-danger` | `#dc2626` | Семантический цвет ошибок и опасных состояний. |
 | `--ui-color-danger-surface` | `#fee2e2` | Мягкий фон для ошибок и деструктивных действий. |
 | `--ui-color-info` | `#2563eb` | Семантический информационный цвет. |
@@ -58,10 +56,7 @@ import { WithControl } from "@/stories/design-tokens.story";
 | Токен | Значение | Описание |
 | --- | --- | --- |
 | `--ui-color-border` | `#ededed` | Цвет границ и разделителей по умолчанию. |
-| `--ui-color-border-faint` | `#ebebeb` | Слабая граница для низкоконтрастных разделителей. |
-| `--ui-color-border-secondary` | `#ececeb` | Граница для вторичных контролов и нейтральных действий. |
 | `--ui-color-border-subtle` | `#ececeb` | Ненавязчивая граница для компактных контролов. |
-| `--ui-color-card-border` | `#ffffff` | Граница карточек для контрастных обводок. |
 | `--ui-color-card-surface` | `#232323` | Поверхность карточек для темных контейнеров. |
 | `--ui-color-surface` | `#ffffff` | Основной фон приложения. |
 | `--ui-color-surface-muted` | `#f3f3f3` | Приглушенный фон для мягких заливок. |
@@ -118,7 +113,7 @@ p {
 | `--ui-space-sm` | `8px` | Малый шаг отступов. |
 | `--ui-space-xl` | `20px` | Очень большой шаг отступов. |
 | `--ui-space-xs` | `4px` | Очень маленький шаг отступов. |
-| `--ui-space-xxl` | `24px` | Двойной очень большой шаг отступов. |
+| `--ui-space-10xl` | `24px` | Расширенный шаг отступов (замена устаревшего `--ui-space-xxl`). |
 
 ### Пример
 

@@ -28,7 +28,7 @@ export function SearchInput({
 				padding: "0 var(--ui-space-lg)",
 				borderRadius: "var(--ui-radius-md)",
 				background: "var(--ui-color-surface-muted)",
-				border: `1px solid ${isActive ? "var(--ui-color-focus-ring)" : "transparent"}`,
+				border: `1px solid ${isActive ? "var(--ui-color-accent)" : "transparent"}`,
 				minWidth: 220,
 				opacity: isDisabled ? 0.6 : 1,
 			}}

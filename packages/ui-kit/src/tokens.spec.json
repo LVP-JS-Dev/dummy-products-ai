@@ -248,8 +248,8 @@
 				"semanticRole": "Row selection indicator stripe",
 				"usage": ["Selected product row stripe"],
 				"screens": ["Products"],
-				"aliasOf": "--ui-color-checkbox-checked",
-				"aliasNote": "Color value matches existing checkbox-checked token"
+				"aliasOf": "--ui-color-checkbox-selected",
+				"aliasNote": "Color value matches checkbox-selected token"
 			},
 			{
 				"name": "--ui-color-checkbox-selected",
@@ -258,8 +258,7 @@
 				"semanticRole": "Selected checkbox fill",
 				"usage": ["Selected checkbox"],
 				"screens": ["Products"],
-				"aliasOf": "--ui-color-checkbox-checked",
-				"aliasNote": "Color value matches existing checkbox-checked token"
+				"aliasOf": null
 			},
 			{
 				"name": "--ui-color-on-primary",
@@ -276,6 +275,86 @@
 				"pencilValue": "#c4c4c4ff",
 				"semanticRole": "Photo placeholder background",
 				"usage": ["Product photo placeholder"],
+				"screens": ["Products"],
+				"aliasOf": null,
+				"status": "new"
+			},
+			{
+				"name": "--ui-color-overlay",
+				"value": "rgb(17 24 39 / 45%)",
+				"pencilValue": "rgb(17 24 39 / 45%)",
+				"semanticRole": "Modal overlay background",
+				"usage": ["Modal backdrop"],
+				"screens": ["Products"],
+				"aliasOf": null,
+				"status": "new"
+			},
+			{
+				"name": "--ui-color-success",
+				"value": "#15803d",
+				"pencilValue": "#15803dff",
+				"semanticRole": "Success text/icon color",
+				"usage": ["Success indicators"],
+				"screens": ["Products"],
+				"aliasOf": null,
+				"status": "new"
+			},
+			{
+				"name": "--ui-color-success-surface",
+				"value": "#dcfce7",
+				"pencilValue": "#dcfce7ff",
+				"semanticRole": "Success background",
+				"usage": ["Success state backgrounds"],
+				"screens": ["Products"],
+				"aliasOf": null,
+				"status": "new"
+			},
+			{
+				"name": "--ui-color-info",
+				"value": "#2563eb",
+				"pencilValue": "#2563ebff",
+				"semanticRole": "Info text/icon color",
+				"usage": ["Info indicators"],
+				"screens": ["Products"],
+				"aliasOf": null,
+				"status": "new"
+			},
+			{
+				"name": "--ui-color-warning",
+				"value": "#d97706",
+				"pencilValue": "#d97706ff",
+				"semanticRole": "Warning text/icon color",
+				"usage": ["Warning indicators"],
+				"screens": ["Products"],
+				"aliasOf": null,
+				"status": "new"
+			},
+			{
+				"name": "--ui-color-danger",
+				"value": "#dc2626",
+				"pencilValue": "#dc2626ff",
+				"semanticRole": "Error text/icon color",
+				"usage": ["Error indicators"],
+				"screens": ["Products"],
+				"aliasOf": null,
+				"status": "new"
+			},
+			{
+				"name": "--ui-color-danger-surface",
+				"value": "#fee2e2",
+				"pencilValue": "#fee2e2ff",
+				"semanticRole": "Error background",
+				"usage": ["Error state backgrounds"],
+				"screens": ["Products"],
+				"aliasOf": null,
+				"status": "new"
+			},
+			{
+				"name": "--ui-color-card-surface",
+				"value": "#232323",
+				"pencilValue": "#232323ff",
+				"semanticRole": "Dark card background",
+				"usage": ["Dark mode cards"],
 				"screens": ["Products"],
 				"aliasOf": null,
 				"status": "new"
@@ -427,6 +506,16 @@
 				"semanticRole": "9x large spacing",
 				"usage": ["Auth form padding", "Photo size"],
 				"screens": ["Auth", "Products"],
+				"status": "new"
+			},
+			{
+				"name": "--ui-space-10xl",
+				"value": "24px",
+				"pencilValue": 24,
+				"semanticRole": "10x large spacing (legacy xxl)",
+				"usage": ["Spinner size", "Modal padding"],
+				"screens": ["Products"],
+				"aliasOf": null,
 				"status": "new"
 			}
 		]
@@ -1053,15 +1142,9 @@
 		"aliases": [
 			{
 				"newToken": "--ui-color-selection-stripe",
-				"aliasOf": "--ui-color-checkbox-checked",
+				"aliasOf": "--ui-color-checkbox-selected",
 				"value": "#3c538e",
-				"notes": "Selection stripe color matches existing checkbox-checked token"
-			},
-			{
-				"newToken": "--ui-color-checkbox-selected",
-				"aliasOf": "--ui-color-checkbox-checked",
-				"value": "#3c538e",
-				"notes": "Checkbox selected color matches existing checkbox-checked token"
+				"notes": "Selection stripe color matches checkbox-selected token"
 			},
 			{
 				"newToken": "--ui-space-md",

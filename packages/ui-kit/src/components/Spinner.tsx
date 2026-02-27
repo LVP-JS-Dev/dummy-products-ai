@@ -5,7 +5,7 @@ import type { SpinnerProps } from "../contracts/SpinnerContract";
 const sizeMap = {
 	sm: "var(--ui-space-lg)",
 	md: "var(--ui-space-xl)",
-	lg: "var(--ui-space-xxl)",
+	lg: "var(--ui-space-10xl)",
 } as const;
 
 const toneMap = {
