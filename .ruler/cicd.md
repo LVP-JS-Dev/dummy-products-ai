@@ -2,11 +2,13 @@
 
 ## Обзор
 
-Проект использует автоматический CI/CD для сборки и деплоя:
-
 ```text
-Git Push → GitHub Actions → Docker Hub → Dokploy (VPS)
+Git Push → GitHub Actions (build) → Docker Hub → Dokploy (deploy)
 ```
+
+**Принцип:**
+- **GitHub Actions** — собирает Docker-образы и пушит в Docker Hub
+- **Dokploy** — pulls готовые образы с Docker Hub (без клонирования репозитория)
 
 ---
 
@@ -14,17 +16,11 @@ Git Push → GitHub Actions → Docker Hub → Dokploy (VPS)
 
 ### Pipeline Flow
 
-1. **Push в `develop`** → GitHub Actions собирает образы → пушит в Docker Hub с тегом `:stage`
-2. **Push в `master`** → то же самое, но с тегом `:prod`
-3. **Тег `vX.Y.Z`** → собирает `:latest` + публикует npm-пакет `burlaki`
-
-### Image Tags
-
-| Trigger | Web Image | Docs Image | Latest Alias |
-|---------|-----------|------------|--------------|
-| `develop` push | `:stage-abc1234` | `:stage-abc1234` | `:stage` |
-| `master` push | `:prod-abc1234` | `:prod-abc1234` | `:prod` |
-| `v1.2.3` tag | `:v1.2.3` | `:v1.2.3` | `:latest` |
+| Trigger | Тег образов | Псевдоним |
+|---------|-------------|-----------|
+| Push в `develop` | `:stage-abc1234` | `:stage` |
+| Push в `master` | `:prod-abc1234` | `:prod` |
+| Тег `v1.2.3` | `:v1.2.3` | `:latest` |
 
 ---
 
@@ -38,18 +34,24 @@ Git Push → GitHub Actions → Docker Hub → Dokploy (VPS)
 |--------|----------|-------------|
 | `DOCKER_USERNAME` | ✅ | Docker Hub username |
 | `DOCKER_TOKEN` | ✅ | Docker Hub access token (read/write/delete) |
-| `NPM_TOKEN` | ⚪ | npm token для публикации burlaki |
-
-### Fallback на Variables
-
-`DOCKER_USERNAME` можно указать как Variable вместо Secret:
-
-- Priority: `secrets.DOCKER_USERNAME` > `vars.DOCKER_USERNAME`
-- Полезно если username не требует скрытности
+| `NPM_TOKEN` | ⚪ | npm token для публикации burlaki (только для v*-тегов) |
 
 ### Пример конфигурации
 
 См. `.github/.env.example` для шаблона.
+
+---
+
+## Файлы
+
+| File | Purpose |
+|------|---------|
+| `.github/workflows/ci.yml` | CI/CD pipeline (build + push) |
+| `.github/.env.example` | Secrets template |
+| `deploy/docker/web.Dockerfile` | Web app build (Vite → nginx) |
+| `deploy/docker/docs.Dockerfile` | Docs app build (Next.js standalone) |
+| `deploy/docker-compose.yml` | Единый compose для Dokploy |
+| `deploy/README.md` | Полная документация для разработчиков |
 
 ---
 
@@ -59,126 +61,114 @@ Git Push → GitHub Actions → Docker Hub → Dokploy (VPS)
 
 ```bash
 # 1. Создать ветку от develop
-git checkout develop
-git pull
+git checkout develop && git pull
 git checkout -b feature/my-feature
 
-# 2. Работать, коммитить
+# 2. Работать, проверить
 pnpm gen && pnpm test && pnpm check
 git add . && git commit -m "feat: add my feature"
 
 # 3. Создать PR в develop
 gh pr create --base develop
 
-# 4. После merge — CI автоматически соберёт :stage
+# 4. После merge — CI собирает :stage
+# 5. В Dokploy: Redeploy → pulls свежий образ
 ```
 
 ### Релиз в production
 
 ```bash
-# Вариант 1: Merge в master
+# Merge в master
 git checkout master
 git merge develop
 git push origin master
-# → CI соберёт :prod
 
-# Вариант 2: Тег для версии
-git tag v1.2.3
-git push origin v1.2.3
-# → CI соберёт :v1.2.3 и :latest, опубликует npm
-```
-
-### Ручной деплой (fallback)
-
-Если CI недоступен:
-
-```bash
-docker login
-
-GIT_SHA=$(git rev-parse --short HEAD)
-
-# Web
-docker buildx build \
-  --platform linux/amd64 \
-  -f deploy/docker/web.Dockerfile \
-  -t your-username/dummy-products-web:stage-$GIT_SHA \
-  -t your-username/dummy-products-web:stage \
-  --push .
-
-# Docs
-docker buildx build \
-  --platform linux/amd64 \
-  -f deploy/docker/docs.Dockerfile \
-  -t your-username/dummy-products-docs:stage-$GIT_SHA \
-  -t your-username/dummy-products-docs:stage \
-  --push .
+# CI собирает :prod
+# В Dokploy: сменить тег на :prod и Redeploy
 ```
 
 ---
 
-## Файлы
+## Dokploy Setup
 
-| File | Purpose |
-|------|---------|
-| `.github/workflows/ci.yml` | CI/CD pipeline |
-| `.github/.env.example` | Secrets/variables template |
-| `deploy/docker/web.Dockerfile` | Web app build |
-| `deploy/docker/docs.Dockerfile` | Docs app build |
-| `deploy/docker-compose.stage.yml` | Staging compose |
-| `deploy/docker-compose.prod.yml` | Production compose |
-| `deploy/README.md` | Полная документация |
+### 1. Создать Compose приложение
+
+- **Name:** `dummy-products`
+- **Source:** Manual (вставить compose)
+
+### 2. Compose для вставки
+
+```yaml
+name: dummy-products
+
+services:
+  web:
+    image: <user>/dummy-products-web:stage
+    restart: unless-stopped
+    expose:
+      - "80"
+    networks:
+      - app
+
+  docs:
+    image: <user>/dummy-products-docs:stage
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      HOSTNAME: 0.0.0.0
+      PORT: "3000"
+    expose:
+      - "3000"
+    networks:
+      - app
+
+networks:
+  app:
+    driver: bridge
+```
+
+### 3. Обновление
+
+После CI-билда: **Redeploy** в Dokploy → pulls свежий образ.
+
+---
+
+## Ручной деплой (fallback)
+
+```bash
+docker login
+GIT_SHA=$(git rev-parse --short HEAD)
+
+# Web
+docker buildx build --platform linux/amd64 \
+  -f deploy/docker/web.Dockerfile \
+  -t <user>/dummy-products-web:stage-$GIT_SHA \
+  -t <user>/dummy-products-web:stage \
+  --push .
+
+# Docs
+docker buildx build --platform linux/amd64 \
+  -f deploy/docker/docs.Dockerfile \
+  -t <user>/dummy-products-docs:stage-$GIT_SHA \
+  -t <user>/dummy-products-docs:stage \
+  --push .
+```
 
 ---
 
 ## Troubleshooting
 
-### CI падает с "DOCKER_USERNAME not set"
-
-Добавьте `DOCKER_USERNAME` и `DOCKER_TOKEN` в GitHub Secrets.
-
-### Образ не подтягивается на VPS
-
-1. Проверьте доступ Dokploy к Docker Hub
-2. Убедитесь что тег совпадает с env переменными
-3. Нажмите "Deploy" в Dokploy UI
-
-### npm publish падает
-
-`NPM_TOKEN` нужен только для релизов с тегами `v*`.
-
----
-
-## Для новых разработчиков
-
-### Первичная настройка
-
-1. Получите доступ к GitHub репозиторию
-2. Клонируйте и установите зависимости:
-   ```bash
-   git clone <repo>
-   cd dummy-products
-   pnpm install
-   ```
-3. Запустите dev: `pnpm dev`
-
-### Как ваши изменения попадают на staging
-
-1. Создаёте PR в `develop`
-2. После approve и merge — CI автоматически собирает образы
-3. Образы пушатся в Docker Hub с тегом `:stage`
-4. Dokploy на VPS подтягивает и запускает
-
-### Как попасть в production
-
-1. Merge `develop` в `master` → автоматический деплой с тегом `:prod`
-2. Или создайте тег `vX.Y.Z` для версии + npm publish
+| Проблема | Решение |
+|----------|---------|
+| `DOCKER_USERNAME not set` | Добавить в GitHub Secrets |
+| Образ не pulls в Dokploy | Проверить тег, нажать Redeploy |
+| npm publish падает | `NPM_TOKEN` нужен только для v*-тегов |
 
 ---
 
 ## Полная документация
 
-См. `deploy/README.md` для детальной информации о:
-- Dokploy setup
+См. `deploy/README.md` для:
+- Детальной настройки Dokploy
 - Domain configuration
-- Auto-deploy webhooks
 - Architecture diagrams
