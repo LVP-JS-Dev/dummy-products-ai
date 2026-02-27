@@ -1,0 +1,29 @@
+# Dokploy Compose - pulls images from Docker Hub
+# CI/CD builds and pushes to Docker Hub, Dokploy deploys
+
+name: dummy-products
+
+services:
+  web:
+    image: ${DOCKER_USERNAME}/dummy-products-web:${IMAGE_TAG:-stage}
+    restart: unless-stopped
+    expose:
+      - "80"
+    networks:
+      - app
+
+  docs:
+    image: ${DOCKER_USERNAME}/dummy-products-docs:${IMAGE_TAG:-stage}
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      HOSTNAME: 0.0.0.0
+      PORT: "3000"
+    expose:
+      - "3000"
+    networks:
+      - app
+
+networks:
+  app:
+    driver: bridge
