@@ -102,12 +102,14 @@ git push origin master
 
 ### 2. Вставьте compose
 
+> **Важно:** В Dokploy при Manual compose нужно хардкодить Docker Hub username в образах. Env-переменные (`${DOCKER_USERNAME}`) не подставляются автоматически.
+
 ```yaml
 name: dummy-products
 
 services:
   web:
-    image: <your-username>/dummy-products-web:stage
+    image: lvpjsdev/dummy-products-web:stage
     restart: unless-stopped
     expose:
       - "80"
@@ -115,7 +117,7 @@ services:
       - app
 
   docs:
-    image: <your-username>/dummy-products-docs:stage
+    image: lvpjsdev/dummy-products-docs:stage
     restart: unless-stopped
     environment:
       NODE_ENV: production
@@ -131,7 +133,7 @@ networks:
     driver: bridge
 ```
 
-Замените `<your-username>` на ваш Docker Hub username.
+Замените `lvpjsdev` на ваш Docker Hub username.
 
 ### 3. Deploy
 
@@ -155,19 +157,33 @@ networks:
 
 ## Переключение между Stage и Prod
 
-Для production используйте тег `:prod` вместо `:stage`:
+### Вариант 1: Два отдельных приложения (рекомендуется)
 
+Создайте два приложения в Dokploy:
+
+**Staging:**
 ```yaml
-# Stage (по умолчанию)
-image: <user>/dummy-products-web:stage
-
-# Production
-image: <user>/dummy-products-web:prod
+image: lvpjsdev/dummy-products-web:stage
+image: lvpjsdev/dummy-products-docs:stage
 ```
 
-Или создайте два отдельных приложения в Dokploy:
-- `dummy-products-stage` с `:stage`
-- `dummy-products-prod` с `:prod`
+**Production:**
+```yaml
+image: lvpjsdev/dummy-products-web:prod
+image: lvpjsdev/dummy-products-docs:prod
+```
+
+### Вариант 2: Одно приложение с ручным переключением
+
+Измените тег в compose и нажмите Redeploy:
+
+```yaml
+# Stage
+image: lvpjsdev/dummy-products-web:stage
+
+# Production  
+image: lvpjsdev/dummy-products-web:prod
+```
 
 ---
 

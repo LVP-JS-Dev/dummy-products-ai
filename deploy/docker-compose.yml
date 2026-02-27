@@ -1,11 +1,14 @@
 # Dokploy Compose - pulls images from Docker Hub
 # CI/CD builds and pushes to Docker Hub, Dokploy deploys
+#
+# IMPORTANT: Replace <your-username> with your Docker Hub username
+# before pasting into Dokploy. Env vars are not substituted in Manual compose.
 
 name: dummy-products
 
 services:
   web:
-    image: ${DOCKER_USERNAME}/dummy-products-web:${IMAGE_TAG:-stage}
+    image: <your-username>/dummy-products-web:${IMAGE_TAG:-stage}
     restart: unless-stopped
     expose:
       - "80"
@@ -13,7 +16,7 @@ services:
       - app
 
   docs:
-    image: ${DOCKER_USERNAME}/dummy-products-docs:${IMAGE_TAG:-stage}
+    image: <your-username>/dummy-products-docs:${IMAGE_TAG:-stage}
     restart: unless-stopped
     environment:
       NODE_ENV: production

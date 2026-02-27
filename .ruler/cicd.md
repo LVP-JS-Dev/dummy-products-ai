@@ -98,12 +98,14 @@ git push origin master
 
 ### 2. Compose для вставки
 
+> **Важно:** Хардкодите Docker Hub username в образах. Env-переменные не подставляются в Manual compose.
+
 ```yaml
 name: dummy-products
 
 services:
   web:
-    image: <user>/dummy-products-web:stage
+    image: lvpjsdev/dummy-products-web:stage
     restart: unless-stopped
     expose:
       - "80"
@@ -111,7 +113,7 @@ services:
       - app
 
   docs:
-    image: <user>/dummy-products-docs:stage
+    image: lvpjsdev/dummy-products-docs:stage
     restart: unless-stopped
     environment:
       NODE_ENV: production
@@ -126,6 +128,8 @@ networks:
   app:
     driver: bridge
 ```
+
+Замените `lvpjsdev` на ваш Docker Hub username.
 
 ### 3. Обновление
 
