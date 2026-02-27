@@ -2,136 +2,284 @@
 
 This setup is designed for:
 
-- local image build
-- push to a container registry
-- Dokploy deploy from `image:` references (no server-side build)
-- CI builds on CircleCI (GHCR) with local fallback
+- CI builds in GitHub Actions
+- Push images to Docker Hub
+- Deploy to VPS via Dokploy with docker-compose
+
+---
+
+## Quick Start for New Developers
+
+### Как работает CI/CD
+
+```text
+┌─────────────────┐     ┌─────────────┐     ┌─────────────────┐     ┌─────────────┐
+│   Git Push      │────▶│ GitHub      │────▶│   Docker Hub    │────▶│  Dokploy    │
+│   (develop/     │     │ Actions     │     │   Registry      │     │  (VPS)      │
+│    master/tag)  │     │ (build)     │     │                 │     │             │
+└─────────────────┘     └─────────────┘     └─────────────────┘     └─────────────┘
+```
+
+**Что происходит при пуше:**
+
+1. **Push в `develop`** → GitHub Actions собирает Docker-образы → пушит в Docker Hub с тегом `:stage`
+2. **Push в `master`** → то же самое, но с тегом `:prod`
+3. **Тег `vX.Y.Z`** → собирает `:latest` + публикует npm-пакет `burlaki`
+
+Dokploy на VPS подтягивает образы из Docker Hub и запускает их через docker-compose.
+
+### Типичный workflow разработки
+
+```bash
+# 1. Работаете в ветке
+git checkout -b feature/my-feature
+
+# 2. Делаете изменения, коммитите
+git add . && git commit -m "feat: add my feature"
+
+# 3. Создаёте PR в develop
+gh pr create --base develop
+
+# 4. После merge в develop — CI автоматически соберёт и запушит образы
+#    Docker Hub: your-username/dummy-products-web:stage
+#    Docker Hub: your-username/dummy-products-docs:stage
+
+# 5. Dokploy автоматически деплоит staging (если настроен webhook)
+#    или деплой вручную через UI Dokploy
+```
+
+### Релиз в production
+
+```bash
+# 1. Merge develop в master
+git checkout master
+git merge develop
+git push origin master
+
+# 2. CI собирает :prod теги
+#    Docker Hub: your-username/dummy-products-web:prod
+#    Docker Hub: your-username/dummy-products-docs:prod
+
+# 3. Деплой через Dokploy
+
+# ИЛИ для версии с npm-пакетом:
+git tag v1.2.3
+git push origin v1.2.3
+# CI соберёт :v1.2.3 и :latest, опубликует burlaki в npm
+```
+
+### Ручной деплой (если CI недоступен)
+
+```bash
+# Логин в Docker Hub
+docker login
+
+GIT_SHA=$(git rev-parse --short HEAD)
+
+# Собрать и запушить web
+docker buildx build \
+  --platform linux/amd64 \
+  -f deploy/docker/web.Dockerfile \
+  -t your-username/dummy-products-web:stage-$GIT_SHA \
+  -t your-username/dummy-products-web:stage \
+  --push .
+
+# Собрать и запушить docs
+docker buildx build \
+  --platform linux/amd64 \
+  -f deploy/docker/docs.Dockerfile \
+  -t your-username/dummy-products-docs:stage-$GIT_SHA \
+  -t your-username/dummy-products-docs:stage \
+  --push .
+
+# Затем в Dokploy: Deploy → Pull latest images
+```
+
+---
+
+## Configuration
+
+### Required GitHub Secrets
+
+Настройте в **Settings → Secrets and variables → Actions**:
+
+| Secret | Required | Description |
+|--------|----------|-------------|
+| `DOCKER_USERNAME` | ✅ | Docker Hub username |
+| `DOCKER_TOKEN` | ✅ | Docker Hub access token (read/write) |
+| `NPM_TOKEN` | ⚪ | npm token для публикации burlaki (только для релизов) |
+
+> **Note:** `DOCKER_USERNAME` можно указать как Variable вместо Secret, если не требует скрытности.
+> См. `.github/.env.example` для примера конфигурации.
+
+### Как создать Docker Hub токен
+
+1. Откройте https://hub.docker.com/settings/security
+2. Нажмите **New Access Token**
+3. Выберите permissions: **Read, Write** (Delete опционально для cleanup)
+4. Скопируйте токен (показывается только один раз!)
+
+### Как создать npm токен
+
+1. Откройте https://www.npmjs.com/settings/tokens
+2. Нажмите **Generate New Token** → **Classic Token**
+3. Выберите тип **Automation**
+4. Скопируйте токен
+
+---
 
 ## Files
 
-- `deploy/docker/web.Dockerfile` - multistage build for `apps/web` (Vite -> nginx)
-- `deploy/docker/docs.Dockerfile` - multistage build for `apps/fumadocs` (Next standalone)
-- `deploy/docker-compose.stage.yml` - stage stack (image-only)
-- `deploy/docker-compose.prod.yml` - prod stack (image-only)
-- `deploy/.env.stage.example` - stage image variables
-- `deploy/.env.prod.example` - prod image variables
+| File | Purpose |
+|------|---------|
+| `.github/workflows/ci.yml` | CI/CD pipeline (build + push) |
+| `.github/.env.example` | Secrets/variables template |
+| `deploy/docker/web.Dockerfile` | Multistage build для `apps/web` (Vite → nginx) |
+| `deploy/docker/docs.Dockerfile` | Multistage build для `apps/fumadocs` (Next standalone) |
+| `deploy/docker-compose.stage.yml` | Staging compose config |
+| `deploy/docker-compose.prod.yml` | Production compose config |
+| `deploy/.env.stage.example` | Stage environment template |
+| `deploy/.env.prod.example` | Production environment template |
 
-## CI/CD (CircleCI + GHCR)
+---
 
-Build and push images on:
-- `push` to `main`
-- manual pipeline run (CircleCI parameters)
+## Image Tags
 
-Publish npm package on:
-- git tag `vX.Y.Z` (with strict tag/version check)
+| Trigger | Web Image | Docs Image | Latest Alias |
+|---------|-----------|------------|--------------|
+| `develop` push | `:stage-abc1234` | `:stage-abc1234` | `:stage` |
+| `master` push | `:prod-abc1234` | `:prod-abc1234` | `:prod` |
+| `v1.2.3` tag | `:v1.2.3` | `:v1.2.3` | `:latest` |
 
-### Required secrets (CircleCI project settings)
+---
 
-- `GHCR_USERNAME` / `GHCR_TOKEN` (PAT with `read:packages`, `write:packages`)
-  - `GHCR_USERNAME` should be the GHCR namespace (user or org)
-- `NPM_TOKEN` (npm publish token)
+## Dokploy Setup
 
-### Image tags
+### 1. Add Docker Hub Registry
 
-- `stage-<short_sha>` for readability
-- Dokploy uses digest (`@sha256:...`) for reproducible deploys
+Dokploy → Settings → Registries → Add Docker Hub:
+- Username: ваш Docker Hub username
+- Password: ваш Docker Hub access token
 
-### Manual trigger
+### 2. Create Projects
 
-Run a manual pipeline with `manual=true` to rebuild/push images without new commits.
-In CircleCI UI: `Trigger Pipeline` -> set parameter `manual` to `true`.
+| Project | Compose File | Purpose |
+|---------|--------------|---------|
+| `dummy-products-stage` | `docker-compose.stage.yml` | Staging environment |
+| `dummy-products-prod` | `docker-compose.prod.yml` | Production environment |
 
-## Build and push images
+### 3. Environment Variables
 
-Example for GHCR (`linux/amd64` for typical VPS):
-
-```bash
-docker login ghcr.io
-
-GIT_SHA=$(git rev-parse --short HEAD)
-
-docker buildx build \
-  --platform linux/amd64 \
-  -f deploy/docker/web.Dockerfile \
-  -t ghcr.io/your-org/dummy-products-web:stage-$GIT_SHA \
-  --push .
-
-docker buildx build \
-  --platform linux/amd64 \
-  -f deploy/docker/docs.Dockerfile \
-  -t ghcr.io/your-org/dummy-products-docs:stage-$GIT_SHA \
-  --push .
+**Stage:**
+```env
+WEB_IMAGE=your-username/dummy-products-web:stage
+DOCS_IMAGE=your-username/dummy-products-docs:stage
 ```
 
-## Publish npm package (CI)
-
-Triggered by tag `vX.Y.Z`. CI validates:
-- `vX.Y.Z` equals `packages/burlaki/package.json` version
-
-If mismatch, publish fails.
-
-## Promote stage -> prod
-
-Recommended: deploy by immutable digest in Dokploy variables.
-
-```bash
-docker buildx imagetools inspect ghcr.io/your-org/dummy-products-web:stage-$GIT_SHA
-docker buildx imagetools inspect ghcr.io/your-org/dummy-products-docs:stage-$GIT_SHA
+**Production:**
+```env
+WEB_IMAGE=your-username/dummy-products-web:prod
+DOCS_IMAGE=your-username/dummy-products-docs:prod
 ```
 
-Then set Dokploy env vars:
+### 4. Domains
 
-- `WEB_IMAGE=ghcr.io/your-org/dummy-products-web@sha256:...`
-- `DOCS_IMAGE=ghcr.io/your-org/dummy-products-docs@sha256:...`
+| Service | Port | Domain Example |
+|---------|------|----------------|
+| `web` | 80 | `stage.example.com`, `example.com` |
+| `docs` | 3000 | `docs-stage.example.com`, `docs.example.com` |
 
-Use the same digests in both stage and prod to guarantee identical artifacts.
+### 5. Auto-Deploy (Optional)
 
-## Local fallback (when CI is unavailable)
+В Dokploy можно настроить webhook для автоматического деплоя при появлении новых образов в Docker Hub.
 
-### Build and push images
+---
 
-```bash
-docker login ghcr.io
+## Troubleshooting
 
-GIT_SHA=$(git rev-parse --short HEAD)
+### CI падает с ошибкой авторизации
 
-docker buildx build \
-  --platform linux/amd64 \
-  -f deploy/docker/web.Dockerfile \
-  -t ghcr.io/your-org/dummy-products-web:stage-$GIT_SHA \
-  --push .
-
-docker buildx build \
-  --platform linux/amd64 \
-  -f deploy/docker/docs.Dockerfile \
-  -t ghcr.io/your-org/dummy-products-docs:stage-$GIT_SHA \
-  --push .
+```text
+Error: DOCKER_USERNAME not set
 ```
 
-### Publish npm package
+**Решение:** Добавьте `DOCKER_USERNAME` и `DOCKER_TOKEN` в GitHub Secrets.
 
-```bash
-cd packages/burlaki
-pnpm install --frozen-lockfile
-pnpm -C . pkg get version
-pnpm publish --access public
+### Образ не подтягивается на VPS
+
+**Решение:**
+1. Проверьте что Dokploy имеет доступ к Docker Hub registry
+2. Убедитесь что тег образа совпадает с `WEB_IMAGE`/`DOCS_IMAGE` в env
+3. Нажмите "Deploy" в Dokploy UI
+
+### npm publish падает
+
+```text
+Error: NPM_TOKEN not set
 ```
 
-Ensure the git tag matches `package.json` (e.g. `v1.2.3`).
+**Решение:** Добавьте `NPM_TOKEN` в GitHub Secrets (нужен только для релизов с тегами `v*`).
 
-## Dokploy wiring
+---
 
-1. Create two Dokploy projects: `dummy-products-stage`, `dummy-products-prod`.
-2. Add registry credentials (GHCR/Docker Hub/etc.) in Dokploy.
-3. For stage use `deploy/docker-compose.stage.yml`, for prod use `deploy/docker-compose.prod.yml`.
-4. Define `WEB_IMAGE` and `DOCS_IMAGE` in each project env.
-5. Attach domains to:
-   - service `web` on port `80`
-   - service `docs` on port `3000`
+## Architecture
 
-## Optional: Lefthook migration
-
-Husky is currently used for local hooks. If hook runtime becomes a bottleneck, consider Lefthook:
-- Faster hook execution via parallelism
-- Centralized hook config
-- Better fit for monorepos
+```text
+┌──────────────────────────────────────────────────────────────────────────┐
+│                              DEVELOPER                                    │
+│                                                                          │
+│   git push origin develop                                                │
+│          │                                                               │
+└──────────┼───────────────────────────────────────────────────────────────┘
+           │
+           ▼
+┌──────────────────────────────────────────────────────────────────────────┐
+│                           GITHUB ACTIONS                                  │
+│                                                                          │
+│   ┌─────────────┐    ┌─────────────┐    ┌─────────────┐                  │
+│   │ Checkout    │───▶│ pnpm build  │───▶│ docker build│                  │
+│   └─────────────┘    └─────────────┘    └──────┬──────┘                  │
+│                                               │                          │
+└───────────────────────────────────────────────┼──────────────────────────┘
+                                                │
+                                                ▼
+┌──────────────────────────────────────────────────────────────────────────┐
+│                            DOCKER HUB                                     │
+│                                                                          │
+│   your-username/dummy-products-web:stage-abc1234                        │
+│   your-username/dummy-products-web:stage                                │
+│   your-username/dummy-products-docs:stage-abc1234                       │
+│   your-username/dummy-products-docs:stage                               │
+│                                                                          │
+└──────────────────────────────┬───────────────────────────────────────────┘
+                               │
+                               ▼
+┌──────────────────────────────────────────────────────────────────────────┐
+│                         DOKPLOY (VPS)                                     │
+│                                                                          │
+│   ┌─────────────────────────────────────────────────────────────────┐   │
+│   │                    docker-compose.stage.yml                       │   │
+│   │                                                                   │   │
+│   │   ┌─────────────┐         ┌─────────────┐                        │   │
+│   │   │    web      │         │    docs     │                        │   │
+│   │   │   (nginx)   │         │  (Next.js)  │                        │   │
+│   │   │   port: 80  │         │  port: 3000 │                        │   │
+│   │   └──────┬──────┘         └──────┬──────┘                        │   │
+│   │          │                       │                                │   │
+│   │          └───────────┬───────────┘                                │   │
+│   │                      │                                            │   │
+│   │              ┌───────▼───────┐                                    │   │
+│   │              │   Traefik     │                                    │   │
+│   │              │  (reverse     │                                    │   │
+│   │              │   proxy)      │                                    │   │
+│   │              └───────┬───────┘                                    │   │
+│   └──────────────────────┼────────────────────────────────────────────┘   │
+│                          │                                                │
+└──────────────────────────┼────────────────────────────────────────────────┘
+                           │
+                           ▼
+                    ┌─────────────┐
+                    │   Users     │
+                    │ (Internet)  │
+                    └─────────────┘
+```
