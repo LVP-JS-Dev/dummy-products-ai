@@ -144,12 +144,12 @@
 		color-mix(in srgb, var(--ui-color-text) 20%, transparent);
 
 	/* Strokes */
-	--ui-stroke-input: 1.5px solid #ededed;
-	--ui-stroke-table-row: 1px solid #e2e2e2;
-	--ui-stroke-checkbox: 1px solid #b2b3b9;
-	--ui-stroke-photo: 1px solid #ececeb;
-	--ui-stroke-button: 1px solid #367aff;
-	--ui-stroke-icon-muted: 2px solid #ededed;
+	--ui-stroke-input: 1.5px solid var(--ui-color-border);
+	--ui-stroke-table-row: 1px solid var(--ui-color-border-row);
+	--ui-stroke-checkbox: 1px solid var(--ui-color-text-tertiary);
+	--ui-stroke-photo: 1px solid var(--ui-color-border-subtle);
+	--ui-stroke-button: 1px solid var(--ui-color-primary-border);
+	--ui-stroke-icon-muted: 2px solid var(--ui-color-border);
 }
 
 /* Minimal base styles for component internals that cannot be expressed via inline style (e.g. ::placeholder, :focus-within). */

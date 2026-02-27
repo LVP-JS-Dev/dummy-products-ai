@@ -396,6 +396,7 @@ Manifest является точкой входа для внешних инст
 ### 11.4 Интеграция в CI
 
 Валидация включена в `pnpm check`:
+
 ```bash
 pnpm check  # включает tokens:validate и docs:check-tokens
 ```

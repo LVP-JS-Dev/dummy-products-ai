@@ -36,34 +36,34 @@ reviews:
     - "!pnpm-lock.yaml"
     - "!**/dist/**"
     - "!**/.turbo/**"
+  
+  # Автоматические actions
+  auto_review:
+    # Авто-ревью при открытии PR
+    enabled: true
+    
+    # Игнорировать draft PR
+    drafts: false
+    
+    # Игнорировать WIP в заголовке
+    ignore_title_keywords:
+      - "WIP"
+      - "DO NOT REVIEW"
+      - "[WIP]"
+  
+  # Инструменты анализа
+  tools:
+    # Статический анализ
+    ast-grep:
+      essential_rules: true
+    
+    # Security checks
+    gitleaks:
+      enabled: true
 
 # Настройки чата
 chat:
   auto_reply: true
-
-# Автоматические actions
-auto_review:
-  # Авто-ревью при открытии PR
-  enabled: true
-  
-  # Игнорировать draft PR
-  drafts: false
-  
-  # Игнорировать WIP в заголовке
-  ignore_title_keywords:
-    - "WIP"
-    - "DO NOT REVIEW"
-    - "[WIP]"
-
-# Инструменты анализа
-tools:
-  # Статический анализ
-  ast-grep:
-    essential_rules: true
-  
-  # Security checks
-  gitleaks:
-    enabled: true
 
 # Knowledge base для контекста проекта
 knowledge_base:
