@@ -106,7 +106,7 @@ docker buildx build \
 | Secret | Required | Description |
 |--------|----------|-------------|
 | `DOCKER_USERNAME` | ✅ | Docker Hub username |
-| `DOCKER_TOKEN` | ✅ | Docker Hub access token (read/write/delete) |
+| `DOCKER_TOKEN` | ✅ | Docker Hub access token (read/write) |
 | `NPM_TOKEN` | ⚪ | npm token для публикации burlaki (только для релизов) |
 
 > **Note:** `DOCKER_USERNAME` можно указать как Variable вместо Secret, если не требует скрытности.
@@ -116,7 +116,7 @@ docker buildx build \
 
 1. Откройте https://hub.docker.com/settings/security
 2. Нажмите **New Access Token**
-3. Выберите permissions: **Read, Write, Delete**
+3. Выберите permissions: **Read, Write** (Delete опционально для cleanup)
 4. Скопируйте токен (показывается только один раз!)
 
 ### Как создать npm токен
@@ -199,7 +199,7 @@ DOCS_IMAGE=your-username/dummy-products-docs:prod
 
 ### CI падает с ошибкой авторизации
 
-```
+```text
 Error: DOCKER_USERNAME not set
 ```
 
@@ -214,7 +214,7 @@ Error: DOCKER_USERNAME not set
 
 ### npm publish падает
 
-```
+```text
 Error: NPM_TOKEN not set
 ```
 
@@ -224,7 +224,7 @@ Error: NPM_TOKEN not set
 
 ## Architecture
 
-```
+```text
 ┌──────────────────────────────────────────────────────────────────────────┐
 │                              DEVELOPER                                    │
 │                                                                          │

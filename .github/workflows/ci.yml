@@ -9,7 +9,8 @@ on:
       - "v*"
   workflow_dispatch:
 
-# Secrets (required): DOCKER_USERNAME, DOCKER_TOKEN, NPM_TOKEN
+# Secrets (required): DOCKER_USERNAME, DOCKER_TOKEN
+# Secrets (required for npm publish): NPM_TOKEN
 # Variables (optional fallback): DOCKER_USERNAME
 # See .github/.env.example for setup instructions
 
@@ -155,6 +156,7 @@ jobs:
 
   publish_burlaki:
     name: Publish burlaki
+    needs: [build_web, build_docs]
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     steps:
