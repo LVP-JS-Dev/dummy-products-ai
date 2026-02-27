@@ -58,7 +58,7 @@
 
 ### 3.1 Удалить 7 deprecated aliases из `tokens.css`
 
-```
+```css
 --ui-color-white
 --ui-color-blue-primary
 --ui-color-blue-accent
@@ -70,7 +70,7 @@
 
 ### 3.2 Удалить 11 мигрированных алиасов из `tokens.css`
 
-```
+```css
 --ui-color-focus-ring
 --ui-color-link
 --ui-color-surface-app
@@ -123,8 +123,8 @@
 
 ## Критерии готовности (DoD)
 
-- [ ] `pnpm tokens:validate` выводит `✅ All tokens in sync!`
-- [ ] `pnpm docs:check-tokens` проходит без ошибок
-- [ ] `pnpm check` проходит полностью
-- [ ] Все компоненты используют токены из spec
-- [ ] Deprecated алиасы удалены из CSS и docs.json
+- [x] `pnpm tokens:validate` выводит `✅ All tokens in sync!`
+- [x] `pnpm docs:check-tokens` проходит без ошибок
+- [x] `pnpm check` проходит полностью
+- [x] Все компоненты используют токены из spec
+- [x] Deprecated алиасы удалены из CSS и docs.json
