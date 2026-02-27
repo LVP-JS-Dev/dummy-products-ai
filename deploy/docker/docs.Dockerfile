@@ -22,6 +22,8 @@ COPY . .
 
 RUN pnpm install --frozen-lockfile
 RUN pnpm -C apps/fumadocs build
+# Ensure public folder exists for COPY in runner stage
+RUN mkdir -p apps/fumadocs/public
 
 FROM node:22-alpine AS runner
 
