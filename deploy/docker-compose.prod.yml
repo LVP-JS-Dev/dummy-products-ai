@@ -2,7 +2,7 @@ name: dummy-products-prod
 
 services:
   web:
-    image: ${WEB_IMAGE:?set WEB_IMAGE}
+    image: ${DOCKER_USERNAME}/dummy-products-web:prod
     restart: unless-stopped
     expose:
       - "80"
@@ -10,7 +10,7 @@ services:
       - app
 
   docs:
-    image: ${DOCS_IMAGE:?set DOCS_IMAGE}
+    image: ${DOCKER_USERNAME}/dummy-products-docs:prod
     restart: unless-stopped
     environment:
       NODE_ENV: production

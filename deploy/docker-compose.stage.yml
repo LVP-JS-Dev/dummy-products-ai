@@ -2,7 +2,7 @@ name: dummy-products-stage
 
 services:
   web:
-    image: ${WEB_IMAGE:?set WEB_IMAGE}
+    image: ${DOCKER_USERNAME}/dummy-products-web:stage
     restart: unless-stopped
     expose:
       - "80"
@@ -10,7 +10,7 @@ services:
       - app
 
   docs:
-    image: ${DOCS_IMAGE:?set DOCS_IMAGE}
+    image: ${DOCKER_USERNAME}/dummy-products-docs:stage
     restart: unless-stopped
     environment:
       NODE_ENV: production
