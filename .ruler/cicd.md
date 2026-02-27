@@ -4,7 +4,7 @@
 
 Проект использует автоматический CI/CD для сборки и деплоя:
 
-```
+```text
 Git Push → GitHub Actions → Docker Hub → Dokploy (VPS)
 ```
 

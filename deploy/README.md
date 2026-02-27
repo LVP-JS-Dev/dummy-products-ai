@@ -12,7 +12,7 @@ This setup is designed for:
 
 ### Как работает CI/CD
 
-```
+```text
 ┌─────────────────┐     ┌─────────────┐     ┌─────────────────┐     ┌─────────────┐
 │   Git Push      │────▶│ GitHub      │────▶│   Docker Hub    │────▶│  Dokploy    │
 │   (develop/     │     │ Actions     │     │   Registry      │     │  (VPS)      │
